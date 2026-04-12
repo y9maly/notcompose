@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+        "types": ["node"],
+        "lib": ["es2024", "ESNext.Array", "ESNext.Collection", "ESNext.Iterator", "ESNext.Promise"],
+        "module": "nodenext",
+        "target": "es2022",
+
+        "rootDir": "./src",
+        "outDir": "./dist",
+        "sourceMap": true,
+        "incremental": true,
+        "allowJs": true,
+        "strict": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "moduleResolution": "nodenext"
+    },
+    "include": ["./src"]
+}
