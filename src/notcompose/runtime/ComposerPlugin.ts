@@ -29,7 +29,7 @@ import {ComposerPluginContext} from "./ComposerPluginContext";
  * ```
  *
  * * Переход 'onNodeCompositionEnded -> onNodeForgotten' возможен только если композиция была запущена вне [startNode]-[endNode]
- *   (Например SubcomposeLayout запускает композицию ноды уже после создания ноды, в фазе layout/measure)
+ *   (Например SubcomposeLayout запускает композицию ноды уже после создания ноды, в фазе layout/measurement)
  */
 export interface ComposerPlugin {
     attach(context: ComposerPluginContext): void

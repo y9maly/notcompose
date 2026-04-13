@@ -208,7 +208,9 @@ setTerminalContent(() => {
 })
 ```
 
-В примере выше используется функция rememberState:
+Счётчик в примере выше будет сбрасываться каждые 5 секунд.
+
+Используется функция rememberState:
 
  * `rememberState(() => 0)` и `remember(() => mutableStateOf(0))` - Это одно и то же. Так писать можно.
 
@@ -323,7 +325,7 @@ setTerminalContent(() => {
 function Screen1() {
     const localCounter = rememberState(() => 0)
 
-    DisposableEffect(() => {{ /* DisposableEffect lambda 1 */
+    DisposableEffect(() => { /* DisposableEffect lambda 1 */
         const interval = setInterval(() => {
             localCounter.value++
         }, 1000)
@@ -407,7 +409,7 @@ const MyMeasurePolicy: MeasurePolicy = MeasurePolicy((measurables, constraints) 
     // [constraints] это ограчения размера для текущего лэяута.
     // Например если нам сказали, что наш MyLayout должен быть шириной не меньше 20,
     // это не значит что все его дети тоже должны быть шириной не меньше 20.
-    // Поэтому нам нужно скопировать
+    // Поэтому нам нужно скопировать только максимальные ограничения
     let currentChildrenConstraints = constraints.copyMaxDimensions()
     // То-же самое, что и:
     // let currentChildrenConstraints = new Constraints(
@@ -430,7 +432,7 @@ const MyMeasurePolicy: MeasurePolicy = MeasurePolicy((measurables, constraints) 
         placeable.height
 
         // Ограничим размер каждого следующего ребёнка.
-        // Например если ширины не ограничена (=== null), то minusMaxWidth ничего не сделает.
+        // Например если ширина не ограничена (=== null), то minusMaxWidth ничего не сделает.
         // А если ограчена, то ширина следующего ребёнка не должна будет привышать
         //   (Текущая максимальная ширина МИНУС Ширина текущего ребёнка)
         currentChildrenConstraints = currentChildrenConstraints
@@ -441,7 +443,7 @@ const MyMeasurePolicy: MeasurePolicy = MeasurePolicy((measurables, constraints) 
     }
 
     // Теперь нужно пройтись по всем Placeable, и измерить размер нашего лэяута
-    // Так как у нас дети распологаются горизонтально, ширина нашего лэяута равна
+    // Так как у нас дети распологаются по диагонали, ширина нашего лэяута равна
     //   сумме широт всех детей, а высота равна сумме высот всех детей
     for (const placeable of placeables) {
         resultWidth = resultWidth + placeable.width
@@ -449,8 +451,8 @@ const MyMeasurePolicy: MeasurePolicy = MeasurePolicy((measurables, constraints) 
     }
 
     // Дополниительно ограничим наши получившиеся размеры с помощью входных constraints,
-    //   чтобы размер лэяута соответствовал им.
-    // Например если в нашем лэяуте не будет детей, но минимальная ширина будет 0,
+    //   чтобы размер лэяута соответствовал им (Уважаем входные constraints).
+    // Например если в нашем лэяуте не будет детей, но constraints.minWidth = 20,
     //   то здесь мы установим resultWidth = 20
     resultWidth = constraints.constrainWidth(resultWidth)
     resultHeight = constraints.constrainHeight(resultHeight)
@@ -476,7 +478,7 @@ function MyLayout(
     content: () => void,
     modifier: Modifier = new Modifier()
 ) {
-    Layout(content, MyMeasurePolicy2, modifier)
+    Layout(content, MyMeasurePolicy, modifier)
 }
 
 // Теперь проверим:
@@ -510,13 +512,13 @@ setTerminalContent(() => {
 - Layout (Измерение размеров элементов и их позиций)
 - - Подфаза Measurement (Измерение размеров элементов)
 - - Подфаза Placement (Позиционирование элементов)
-- Draw (Отрисовка)
+- Drawing (Отрисовка)
 
 Каждая фаза идёт одна за другой. Но иногда может понадобится информация из фазы Measurement для того, чтобы построить дерево. Как же быть?
 
 ### LayoutWithConstraints
 
-Например, для того чтобы построить дерево нам нужно знать то, несколько большим могут быть элементы в дерево.
+Например, для того чтобы построить дерево нам нужно знать то, несколько большим могут быть элементы: Для этого нужно знать constraints.
 В веб-разработке, например, перед тем как отрисовать HTML страничку полезно сначала узнать: А какого размера у нас экран? Нам нужна мобильная вёрстка или десктопная?
 
 В данном случае нам помогут LayoutWithConstraints/BoxWithConstraints/ColumnWithConstraints/RowWithConstraints.
@@ -602,7 +604,7 @@ setTerminalContent(() => {
             Text(`> ${textField.value}`)
         })[0].measure(constraints)
 
-        const placeable2_ = subcompose(() => {
+        const placeable2 = subcompose(() => {
             if (placeable1.width > 30) {
                 Key(1, () => {
                     Row(() => {
@@ -616,9 +618,7 @@ setTerminalContent(() => {
                     Text('Ты ввёл мало текста')
                 })
             }
-        })[0]
-
-        const placeable2 = placeable2_.measure(constraints)
+        })[0].measure(constraints)
 
         const width = placeable1.width
         const height = 3
@@ -652,7 +652,7 @@ setTerminalContent(() => {
 
 Любой другой модификатор может быть добавлен, они не захардкожены.
 
-Например InputModifier реализует [InputDispatcher](src/notcompose-terminal/runtime-input/InputDispatcher.ts) и [InputProcessor](src/notcompose-terminal/runtime-input/InputProcessor.ts) - он обрабатывает ввод с клавиатуры, обходит дерево и вызывает InputModifier в определённом порядке. Ты можешь реализовать любую другую дополнительную логику поверх дерева написав свой собственный Processor.
+Например InputModifier реализует [InputDispatcher](src/notcompose-terminal/runtime-input/InputDispatcher.ts) и [InputProcessor](src/notcompose-terminal/runtime-input/InputProcessor.ts) - они реализуют логику обработки ввода с клавиатуры, обхода дерева и вызыва InputModifier в определённом порядке. Ты можешь реализовать любую другую дополнительную логику поверх дерева написав свой собственный Processor.
 
 Также как и в Kotlin Compose порядок модификаторов имеет значение.
 
@@ -736,7 +736,7 @@ setTerminalContent(() => {
 
 В примере выше можно увидеть как от порядка модификаторов зависит фактический результат.
 Каждый layout-модификатор оборачивает следующий.
-Порядок применения модификаторов обратный (Также как в Kotlin Composer)
+Порядок применения модификаторов обратный (Также как в Kotlin Compose)
 
 Давай разребём каждый случай по отдельности:
 
@@ -823,8 +823,8 @@ ___________
 ```
 
 Здесь добавляется модификатор [SizeModifier](src/notcompose-terminal/modifiers/SizeModifier.ts) который заставляет оригинальный лэяут стать размером 7x7 (constraints = { minWidth: 7, maxWidth: 7, minHeight: 7, maxHeight: 7 }).
-[BoxMeasurePolicy](src/notcompose-terminal/highlevel/Box.ts) Уважает эти constraints с становится размером 7x7.
-[PaddingModifier](src/notcompose-terminal/modifiers/PaddingModifier.ts) добавляет ещё 4 пикселя рамзера по вертикали и горизонтали.
+[BoxMeasurePolicy](src/notcompose-terminal/highlevel/Box.ts) Уважает эти constraints и становится размером 7x7.
+[PaddingModifier](src/notcompose-terminal/modifiers/PaddingModifier.ts) добавляет ещё 4 пикселя размера по вертикали и горизонтали.
 [BackgroundModifier](src/notcompose-terminal/modifiers/BackgroundModifier.ts) рисуется в области 11x11
 
 ### Случай 4

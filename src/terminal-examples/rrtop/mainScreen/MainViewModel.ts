@@ -6,7 +6,11 @@ import {SystemInfoRepository} from "../repository/SystemInfoRepository";
 export class MainViewModel {
     constructor(
         private systemInfoRepository: SystemInfoRepository
-    ) {}
+    ) {
+        this.osType.value = systemInfoRepository.osType()
+        this.osRelease.value = systemInfoRepository.osRelease()
+        this.arch.value = systemInfoRepository.arch()
+    }
 
     private historyDataCapacity = 200
 
@@ -28,11 +32,14 @@ export class MainViewModel {
     rxHistory = mutableStateOf<HistoryData>({ items: [] })
     txHistory = mutableStateOf<HistoryData>({ items: [] })
 
+    osType = mutableStateOf<string>('')
+    osRelease = mutableStateOf<string>('')
+    arch = mutableStateOf<string>('')
     uptime = mutableStateOf<number>(0)
     processCount = mutableStateOf<number | null>(0)
 
-    private intervals: NodeJS.Timeout[] = []
-    private get isActive() { return this.intervals.length > 0 }
+    private disposables: (() => void)[] = []
+    private get isActive() { return this.disposables.length > 0 }
     start(): Disposable {
         this.fetchCpuLoad()
         this.fetchMemory()
@@ -44,18 +51,19 @@ export class MainViewModel {
             this.fetchMemory()
             this.fetchOs()
         }, this.refreshRate.value)
+        this.disposables.push(() => clearInterval(interval1))
 
         const interval2 = setInterval(() => {
             this.fetchNetwork()
         }, this.networkRefreshRate.value)
+        this.disposables.push(() => clearInterval(interval2))
 
-        this.intervals.push(interval1)
-        this.intervals.push(interval2)
         return this
     }
 
     [Symbol.dispose]() {
-        this.intervals.forEach(interval => clearInterval(interval))
+        this.disposables.forEach(dispose => dispose())
+        this.disposables.length = 0
     }
 
     incrementRefreshRate() {

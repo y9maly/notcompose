@@ -1,5 +1,6 @@
 import {AnnotatedString} from "./AnnotatedString";
 import {TextCanvas} from "./TextCanvas";
+import {assertInt} from "../../../notcompose/utils/assertInt";
 
 
 export class TextBuffer implements TextCanvas {
@@ -22,8 +23,7 @@ export class TextBuffer implements TextCanvas {
     }
 
     drawText(x: number, y: number, string: string | AnnotatedString): void {
-        if (isNaN(x)) throw new Error('x is NaN')
-        if (isNaN(y)) throw new Error('y is NaN')
+        assertInt(x, y)
 
         if (typeof string === 'string') {
             insertText(this.buffer, this.width, this.height, string, x + this.localX, y + this.localY)
@@ -34,8 +34,7 @@ export class TextBuffer implements TextCanvas {
 }
 
 function insertText(buffer: string[][], maxWidth: number, maxHeight: number, string: string, x: number, y: number) {
-    if (isNaN(x)) throw new Error('x is NaN')
-    if (isNaN(y)) throw new Error('y is NaN')
+    assertInt(maxWidth, maxHeight, x, y)
 
     let cx = x
     let cy = y

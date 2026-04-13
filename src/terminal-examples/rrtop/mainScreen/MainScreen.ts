@@ -41,7 +41,7 @@ export function MainScreen(
     })
 
     Column(() => {
-        Text(` 💻 System: ${os.type()} ${os.release()} (${os.arch()})`);
+        Text(` 💻 System: ${viewModel.osType.value} ${viewModel.osRelease.value} (${viewModel.arch.value})`);
         Text(` Refresh rate: ${viewModel.refreshRate.value}ms`);
         Text(` Network refresh rate: ${viewModel.networkRefreshRate.value}ms`);
         Text(``)
@@ -111,8 +111,8 @@ function MemoryInfo(
         )
 
         Column(() => {
-            Text(`Total: ${formatMemory(viewModel.totalMemory.value)}`)
-            Text(`Free: ${formatMemory(viewModel.freeMemory.value)}`)
+            Text(`Total: ${formatBytes(viewModel.totalMemory.value)}`)
+            Text(`Free: ${formatBytes(viewModel.freeMemory.value)}`)
         }, new Modifier([
             OffsetModifier(2, 1)
         ]))
@@ -133,7 +133,7 @@ function NetworkInfo(
                 )
 
                 Column(() => {
-                    Text(`download: ${formatMemory(viewModel.rx.value * (viewModel.networkRefreshRate.value / 1000))}/s`)
+                    Text(`download: ${formatBytes(viewModel.rx.value * (viewModel.networkRefreshRate.value / 1000))}/s`)
                 }, new Modifier([
                     OffsetModifier(1, 0)
                 ]))
@@ -158,7 +158,7 @@ function NetworkInfo(
                 )
 
                 Column(() => {
-                    Text(`upload: ${formatMemory(viewModel.tx.value * (viewModel.networkRefreshRate.value / 1000))}/s`)
+                    Text(`upload: ${formatBytes(viewModel.tx.value * (viewModel.networkRefreshRate.value / 1000))}/s`)
                 }, new Modifier([
                     OffsetModifier(1, 0)
                 ]))
@@ -183,7 +183,7 @@ function formatUptime(seconds: number): string {
     return `${h}h ${m}m ${s}s`
 }
 
-function formatMemory(bytes: number): string {
+function formatBytes(bytes: number): string {
     const units = ['B', 'KB', 'MB', 'GB']
     let unit = 0
 
@@ -192,16 +192,15 @@ function formatMemory(bytes: number): string {
         unit++
     }
 
+    if (parseFloat(bytes.toFixed(2)) >= 1000 && unit < units.length - 1) {
+        bytes /= 1024
+        unit++
+    }
+
     if (units[unit] === 'GB') {
-        return `${parseFloat(bytes.toFixed(2))} ${units[unit]}`
+        return `${bytes.toFixed(2)} ${units[unit]}`
     } else {
-        let count = parseFloat(bytes.toFixed(2)).toString()
-        if (!count.includes('.'))
-            count = `${count}.00`.padStart(6, ' ')
-        else if (count[count.length - 2] === '.')
-            count = `${count}0`.padStart(6, ' ')
-        else
-            count = count.padStart(6, ' ')
+        const count = bytes.toFixed(2).padStart(6, ' ')
         return `${count} ${units[unit]}`
     }
 }

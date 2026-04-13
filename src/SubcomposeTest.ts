@@ -21,7 +21,7 @@ export function SubcomposeTestScreen() {
             })[0].measure(constraints.minusMaxHeight(one.height))
 
             const three = subcompose(() => {
-                Text(`NOT PLACED (must be not visible)`)
+                Text(`NOT PLACED (must be invisible)`)
             })[0].measure(constraints)
 
             // ограничение ширины для four будет шириной three

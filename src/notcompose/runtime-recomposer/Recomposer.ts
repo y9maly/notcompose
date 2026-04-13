@@ -37,10 +37,10 @@ export class Recomposer implements StateReadsObserver {
             if (recomposeLambda === undefined)
                 return
 
+            const oldComposer = currentComposerOrNull()
             setCurrentComposer(composer)
             composer.startRootNode(node)
             composer.startComposingNode()
-            const oldComposer = currentComposerOrNull()
             debug.log(`Recompose ${node.findName() ?? ''}`)
             recomposeLambda()
             composer.endComposingNode()

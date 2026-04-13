@@ -7,14 +7,14 @@ import {elvis} from "../../../notcompose/runtime-highlevel/elvis";
 
 
 export function BorderModifier(symbols?: {
-    topStart: string,
-    topEnd: string,
-    bottomStart: string,
-    bottomEnd: string,
-    verticalStart: string,
-    verticalEnd: string,
-    horizontalTop: string,
-    horizontalBottom: string,
+    topStart?: string,
+    topEnd?: string,
+    bottomStart?: string,
+    bottomEnd?: string,
+    verticalStart?: string,
+    verticalEnd?: string,
+    horizontalTop?: string,
+    horizontalBottom?: string,
 }): ModifierElement {
     const {topStart, topEnd, bottomStart, bottomEnd, verticalStart, verticalEnd, horizontalTop, horizontalBottom} = elvis(symbols, {
         topStart: '┌',

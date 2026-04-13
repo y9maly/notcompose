@@ -1,4 +1,5 @@
 import {Size} from "../ui/Size";
+import {assertInt} from "../../../notcompose/utils/assertInt";
 
 export class Constraints {
     constructor(
@@ -7,29 +8,11 @@ export class Constraints {
         public minHeight: number, // 0..
         public maxHeight: number | null, // 0..inf (null is infinity)
     ) {
-        if (isNaN(minWidth))
-            throw new Error('minWidth is NaN')
-        if (!Number.isInteger(minWidth))
-            throw new Error('minWidth is not an integer')
-
-        if (maxWidth !== null) {
-            if (isNaN(maxWidth))
-                throw new Error('maxWidth is NaN')
-            if (!Number.isInteger(maxWidth))
-                throw new Error('maxWidth is not an integer')
-        }
-
-        if (isNaN(minHeight))
-            throw new Error('minHeight is NaN')
-        if (!Number.isInteger(minHeight))
-            throw new Error('minHeight is not an integer')
-
-        if (maxHeight !== null) {
-            if (isNaN(maxHeight))
-                throw new Error('maxHeight is NaN')
-            if (!Number.isInteger(maxHeight))
-                throw new Error('maxHeight is not an integer')
-        }
+        assertInt(minWidth, minHeight)
+        if (maxWidth !== null)
+            assertInt(maxWidth)
+        if (maxHeight !== null)
+            assertInt(maxHeight)
 
         if (maxWidth !== null && minWidth > maxWidth)
             throw new Error('minWidth should be less than maxWidth')
@@ -183,8 +166,7 @@ export function MeasurePolicy(
 ): MeasurePolicy { return {
     measure(measurables, constraints) {
         const result = measure(measurables, constraints)
-        if (isNaN(result.width)) throw new Error('width is NaN')
-        if (isNaN(result.height)) throw new Error('height is NaN')
+        assertInt(result.width, result.height)
         return result
     }
 } }

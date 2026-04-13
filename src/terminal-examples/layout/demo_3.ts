@@ -26,27 +26,21 @@ setTerminalContent(() => {
             Text(`> ${textField.value}`)
         })[0].measure(constraints)
 
-        const placeable2_ = subcompose(() => {
-            // todo BUG HERE
-            //      Box is a workaround
-            Box(() => {
-                if (placeable1.width > 30) {
-                    Key(1, () => {
-                        Row(() => {
-                            Text('Ты ввёл много текста')
-                            Text(' | ')
-                            Text('Даже слишком много...')
-                        })
+        const placeable2 = subcompose(() => {
+            if (placeable1.width > 30) {
+                Key(1, () => {
+                    Row(() => {
+                        Text('Ты ввёл много текста')
+                        Text(' | ')
+                        Text('Даже слишком много...')
                     })
-                } else {
-                    Key(2, () => {
-                        Text('Ты ввёл мало текста')
-                    })
-                }
-            })
-        })[0]
-
-        const placeable2 = placeable2_.measure(constraints)
+                })
+            } else {
+                Key(2, () => {
+                    Text('Ты ввёл мало текста')
+                })
+            }
+        })[0].measure(constraints)
 
         const width = placeable1.width
         const height = 3

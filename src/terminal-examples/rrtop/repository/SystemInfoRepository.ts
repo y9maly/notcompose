@@ -21,6 +21,7 @@ export interface SystemInfoRepository {
     hostname(): string
     osType(): string
     osVersion(): string
+    osRelease(): string
     username(): string
     processCount(): number | null
 }
@@ -85,6 +86,10 @@ export class FakeSystemInfoRepository implements SystemInfoRepository {
 
     osVersion(): string {
         return `Android 12.1`
+    }
+
+    osRelease(): string {
+        return '42'
     }
 
     username(): string {
@@ -208,6 +213,10 @@ export class NodejsSystemInfoRepository implements SystemInfoRepository {
 
     osVersion(): string {
         return os.version()
+    }
+
+    osRelease(): string {
+        return os.release()
     }
 
     username(): string {

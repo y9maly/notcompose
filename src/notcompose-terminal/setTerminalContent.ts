@@ -22,7 +22,6 @@ const appLogConsole = new Console.Console({ stdout: appLogStream, stderr: appLog
 NotcomposeRuntimeDebug.setDebugConsole(appLogConsole)
 
 export function setTerminalContent(content: () => void) {
-    // const recomposeOwner = new RecomposeScopeOwnerImpl1()
     const recomposer = new Recomposer()
     const composer = new Composer([
         // Для дебага, кинет исключение если методы плагинов вызовутся неправильно
@@ -35,6 +34,7 @@ export function setTerminalContent(content: () => void) {
         // + recomposer помечает ноду грязной при изменении стейтов, от которых она зависит
         new StateReadsPlugin(recomposer),
         // Вызывает onRemembered и onForgotten для запомненых объектов реализующих RememberObserver
+        // В частности это нужно для работы LaunchedEffect и DisposableEffect (см. исходники)
         new RememberObserverPlugin(),
     ])
 
@@ -46,7 +46,7 @@ export function setTerminalContent(content: () => void) {
     ))
     inputProcessor.start()
 
-    // Обходит дерево, измеряет ноды (measure/layout + layout/place фазы)
+    // Обходит дерево, измеряет ноды (layout/measurement + layout/placement фазы)
     const layoutProcessor = new LayoutProcessor()
 
     // Рисует кадр в console
@@ -65,10 +65,8 @@ export function setTerminalContent(content: () => void) {
     composition.setContent(content)
 
     let rootConstraints = new Constraints(0, process.stdout.columns, 0, process.stdout.rows)
-    let recompositionInProgress = false
 
     function recompose() {
-        recompositionInProgress = true
         composition.compose(new Modifier([
             SizeInModifier({
                 maxWidth: process.stdout.columns,
@@ -76,28 +74,21 @@ export function setTerminalContent(content: () => void) {
             }),
             new NameElement('Root')
         ]))
-        recompositionInProgress = false
 
         layoutProcessor.layout(composition.rootNode, composer, rootConstraints)
         outputProcessor.doFrame(composition.rootNode, process.stdout.columns, process.stdout.rows)
     }
 
-    recompositionInProgress = true
     recompose()
-    recompositionInProgress = false
 
     process.stdout.on('resize', () => {
         rootConstraints = new Constraints(0, process.stdout.columns, 0, process.stdout.rows)
-        recompositionInProgress = true
         recompose()
-        recompositionInProgress = false
     })
 
     setInterval(() => {
         if (recomposer.needRecompose()) {
-            recompositionInProgress = true
             recomposer.recompose(composer)
-            recompositionInProgress = false
 
             layoutProcessor.layout(composition.rootNode, composer, rootConstraints)
             outputProcessor.doFrame(composition.rootNode, process.stdout.columns, process.stdout.rows)
