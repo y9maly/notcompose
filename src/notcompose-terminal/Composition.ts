@@ -7,10 +7,12 @@ import {
     RecomposeLambdaExtensionKey
 } from "../notcompose/runtime-plugins/partialRecomposition/RecomposeLambda";
 import {Node} from "../notcompose/runtime/Node";
-import {MeasurePolicy, Placeable} from "./runtime/layout/measure";
+import {Placeable} from "./runtime/layout/Placeable";
+import {MeasurePolicy} from "./runtime/layout/MeasurePolicy";
+import {MeasureResult} from "./runtime/layout/Measurable";
 
-const RootMeasurePolicy: MeasurePolicy = {
-    measure(measurables, constraints) {
+const RootMeasurePolicy = MeasurePolicy(
+    (measurables, constraints) => {
         let totalWidth = 0
         let totalHeight = 0
 
@@ -25,17 +27,17 @@ const RootMeasurePolicy: MeasurePolicy = {
             totalHeight = Math.max(totalHeight, height)
         })
 
-        return {
-            width: constraints.constrainWidth(totalWidth),
-            height: constraints.constrainHeight(totalHeight),
-            placeChildren: () => {
+        return MeasureResult(
+            constraints.constrainWidth(totalWidth),
+            constraints.constrainHeight(totalHeight),
+            () => {
                 placeables.forEach(placeable => {
                     placeable.place(0, 0)
                 })
             }
-        }
+        )
     }
-}
+)
 
 export class Composition {
     public rootNode = new Node(null, new Modifier())

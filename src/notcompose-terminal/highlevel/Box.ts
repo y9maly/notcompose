@@ -1,9 +1,11 @@
-import {MeasurePolicy, MeasureResult, Placeable} from "../runtime/layout/measure.js";
 import {Layout} from "../runtime/layout/Layout.js";
 import {Modifier} from "../../notcompose/runtime/Modifier";
 import {Alignment} from "../runtime/ui/Alignment";
 import {Size} from "../runtime/ui/Size";
 import {elvis} from "../../notcompose/runtime-highlevel/elvis";
+import {Placeable} from "../runtime/layout/Placeable";
+import {MeasureResult} from "../runtime/layout/Measurable";
+import {MeasurePolicy} from "../runtime/layout/MeasurePolicy";
 
 
 export const BoxMeasurePolicy = (

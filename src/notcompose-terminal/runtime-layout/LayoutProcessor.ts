@@ -2,7 +2,8 @@ import {Node} from "../../notcompose/runtime/Node";
 import {Composer} from "../../notcompose/runtime/Composer";
 import {applyNodeCoordinator} from "./applyNodeCoordinator";
 import {currentComposerOrNull, setCurrentComposer} from "../../notcompose/runtime/currentComposer";
-import {Constraints} from "../runtime/layout/measure";
+
+import {Constraints} from "../runtime/layout/Constraints";
 
 
 export class LayoutProcessor {

@@ -1,9 +1,10 @@
 import {RawTextModifier} from "./RawTextModifier";
 import {ModifierElement} from "../../../notcompose/runtime/Modifier";
 import {LayoutModifier} from "./LayoutModifier";
-import {Constraints, Measurable, MeasureResult} from "../layout/measure";
 import {TextCanvas} from "../draw/TextCanvas";
 import {elvis} from "../../../notcompose/runtime-highlevel/elvis";
+import {Constraints} from "../layout/Constraints";
+import {Measurable, MeasureResult} from "../layout/Measurable";
 
 
 export function BorderModifier(symbols?: {
@@ -31,9 +32,8 @@ export function BorderModifier(symbols?: {
 }
 
 
-class BorderModifierImpl implements RawTextModifier, LayoutModifier {
+class BorderModifierImpl implements RawTextModifier {
     [RawTextModifier.symbol] = this;
-    [LayoutModifier.symbol] = this;
 
     constructor(
         private topStart: string = '┌',
@@ -46,7 +46,7 @@ class BorderModifierImpl implements RawTextModifier, LayoutModifier {
         private horizontalBottom: string = '─',
     ) {}
 
-    measure(measurable: Measurable, constraints: Constraints): MeasureResult {
+    [LayoutModifier.symbol] = LayoutModifier((measurable, constraints) => {
         const placeable = measurable.measure(
             constraints.minusMaxWidth(2).minusMaxHeight(2)
         )
@@ -56,7 +56,7 @@ class BorderModifierImpl implements RawTextModifier, LayoutModifier {
         return MeasureResult(width, height, () => {
             placeable.place(1, 1)
         })
-    }
+    });
 
     rawText(availableWidth: number, availableHeight: number, canvas: TextCanvas) {
         canvas.drawText(0, 0, this.topStart)

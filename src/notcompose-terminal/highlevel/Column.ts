@@ -1,8 +1,9 @@
 import {Layout} from "../runtime/layout/Layout.js";
-import {MeasurePolicy, Placeable} from "../runtime/layout/measure.js";
 import {Modifier} from "../../notcompose/runtime/Modifier";
 import {elvis} from "../../notcompose/runtime-highlevel/elvis";
 import {Alignment, HorizontalAlignment} from "../runtime/ui/Alignment";
+import {Placeable} from "../runtime/layout/Placeable";
+import {MeasurePolicy} from "../runtime/layout/MeasurePolicy";
 
 
 export const ColumnMeasurePolicy = (

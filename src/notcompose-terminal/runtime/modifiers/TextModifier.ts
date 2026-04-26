@@ -1,17 +1,16 @@
 import {RawTextModifier} from "./RawTextModifier.js";
 import {LayoutModifier} from "./LayoutModifier.js";
-import {Constraints, Measurable, MeasureResult} from "../layout/measure.js";
 import {ModifierElement} from "../../../notcompose/runtime/Modifier";
 import {TextCanvas} from "../draw/TextCanvas";
+import {MeasureResult} from "../layout/Measurable";
 
 
 export function TextModifier(text: string): ModifierElement {
     return new TextModifierImpl(text)
 }
 
-class TextModifierImpl implements RawTextModifier, LayoutModifier {
+class TextModifierImpl implements RawTextModifier {
     [RawTextModifier.symbol] = this;
-    [LayoutModifier.symbol] = this;
 
     private requiredWidth = 0
     private requiredHeight = 1
@@ -31,14 +30,14 @@ class TextModifierImpl implements RawTextModifier, LayoutModifier {
         }
     }
 
-    measure(measurable: Measurable, constraints: Constraints): MeasureResult {
+    [LayoutModifier.symbol] = LayoutModifier((measurable, constraints) => {
         const placeable = measurable.measure(constraints)
         return MeasureResult(
             constraints.constrainWidth(this.requiredWidth),
             constraints.constrainHeight(this.requiredHeight),
             () => placeable.place(0, 0)
         )
-    }
+    })
 
     rawText(availableWidth: number, availableHeight: number, canvas: TextCanvas) {
         canvas.drawText(0, 0, this.buildText(availableWidth, availableHeight))

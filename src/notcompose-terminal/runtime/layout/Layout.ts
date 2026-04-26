@@ -1,4 +1,3 @@
-import {MeasurePolicy} from "./measure.js";
 import {MeasurePolicyNodeExtensionKey} from "../nodeExtensions/MeasurePolicyNodeExtension.js";
 import {Modifier} from "../../../notcompose/runtime/Modifier";
 import {currentComposer} from "../../../notcompose/runtime/currentComposer";
@@ -6,6 +5,7 @@ import {
     RecomposeLambda,
     RecomposeLambdaExtensionKey
 } from "../../../notcompose/runtime-plugins/partialRecomposition/RecomposeLambda";
+import {MeasurePolicy} from "./MeasurePolicy";
 
 
 export function Layout(content: () => void, measurePolicy: MeasurePolicy, modifier: Modifier = new Modifier()) {

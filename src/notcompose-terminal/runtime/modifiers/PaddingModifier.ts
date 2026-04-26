@@ -1,6 +1,6 @@
-import {Constraints, Measurable, MeasureResult} from "../layout/measure.js";
 import {LayoutModifier} from "./LayoutModifier.js";
 import {ModifierElement} from "../../../notcompose/runtime/Modifier";
+import {MeasureResult} from "../layout/Measurable";
 
 
 export function PaddingModifier(all: number): ModifierElement
@@ -46,9 +46,7 @@ export function PaddingModifier(
     return new PaddingModifierImpl(start, top, end, bottom)
 }
 
-class PaddingModifierImpl implements LayoutModifier {
-    [LayoutModifier.symbol] = this;
-
+class PaddingModifierImpl {
     constructor(
         public start: number,
         public top: number,
@@ -56,7 +54,7 @@ class PaddingModifierImpl implements LayoutModifier {
         public bottom: number,
     ) {}
 
-    measure(measurable: Measurable, constraints: Constraints): MeasureResult {
+    [LayoutModifier.symbol] = LayoutModifier((measurable, constraints) => {
         const horizontal = this.start + this.end
         const vertical = this.top + this.bottom
 
@@ -67,7 +65,7 @@ class PaddingModifierImpl implements LayoutModifier {
         return MeasureResult(width, height, () => {
             placeable.place(this.start, this.top)
         })
-    }
+    })
 
     equals(other: ModifierElement): boolean {
         return other instanceof PaddingModifierImpl

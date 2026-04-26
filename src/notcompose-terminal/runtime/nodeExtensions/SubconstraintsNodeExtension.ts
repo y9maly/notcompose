@@ -1,4 +1,4 @@
-import {Constraints} from "../layout/measure.js";
+import {Constraints} from "../layout/Constraints";
 
 
 export const SubconstraintsNodeExtensionKey = Symbol('SubconstraintsNodeExtensionKey')

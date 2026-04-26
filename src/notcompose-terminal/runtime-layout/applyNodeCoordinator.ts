@@ -3,9 +3,9 @@ import {NodeCoordinatorExtensionKey} from "../runtime/nodeExtensions/NodeCoordin
 import {InnerNodeCoordinator} from "./InnerNodeCoordinator.js";
 import {LayoutModifier} from "../runtime/modifiers/LayoutModifier.js";
 import {MeasurePolicyNodeExtensionKey} from "../runtime/nodeExtensions/MeasurePolicyNodeExtension.js";
-import {MeasurePolicy} from "../runtime/layout/measure.js";
 import {LayoutModifierNodeCoordinator} from "./LayoutModifierNodeCoordinator.js";
 import {Node} from "../../notcompose/runtime/Node";
+import {MeasurePolicy} from "../runtime/layout/MeasurePolicy";
 
 
 export function applyNodeCoordinator(

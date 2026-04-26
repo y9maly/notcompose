@@ -1,6 +1,6 @@
 import {LayoutModifier} from "./LayoutModifier.js";
-import {Constraints, Measurable, MeasureResult} from "../layout/measure.js";
 import {ModifierElement} from "../../../notcompose/runtime/Modifier";
+import {MeasureResult} from "../layout/Measurable";
 
 
 export function OffsetModifier(x: number, y: number): ModifierElement {
@@ -15,20 +15,18 @@ export function OffsetYModifier(offset: number): ModifierElement {
     return new OffsetModifierImpl(0, offset)
 }
 
-class OffsetModifierImpl implements LayoutModifier {
-    [LayoutModifier.symbol] = this;
-
+class OffsetModifierImpl {
     constructor(
         private x: number,
         private y: number,
     ) {}
 
-    measure(measurable: Measurable, constraints: Constraints): MeasureResult {
+    [LayoutModifier.symbol] = LayoutModifier((measurable, constraints) => {
         const placeable = measurable.measure(constraints)
         return MeasureResult(placeable.width, placeable.height, () => {
             placeable.place(this.x, this.y)
         })
-    }
+    })
 
     equals(other: ModifierElement): boolean {
         return other instanceof OffsetModifierImpl

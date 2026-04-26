@@ -4,9 +4,8 @@ import {input} from "../../notcompose-terminal/runtime/Input";
 import {subcompose, SubcomposeLayout} from "../../notcompose-terminal/highlevel/SubcomposeLayout";
 import {Text} from "../../notcompose-terminal/highlevel/Text";
 import {Row} from "../../notcompose-terminal/highlevel/Row";
-import {MeasureResult} from "../../notcompose-terminal/runtime/layout/measure";
 import {Key} from "../../notcompose/runtime-highlevel/Key";
-import {Box} from "../../notcompose-terminal/highlevel/Box";
+import {MeasureResult} from "../../notcompose-terminal/runtime/layout/Measurable";
 
 
 setTerminalContent(() => {

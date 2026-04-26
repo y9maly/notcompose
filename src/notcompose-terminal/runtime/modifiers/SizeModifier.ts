@@ -1,6 +1,7 @@
 import {ModifierElement} from "../../../notcompose/runtime/Modifier";
-import {Constraints, Measurable, MeasureResult} from "../layout/measure";
 import {LayoutModifier} from "./LayoutModifier";
+import {Constraints} from "../layout/Constraints";
+import {MeasureResult} from "../layout/Measurable";
 
 
 // Fixed size
@@ -91,8 +92,7 @@ export function RequiredSizeInModifier(values: {
 
 
 type Unspecified = undefined
-class SizeModifierImpl implements LayoutModifier {
-    [LayoutModifier.symbol] = this;
+class SizeModifierImpl {
     private readonly targetConstraints: Constraints
 
     constructor(
@@ -110,7 +110,7 @@ class SizeModifierImpl implements LayoutModifier {
         )
     }
 
-    measure(measurable: Measurable, inputConstraints: Constraints): MeasureResult {
+    [LayoutModifier.symbol] = LayoutModifier((measurable, inputConstraints) => {
         let wrappedConstraints: Constraints
 
         if (this.enforceIncoming) {
@@ -140,8 +140,8 @@ class SizeModifierImpl implements LayoutModifier {
             const maxHeight = this.maxHeight !== undefined
                 ? this.targetConstraints.maxHeight
                 : (inputConstraints.maxHeight === null
-                        ? this.targetConstraints.maxHeight
-                        : Math.max(inputConstraints.maxHeight, this.targetConstraints.minHeight)
+                    ? this.targetConstraints.maxHeight
+                    : Math.max(inputConstraints.maxHeight, this.targetConstraints.minHeight)
                 )
 
             wrappedConstraints = new Constraints(minWidth, maxWidth, minHeight, maxHeight)
@@ -152,7 +152,7 @@ class SizeModifierImpl implements LayoutModifier {
         return MeasureResult(placeable.width, placeable.height, () => {
             placeable.place(0, 0)
         })
-    }
+    })
 
     equals(other: ModifierElement): boolean {
         return other instanceof SizeModifierImpl

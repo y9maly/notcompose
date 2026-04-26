@@ -1,13 +1,13 @@
 import {Item} from "./utils";
 import {Modifier} from "../../notcompose/runtime/Modifier";
 import {ColumnWithConstraints} from "../../notcompose-terminal/highlevel/WithConstraints";
-import {Constraints} from "../../notcompose-terminal/runtime/layout/measure";
 import {Text} from "../../notcompose-terminal/highlevel/Text";
 import {Key} from "../../notcompose/runtime-highlevel/Key";
 import {ListItem} from "./ListItem";
 import {NameModifier} from "../../notcompose/runtime/modifiers/NameElement";
 import {ExampleHeader} from "../common/ExampleHeader";
 import {Divider} from "../common/Divider";
+import {Constraints} from "../../notcompose-terminal/runtime/layout/Constraints";
 
 
 export function Content(

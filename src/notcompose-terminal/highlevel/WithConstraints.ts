@@ -1,4 +1,3 @@
-import {Constraints, MeasurePolicy} from "../runtime/layout/measure.js";
 import {MeasurePolicyNodeExtensionKey} from "../runtime/nodeExtensions/MeasurePolicyNodeExtension.js";
 import {BoxMeasurePolicy} from "./Box.js";
 import {
@@ -10,6 +9,8 @@ import {RowMeasurePolicy} from "./Row.js";
 import {Modifier} from "../../notcompose/runtime/Modifier";
 import {currentComposer} from "../../notcompose/runtime/currentComposer";
 import {Alignment, HorizontalAlignment, VerticalAlignment} from "../runtime/ui/Alignment";
+import {Constraints} from "../runtime/layout/Constraints";
+import {MeasurePolicy} from "../runtime/layout/MeasurePolicy";
 
 
 export function BoxWithConstraints(

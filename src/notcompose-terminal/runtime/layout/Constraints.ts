@@ -1,34 +1,93 @@
-import {Size} from "../ui/Size";
 import {assertInt} from "../../../notcompose/utils/assertInt";
+import {Size} from "../ui/Size";
+
 
 export class Constraints {
-    constructor(
-        public minWidth: number, // 0..
-        public maxWidth: number | null, // 0..inf (null is infinity)
-        public minHeight: number, // 0..
-        public maxHeight: number | null, // 0..inf (null is infinity)
-    ) {
-        assertInt(minWidth, minHeight)
-        if (maxWidth !== null)
-            assertInt(maxWidth)
-        if (maxHeight !== null)
-            assertInt(maxHeight)
+    minWidth: number         // 0..
+    maxWidth: number | null  // 0..inf (null is infinity)
+    minHeight: number        // 0..
+    maxHeight: number | null // 0..inf (null is infinity)
 
-        if (maxWidth !== null && minWidth > maxWidth)
+    constructor(
+        minWidth: number,
+        maxWidth: number | null,
+        minHeight: number,
+        maxHeight: number | null
+    )
+
+    constructor(values?: {
+        minWidth?: number,        // 0 by default
+        maxWidth?: number | null, // null by default
+        minHeight?: number,       // 0 by default
+        maxHeight?: number | null // null by default
+    })
+
+    constructor(
+        a: number | undefined | {
+            minWidth?: number,        // 0 by default
+            maxWidth?: number | null, // null by default
+            minHeight?: number,       // 0 by default
+            maxHeight?: number | null // null by default
+        },
+        b?: number | null,
+        c?: number,
+        d?: number | null,
+    ) {
+        if (a === undefined || typeof a === 'object') {
+            this.minWidth = a?.minWidth ?? 0
+            this.maxWidth = a?.maxWidth ?? null
+            this.minHeight = a?.minHeight ?? 0
+            this.maxHeight = a?.maxHeight ?? null
+        } else {
+            this.minWidth = a!
+            this.maxWidth = b as number | null
+            this.minHeight = c!
+            this.maxHeight = d as number | null
+        }
+
+        assertInt(this.minWidth, this.minHeight)
+        if (this.maxWidth !== null)
+            assertInt(this.maxWidth)
+        if (this.maxHeight !== null)
+            assertInt(this.maxHeight)
+
+        if (this.maxWidth !== null && this.minWidth > this.maxWidth)
             throw new Error('minWidth should be less than maxWidth')
-        if (maxHeight !== null && minHeight > maxHeight)
+        if (this.maxHeight !== null && this.minHeight > this.maxHeight)
             throw new Error('minHeight should be less than maxHeight')
     }
 
-    get isZero() { return this.maxWidth === 0 || this.maxHeight === 0 }
+    get isZero() {
+        return this.maxWidth === 0 || this.maxHeight === 0
+    }
 
-    get hasInfinityWidth() { return this.maxWidth === null }
-    get hasInfinityHeight() { return this.maxHeight === null }
-    get hasBoundedWidth() { return this.maxWidth !== null }
-    get hasBoundedHeight() { return this.maxHeight !== null }
-    get hasFixedWidth() { return this.minWidth === this.maxWidth }
-    get hasFixedHeight() { return this.minHeight === this.maxHeight }
-    get hasFixedSize() { return this.hasFixedWidth && this.hasFixedHeight }
+    get hasInfinityWidth() {
+        return this.maxWidth === null
+    }
+
+    get hasInfinityHeight() {
+        return this.maxHeight === null
+    }
+
+    get hasBoundedWidth() {
+        return this.maxWidth !== null
+    }
+
+    get hasBoundedHeight() {
+        return this.maxHeight !== null
+    }
+
+    get hasFixedWidth() {
+        return this.minWidth === this.maxWidth
+    }
+
+    get hasFixedHeight() {
+        return this.minHeight === this.maxHeight
+    }
+
+    get hasFixedSize() {
+        return this.hasFixedWidth && this.hasFixedHeight
+    }
 
     constrain(other: Constraints): Constraints
     constrain(other: Size): Size
@@ -130,43 +189,3 @@ export class Constraints {
         return Math.max(0, max + value)
     }
 }
-
-// Self
-
-export interface Placeable {
-    width: number
-    height: number
-    place(x: number, y: number): void
-}
-
-export interface Measurable {
-    measure(constraints: Constraints): Placeable
-}
-
-// Layout
-
-export interface MeasureResult {
-    width: number
-    height: number
-    placeChildren(): void
-}
-
-export interface MeasurePolicy {
-    measure(measurables: ReadonlyArray<Measurable>, constraints: Constraints): MeasureResult
-}
-
-export function MeasureResult(
-    width: number,
-    height: number,
-    placeChildren: () => void = () => {},
-): MeasureResult { return { width, height, placeChildren } }
-
-export function MeasurePolicy(
-    measure: (measurables: ReadonlyArray<Measurable>, constraints: Constraints) => MeasureResult
-): MeasurePolicy { return {
-    measure(measurables, constraints) {
-        const result = measure(measurables, constraints)
-        assertInt(result.width, result.height)
-        return result
-    }
-} }

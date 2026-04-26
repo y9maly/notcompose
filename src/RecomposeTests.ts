@@ -5,8 +5,9 @@ import {Modifier} from "./notcompose/runtime/Modifier";
 import {NameModifier} from "./notcompose/runtime/modifiers/NameElement";
 import {Text} from "./notcompose-terminal/highlevel/Text";
 import {Layout} from "./notcompose-terminal/runtime/layout/Layout";
-import {MeasurePolicy, MeasureResult} from "./notcompose-terminal/runtime/layout/measure";
 import {BackgroundModifier} from "./notcompose-terminal/runtime/modifiers/BackgroundModifier";
+import {MeasurePolicy} from "./notcompose-terminal/runtime/layout/MeasurePolicy";
+import {MeasureResult} from "./notcompose-terminal/runtime/layout/Measurable";
 
 export function RecomposeTests() {}
 

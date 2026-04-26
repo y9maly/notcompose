@@ -12,10 +12,10 @@ import {InputProcessor} from "./runtime-input/InputProcessor";
 import {RootInputDispatcher} from "./runtime-input/InputDispatcher";
 import {LayoutProcessor} from "./runtime-layout/LayoutProcessor";
 import {ConsoleOutputProcessor} from "./runtime-output/OutputProcessor";
-import {Constraints} from "./runtime/layout/measure";
 import {Modifier} from "../notcompose/runtime/Modifier";
 import {SizeInModifier} from "./runtime/modifiers/SizeModifier";
 import {NameElement} from "../notcompose/runtime/modifiers/NameElement";
+import {Constraints} from "./runtime/layout/Constraints";
 
 const appLogStream = fs.createWriteStream('./app.log')
 const appLogConsole = new Console.Console({ stdout: appLogStream, stderr: appLogStream })

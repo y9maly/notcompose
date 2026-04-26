@@ -1,9 +1,9 @@
 import {setTerminalContent} from "../../notcompose-terminal/setTerminalContent";
 import {BoxWithConstraints, ColumnWithConstraints} from "../../notcompose-terminal/highlevel/WithConstraints";
-import {Constraints} from "../../notcompose-terminal/runtime/layout/measure";
 import {Text} from "../../notcompose-terminal/highlevel/Text";
 import {Row} from "../../notcompose-terminal/highlevel/Row";
 import {Column} from "../../notcompose-terminal/highlevel/Column";
+import {Constraints} from "../../notcompose-terminal/runtime/layout/Constraints";
 
 
 setTerminalContent(() => {

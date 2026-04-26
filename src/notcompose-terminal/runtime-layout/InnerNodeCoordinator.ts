@@ -1,5 +1,4 @@
 import {NodeCoordinator} from "./NodeCoordinator.js";
-import {Constraints, Measurable, MeasurePolicy, MeasureResult, Placeable} from "../runtime/layout/measure.js";
 import {MeasurePolicyNodeExtensionKey} from "../runtime/nodeExtensions/MeasurePolicyNodeExtension.js";
 import {applyNodeCoordinator} from "./applyNodeCoordinator.js";
 import {
@@ -16,6 +15,10 @@ import {
 import {Key} from "../../notcompose/runtime/Composer";
 import {currentComposer} from "../../notcompose/runtime/currentComposer";
 import {assertInt} from "../../notcompose/utils/assertInt";
+import {Constraints} from "../runtime/layout/Constraints";
+import {Placeable} from "../runtime/layout/Placeable";
+import {Measurable, MeasureResult} from "../runtime/layout/Measurable";
+import {MeasurePolicy} from "../runtime/layout/MeasurePolicy";
 
 
 export class InnerNodeCoordinator extends NodeCoordinator {
@@ -60,6 +63,42 @@ export class InnerNodeCoordinator extends NodeCoordinator {
         this.height = measureResult.height
         this.placeChildren = () => measureResult.placeChildren()
         return this
+    }
+
+    minIntrinsicWidth(height: number | null): number {
+        if (this.measurePolicy === null)
+            return 0
+
+        const childrenMeasurables: Measurable[] = childrenNodeCoordinators(this.node.children, this.insert)
+
+        return this.measurePolicy?.minIntrinsicWidth(childrenMeasurables, height)
+    }
+
+    maxIntrinsicWidth(height: number | null): number {
+        if (this.measurePolicy === null)
+            return 0
+
+        const childrenMeasurables: Measurable[] = childrenNodeCoordinators(this.node.children, this.insert)
+
+        return this.measurePolicy?.maxIntrinsicWidth(childrenMeasurables, height)
+    }
+
+    minIntrinsicHeight(width: number | null): number {
+        if (this.measurePolicy === null)
+            return 0
+
+        const childrenMeasurables: Measurable[] = childrenNodeCoordinators(this.node.children, this.insert)
+
+        return this.measurePolicy?.minIntrinsicHeight(childrenMeasurables, width)
+    }
+
+    maxIntrinsicHeight(width: number | null): number {
+        if (this.measurePolicy === null)
+            return 0
+
+        const childrenMeasurables: Measurable[] = childrenNodeCoordinators(this.node.children, this.insert)
+
+        return this.measurePolicy?.maxIntrinsicHeight(childrenMeasurables, width)
     }
 
     place(x: number, y: number) {

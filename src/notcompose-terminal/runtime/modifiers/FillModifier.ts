@@ -1,6 +1,7 @@
 import {ModifierElement} from "../../../notcompose/runtime/Modifier";
 import {LayoutModifier} from "./LayoutModifier";
-import {Constraints, Measurable, MeasureResult} from "../layout/measure";
+import {Constraints} from "../layout/Constraints";
+import {MeasureResult} from "../layout/Measurable";
 
 
 /**
@@ -25,9 +26,7 @@ export function FillMaxHeightModifier(fraction: number = 1): ModifierElement {
 }
 
 
-class FillModifierImpl implements LayoutModifier {
-    [LayoutModifier.symbol] = this;
-
+class FillModifierImpl {
     constructor(
         private horizontalFraction: number,
         private verticalFraction: number,
@@ -35,7 +34,7 @@ class FillModifierImpl implements LayoutModifier {
         private vertical: boolean,
     ) {}
 
-    measure(measurable: Measurable, constraints: Constraints): MeasureResult {
+    [LayoutModifier.symbol] = LayoutModifier((measurable, constraints) => {
         let minWidth: number
         let maxWidth: number | null
         let minHeight: number
@@ -60,7 +59,7 @@ class FillModifierImpl implements LayoutModifier {
         return MeasureResult(placeable.width, placeable.height, () => {
             placeable.place(0, 0)
         })
-    }
+    });
 
     equals(other: ModifierElement): boolean {
         return other instanceof FillModifierImpl

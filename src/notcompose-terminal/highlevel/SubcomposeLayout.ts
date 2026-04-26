@@ -1,12 +1,13 @@
 import {currentComposer} from "../../notcompose/runtime/currentComposer";
 import {Modifier} from "../../notcompose/runtime/Modifier";
-import {Constraints, Measurable, MeasureResult} from "../runtime/layout/measure";
 import {Key} from "../../notcompose/runtime/Composer";
 import {
     SubcomposeNodeExtension,
     SubcomposeNodeExtensionKey,
     SubcomposeScope
 } from "../runtime/nodeExtensions/SubcomposeNodeExtension";
+import {Constraints} from "../runtime/layout/Constraints";
+import {Measurable, MeasureResult} from "../runtime/layout/Measurable";
 
 
 export function SubcomposeLayout(content: (constraints: Constraints) => MeasureResult, modifier: Modifier = new Modifier()) {
