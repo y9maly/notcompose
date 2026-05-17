@@ -18,7 +18,7 @@
 
  * [rrtop](src/terminal-examples/rrtop)
 
-   https://github.com/user-attachments/assets/c43f7008-8e7f-4e25-bdd4-2ff037141147
+   https://github.com/user-attachments/assets/2ec8a41f-9478-46f5-9834-4f2ed3fa9cb3
 
 # Как назвать этот заголовок?
 
