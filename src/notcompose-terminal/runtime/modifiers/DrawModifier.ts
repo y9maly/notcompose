@@ -1,0 +1,38 @@
+import {ModifierElement} from "../../../notcompose/runtime/Modifier";
+import {ContentDrawScope} from "../ui/graphics/ContentDrawScope";
+import {DrawScope} from "../ui/graphics/DrawScope";
+
+
+export interface DrawModifier extends ModifierElement {
+    draw(scope: ContentDrawScope): void
+}
+
+const symbol = Symbol()
+DrawModifier.symbol = symbol
+DrawModifier.is = (o: unknown): o is { [symbol]: DrawModifier } =>
+    !(!o || typeof o !== 'object' || !(DrawModifier.symbol in o));
+DrawModifier.of = (o: unknown): DrawModifier | null =>
+    DrawModifier.is(o) ? o[symbol] : null
+
+export function DrawBehindModifier(draw: (scope: DrawScope) => void): DrawModifier {
+    return DrawModifier(scope => {
+        scope.drawContent()
+        draw(scope)
+    })
+}
+
+export function DrawModifier(draw: (scope: ContentDrawScope) => void): DrawModifier {
+    return new DrawModifierImpl(draw)
+}
+
+class DrawModifierImpl implements DrawModifier {
+    [DrawModifier.symbol] = this;
+
+    constructor(
+        public draw: (scope: ContentDrawScope) => void,
+    ) {}
+
+    equals(other: ModifierElement): boolean {
+        return other instanceof DrawModifierImpl && this.draw === other.draw
+    }
+}

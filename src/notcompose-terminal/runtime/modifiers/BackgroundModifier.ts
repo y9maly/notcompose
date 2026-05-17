@@ -1,21 +1,38 @@
-import {RawTextModifier} from "./RawTextModifier.js";
 import {ModifierElement} from "../../../notcompose/runtime/Modifier";
-import {TextCanvas} from "../draw/TextCanvas";
+import {DrawModifier} from "./DrawModifier";
+import {ContentDrawScope} from "../ui/graphics/ContentDrawScope";
+import {Color} from "../ui/Color";
+import {elvis} from "../../../notcompose/runtime-highlevel/elvis";
+import {ColorTextSpan, TextSpan} from "../ui/TextSpan";
+import {AnnotatedString} from "../ui/AnnotatedString";
 
 
-export function BackgroundModifier(symbol: string): ModifierElement {
-    return new BackgroundModifierImpl(symbol)
+export function BackgroundModifier(
+    symbol: string,
+    params?: {
+        color?: Color | null,
+    }
+): ModifierElement {
+    const { color } = elvis(params, {
+        color: null,
+    })
+
+    return new BackgroundModifierImpl(symbol, color)
 }
 
-class BackgroundModifierImpl implements RawTextModifier {
-    [RawTextModifier.symbol] = this;
+class BackgroundModifierImpl implements DrawModifier {
+    [DrawModifier.symbol] = this;
 
-    constructor(private symbol: string) {}
+    constructor(private symbol: string, private color: Color | null) {}
 
-    rawText(availableWidth: number, availableHeight: number, canvas: TextCanvas): void {
-        for (let x = 0; x < availableWidth; x++) {
-            for (let y = 0; y < availableHeight; y++) {
-                canvas.drawText(x, y, this.symbol)
+    draw(scope: ContentDrawScope) {
+        const spans = this.color !== null
+            ? [new TextSpan(new ColorTextSpan(this.color), 0, 1)]
+            : []
+
+        for (let x = 0; x < scope.availableWidth; x++) {
+            for (let y = 0; y < scope.availableHeight; y++) {
+                scope.drawText(x, y, new AnnotatedString(this.symbol, spans))
             }
         }
     }

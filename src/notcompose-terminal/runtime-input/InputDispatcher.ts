@@ -8,10 +8,14 @@ export interface InputDispatcher {
 
 export class RootInputDispatcher implements InputDispatcher {
     constructor(
-        private rootNode: () => Node
+        private rootNode: () => Node,
+        private intercept: (string: string, key: unknown) => boolean = () => false,
     ) {}
 
     dispatch(string: string, key: unknown): boolean {
+        if (this.intercept(string, key))
+            return true
+
         const nodeQueue = [this.rootNode()]
         while (nodeQueue.length > 0) {
             const node = nodeQueue.shift()!

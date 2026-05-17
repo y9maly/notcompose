@@ -1,23 +1,25 @@
-import {RawTextModifier} from "./RawTextModifier.js";
 import {LayoutModifier} from "./LayoutModifier.js";
 import {ModifierElement} from "../../../notcompose/runtime/Modifier";
-import {TextCanvas} from "../draw/TextCanvas";
 import {MeasureResult} from "../layout/Measurable";
+import {AnnotatedString} from "../ui/AnnotatedString";
+import {TextSpan} from "../ui/TextSpan";
+import {DrawModifier} from "./DrawModifier";
+import {ContentDrawScope} from "../ui/graphics/ContentDrawScope";
 
 
-export function TextModifier(text: string): ModifierElement {
+export function TextModifier(text: string | AnnotatedString): ModifierElement {
     return new TextModifierImpl(text)
 }
 
-class TextModifierImpl implements RawTextModifier {
-    [RawTextModifier.symbol] = this;
+class TextModifierImpl implements DrawModifier {
+    [DrawModifier.symbol] = this;
 
     private requiredWidth = 0
     private requiredHeight = 1
-    constructor(private text: string) {
+    constructor(private text: string | AnnotatedString) {
         if (text !== '') {
             let lineWidth = 0
-            for (const char of text) {
+            for (const char of typeof text === 'string' ? text : text.string) {
                 if (char === '\n') {
                     this.requiredHeight++
                     this.requiredWidth = Math.max(lineWidth, this.requiredWidth)
@@ -39,39 +41,90 @@ class TextModifierImpl implements RawTextModifier {
         )
     })
 
-    rawText(availableWidth: number, availableHeight: number, canvas: TextCanvas) {
-        canvas.drawText(0, 0, this.buildText(availableWidth, availableHeight))
+    draw(scope: ContentDrawScope) {
+        scope.drawText(0, 0, this.buildText(scope.availableWidth, scope.availableHeight))
     }
 
-    private buildText(availableWidth: number, availableHeight: number): string {
-        if (availableWidth === 0 && availableHeight === 0)
-            return ''
-        if (availableWidth >= this.requiredWidth) {
-            if (availableHeight >= this.requiredHeight) {
-                return this.text
-            } else {
-                return this.text
-                    .split('\n')
-                    .slice(0, availableHeight)
-                    .join('\n')
+    private buildText(availableWidth: number, availableHeight: number): AnnotatedString {
+        const rawString = typeof this.text === 'string' ? this.text : this.text.string
+        const spans = typeof this.text === 'string' ? [] : this.text.spans
+
+        if (availableWidth === 0 || availableHeight === 0 || rawString === '')
+            return new AnnotatedString('')
+
+        if (availableWidth >= this.requiredWidth && availableHeight >= this.requiredHeight)
+            return new AnnotatedString(rawString, spans)
+
+        return this.cropAnnotatedString(rawString, spans, availableWidth, availableHeight)
+    }
+
+    private cropAnnotatedString(
+        rawString: string,
+        spans: ReadonlyArray<TextSpan>,
+        maxWidth: number,
+        maxHeight: number
+    ): AnnotatedString {
+        let newString = []
+
+        const oldToNewMap = new Array(rawString.length).fill(-1)
+
+        let cx = 0
+        let cy = 0
+        for (let i = 0; i < rawString.length; i++) {
+            const ch = rawString[i]
+
+            if (cy >= maxHeight)
+                break
+
+            if (ch === '\n') {
+                newString.push(ch)
+                oldToNewMap[i] = newString.length - 1
+                cy++
+                cx = 0
+                continue
             }
-        } else {
-            if (availableHeight >= this.requiredHeight) {
-                return this.text
-                    .split('\n')
-                    .map(it => it.substring(0, availableWidth))
-                    .join('\n')
-            } else {
-                return this.text
-                    .split('\n')
-                    .slice(0, availableHeight)
-                    .map(it => it.substring(0, availableWidth))
-                    .join('\n')
+
+            if (cx < maxWidth) {
+                newString.push(ch)
+                oldToNewMap[i] = newString.length - 1
+            }
+
+            cx++
+        }
+
+        const newSpans: TextSpan[] = []
+        for (const span of spans) {
+            let newStart = -1
+            let newEnd = -1
+
+            for (let i = span.start; i < span.end; i++) {
+                if (i >= oldToNewMap.length)
+                    break
+
+                const mappedIndex = oldToNewMap[i]
+                if (mappedIndex !== -1) {
+                    if (newStart === -1) newStart = mappedIndex
+                    newEnd = mappedIndex
+                }
+            }
+
+            if (newStart !== -1) {
+                newSpans.push(new TextSpan(
+                    span.type,
+                    newStart,
+                    (newEnd - newStart) + 1,
+                ))
             }
         }
+
+        return new AnnotatedString(newString.join(''), newSpans)
     }
 
     equals(other: ModifierElement): boolean {
-        return other instanceof TextModifierImpl && other.text === this.text
+        if (!(other instanceof TextModifierImpl))
+            return false
+        if (this.text instanceof AnnotatedString)
+            return false // todo no equals in AnnotatedString
+        return this.text === other.text
     }
 }

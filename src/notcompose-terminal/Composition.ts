@@ -13,29 +13,18 @@ import {MeasureResult} from "./runtime/layout/Measurable";
 
 const RootMeasurePolicy = MeasurePolicy(
     (measurables, constraints) => {
-        let totalWidth = 0
-        let totalHeight = 0
+        const childrenConstraints = constraints.copyMaxDimensions()
+        const placeables = measurables
+            .map(it => it.measure(childrenConstraints))
 
-        const placeables: Placeable[] = []
-        let currentConstraints = constraints
-        measurables.forEach(measurable => {
-            const placeable = measurable.measure(currentConstraints)
-            placeables.push(placeable)
-            const { width, height } = placeable
-            currentConstraints = currentConstraints.minusMaxHeight(height)
-            totalWidth = Math.max(totalWidth, width)
-            totalHeight = Math.max(totalHeight, height)
+        if (constraints.maxWidth === null || constraints.maxHeight === null)
+            throw new Error(`Root layout cannot have unbounded dimensions`)
+
+        return MeasureResult(constraints.maxWidth, constraints.maxHeight, () => {
+            placeables.forEach(placeable => {
+                placeable.place(0, 0)
+            })
         })
-
-        return MeasureResult(
-            constraints.constrainWidth(totalWidth),
-            constraints.constrainHeight(totalHeight),
-            () => {
-                placeables.forEach(placeable => {
-                    placeable.place(0, 0)
-                })
-            }
-        )
     }
 )
 
@@ -54,7 +43,7 @@ export class Composition {
 
     invalidate() {
         const callback = this.invalidatedCallback
-        if (callback == null) return
+        if (callback === null) return
         this.invalidatedCallback = null
         callback()
     }

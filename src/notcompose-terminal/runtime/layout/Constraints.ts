@@ -1,5 +1,5 @@
-import {assertInt} from "../../../notcompose/utils/assertInt";
 import {Size} from "../ui/Size";
+import {assertUInt} from "../../../core/types";
 
 
 export class Constraints {
@@ -45,11 +45,7 @@ export class Constraints {
             this.maxHeight = d as number | null
         }
 
-        assertInt(this.minWidth, this.minHeight)
-        if (this.maxWidth !== null)
-            assertInt(this.maxWidth)
-        if (this.maxHeight !== null)
-            assertInt(this.maxHeight)
+        assertUInt(this.minWidth, this.maxWidth ?? 0, this.minHeight, this.maxHeight ?? 0)
 
         if (this.maxWidth !== null && this.minWidth > this.maxWidth)
             throw new Error('minWidth should be less than maxWidth')

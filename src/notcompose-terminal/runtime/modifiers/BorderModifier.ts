@@ -1,13 +1,18 @@
-import {RawTextModifier} from "./RawTextModifier";
 import {ModifierElement} from "../../../notcompose/runtime/Modifier";
 import {LayoutModifier} from "./LayoutModifier";
-import {TextCanvas} from "../draw/TextCanvas";
+import {TextCanvas} from "../ui/graphics/TextCanvas";
 import {elvis} from "../../../notcompose/runtime-highlevel/elvis";
 import {Constraints} from "../layout/Constraints";
 import {Measurable, MeasureResult} from "../layout/Measurable";
+import {DrawModifier} from "./DrawModifier";
+import {ContentDrawScope} from "../ui/graphics/ContentDrawScope";
+import {Color} from "../ui/Color";
+import {AnnotatedString} from "../ui/AnnotatedString";
+import {ColorTextSpan, TextSpan} from "../ui/TextSpan";
 
 
-export function BorderModifier(symbols?: {
+export function BorderModifier(params?: {
+    color?: Color | null,
     topStart?: string,
     topEnd?: string,
     bottomStart?: string,
@@ -17,7 +22,8 @@ export function BorderModifier(symbols?: {
     horizontalTop?: string,
     horizontalBottom?: string,
 }): ModifierElement {
-    const {topStart, topEnd, bottomStart, bottomEnd, verticalStart, verticalEnd, horizontalTop, horizontalBottom} = elvis(symbols, {
+    const { color, topStart, topEnd, bottomStart, bottomEnd, verticalStart, verticalEnd, horizontalTop, horizontalBottom } = elvis(params, {
+        color: null,
         topStart: '┌',
         topEnd: '┐',
         bottomStart: '└',
@@ -28,22 +34,23 @@ export function BorderModifier(symbols?: {
         horizontalBottom: '─',
     })
 
-    return new BorderModifierImpl(topStart, topEnd, bottomStart, bottomEnd, verticalStart, verticalEnd, horizontalTop, horizontalBottom)
+    return new BorderModifierImpl(color, topStart, topEnd, bottomStart, bottomEnd, verticalStart, verticalEnd, horizontalTop, horizontalBottom)
 }
 
 
-class BorderModifierImpl implements RawTextModifier {
-    [RawTextModifier.symbol] = this;
+class BorderModifierImpl implements DrawModifier {
+    [DrawModifier.symbol] = this;
 
     constructor(
-        private topStart: string = '┌',
-        private topEnd: string = '┐',
-        private bottomStart: string = '└',
-        private bottomEnd: string = '┘',
-        private verticalStart: string = '│',
-        private verticalEnd: string = '│',
-        private horizontalTop: string = '─',
-        private horizontalBottom: string = '─',
+        private color: Color | null,
+        private topStart: string,
+        private topEnd: string,
+        private bottomStart: string,
+        private bottomEnd: string,
+        private verticalStart: string,
+        private verticalEnd: string,
+        private horizontalTop: string,
+        private horizontalBottom: string,
     ) {}
 
     [LayoutModifier.symbol] = LayoutModifier((measurable, constraints) => {
@@ -58,31 +65,40 @@ class BorderModifierImpl implements RawTextModifier {
         })
     });
 
-    rawText(availableWidth: number, availableHeight: number, canvas: TextCanvas) {
-        canvas.drawText(0, 0, this.topStart)
-        canvas.drawText(availableWidth-1, 0, this.topEnd)
-        canvas.drawText(availableWidth-1, availableHeight-1, this.bottomEnd)
-        canvas.drawText(0, availableHeight-1, this.bottomStart)
+    draw(scope: ContentDrawScope) {
+        scope.drawText(0, 0, this.colored(this.topStart))
+        scope.drawText(scope.availableWidth-1, 0, this.colored(this.topEnd))
+        scope.drawText(scope.availableWidth-1, scope.availableHeight-1, this.colored(this.bottomEnd))
+        scope.drawText(0, scope.availableHeight-1, this.colored(this.bottomStart))
 
-        for (let y = 1; y < availableHeight-1; y++) {
-            canvas.drawText(0, y, this.verticalStart)
+        for (let y = 1; y < scope.availableHeight-1; y++) {
+            scope.drawText(0, y, this.colored(this.verticalStart))
         }
 
-        for (let y = 1; y < availableHeight-1; y++) {
-            canvas.drawText(availableWidth-1, y, this.verticalEnd)
+        for (let y = 1; y < scope.availableHeight-1; y++) {
+            scope.drawText(scope.availableWidth-1, y, this.colored(this.verticalEnd))
         }
 
-        for (let x = 1; x < availableWidth-1; x++) {
-            canvas.drawText(x, 0, this.horizontalTop)
+        for (let x = 1; x < scope.availableWidth-1; x++) {
+            scope.drawText(x, 0, this.colored(this.horizontalTop))
         }
 
-        for (let x = 1; x < availableWidth-1; x++) {
-            canvas.drawText(x, availableHeight-1, this.horizontalBottom)
+        for (let x = 1; x < scope.availableWidth-1; x++) {
+            scope.drawText(x, scope.availableHeight-1, this.colored(this.horizontalBottom))
         }
+
+        scope.drawContent()
+    }
+
+    private colored(string: string): string | AnnotatedString {
+        if (this.color === null)
+            return string
+        return new AnnotatedString(string, [new TextSpan(new ColorTextSpan(this.color), 0, string.length)])
     }
 
     equals(other: ModifierElement): boolean {
         return other instanceof BorderModifierImpl
+            && this.color === other.color
             && this.topStart === other.topStart
             && this.topEnd === other.topEnd
             && this.bottomStart === other.bottomStart

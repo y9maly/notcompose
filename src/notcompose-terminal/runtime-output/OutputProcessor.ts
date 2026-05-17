@@ -1,10 +1,10 @@
 import {Node} from "../../notcompose/runtime/Node";
-import {RawTextModifier} from "../runtime/modifiers/RawTextModifier";
-import {LayoutModifierNodeCoordinator} from "../runtime-layout/LayoutModifierNodeCoordinator";
 import {NodeCoordinatorExtensionKey} from "../runtime/nodeExtensions/NodeCoordinatorExtension";
 import {NodeCoordinator} from "../runtime-layout/NodeCoordinator";
-import {TextCanvas} from "../runtime/draw/TextCanvas";
-import {TextBuffer} from "../runtime/draw/TextBuffer";
+import {TextCanvas} from "../runtime/ui/graphics/TextCanvas";
+import {TextBuffer, TextBufferCanvas, TextCell, TextRow} from "../runtime/ui/graphics/TextBufferCanvas";
+import {Char} from "../../core/types";
+import {DebugTextSpanProcessor, TextSpanProcessor} from "./TextSpanProcessor";
 
 
 export interface OutputProcessor {
@@ -13,21 +13,40 @@ export interface OutputProcessor {
 
 export class StringOutputProcessor implements OutputProcessor {
     constructor(
-        private onFrame: (string: string) => void
+        private onFrame: (string: string) => void,
+        private spanProcessor: TextSpanProcessor = new DebugTextSpanProcessor(),
     ) {}
 
-    doFrame(node: Node, width: number, height: number): void {
-        const buffer = new TextBuffer([], width, height)
-        materialize(node, buffer)
+    private canvas = new TextBufferCanvas(new TextBuffer([]), 0, 0)
 
-        const rows = buffer.buffer
-            .map(row => row.join('').trimEnd())
-        for (let i = rows.length - 1; i >= 0; i--) {
-            if (rows[i].trim() === '') rows.splice(i, 1)
-            else break
+    doFrame(node: Node, width: number, height: number): void {
+        this.canvas = new TextBufferCanvas(new TextBuffer([]), width, height)
+        const textRows = this.canvas.buffer.rows
+        const rows: string[] = []
+
+        for (let y = 0; y < height; y++) {
+            if (textRows[y] === undefined)
+                textRows[y] = new TextRow([])
+            for (let x = 0; x < width; x++) {
+                if (textRows[y].cells.at(x) === undefined)
+                    textRows[y].cells[x] = new TextCell(' ' as Char, [])
+            }
         }
 
-        this.onFrame(rows.join('\n'))
+        materialize(node, this.canvas)
+
+        let output = []
+
+        for (let y = 0; y < textRows.length; y++) {
+            const rawRow = new Array(width)
+            this.spanProcessor.transform(textRows[y], rawRow)
+            let rowString = rawRow.join('')
+            rows.push(rowString)
+        }
+
+        output.push(rows.join('\n'))
+
+        this.onFrame(output.join(''))
     }
 }
 
@@ -40,11 +59,20 @@ export class ConsoleOutputProcessor implements OutputProcessor {
         }
     ) {}
 
-    private stringProcessor = new StringOutputProcessor((string) => {
-        this.options?.before?.()
-        this.stream.write(string)
-        this.options?.after?.()
-    })
+    private stringProcessor = new StringOutputProcessor(
+        // todo
+        // new CombinedTextSpanProcessor([
+        //     new BoldTextSpanProcessor(),
+        //     new BackgroundColorTextSpanProcessor(),
+        //     new ColorTextSpanProcessor(),
+        //     new UnderlineTextSpanProcessor(),
+        // ]),
+        (string) => {
+            this.options?.before?.()
+            this.stream.write(string)
+            this.options?.after?.()
+        }
+    )
 
     doFrame(node: Node, width: number, height: number): void {
         this.stringProcessor.doFrame(node, width, height)
@@ -52,55 +80,10 @@ export class ConsoleOutputProcessor implements OutputProcessor {
 }
 
 function materialize(node: Node, canvas: TextCanvas) {
-    const nodeQueue = [{ node, offsetX: 0, offsetY: 0 }]
-
-    while (nodeQueue.length > 0) {
-        const { node, offsetX, offsetY } = nodeQueue.shift()!
-
-        const outerCoordinator = node.extensions.get(NodeCoordinatorExtensionKey) as NodeCoordinator | undefined
-
-        if (!outerCoordinator) {
-            nodeQueue.push(...node.children.map(it => ({
-                node: it.node,
-                offsetX,
-                offsetY
-            })))
-            continue
-        }
-
-        let cx = offsetX
-        let cy = offsetY
-
-        let currentCoordinator = outerCoordinator
-
-        while (true) {
-            if (currentCoordinator.placed) {
-                cx += currentCoordinator.x
-                cy += currentCoordinator.y
-
-                for (const element of currentCoordinator.elements) {
-                    const text = RawTextModifier.of(element)
-                    if (text) {
-                        canvas.resetTranslate()
-                        canvas.translate(cx, cy)
-                        text.rawText(currentCoordinator.width, currentCoordinator.height, canvas)
-                    }
-                }
-            }
-
-            if (currentCoordinator instanceof LayoutModifierNodeCoordinator) {
-                currentCoordinator = currentCoordinator.nextCoordinator
-            } else {
-                break
-            }
-        }
-
-        nodeQueue.push(...node.children.map(it => ({
-            node: it.node,
-            offsetX: cx,
-            offsetY: cy
-        })))
+    const coordinator = node.extensions.get(NodeCoordinatorExtensionKey) as NodeCoordinator | undefined
+    if (coordinator === undefined) {
+        throw new Error(`Root node doesn't have coordinator`)
+    } else {
+        coordinator.draw(canvas)
     }
-
-    return
 }

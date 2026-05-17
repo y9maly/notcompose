@@ -1,4 +1,4 @@
-import {Color} from "../ui/Color";
+import {Color} from "./Color";
 
 
 export class TextSpan {
@@ -16,16 +16,16 @@ export class TextSpan {
     get end() { return this.start + this.length }
 }
 
-export interface TextSpanType {}
+export type TextSpanType = unknown
 
 
 
-export class BackgroundColorTextSpan implements TextSpanType {
-    constructor(public readonly color: Color) {}
+export class BackgroundColorTextSpan {
+    constructor(public readonly color: Color | null) {}
 }
 
-export class ColorTextSpan implements TextSpanType {
-    constructor(public readonly color: Color) {}
+export class ColorTextSpan {
+    constructor(public readonly color: Color | null) {}
 }
 
 export const BoldTextSpan: TextSpanType = {}

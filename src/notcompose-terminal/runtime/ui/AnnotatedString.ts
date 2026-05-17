@@ -3,8 +3,8 @@ import {TextSpan} from "./TextSpan";
 
 export class AnnotatedString {
     constructor(
-        public readonly string: string,
-        public readonly spans: ReadonlyArray<TextSpan>,
+        public readonly string: string = '',
+        public readonly spans: ReadonlyArray<TextSpan> = [],
     ) {
         spans.forEach(span => {
             if (span.end > string.length)

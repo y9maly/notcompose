@@ -13,9 +13,9 @@ import {RootInputDispatcher} from "./runtime-input/InputDispatcher";
 import {LayoutProcessor} from "./runtime-layout/LayoutProcessor";
 import {ConsoleOutputProcessor} from "./runtime-output/OutputProcessor";
 import {Modifier} from "../notcompose/runtime/Modifier";
-import {SizeInModifier} from "./runtime/modifiers/SizeModifier";
 import {NameElement} from "../notcompose/runtime/modifiers/NameElement";
 import {Constraints} from "./runtime/layout/Constraints";
+import process from "node:process";
 
 const appLogStream = fs.createWriteStream('./app.log')
 const appLogConsole = new Console.Console({ stdout: appLogStream, stderr: appLogStream })
@@ -42,7 +42,12 @@ export function setTerminalContent(content: () => void) {
 
     // Обходит дерево, ищет на ноды с InputModifier для обработки ввода с клавиатуры
     const inputProcessor = new InputProcessor(new RootInputDispatcher(
-        () => composition.rootNode
+        () => composition.rootNode,
+        (_, key: any) => {
+            if (key?.ctrl && key?.name === 'c')
+                process.exit(0)
+            return false
+        }
     ))
     inputProcessor.start()
 
@@ -68,10 +73,6 @@ export function setTerminalContent(content: () => void) {
 
     function recompose() {
         composition.compose(new Modifier([
-            SizeInModifier({
-                maxWidth: process.stdout.columns,
-                maxHeight: process.stdout.rows,
-            }),
             new NameElement('Root')
         ]))
 
