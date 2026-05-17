@@ -10,13 +10,15 @@ import {MeasurePolicy} from "../runtime/layout/MeasurePolicy";
 
 export const BoxMeasurePolicy = (
     alignment: Alignment = Alignment.TopStart,
+    propagateMinConstraints: boolean = false,
 ) => MeasurePolicy((measurables, constraints) => {
     let totalWidth = 0
     let totalHeight = 0
 
     const placeables: Placeable[] = []
+    const childConstraints = propagateMinConstraints ? constraints : constraints.copyMaxDimensions()
     measurables.forEach(measurable => {
-        const placeable = measurable.measure(constraints)
+        const placeable = measurable.measure(childConstraints)
         placeables.push(placeable)
         totalWidth = Math.max(totalWidth, placeable.width)
         totalHeight = Math.max(totalHeight, placeable.height)
