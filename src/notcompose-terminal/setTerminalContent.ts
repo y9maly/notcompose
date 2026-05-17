@@ -58,12 +58,11 @@ export function setTerminalContent(content: () => void) {
     // Перед отрисовкой нужно сделать remeasure: вызвать layoutProcessor.layout()
     const outputProcessor = new ConsoleOutputProcessor(process.stdout, {
         before: () => {
-            console.clear()
-            // '\x1b[2J\x1b[H', '\r\x1B[?25l'
-            process.stdout.write('\r\x1B[?25l')
+            // hide cursor
+            process.stdout.write('\x1B[?25l')
         },
         after: () => {
-            process.stdout.write('\r')
+            process.stdout.cursorTo(0, 0)
         }
     })
 

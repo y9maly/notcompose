@@ -52,7 +52,7 @@ export class StringOutputProcessor implements OutputProcessor {
 
 export class ConsoleOutputProcessor implements OutputProcessor {
     constructor(
-        private stream: NodeJS.WritableStream,
+        private stream: NodeJS.WriteStream,
         private options?: {
             before?: () => void,
             after?: () => void,
@@ -69,13 +69,18 @@ export class ConsoleOutputProcessor implements OutputProcessor {
         // ]),
         (string) => {
             this.options?.before?.()
-            this.stream.write(string)
+            this.draw(string)
             this.options?.after?.()
         }
     )
 
     doFrame(node: Node, width: number, height: number): void {
         this.stringProcessor.doFrame(node, width, height)
+    }
+
+    draw(string: string) {
+        this.stream.cursorTo(0, 0)
+        this.stream.write(string)
     }
 }
 
