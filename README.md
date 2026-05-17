@@ -20,6 +20,11 @@
 
    https://github.com/user-attachments/assets/2ec8a41f-9478-46f5-9834-4f2ed3fa9cb3
 
+   
+ * [cube](src/terminal-examples/cube)
+
+   https://github.com/user-attachments/assets/310e8f20-f182-436a-971b-e7d1ae346556
+
 # Как назвать этот заголовок?
 
 Я не знаю можно ли назвать это фреймворком, но формально это он. Поэтому дальше буду использовать это определение.
