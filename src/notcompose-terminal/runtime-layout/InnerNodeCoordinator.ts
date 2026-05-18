@@ -1,6 +1,6 @@
 import {NodeCoordinator} from "./NodeCoordinator.js";
 import {MeasurePolicyNodeExtensionKey} from "../runtime/nodeExtensions/MeasurePolicyNodeExtension.js";
-import {applyNodeCoordinator} from "./applyNodeCoordinator.js";
+import {applyLayoutNode} from "./applyLayoutNode.js";
 import {
     SubconstraintsNodeExtension,
     SubconstraintsNodeExtensionKey
@@ -20,7 +20,8 @@ import {Measurable, MeasureResult} from "../runtime/layout/Measurable";
 import {MeasurePolicy} from "../runtime/layout/MeasurePolicy";
 import {assertInt, assertUInt} from "../../core/types";
 import {TextCanvas} from "../runtime/ui/graphics/TextCanvas";
-import {NodeCoordinatorExtensionKey} from "../runtime/nodeExtensions/NodeCoordinatorExtension";
+import {LayoutNodeExtensionKey} from "../runtime/nodeExtensions/LayoutNodeExtension";
+import {LayoutNode} from "./LayoutNode";
 
 
 export class InnerNodeCoordinator extends NodeCoordinator {
@@ -56,7 +57,8 @@ export class InnerNodeCoordinator extends NodeCoordinator {
             return this
         }
 
-        const childrenMeasurables: Measurable[] = createChildrenNodeCoordinators(this.node.children, this.insert)
+        const childrenMeasurables: Measurable[] = createChildrenLayoutNodes(this.node.children, this.insert)
+            .map(it => it.asMeasurable())
 
         const measureResult = this.measurePolicy.measure(childrenMeasurables, constraints)
         assertUInt(measureResult.width, measureResult.height)
@@ -71,7 +73,8 @@ export class InnerNodeCoordinator extends NodeCoordinator {
         if (this.measurePolicy === null)
             return 0
 
-        const childrenMeasurables: Measurable[] = createChildrenNodeCoordinators(this.node.children, this.insert)
+        const childrenMeasurables: Measurable[] = createChildrenLayoutNodes(this.node.children, this.insert)
+            .map(it => it.asMeasurable())
 
         return this.measurePolicy?.minIntrinsicWidth(childrenMeasurables, height)
     }
@@ -80,7 +83,8 @@ export class InnerNodeCoordinator extends NodeCoordinator {
         if (this.measurePolicy === null)
             return 0
 
-        const childrenMeasurables: Measurable[] = createChildrenNodeCoordinators(this.node.children, this.insert)
+        const childrenMeasurables: Measurable[] = createChildrenLayoutNodes(this.node.children, this.insert)
+            .map(it => it.asMeasurable())
 
         return this.measurePolicy?.maxIntrinsicWidth(childrenMeasurables, height)
     }
@@ -89,7 +93,8 @@ export class InnerNodeCoordinator extends NodeCoordinator {
         if (this.measurePolicy === null)
             return 0
 
-        const childrenMeasurables: Measurable[] = createChildrenNodeCoordinators(this.node.children, this.insert)
+        const childrenMeasurables: Measurable[] = createChildrenLayoutNodes(this.node.children, this.insert)
+            .map(it => it.asMeasurable())
 
         return this.measurePolicy?.minIntrinsicHeight(childrenMeasurables, width)
     }
@@ -98,7 +103,8 @@ export class InnerNodeCoordinator extends NodeCoordinator {
         if (this.measurePolicy === null)
             return 0
 
-        const childrenMeasurables: Measurable[] = createChildrenNodeCoordinators(this.node.children, this.insert)
+        const childrenMeasurables: Measurable[] = createChildrenLayoutNodes(this.node.children, this.insert)
+            .map(it => it.asMeasurable())
 
         return this.measurePolicy?.maxIntrinsicHeight(childrenMeasurables, width)
     }
@@ -116,14 +122,14 @@ export class InnerNodeCoordinator extends NodeCoordinator {
 
     nextDrawLambda(canvas: TextCanvas): () => void {
         return () => {
-            const childrenCoordinators = reuseChildrenNodeCoordinators(this.node.children)
+            const childrenLayoutNodes = reuseChildrenLayoutNodes(this.node.children)
                 // .sort((a, b) => a.z - b.z) todo
 
-            for (const childrenCoordinator of childrenCoordinators) {
-                if (childrenCoordinator.placed) {
+            for (const childrenLayoutNode of childrenLayoutNodes) {
+                if (childrenLayoutNode.placed) {
                     canvas.save()
                     canvas.translate(this.x, this.y)
-                    childrenCoordinator.draw(canvas)
+                    childrenLayoutNode.outerCoordinator.draw(canvas)
                     canvas.restore()
                 }
             }
@@ -153,7 +159,8 @@ function subcompose(node: Node, constraints: Constraints, insert: (block: () => 
                 node.parent = null
             })
 
-            return createChildrenNodeCoordinators(node.children, insert)
+            return createChildrenLayoutNodes(node.children, insert)
+                .map(it => it.asMeasurable())
         },
 
         commit(_measureResult) {
@@ -182,10 +189,10 @@ function subcompose(node: Node, constraints: Constraints, insert: (block: () => 
     return measureResult
 }
 
-function reuseChildrenNodeCoordinators(
+function reuseChildrenLayoutNodes(
     children: ReadonlyArray<{ key: Key | null, node: Node }>,
-): NodeCoordinator[] {
-    const result: NodeCoordinator[] = []
+): LayoutNode[] {
+    const result: LayoutNode[] = []
 
     const queue = children.map(it => it.node)
     while (queue.length > 0) {
@@ -194,9 +201,9 @@ function reuseChildrenNodeCoordinators(
         if (node.extensions.has(MeasurePolicyNodeExtensionKey) || node.extensions.has(SubcomposeNodeExtensionKey)) {
             // Если нода умеет распологать детей - добавить её как дочерний coordinator
             // Если дерево ещё не построено, то [coordinator] достроит его сам.
-            const coordinator = node.extensions.get(NodeCoordinatorExtensionKey) as NodeCoordinator | undefined
-            if (coordinator !== undefined)
-                result.push(coordinator)
+            const layoutNode = node.extensions.get(LayoutNodeExtensionKey) as LayoutNode | undefined
+            if (layoutNode !== undefined)
+                result.push(layoutNode)
         } else {
             // Если нода НЕ умеет распологать детей - добавить её детей напрямую
             queue.unshift(...node.children.map(it => it.node))
@@ -206,11 +213,11 @@ function reuseChildrenNodeCoordinators(
     return result
 }
 
-function createChildrenNodeCoordinators(
+function createChildrenLayoutNodes(
     children: ReadonlyArray<{ key: Key | null, node: Node }>,
     insert: (block: () => void, node: Node) => void
-): NodeCoordinator[] {
-    const result: NodeCoordinator[] = []
+): LayoutNode[] {
+    const result: LayoutNode[] = []
 
     const queue = children.map(it => it.node)
     while (queue.length > 0) {
@@ -219,8 +226,8 @@ function createChildrenNodeCoordinators(
         if (node.extensions.has(MeasurePolicyNodeExtensionKey) || node.extensions.has(SubcomposeNodeExtensionKey)) {
             // Если нода умеет распологать детей - добавить её как дочерний coordinator
             // Если дерево ещё не построено, то [coordinator] достроит его сам.
-            const coordinator = applyNodeCoordinator(node, insert)
-            result.push(coordinator)
+            const layoutNode = applyLayoutNode(node, insert)
+            result.push(layoutNode)
         } else {
             // Если нода НЕ умеет распологать детей - добавить её детей напрямую
             queue.unshift(...node.children.map(it => it.node))

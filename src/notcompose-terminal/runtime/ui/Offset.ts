@@ -7,4 +7,8 @@ export class Offset {
     ) {}
 
     static ZERO = new Offset(0, 0)
+
+    equals(other: Offset) {
+        return this.x === other.x && this.y === other.y
+    }
 }

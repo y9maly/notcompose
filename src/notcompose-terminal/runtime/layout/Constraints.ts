@@ -180,6 +180,13 @@ export class Constraints {
         )
     }
 
+    equals(other: Constraints): boolean {
+        return this.minWidth === other.minWidth
+            && this.maxWidth === other.maxWidth
+            && this.minHeight === other.minHeight
+            && this.maxHeight === other.maxHeight
+    }
+
     private addMaxWithMinimum(max: number | null, value: number): number | null {
         if (max === null) return max
         return Math.max(0, max + value)

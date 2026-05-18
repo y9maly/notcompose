@@ -1,18 +1,21 @@
 import {NodeCoordinator} from "./NodeCoordinator.js";
-import {NodeCoordinatorExtensionKey} from "../runtime/nodeExtensions/NodeCoordinatorExtension.js";
 import {InnerNodeCoordinator} from "./InnerNodeCoordinator.js";
 import {LayoutModifier} from "../runtime/modifiers/LayoutModifier.js";
 import {MeasurePolicyNodeExtensionKey} from "../runtime/nodeExtensions/MeasurePolicyNodeExtension.js";
 import {LayoutModifierNodeCoordinator} from "./LayoutModifierNodeCoordinator.js";
 import {Node} from "../../notcompose/runtime/Node";
 import {MeasurePolicy} from "../runtime/layout/MeasurePolicy";
+import {LayoutNode} from "./LayoutNode";
+import {LayoutNodeExtensionKey} from "../runtime/nodeExtensions/LayoutNodeExtension";
 
 
-export function applyNodeCoordinator(
+export function applyLayoutNode(
     node: Node,
     insert: (content: () => void, node: Node) => void,
-): NodeCoordinator {
+): LayoutNode {
     // TODO reuse node coordinator
+
+    const previousLayoutNode = node.extensions.get(LayoutNodeExtensionKey) as LayoutNode | undefined
 
     const elements = []
     let layoutModifier: LayoutModifier | null = null
@@ -50,6 +53,14 @@ export function applyNodeCoordinator(
         elements.splice(0, elements.length)
     }
 
-    node.extensions.set(NodeCoordinatorExtensionKey, coordinator)
-    return coordinator
+    let layoutNode: LayoutNode
+    if (previousLayoutNode !== undefined) {
+        layoutNode = previousLayoutNode
+        layoutNode.outerCoordinator = coordinator
+    } else {
+        layoutNode = new LayoutNode(coordinator)
+        node.extensions.set(LayoutNodeExtensionKey, layoutNode)
+    }
+
+    return layoutNode
 }

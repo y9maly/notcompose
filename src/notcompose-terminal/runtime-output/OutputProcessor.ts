@@ -1,10 +1,11 @@
 import {Node} from "../../notcompose/runtime/Node";
-import {NodeCoordinatorExtensionKey} from "../runtime/nodeExtensions/NodeCoordinatorExtension";
 import {NodeCoordinator} from "../runtime-layout/NodeCoordinator";
 import {TextCanvas} from "../runtime/ui/graphics/TextCanvas";
 import {TextBuffer, TextBufferCanvas, TextCell, TextRow} from "../runtime/ui/graphics/TextBufferCanvas";
 import {Char} from "../../core/types";
 import {DebugTextSpanProcessor, TextSpanProcessor} from "./TextSpanProcessor";
+import {LayoutNode} from "../runtime-layout/LayoutNode";
+import {LayoutNodeExtensionKey} from "../runtime/nodeExtensions/LayoutNodeExtension";
 
 
 export interface OutputProcessor {
@@ -85,10 +86,10 @@ export class ConsoleOutputProcessor implements OutputProcessor {
 }
 
 function materialize(node: Node, canvas: TextCanvas) {
-    const coordinator = node.extensions.get(NodeCoordinatorExtensionKey) as NodeCoordinator | undefined
-    if (coordinator === undefined) {
-        throw new Error(`Root node doesn't have coordinator`)
+    const layoutNode = node.extensions.get(LayoutNodeExtensionKey) as LayoutNode | undefined
+    if (layoutNode === undefined) {
+        throw new Error(`Root node is not a layout node`)
     } else {
-        coordinator.draw(canvas)
+        layoutNode.draw(canvas)
     }
 }
