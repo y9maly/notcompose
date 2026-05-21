@@ -5,6 +5,8 @@ const stateReadObservers = new Set<(state: State<unknown>) => void>()
 const stateWriteObservers = new Set<(state: State<unknown>) => void>()
 
 export class GlobalSnapshot {
+    private static disableReadObservation = false
+
     static observeStateReads(callback: (state: State<unknown>) => void): Disposable {
         stateReadObservers.add(callback)
         return {
@@ -20,6 +22,8 @@ export class GlobalSnapshot {
     }
 
     static observeRead(state: State<unknown>) {
+        if (this.disableReadObservation)
+            return
         const observersSnapshot = [...stateReadObservers]
 
         for (const observer of observersSnapshot) {
@@ -37,5 +41,18 @@ export class GlobalSnapshot {
                 observer(state)
             }
         }
+    }
+
+    static withoutReadObservation<T>(content: () => T): T {
+        if (this.disableReadObservation)
+            return content()
+        this.disableReadObservation = true
+        let value: T
+        try {
+            value = content()
+        } finally {
+            this.disableReadObservation = false
+        }
+        return value
     }
 }
