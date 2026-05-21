@@ -10,11 +10,7 @@
 
 В этом примере используется библиотека rxjs.
 
-Более сложный пример есть в файлах (Пример сгенерирован нейронкой, у меня нет времени сейчас думать, там много букав, но разница в удобстве видна хорошо):
-- [complexDemo.ts](complexDemo.ts)
-- [complexDemo-rxjs.ts](complexDemo-rxjs.ts)
-- [complexDemo-molecule.ts](complexDemo-molecule.ts)
-
+[demo.ts](demo.ts)
 ```typescript
 // Допустим у нас есть вот такие реактивные состояния:
 const usernameSubject: BehaviorSubject<string>
@@ -68,3 +64,8 @@ userSubject.subscribe(user => {
 https://github.com/user-attachments/assets/a8a98628-bbeb-4301-8927-5f6e7b4f044f
 
 Этот способ масштабируется на достаточно сложные и вложенные объекты.
+
+Более сложный пример есть в следующих файлах: (Пример сгенерирован нейронкой, у меня нет времени сейчас думать, там много букав, но разница в удобстве видна хорошо)
+- [complexDemo.ts](complexDemo.ts)
+- [complexDemo-rxjs.ts](complexDemo-rxjs.ts)
+- [complexDemo-molecule.ts](complexDemo-molecule.ts)
