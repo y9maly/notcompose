@@ -2,10 +2,11 @@ import {currentComposer} from "../runtime/currentComposer.js";
 import {Modifier} from "../runtime/Modifier.js";
 import {Key} from "../runtime/Composer.js";
 
-export function Key(key: Key, content: () => void) {
+export function Key<T>(key: Key, content: () => T): T {
     currentComposer().startNode(new Modifier(), key)
     currentComposer().startComposingNode()
-    content()
+    const value = content()
     currentComposer().endComposingNode()
     currentComposer().endNode()
+    return value
 }

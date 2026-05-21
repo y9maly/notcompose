@@ -4,7 +4,7 @@ import {subjectAsState} from "../notcompose/runtime-rxjs/subjectAsState";
 import {State} from "../notcompose/runtime/State";
 import * as console from "node:console";
 
-// --- Types ---
+// --- Domain ---
 
 interface User {
     username: string
@@ -12,7 +12,7 @@ interface User {
     score: number
 }
 
-// --- Input data ---
+// --- Input reactive state ---
 
 const randomOf = <T>(arr: T[]) => arr[Math.floor(Math.random() * arr.length)]
 const randomNumber = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1)) + min
@@ -65,9 +65,11 @@ const user: BehaviorSubject<User> = subjectMolecule(() => {
 
 // --- Demo ---
 
+let valueCounter = 1
 user.subscribe(user => {
     console.clear()
     console.log('------')
+    console.log(`Value #${valueCounter++}`)
     console.log(`Username: ${user.username}`)
     console.log(`Age     : ${user.age}`)
     console.log(`Score   : ${user.score}`)
