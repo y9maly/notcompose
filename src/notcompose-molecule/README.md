@@ -33,10 +33,10 @@ interface UserInfo {
 }
 
 // Мы хотим объеденить эти 3 состояния и получить BehaviourSubject<User>
-const user: BehaviorSubject<User>
+const userSubject: BehaviorSubject<User>
 
 // С notcompose-molecule это можно сделать так:
-const user = subjectMolecule<User>(() => {
+const userSubject = subjectMolecule<User>(() => {
     // subjectAsState преобразует BehaviorSubject в объект State, который фреймворк notcompose умеет отслеживать сам.
     const username: State<string> = subjectAsState(usernameSubject)
     const age: State<number> = subjectAsState(ageSubject)
@@ -52,6 +52,19 @@ const user = subjectMolecule<User>(() => {
         } satisfies UserInfo
     } satisfies User
 })
+
+// Использование
+let valueCounter = 1 // Счётчик покажет, как часто обновляется userSubject
+userSubject.subscribe(user => {
+    console.clear()
+    console.log('------')
+    console.log(`Value #${valueCounter++}`)
+    console.log(`Username: ${user.username}`)
+    console.log(`Age     : ${user.age}`)
+    console.log(`Score   : ${user.score}`)
+})
 ```
+
+https://github.com/user-attachments/assets/a8a98628-bbeb-4301-8927-5f6e7b4f044f
 
 Этот способ масштабируется на достаточно сложные и вложенные объекты.
