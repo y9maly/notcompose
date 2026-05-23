@@ -6,6 +6,7 @@ import {
     RecomposeLambdaExtensionKey
 } from "../../../notcompose/runtime-plugins/partialRecomposition/RecomposeLambda";
 import {MeasurePolicy} from "./MeasurePolicy";
+import {NameElement} from "../../../notcompose/runtime/modifiers/NameElement";
 
 
 export function Layout(content: () => void, measurePolicy: MeasurePolicy, modifier: Modifier = new Modifier()) {
@@ -16,7 +17,7 @@ export function Layout(content: () => void, measurePolicy: MeasurePolicy, modifi
     // } else {
     //     debug.log(`Can't skip ${currentComposer().nextNode()?.findName() ?? '...'}`)
     // }
-    currentComposer().startNode(modifier)
+    currentComposer().startNode(modifier.then(new NameElement('Layout')))
     currentComposer().applyExtension(MeasurePolicyNodeExtensionKey, measurePolicy)
     currentComposer().applyExtension(RecomposeLambdaExtensionKey, content satisfies RecomposeLambda)
     currentComposer().startComposingNode()

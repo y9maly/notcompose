@@ -6,6 +6,7 @@ import {elvis} from "../../notcompose/runtime-highlevel/elvis";
 import {Placeable} from "../runtime/layout/Placeable";
 import {MeasureResult} from "../runtime/layout/Measurable";
 import {MeasurePolicy} from "../runtime/layout/MeasurePolicy";
+import {NameElement} from "../../notcompose/runtime/modifiers/NameElement";
 
 
 export const BoxMeasurePolicy = (
@@ -42,5 +43,5 @@ export function Box(content: () => void, modifier: Modifier = new Modifier(), pa
         alignment: Alignment.TopStart
     })
 
-    Layout(content, BoxMeasurePolicy(alignment), modifier)
+    Layout(content, BoxMeasurePolicy(alignment), modifier.then(new NameElement('Box')))
 }

@@ -14,6 +14,19 @@ export class TextSpan {
     }
 
     get end() { return this.start + this.length }
+
+    offset(offset: number): TextSpan {
+        return this.copy({ start: this.start + offset })
+    }
+
+    copy(overrides: { type?: TextSpanType, start?: number, length?: number }): TextSpan
+    copy(overrides: { type?: TextSpanType, start?: number, end?: number }): TextSpan
+    copy(overrides: { type?: TextSpanType, start?: number, length?: number, end?: number }): TextSpan {
+        const type = overrides.type ?? this.type
+        const start = overrides.start ?? this.start
+        const length = overrides.length ?? (overrides.end !== undefined ? overrides.end - start : this.length)
+        return new TextSpan(type, start, length)
+    }
 }
 
 export type TextSpanType = unknown

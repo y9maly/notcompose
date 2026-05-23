@@ -4,6 +4,7 @@ import {Alignment, VerticalAlignment} from "../runtime/ui/Alignment";
 import {elvis} from "../../notcompose/runtime-highlevel/elvis";
 import {Placeable} from "../runtime/layout/Placeable";
 import {MeasurePolicy} from "../runtime/layout/MeasurePolicy";
+import {NameElement} from "../../notcompose/runtime/modifiers/NameElement";
 
 
 export const RowMeasurePolicy = (
@@ -50,5 +51,5 @@ export function Row(content: () => void, modifier: Modifier = new Modifier(), pa
         verticalAlignment: Alignment.Top
     })
 
-    Layout(content, RowMeasurePolicy(verticalAlignment), modifier)
+    Layout(content, RowMeasurePolicy(verticalAlignment), modifier.then(new NameElement('Row')))
 }

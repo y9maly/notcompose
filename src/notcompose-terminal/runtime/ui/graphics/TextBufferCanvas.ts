@@ -143,7 +143,7 @@ export class TextBufferCanvas implements TextCanvas {
                     this.buffer.rows[ry].cells[rx] = new TextCell(
                         char,
                         spans
-                            .filter(it => it.start <= charIndex && it.end >= charIndex)
+                            .filter(it => it.start <= charIndex && it.end > charIndex)
                             .map(it => it.type)
                     )
                 }

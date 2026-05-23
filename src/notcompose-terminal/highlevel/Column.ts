@@ -4,6 +4,7 @@ import {elvis} from "../../notcompose/runtime-highlevel/elvis";
 import {Alignment, HorizontalAlignment} from "../runtime/ui/Alignment";
 import {Placeable} from "../runtime/layout/Placeable";
 import {MeasurePolicy} from "../runtime/layout/MeasurePolicy";
+import {NameElement} from "../../notcompose/runtime/modifiers/NameElement";
 
 
 export const ColumnMeasurePolicy = (
@@ -45,5 +46,5 @@ export function Column(content: () => void, modifier: Modifier = new Modifier(),
         horizontalAlignment: Alignment.Start
     })
 
-    Layout(content, ColumnMeasurePolicy(horizontalAlignment), modifier)
+    Layout(content, ColumnMeasurePolicy(horizontalAlignment), modifier.then(new NameElement('Column')))
 }

@@ -8,7 +8,7 @@ import {MeasurePolicy} from "../../notcompose-terminal/runtime/layout/MeasurePol
 import {MeasureResult} from "../../notcompose-terminal/runtime/layout/Measurable";
 
 
-// Давайте создатим кастомный лэяут который распологает детей по горизонтали:
+// Давайте создадим кастомный лэяут который распологает детей по горизонтали:
 // Сверзу-вниз, Слева-направо
 // Вот так:
 //

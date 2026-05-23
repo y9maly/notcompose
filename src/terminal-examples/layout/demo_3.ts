@@ -8,6 +8,10 @@ import {Key} from "../../notcompose/runtime-highlevel/Key";
 import {MeasureResult} from "../../notcompose-terminal/runtime/layout/Measurable";
 
 
+// P.S. На самом деле "Ты ввёл мало текста" будет отображаться всегда, если ширина терминала меньше 30.
+// Так как мы смотрим не на фактический размер введеного текста, а на ширину [placeable1].
+// А он никогда не станет шире чем терминал, вне зависимости от размера введённой строки.
+
 setTerminalContent(() => {
     const textField = rememberState(() => '')
 

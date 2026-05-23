@@ -16,8 +16,15 @@ import {Modifier} from "../notcompose/runtime/Modifier";
 import {NameElement} from "../notcompose/runtime/modifiers/NameElement";
 import {Constraints} from "./runtime/layout/Constraints";
 import process from "node:process";
+import path from "path";
 
-const appLogStream = fs.createWriteStream('./app.log')
+const findAppLogFile = (dir: string = process.cwd()): string => {
+    const file = fs.readdirSync(dir).find(it => it === 'app.log' || it === 'package.json')
+    if (file) return path.join(dir, file)
+    return findAppLogFile(path.dirname(dir)) ?? './app.log'
+}
+
+const appLogStream = fs.createWriteStream(findAppLogFile())
 const appLogConsole = new Console.Console({ stdout: appLogStream, stderr: appLogStream })
 NotcomposeRuntimeDebug.setDebugConsole(appLogConsole)
 

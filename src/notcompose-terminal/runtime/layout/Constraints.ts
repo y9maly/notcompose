@@ -180,6 +180,16 @@ export class Constraints {
         )
     }
 
+    toString(): string {
+        const maxWidth = this.maxWidth === null ? 'Infinity' : this.maxWidth
+        const maxHeight = this.maxHeight === null ? 'Infinity' : this.maxHeight
+        return `Constraints(width=${this.minWidth}..${maxWidth}, height=${this.minHeight}..${maxHeight})`
+    }
+
+    [Symbol.toStringTag]() {
+        return 'Constraints'
+    }
+
     equals(other: Constraints): boolean {
         return this.minWidth === other.minWidth
             && this.maxWidth === other.maxWidth
