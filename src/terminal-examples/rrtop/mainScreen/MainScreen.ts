@@ -15,8 +15,7 @@ import {Box} from "../../../notcompose-terminal/highlevel/Box";
 import {Divider} from "../../common/Divider";
 import {ConstraintsModifiers} from "../../../notcompose-terminal/runtime/modifiers/ConstraintsModifier";
 import {input} from "../../../notcompose-terminal/runtime/Input";
-import {AnnotatedString} from "../../../notcompose-terminal/runtime/ui/AnnotatedString";
-import {BoldTextSpan, ColorTextSpan, TextSpan} from "../../../notcompose-terminal/runtime/ui/TextSpan";
+import {annotated, bold, colored} from "../../../notcompose-terminal/runtime/ui/AnnotatedString";
 import {Color} from "../../../notcompose-terminal/runtime/ui/Color";
 
 
@@ -42,34 +41,15 @@ export function MainScreen(
         return false
     })
 
+    const system = `${viewModel.osType.value} ${viewModel.osRelease.value} (${viewModel.arch.value})`
+    const refreshRate = `${viewModel.refreshRate.value}ms`
+    const networkRefreshRate = `${viewModel.networkRefreshRate.value}ms`
+
     Column(() => {
-        const systemText = `${viewModel.osType.value} ${viewModel.osRelease.value} (${viewModel.arch.value})`
-        const refreshRateText = `${viewModel.refreshRate.value}ms`
-        const networkRefreshRateText = `${viewModel.networkRefreshRate.value}ms`
+        Text(annotated`💻 ${colored(Color.DarkCyan, bold(`System:`))} ${colored(Color.LightGray, system)}`)
+        Text(annotated`    ${colored(Color.DarkCyan, bold(`Refresh rate:`))} ${colored(Color.LightGray, refreshRate)}`)
+        Text(annotated`    ${colored(Color.DarkCyan, bold(`Network refresh rate:`))} ${colored(Color.LightGray, networkRefreshRate)}`)
 
-        Text(new AnnotatedString(
-            ` 💻 System: ${systemText}`, [
-                new TextSpan(BoldTextSpan, 4, 7),
-                new TextSpan(new ColorTextSpan(Color.DarkCyan), 4, 7),
-                new TextSpan(new ColorTextSpan(Color.LightGray), 12, systemText.length),
-            ]
-        ))
-
-        Text(new AnnotatedString(
-            `    Refresh rate: ${refreshRateText}`, [
-                new TextSpan(BoldTextSpan, 4, 13),
-                new TextSpan(new ColorTextSpan(Color.DarkCyan), 4, 13),
-                new TextSpan(new ColorTextSpan(Color.LightGray), 18, refreshRateText.length),
-            ]
-        ))
-
-        Text(new AnnotatedString(
-            `    Network refresh rate: ${networkRefreshRateText}`, [
-                new TextSpan(BoldTextSpan, 4, 21),
-                new TextSpan(new ColorTextSpan(Color.DarkCyan), 4, 21),
-                new TextSpan(new ColorTextSpan(Color.LightGray), 26, networkRefreshRateText.length),
-            ]
-        ))
         Text(``)
 
         CpuInfo(viewModel, new Modifier([
@@ -103,68 +83,52 @@ function CpuInfo(
     viewModel: MainViewModel,
     modifier: Modifier = new Modifier(),
 ) {
+    const cpuLoad = viewModel.cpuLoad.value.toString().padStart(3, ' ')
+    const processes = viewModel.processCount.value ?? '??'
+    const uptime = formatUptime(viewModel.uptime.value)
+
     BorderedTitledBox(
+        () => Text(colored(Color.LightGray, `CPU load:${cpuLoad}%`)),
         () => {
-            const value = `CPU load:${viewModel.cpuLoad.value.toString().padStart(3, ' ')}%`
+            SolidPlot(
+                viewModel.cpuLoadHistory.value,
+                new Modifier([FillMaxSizeModifier()]),
+                {
+                    color: Color.Gray,
+                    minValue: 0,
+                    maxValue: 100,
+                }
+            )
 
-            Text(new AnnotatedString(
-                value, [
-                    new TextSpan(new ColorTextSpan(Color.LightGray), 0, value.length),
-                ]
-            ))
-        }, () => {
-
-        SolidPlot(
-            viewModel.cpuLoadHistory.value,
-            new Modifier([FillMaxSizeModifier()]),
-            {
-                color: Color.Gray,
-                minValue: 0,
-                maxValue: 100,
-            }
-        )
-
-        Column(() => {
-            const processesText = `Processes: ${viewModel.processCount.value ?? '??'}`
-            Text(new AnnotatedString(
-                processesText,
-                [new TextSpan(new ColorTextSpan(Color.Gray), 0, processesText.length)]
-            ))
-
-            const uptimeText = `Uptime: ${viewModel.uptime.value}`
-            Text(new AnnotatedString(
-                uptimeText,
-                [new TextSpan(new ColorTextSpan(Color.Gray), 0, uptimeText.length)]
-            ))
-        }, new Modifier([
-            OffsetModifier(2, 1)
-        ]))
-    }, modifier, {
-        color: Color.DarkGray,
-    })
+            Column(() => {
+                Text(colored(Color.Gray, `Processes: ${processes}`))
+                Text(colored(Color.Gray, `Uptime: ${uptime}`))
+            }, new Modifier([
+                OffsetModifier(2, 1)
+            ]))
+        }, modifier, {
+            color: Color.DarkGray,
+        }
+    )
 }
 
 function MemoryInfo(
     viewModel: MainViewModel,
     modifier: Modifier = new Modifier(),
 ) {
-    const memoryUsagePercentage = viewModel.memoryUsagePercent.value
-    const memoryUsagePercentageString = memoryUsagePercentage.toString().padStart(3, ' ')
+    const total = formatBytes(viewModel.totalMemory.value)
+    const free = formatBytes(viewModel.freeMemory.value)
+    const memoryUsageValue = viewModel.memoryUsagePercent.value
+    const memoryUsage = memoryUsageValue.toString().padStart(3, ' ') + '%'
     const memoryColor =
-        memoryUsagePercentage >= 90 ? new Color(0xff7D2D27) :
-        memoryUsagePercentage >= 80 ? new Color(0xff746237) :
+        memoryUsageValue >= 90 ? new Color(0xff7D2D27) :
+            memoryUsageValue >= 80 ? new Color(0xff746237) :
         new Color(0xff28632F)
 
     BorderedTitledBox(() => {
-        const value = `Memory used:${memoryUsagePercentageString}%`
-
-        Text(new AnnotatedString(
-            value, [
-                new TextSpan(new ColorTextSpan(Color.LightGray), 0, 12),
-                new TextSpan(new ColorTextSpan(memoryColor), 12, memoryUsagePercentageString.length),
-                new TextSpan(new ColorTextSpan(Color.LightGray), 12 + memoryUsagePercentageString.length, 1),
-            ]
-        ))
+        Text(colored(Color.LightGray, `Memory used:`)
+            .plus(colored(memoryColor, memoryUsage))
+        )
     }, () => {
         SolidPlot(
             viewModel.usedMemoryHistory.value,
@@ -177,17 +141,8 @@ function MemoryInfo(
         )
 
         Column(() => {
-            const totalText = `Total: ${formatBytes(viewModel.totalMemory.value)}`
-            Text(new AnnotatedString(
-                totalText,
-                [new TextSpan(new ColorTextSpan(Color.Gray), 0, totalText.length)]
-            ))
-
-            const freeText = `Free: ${formatBytes(viewModel.freeMemory.value)}`
-            Text(new AnnotatedString(
-                freeText,
-                [new TextSpan(new ColorTextSpan(Color.Gray), 0, freeText.length)]
-            ))
+            Text(colored(Color.Gray, `Total: ${total}`))
+            Text(colored(Color.Gray, `Free: ${free}`))
         }, new Modifier([
             OffsetModifier(2, 1)
         ]))
@@ -200,14 +155,11 @@ function NetworkInfo(
     viewModel: MainViewModel,
     modifier: Modifier = new Modifier(),
 ) {
-    BorderedTitledBox(() => {
-        const value = `Network`
+    const download = `${formatBytes(viewModel.rx.value * (viewModel.networkRefreshRate.value / 1000))}/s`
+    const upload = `${formatBytes(viewModel.tx.value * (viewModel.networkRefreshRate.value / 1000))}/s`
 
-        Text(new AnnotatedString(
-            value, [
-                new TextSpan(new ColorTextSpan(Color.LightGray), 0, value.length),
-            ]
-        ))
+    BorderedTitledBox(() => {
+        Text(colored(Color.LightGray, `Network`))
     }, () => {
         Column(() => {
             Box(() => {
@@ -221,11 +173,7 @@ function NetworkInfo(
                 )
 
                 Column(() => {
-                    const value = `download: ${formatBytes(viewModel.rx.value * (viewModel.networkRefreshRate.value / 1000))}/s`
-                    Text(new AnnotatedString(
-                        value,
-                        [new TextSpan(new ColorTextSpan(Color.Gray), 0, value.length)]
-                    ))
+                    Text(colored(Color.Gray, `download: ${download}`))
                 }, new Modifier([
                     OffsetModifier(1, 0)
                 ]))
@@ -253,11 +201,7 @@ function NetworkInfo(
                 )
 
                 Column(() => {
-                    const value = `upload: ${formatBytes(viewModel.tx.value * (viewModel.networkRefreshRate.value / 1000))}/s`
-                    Text(new AnnotatedString(
-                        value,
-                        [new TextSpan(new ColorTextSpan(Color.Gray), 0, value.length)]
-                    ))
+                    Text(colored(Color.Gray, `upload: ${upload}`))
                 }, new Modifier([
                     OffsetModifier(1, 0)
                 ]))

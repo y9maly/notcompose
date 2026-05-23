@@ -10,8 +10,7 @@ import {BackgroundModifier} from "../../../../notcompose-terminal/runtime/modifi
 import {HeightModifier, WidthModifier} from "../../../../notcompose-terminal/runtime/modifiers/SizeModifier";
 import {Color} from "../../../../notcompose-terminal/runtime/ui/Color";
 import {elvis} from "../../../../notcompose/runtime-highlevel/elvis";
-import {ColorTextSpan, TextSpan} from "../../../../notcompose-terminal/runtime/ui/TextSpan";
-import {AnnotatedString} from "../../../../notcompose-terminal/runtime/ui/AnnotatedString";
+import {colored} from "../../../../notcompose-terminal/runtime/ui/AnnotatedString";
 
 
 export function SolidPlot(
@@ -28,10 +27,6 @@ export function SolidPlot(
         color: null,
     })
 
-    const spans = color !== null
-        ? [new TextSpan(new ColorTextSpan(color), 0, 1)]
-        : []
-
     RowWithConstraints(({ maxWidth: plotWidth, maxHeight: plotHeight }) => {
         if (plotWidth === null || plotHeight === null)
             throw new Error('Plot width and height cannot be infinity')
@@ -40,7 +35,7 @@ export function SolidPlot(
         const columns = historyData.items.slice(Math.max(0, historyData.items.length - plotWidth), historyData.items.length)
 
         repeat(emptyColumns, () => {
-            Text(new AnnotatedString('▂', spans))
+            Text(colored(color, '▂'))
         })
 
         const minValue = params?.minValue ?? Math.min(...columns.map(it => it.value))
@@ -54,7 +49,7 @@ export function SolidPlot(
                 )
 
             if (columnHeight === 0) {
-                Text(new AnnotatedString('▂', spans))
+                Text(colored(color, '▂'))
             } else {
                 Spacer(new Modifier([
                     BackgroundModifier('█', { color: color }),

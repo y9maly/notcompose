@@ -1,7 +1,6 @@
 import {Color} from "../../notcompose-terminal/runtime/ui/Color";
 import {TextCanvas} from "../../notcompose-terminal/runtime/ui/graphics/TextCanvas";
-import {AnnotatedString} from "../../notcompose-terminal/runtime/ui/AnnotatedString";
-import {ColorTextSpan, TextSpan} from "../../notcompose-terminal/runtime/ui/TextSpan";
+import {colored} from "../../notcompose-terminal/runtime/ui/AnnotatedString";
 import {mutableStateOf} from "../../notcompose/runtime-highlevel/mutableStateOf";
 import {Modifier} from "../../notcompose/runtime/Modifier";
 import {Box} from "../../notcompose-terminal/highlevel/Box";
@@ -87,7 +86,7 @@ function drawLine(canvas: TextCanvas, x0: number, y0: number, x1: number, y1: nu
     let err = dx - dy
 
     while (true) {
-        canvas.drawText(x0, y0, new AnnotatedString(char, [new TextSpan(new ColorTextSpan(color), 0, 1)]))
+        canvas.drawText(x0, y0, colored(color, char))
 
         if (x0 === x1 && y0 === y1) {
             break

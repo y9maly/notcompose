@@ -6,8 +6,7 @@ import {OffsetXModifier} from "../../../notcompose-terminal/runtime/modifiers/Of
 import {Color} from "../../../notcompose-terminal/runtime/ui/Color";
 import {elvis} from "../../../notcompose/runtime-highlevel/elvis";
 import {Row} from "../../../notcompose-terminal/highlevel/Row";
-import {AnnotatedString} from "../../../notcompose-terminal/runtime/ui/AnnotatedString";
-import {ColorTextSpan, TextSpan} from "../../../notcompose-terminal/runtime/ui/TextSpan";
+import {colored} from "../../../notcompose-terminal/runtime/ui/AnnotatedString";
 
 
 /**
@@ -33,9 +32,9 @@ export function BorderedTitledBox(
         Box(content, new Modifier([BorderModifier({ color: color })]))
 
         Row(() => {
-            Text(new AnnotatedString(`┐`, [new TextSpan(new ColorTextSpan(color), 0, 1)]))
+            Text(colored(color, `┐`))
             title()
-            Text(new AnnotatedString(`┌`, [new TextSpan(new ColorTextSpan(color), 0, 1)]))
+            Text(colored(color, `┌`))
         }, new Modifier([OffsetXModifier(1)]))
     }, modifier)
 }
