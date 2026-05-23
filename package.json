@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:types": "tsc -p tsconfig.vitest.json --noEmit"
   },
   "keywords": [],
   "author": "",
@@ -12,7 +15,8 @@
   "packageManager": "pnpm@10.20.0",
   "devDependencies": {
     "@types/node": "^25.5.2",
-    "typescript": "^6.0.2"
+    "typescript": "^6.0.2",
+    "vitest": "^4.1.7"
   },
   "dependencies": {
     "rxjs": "^7.8.2"
