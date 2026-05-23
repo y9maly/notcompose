@@ -1,7 +1,7 @@
 import {GlobalSnapshot} from "./Snapshot";
 
-export abstract class State<out T> {
-    abstract get value(): T
+export interface State<out T> {
+    get value(): T
 }
 
 export interface SnapshotMutationPolicy<T> {
@@ -16,11 +16,15 @@ export function looseEqualityPolicy<T>(): SnapshotMutationPolicy<T> { return Loo
 export function strictEqualityPolicy<T>(): SnapshotMutationPolicy<T> { return StrictEqualityPolicy }
 export function neverEqualPolicy<T>(): SnapshotMutationPolicy<T> { return NeverEqualPolicy }
 
-export class MutableState<T> extends State<T> {
+export interface MutableState<T> extends State<T> {
+    set value(value: T)
+}
+
+class MutableStateImpl<T> implements MutableState<T> {
     constructor(
         private _value: T,
         private mutationPolicy: SnapshotMutationPolicy<T> = strictEqualityPolicy()
-    ) { super() }
+    ) {}
 
     get value() {
         GlobalSnapshot.observeRead(this)
@@ -34,3 +38,9 @@ export class MutableState<T> extends State<T> {
         GlobalSnapshot.observeWrite(this)
     }
 }
+
+export interface MutableStateConstructor {
+    new <T>(value: T, mutationPolicy?: SnapshotMutationPolicy<T>): MutableState<T>
+}
+
+export const MutableState: MutableStateConstructor = MutableStateImpl
