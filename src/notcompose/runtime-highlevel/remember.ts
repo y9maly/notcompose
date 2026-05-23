@@ -41,6 +41,7 @@ export function remember<T>(
 
     if (
         keys.length !== previousKeys.length ||
+        // todo i dont like this `Object.is`
         keys.some((a, index) => !Object.is(a, previousKeys[index]))
     ) {
         currentComposer().rememberValue(keys)

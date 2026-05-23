@@ -7,17 +7,17 @@ const Empty = Symbol()
 
 export function rememberState<T>(
     calculation: () => T
-): MutableState<T>
+): MutableState<T> & Readonly<[T, (value: T) => void]>
 
 export function rememberState<T>(
     keys: unknown[],
     calculation: () => T
-): MutableState<T>
+): MutableState<T> & Readonly<[T, (value: T) => void]>
 
 export function rememberState<T>(
     a: unknown[] | (() => T),
     b: (() => T) | typeof Empty = Empty,
-): MutableState<T> {
+): MutableState<T> & Readonly<[T, (value: T) => void]> {
     let keys: unknown[]
     let calculation: () => T
 
@@ -32,5 +32,12 @@ export function rememberState<T>(
     const state = remember(() => mutableStateOf<T | typeof Empty>(Empty))
     remember(keys, () => state.value = calculation())
 
-    return state as MutableState<T>
+    return {
+        get value() { return state.value as T },
+        set value(value: T) { state.value = value },
+        *[Symbol.iterator]() {
+            yield state.value
+            yield (value: T) => state.value = value
+        }
+    } as MutableState<T> & Readonly<[T, (value: T) => void]>
 }
