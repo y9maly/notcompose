@@ -15,6 +15,7 @@ export class LayoutProcessor {
             const previousComposer = currentComposerOrNull()
             setCurrentComposer(composer)
             composer.startRootNode(node)
+            composer.applyExtension(RecomposeLambdaExtensionKey, content)
             composer.startComposingNode()
             content()
             composer.endComposingNode()
