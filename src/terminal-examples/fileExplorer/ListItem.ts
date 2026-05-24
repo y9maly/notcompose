@@ -5,7 +5,6 @@ import {DisposableEffect} from "../../notcompose/runtime-highlevel/DisposableEff
 import {Row} from "../../notcompose-terminal/highlevel/Row";
 import {Text} from "../../notcompose-terminal/highlevel/Text";
 
-
 export function ListItem(
     item: Item,
     isSelected: boolean,

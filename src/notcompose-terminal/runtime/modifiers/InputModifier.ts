@@ -1,6 +1,5 @@
 import {ModifierElement} from "../../../notcompose/runtime/Modifier";
 
-
 export interface InputModifier extends ModifierElement {
     pass: 'Initial' | 'Main' | 'Final'
     process(string: string, key: unknown): boolean

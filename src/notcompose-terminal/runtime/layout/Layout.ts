@@ -8,7 +8,6 @@ import {
 import {MeasurePolicy} from "./MeasurePolicy";
 import {NameElement} from "../../../notcompose/runtime/modifiers/NameElement";
 
-
 export function Layout(content: () => void, measurePolicy: MeasurePolicy, modifier: Modifier = new Modifier()) {
     // if (canSkipComposition(...keys)) {
     //     debug.log(`Skipping ${currentComposer().nextNode()?.findName() ?? '...'}`)

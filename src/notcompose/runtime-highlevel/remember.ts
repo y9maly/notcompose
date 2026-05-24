@@ -1,6 +1,5 @@
 import {currentComposer} from "../runtime/currentComposer.js";
 
-
 const Empty = Symbol()
 
 export function remember<T>(

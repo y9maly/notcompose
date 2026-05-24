@@ -17,6 +17,7 @@ const Empty = Symbol('Empty')
 export function runMolecule<T>(content: () => T): State<T> {
     const recomposer = new Recomposer()
     const composer = new Composer([
+        recomposer,
         // Для дебага, кинет исключение если методы плагинов вызовутся неправильно
         new PluginVerifierPlugin(),
         // Удаляет пометку о грязной ноде сразу после начала композиции

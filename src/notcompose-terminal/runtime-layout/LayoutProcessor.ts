@@ -1,28 +1,44 @@
 import {Node} from "../../notcompose/runtime/Node";
 import {Composer} from "../../notcompose/runtime/Composer";
-import {applyNodeCoordinator} from "./applyNodeCoordinator";
-import {currentComposerOrNull, setCurrentComposer} from "../../notcompose/runtime/currentComposer";
+import {applyLayoutNode} from "./applyLayoutNode";
+import {withComposer} from "../../notcompose/runtime/currentComposer";
 
 import {Constraints} from "../runtime/layout/Constraints";
-
+import {
+    RecomposeLambda,
+    RecomposeLambdaExtensionKey
+} from "../../notcompose/runtime-plugins/partialRecomposition/RecomposeLambda";
+import {LayoutProcessorPluginDebug} from "./LayoutProcessorPlugin";
 
 export class LayoutProcessor {
-    constructor() {}
+    constructor(
+        // todo Subject to remove.
+        private readonly params: {
+            interceptMeasurement: (invoke: () => void) => void,
+            interceptPlacement: (invoke: () => void) => void,
+        } = {
+            interceptMeasurement: it => it(),
+            interceptPlacement: it => it(),
+        }
+    ) {}
 
     // composer используется для Subconstraints/Subcompose
     layout(node: Node, composer: Composer, constraints: Constraints) {
-        const coordinator = applyNodeCoordinator(node, (content, node) => {
-            const previousComposer = currentComposerOrNull()
-            setCurrentComposer(composer)
-            composer.startRootNode(node)
-            composer.applyExtension(RecomposeLambdaExtensionKey, content)
-            composer.startComposingNode()
-            content()
-            composer.endComposingNode()
-            composer.endRootNode()
-            setCurrentComposer(previousComposer)
+        const plugin = new LayoutProcessorPluginDebug()
+
+        const coordinator = applyLayoutNode(node, (content, node) => {
+            withComposer(composer, () => {
+                composer.startRootNode(node)
+                composer.applyExtension(RecomposeLambdaExtensionKey, content satisfies RecomposeLambda)
+                composer.startComposingNode()
+                content()
+                composer.endComposingNode()
+                composer.endRootNode()
+            })
         })
-        coordinator.measure(constraints)
-        coordinator.place(0, 0)
+
+        this.params.interceptMeasurement(() => coordinator.measure(plugin, constraints))
+
+        this.params.interceptPlacement(() => coordinator.place(0, 0, 0))
     }
 }

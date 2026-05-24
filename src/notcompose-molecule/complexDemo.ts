@@ -1,6 +1,5 @@
 import { BehaviorSubject } from 'rxjs'
 
-
 // Реализация с использованием RxJs лежит в файле complexDemo-rxjs.ts
 
 // Реализация с использованием notcompose-molecule лежит в файле complexDemo-molecule.ts

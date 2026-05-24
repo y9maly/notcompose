@@ -1,21 +1,23 @@
 import {Node} from "../../notcompose/runtime/Node";
-import {NodeCoordinator} from "../runtime-layout/NodeCoordinator";
 import {TextCanvas} from "../runtime/ui/graphics/TextCanvas";
 import {TextBuffer, TextBufferCanvas, TextCell, TextRow} from "../runtime/ui/graphics/TextBufferCanvas";
 import {Char} from "../../core/types";
 import {DebugTextSpanProcessor, TextSpanProcessor} from "./TextSpanProcessor";
 import {LayoutNode} from "../runtime-layout/LayoutNode";
 import {LayoutNodeExtensionKey} from "../runtime/nodeExtensions/LayoutNodeExtension";
-
+import {BehaviorSubject} from "rxjs";
 
 export interface OutputProcessor {
+    // todo Subject to change
+    viewportSize: BehaviorSubject<[number, number]>
+
     doFrame(node: Node, width: number, height: number): void
 }
 
-export class StringOutputProcessor implements OutputProcessor {
+export class RawOutputProcessor implements OutputProcessor {
     constructor(
-        private onFrame: (string: string) => void,
-        private spanProcessor: TextSpanProcessor = new DebugTextSpanProcessor(),
+        public viewportSize: BehaviorSubject<[number, number]>,
+        private onFrame: (rows: TextRow[], width: number, height: number, node: Node) => void,
     ) {}
 
     private canvas = new TextBufferCanvas(new TextBuffer([]), 0, 0)
@@ -23,7 +25,6 @@ export class StringOutputProcessor implements OutputProcessor {
     doFrame(node: Node, width: number, height: number): void {
         this.canvas = new TextBufferCanvas(new TextBuffer([]), width, height)
         const textRows = this.canvas.buffer.rows
-        const rows: string[] = []
 
         for (let y = 0; y < height; y++) {
             if (textRows[y] === undefined)
@@ -36,44 +37,76 @@ export class StringOutputProcessor implements OutputProcessor {
 
         materialize(node, this.canvas)
 
-        let output = []
+        this.onFrame(textRows, width, height, node)
+    }
+}
 
-        for (let y = 0; y < textRows.length; y++) {
-            const rawRow = new Array(width)
-            this.spanProcessor.transform(textRows[y], rawRow)
-            let rowString = rawRow.join('')
-            rows.push(rowString)
-        }
+export class StringOutputProcessor implements OutputProcessor {
+    private raw: OutputProcessor
 
-        output.push(rows.join('\n'))
+    constructor(
+        public viewportSize: BehaviorSubject<[number, number]>,
+        private onFrame: (string: string) => void,
+        private spanProcessor: TextSpanProcessor = new DebugTextSpanProcessor(),
+    ) {
+        this.raw = new RawOutputProcessor(this.viewportSize, (textRows, width) => {
+            const rows: string[] = []
 
-        this.onFrame(output.join(''))
+            let output = []
+
+            for (let y = 0; y < textRows.length; y++) {
+                const rawRow = new Array(width)
+                this.spanProcessor.transform(textRows[y], rawRow)
+                let rowString = rawRow.join('')
+                rows.push(rowString)
+            }
+
+            output.push(rows.join('\n'))
+
+            this.onFrame(output.join(''))
+        })
+    }
+
+    doFrame(node: Node, width: number, height: number): void {
+        this.raw.doFrame(node, width, height)
     }
 }
 
 export class ConsoleOutputProcessor implements OutputProcessor {
+    public viewportSize: BehaviorSubject<[number, number]>
+    private stringProcessor: StringOutputProcessor
+
     constructor(
         private stream: NodeJS.WriteStream,
         private options?: {
+            onResize?: (width: number, height: number) => void,
             before?: () => void,
             after?: () => void,
         }
-    ) {}
+    ) {
+        this.viewportSize = new BehaviorSubject([process.stdout.columns, process.stdout.rows])
+        // todo memory leak
+        process.stdout.on('resize', () => {
+            this.viewportSize.next([process.stdout.columns, process.stdout.rows])
+            this.options?.onResize?.(process.stdout.columns, process.stdout.rows)
+        })
 
-    private stringProcessor = new StringOutputProcessor(
-        // todo
-        // new CombinedTextSpanProcessor([
-        //     new BoldTextSpanProcessor(),
-        //     new BackgroundColorTextSpanProcessor(),
-        //     new ColorTextSpanProcessor(),
-        //     new UnderlineTextSpanProcessor(),
-        // ]),
-        (string) => {
-            this.options?.before?.()
-            this.draw(string)
-            this.options?.after?.()
-        }
-    )
+        this.stringProcessor = new StringOutputProcessor(
+            this.viewportSize,
+            // todo
+            // new CombinedTextSpanProcessor([
+            //     new BoldTextSpanProcessor(),
+            //     new BackgroundColorTextSpanProcessor(),
+            //     new ColorTextSpanProcessor(),
+            //     new UnderlineTextSpanProcessor(),
+            // ]),
+            (string) => {
+                this.options?.before?.()
+                this.draw(string)
+                this.options?.after?.()
+            }
+        )
+    }
 
     doFrame(node: Node, width: number, height: number): void {
         this.stringProcessor.doFrame(node, width, height)

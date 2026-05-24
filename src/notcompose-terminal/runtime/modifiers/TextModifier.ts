@@ -1,11 +1,10 @@
 import {LayoutModifier} from "./LayoutModifier.js";
 import {ModifierElement} from "../../../notcompose/runtime/Modifier";
 import {MeasureResult} from "../layout/Measurable";
-import {AnnotatedString} from "../ui/AnnotatedString";
+import {annotated, AnnotatedString} from "../ui/AnnotatedString";
 import {TextSpan} from "../ui/TextSpan";
 import {DrawModifier} from "./DrawModifier";
 import {ContentDrawScope} from "../ui/graphics/ContentDrawScope";
-
 
 export function TextModifier(text: string | AnnotatedString): ModifierElement {
     return new TextModifierImpl(text)
@@ -42,6 +41,7 @@ class TextModifierImpl implements DrawModifier {
     })
 
     draw(scope: ContentDrawScope) {
+        scope.drawContent()
         scope.drawText(0, 0, this.buildText(scope.availableWidth, scope.availableHeight))
     }
 
@@ -50,7 +50,7 @@ class TextModifierImpl implements DrawModifier {
         const spans = typeof this.text === 'string' ? [] : this.text.spans
 
         if (availableWidth === 0 || availableHeight === 0 || rawString === '')
-            return new AnnotatedString('')
+            return annotated``
 
         if (availableWidth >= this.requiredWidth && availableHeight >= this.requiredHeight)
             return new AnnotatedString(rawString, spans)

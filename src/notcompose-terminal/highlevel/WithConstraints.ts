@@ -13,7 +13,6 @@ import {Constraints} from "../runtime/layout/Constraints";
 import {MeasurePolicy} from "../runtime/layout/MeasurePolicy";
 import {NameElement} from "../../notcompose/runtime/modifiers/NameElement";
 
-
 export function BoxWithConstraints(
     content: (constraints: Constraints) => void,
     modifier: Modifier = new Modifier(),

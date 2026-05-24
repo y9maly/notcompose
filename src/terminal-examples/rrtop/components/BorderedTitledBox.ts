@@ -8,7 +8,6 @@ import {elvis} from "../../../notcompose/runtime-highlevel/elvis";
 import {Row} from "../../../notcompose-terminal/highlevel/Row";
 import {colored} from "../../../notcompose-terminal/runtime/ui/AnnotatedString";
 
-
 /**
  * ```
  * ┌┐ Title ┌───┐

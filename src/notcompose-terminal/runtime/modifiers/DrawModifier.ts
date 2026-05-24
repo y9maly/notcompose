@@ -2,7 +2,6 @@ import {ModifierElement} from "../../../notcompose/runtime/Modifier";
 import {ContentDrawScope} from "../ui/graphics/ContentDrawScope";
 import {DrawScope} from "../ui/graphics/DrawScope";
 
-
 export interface DrawModifier extends ModifierElement {
     draw(scope: ContentDrawScope): void
 }

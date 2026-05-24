@@ -1,6 +1,5 @@
 import {Color} from "./Color";
 
-
 export class TextSpan {
     constructor(
         public readonly type: TextSpanType,

@@ -2,7 +2,6 @@ import {LayoutModifier} from "./LayoutModifier.js";
 import {ModifierElement} from "../../../notcompose/runtime/Modifier";
 import {MeasureResult} from "../layout/Measurable";
 
-
 export function PaddingModifier(all: number): ModifierElement
 export function PaddingModifier(horizontal: number, vertical: number): ModifierElement
 export function PaddingModifier(start: number, top: number, end: number, bottom: number): ModifierElement

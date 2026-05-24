@@ -3,9 +3,7 @@ import {DrawModifier} from "./DrawModifier";
 import {ContentDrawScope} from "../ui/graphics/ContentDrawScope";
 import {Color} from "../ui/Color";
 import {elvis} from "../../../notcompose/runtime-highlevel/elvis";
-import {ColorTextSpan, TextSpan} from "../ui/TextSpan";
-import {AnnotatedString} from "../ui/AnnotatedString";
-
+import {colored} from "../ui/AnnotatedString";
 
 export function BackgroundModifier(
     symbol: string,
@@ -26,15 +24,17 @@ class BackgroundModifierImpl implements DrawModifier {
     constructor(private symbol: string, private color: Color | null) {}
 
     draw(scope: ContentDrawScope) {
-        const spans = this.color !== null
-            ? [new TextSpan(new ColorTextSpan(this.color), 0, 1)]
-            : []
+        const string = this.color !== null
+            ? colored(this.color, this.symbol)
+            : this.symbol
 
         for (let x = 0; x < scope.availableWidth; x++) {
             for (let y = 0; y < scope.availableHeight; y++) {
-                scope.drawText(x, y, new AnnotatedString(this.symbol, spans))
+                scope.drawText(x, y, string)
             }
         }
+
+        scope.drawContent()
     }
 
     equals(other: ModifierElement): boolean {

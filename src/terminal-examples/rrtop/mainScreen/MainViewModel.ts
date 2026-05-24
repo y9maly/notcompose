@@ -2,7 +2,6 @@ import {mutableStateOf} from "../../../notcompose/runtime-highlevel/mutableState
 import {HistoryData} from "../components/plot/HistoryData";
 import {SystemInfoRepository} from "../repository/SystemInfoRepository";
 
-
 export class MainViewModel {
     constructor(
         private systemInfoRepository: SystemInfoRepository

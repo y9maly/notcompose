@@ -1,6 +1,5 @@
 import {DrawScope} from "./DrawScope";
 
-
 export interface ContentDrawScope extends DrawScope {
     drawContent(): void
 }

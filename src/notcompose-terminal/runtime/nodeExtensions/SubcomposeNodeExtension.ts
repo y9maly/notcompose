@@ -3,7 +3,6 @@ import {Key} from "../../../notcompose/runtime/Composer";
 import {Constraints} from "../layout/Constraints";
 import {Measurable, MeasureResult} from "../layout/Measurable";
 
-
 export const SubcomposeNodeExtensionKey = Symbol('SubcomposeNodeExtensionKey')
 
 export interface SubcomposeScope {

@@ -1,6 +1,5 @@
 import {TextCanvas} from "./TextCanvas";
 
-
 // todo do not inherent TextCanvas
 export interface DrawScope extends TextCanvas {
     availableWidth: number

@@ -8,7 +8,6 @@ import {Key} from "../../notcompose/runtime-highlevel/Key";
 import {DisposableEffect} from "../../notcompose/runtime-highlevel/DisposableEffect";
 import {rememberState} from "../../notcompose/runtime-highlevel/rememberState";
 
-
 setTerminalContent(() => {
     const screen = remember(() => mutableStateOf(1))
 

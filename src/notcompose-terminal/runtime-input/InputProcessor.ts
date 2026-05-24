@@ -1,31 +1,21 @@
-import * as readline from "node:readline";
 import {InputDispatcher} from "./InputDispatcher";
-import process from "node:process";
-
+import {InputSource} from "./InputSource";
 
 export class InputProcessor {
     constructor(
-        private dispatcher: InputDispatcher
+        private source: InputSource,
+        private dispatcher: InputDispatcher,
     ) {}
 
-    private listener?: ((string: string, key: unknown) => boolean)
+    private disposable?: Disposable
 
     start() {
-        readline.emitKeypressEvents(process.stdin)
-        if (process.stdin.isTTY) {
-            process.stdin.setRawMode(true)
-        }
-
-        this.listener = (string, key) => {
-            return this.dispatcher.dispatch(string, key)
-        }
-
-        process.stdin.on('keypress', this.listener);
+        this.stop()
+        this.disposable = this.source.start((string, key) => this.dispatcher.dispatch(string, key))
     }
 
     stop() {
-        if (this.listener === undefined)
-            return
-        process.stdin.off('keypress', this.listener)
+        if (this.disposable)
+            this.disposable[Symbol.dispose]()
     }
 }

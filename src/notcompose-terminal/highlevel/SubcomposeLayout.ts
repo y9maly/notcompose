@@ -10,7 +10,6 @@ import {Constraints} from "../runtime/layout/Constraints";
 import {Measurable, MeasureResult} from "../runtime/layout/Measurable";
 import {NameElement} from "../../notcompose/runtime/modifiers/NameElement";
 
-
 export function SubcomposeLayout(content: (constraints: Constraints) => MeasureResult, modifier: Modifier = new Modifier()) {
     currentComposer().startNode(modifier.then(new NameElement('SubcomposeLayout')))
     currentComposer().applyExtension(SubcomposeNodeExtensionKey, {

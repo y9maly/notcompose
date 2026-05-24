@@ -4,7 +4,6 @@ import {Column} from "../../../notcompose-terminal/highlevel/Column";
 import {Text} from "../../../notcompose-terminal/highlevel/Text";
 import {Alignment} from "../../../notcompose-terminal/runtime/ui/Alignment";
 
-
 export function RawInfoScreen(
     viewModel: RawInfoViewModel,
     modifier: Modifier = new Modifier(),

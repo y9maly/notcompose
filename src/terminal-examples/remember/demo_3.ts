@@ -6,7 +6,6 @@ import {remember} from "../../notcompose/runtime-highlevel/remember";
 import {Text} from "../../notcompose-terminal/highlevel/Text";
 import {input} from "../../notcompose-terminal/runtime/Input";
 
-
 const globalCounter: MutableState<number> = mutableStateOf(0)
 
 setInterval(() => {

@@ -1,7 +1,6 @@
 import {Size} from "../ui/Size";
 import {assertUInt} from "../../../core/types";
 
-
 export class Constraints {
     minWidth: number         // 0..
     maxWidth: number | null  // 0..inf (null is infinity)

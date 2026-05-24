@@ -18,7 +18,6 @@ import {input} from "../../../notcompose-terminal/runtime/Input";
 import {annotated, bold, colored} from "../../../notcompose-terminal/runtime/ui/AnnotatedString";
 import {Color} from "../../../notcompose-terminal/runtime/ui/Color";
 
-
 export function MainScreen(
     viewModel: MainViewModel,
     modifier: Modifier = new Modifier(),

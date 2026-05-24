@@ -1,7 +1,6 @@
 import {SystemInfoRepository} from "../repository/SystemInfoRepository";
 import {mutableStateOf} from "../../../notcompose/runtime-highlevel/mutableStateOf";
 
-
 export class RawInfoViewModel {
     constructor(
         public systemInfoRepository: SystemInfoRepository,

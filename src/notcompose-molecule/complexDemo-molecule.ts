@@ -33,7 +33,6 @@ import {subjectAsState} from "../notcompose/runtime-rxjs/subjectAsState";
 import {Key} from "../notcompose/runtime-highlevel/Key";
 import {rememberState} from "../notcompose/runtime-highlevel/rememberState";
 
-
 export const dashboardVm = subjectMolecule<DashboardVm>(() => {
     return {
         header: HeaderVmComponent(),

@@ -9,7 +9,6 @@ import {
 } from "./TextSpan";
 import {Color} from "./Color";
 
-
 export class AnnotatedString {
     public readonly length: number
 

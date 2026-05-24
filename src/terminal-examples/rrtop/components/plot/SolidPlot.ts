@@ -12,7 +12,6 @@ import {Color} from "../../../../notcompose-terminal/runtime/ui/Color";
 import {elvis} from "../../../../notcompose/runtime-highlevel/elvis";
 import {colored} from "../../../../notcompose-terminal/runtime/ui/AnnotatedString";
 
-
 export function SolidPlot(
     historyData: HistoryData,
     modifier: Modifier = new Modifier(),

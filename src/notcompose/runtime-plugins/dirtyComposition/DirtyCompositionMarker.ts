@@ -1,6 +1,5 @@
 import {Node} from "../../runtime/Node";
 
-
 const DirtyCompositionMarker = Symbol('DirtyCompositionMarker')
 
 

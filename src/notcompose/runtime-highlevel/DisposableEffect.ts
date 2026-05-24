@@ -2,7 +2,6 @@ import {currentComposer} from "../runtime/currentComposer.js";
 import {remember} from "./remember.js";
 import {RememberObserver} from "../runtime-plugins/rememberObserver/RememberObserver.js";
 
-
 const Empty = Symbol()
 
 export function DisposableEffect(
@@ -43,13 +42,21 @@ class DisposableEffectImpl implements RememberObserver {
 
     onRemembered(): void {
         currentComposer().exitComposition()
-        this.onDispose = this.block()
-        currentComposer().reenterComposition()
+        try {
+            this.onDispose = this.block()
+        } finally {
+            currentComposer().reenterComposition()
+        }
     }
 
     onForgotten(): void {
-        currentComposer().exitComposition()
-        if (this.onDispose) this.onDispose()
-        currentComposer().reenterComposition()
+        if (this.onDispose) {
+            currentComposer().exitComposition()
+            try {
+                this.onDispose()
+            } finally {
+                currentComposer().reenterComposition()
+            }
+        }
     }
 }

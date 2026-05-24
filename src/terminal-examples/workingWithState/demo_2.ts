@@ -5,7 +5,6 @@ import {Text} from "../../notcompose-terminal/highlevel/Text";
 import {Column} from "../../notcompose-terminal/highlevel/Column";
 import {Box} from "../../notcompose-terminal/highlevel/Box";
 
-
 const counter: MutableState<number> = mutableStateOf(0)
 
 setInterval(() => {

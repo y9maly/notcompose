@@ -2,7 +2,6 @@ import {execSync} from "node:child_process";
 import * as os from "node:os";
 import fs from "fs";
 
-
 export interface SystemInfoRepository {
     cpusCount(): number
     cpuLoad(): number

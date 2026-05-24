@@ -3,7 +3,6 @@ import {Modifier} from "./Modifier.js";
 import {NodeExtension} from "./NodeExtension.js";
 import {NameElement} from "./modifiers/NameElement.js";
 
-
 export class Node {
     constructor(
         public parent: Node | null,
@@ -16,5 +15,14 @@ export class Node {
 
     findName(): string | null {
         return this.modifier.elements.find(it => it instanceof NameElement)?.name ?? null
+    }
+
+    walkChildrenDFS(block: (node: Node) => void) {
+        const stack = [...this.children]
+        while (stack.length > 0) {
+            const {node} = stack.pop()!
+            block(node)
+            stack.push(...node.children)
+        }
     }
 }

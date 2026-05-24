@@ -4,7 +4,6 @@ import {Placeable} from "../layout/Placeable";
 import {IntrinsicMeasurable} from "../layout/IntrinsicMeasurable";
 import {Measurable, MeasureResult} from "../layout/Measurable";
 
-
 export interface LayoutModifier extends ModifierElement {
     measure(measurable: Measurable, constraints: Constraints): MeasureResult
 

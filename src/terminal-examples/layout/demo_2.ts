@@ -5,7 +5,6 @@ import {Row} from "../../notcompose-terminal/highlevel/Row";
 import {Column} from "../../notcompose-terminal/highlevel/Column";
 import {Constraints} from "../../notcompose-terminal/runtime/layout/Constraints";
 
-
 setTerminalContent(() => {
     ColumnWithConstraints((constraints: Constraints) => {
         Text(`Ширина терминала: ${constraints.maxWidth}`)

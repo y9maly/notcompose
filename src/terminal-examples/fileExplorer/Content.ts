@@ -9,7 +9,6 @@ import {ExampleHeader} from "../common/ExampleHeader";
 import {Divider} from "../common/Divider";
 import {Constraints} from "../../notcompose-terminal/runtime/layout/Constraints";
 
-
 export function Content(
     currentDirectoryPath: string,
     items: Item[],

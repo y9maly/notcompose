@@ -1,15 +1,11 @@
 import {ModifierElement} from "../../../notcompose/runtime/Modifier";
 import {LayoutModifier} from "./LayoutModifier";
-import {TextCanvas} from "../ui/graphics/TextCanvas";
 import {elvis} from "../../../notcompose/runtime-highlevel/elvis";
-import {Constraints} from "../layout/Constraints";
-import {Measurable, MeasureResult} from "../layout/Measurable";
+import {MeasureResult} from "../layout/Measurable";
 import {DrawModifier} from "./DrawModifier";
 import {ContentDrawScope} from "../ui/graphics/ContentDrawScope";
 import {Color} from "../ui/Color";
-import {AnnotatedString} from "../ui/AnnotatedString";
-import {ColorTextSpan, TextSpan} from "../ui/TextSpan";
-
+import {AnnotatedString, colored} from "../ui/AnnotatedString";
 
 export function BorderModifier(params?: {
     color?: Color | null,
@@ -66,6 +62,8 @@ class BorderModifierImpl implements DrawModifier {
     });
 
     draw(scope: ContentDrawScope) {
+        scope.drawContent()
+
         scope.drawText(0, 0, this.colored(this.topStart))
         scope.drawText(scope.availableWidth-1, 0, this.colored(this.topEnd))
         scope.drawText(scope.availableWidth-1, scope.availableHeight-1, this.colored(this.bottomEnd))
@@ -86,14 +84,12 @@ class BorderModifierImpl implements DrawModifier {
         for (let x = 1; x < scope.availableWidth-1; x++) {
             scope.drawText(x, scope.availableHeight-1, this.colored(this.horizontalBottom))
         }
-
-        scope.drawContent()
     }
 
     private colored(string: string): string | AnnotatedString {
         if (this.color === null)
             return string
-        return new AnnotatedString(string, [new TextSpan(new ColorTextSpan(this.color), 0, string.length)])
+        return colored(this.color, string)
     }
 
     equals(other: ModifierElement): boolean {

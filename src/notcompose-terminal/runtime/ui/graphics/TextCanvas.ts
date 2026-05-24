@@ -4,7 +4,6 @@ import {TransformationMatrix} from "./TransformationMatrix";
 import {Float} from "../../../../core/types";
 import {Size} from "../Size";
 
-
 export interface TextCanvas {
     get width(): number
     get height(): number

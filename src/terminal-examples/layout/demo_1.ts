@@ -7,7 +7,6 @@ import {Placeable} from "../../notcompose-terminal/runtime/layout/Placeable";
 import {MeasurePolicy} from "../../notcompose-terminal/runtime/layout/MeasurePolicy";
 import {MeasureResult} from "../../notcompose-terminal/runtime/layout/Measurable";
 
-
 // Давайте создадим кастомный лэяут который распологает детей по горизонтали:
 // Сверзу-вниз, Слева-направо
 // Вот так:

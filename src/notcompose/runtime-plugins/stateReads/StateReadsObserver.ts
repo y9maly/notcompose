@@ -2,7 +2,6 @@ import {Node} from "../../runtime/Node";
 import {State} from "../../runtime/State";
 import {StateReads} from "./StateReads";
 
-
 // Отслеживает изменение StateReads у ноды.
 export interface StateReadsObserver {
     // Вызывается сразу как [node] во время её композиции прочитала [state]

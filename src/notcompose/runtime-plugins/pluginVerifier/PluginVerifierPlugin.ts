@@ -3,7 +3,6 @@ import {ComposerPluginContext} from "../../runtime/ComposerPluginContext";
 import {Node} from "../../runtime/Node";
 import {Composer} from "../../runtime/Composer";
 
-
 export class PluginVerifierPlugin implements PartialComposerPlugin {
     private context!: ComposerPluginContext
     private composer!: Composer

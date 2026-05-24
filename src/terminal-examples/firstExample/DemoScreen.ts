@@ -11,7 +11,6 @@ import {Box} from "../../notcompose-terminal/highlevel/Box";
 import {Key} from "../../notcompose/runtime-highlevel/Key";
 import {setTerminalContent} from "../../notcompose-terminal/setTerminalContent";
 
-
 setTerminalContent(() => {
     DemoScreen()
 })

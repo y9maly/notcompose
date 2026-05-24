@@ -8,7 +8,6 @@ import {MeasurePolicy} from "../runtime/layout/MeasurePolicy";
 import {LayoutNode} from "./LayoutNode";
 import {LayoutNodeExtensionKey} from "../runtime/nodeExtensions/LayoutNodeExtension";
 
-
 export function applyLayoutNode(
     node: Node,
     insert: (content: () => void, node: Node) => void,
@@ -16,6 +15,7 @@ export function applyLayoutNode(
     // TODO reuse node coordinator
 
     const previousLayoutNode = node.extensions.get(LayoutNodeExtensionKey) as LayoutNode | undefined
+    const measurePolicy = node.extensions.get(MeasurePolicyNodeExtensionKey) as MeasurePolicy | undefined
 
     const elements = []
     let layoutModifier: LayoutModifier | null = null
@@ -25,8 +25,7 @@ export function applyLayoutNode(
         const element = node.modifier.elements[i]
         if (LayoutModifier.symbol in element) {
             if (coordinator === null) {
-                const measurePolicy = node.extensions.get(MeasurePolicyNodeExtensionKey) as MeasurePolicy | undefined
-                coordinator = new InnerNodeCoordinator([...elements], insert, node, measurePolicy ?? null)
+                coordinator = new InnerNodeCoordinator([...elements], insert, measurePolicy ?? null)
                 elements.splice(0, elements.length)
             }
 
@@ -44,7 +43,7 @@ export function applyLayoutNode(
 
     if (coordinator === null) {
         const measurePolicy = node.extensions.get(MeasurePolicyNodeExtensionKey) as MeasurePolicy | undefined
-        coordinator = new InnerNodeCoordinator([...elements], insert, node, measurePolicy ?? null)
+        coordinator = new InnerNodeCoordinator([...elements], insert, measurePolicy ?? null)
         elements.splice(0, elements.length)
     }
 
@@ -58,8 +57,19 @@ export function applyLayoutNode(
         layoutNode = previousLayoutNode
         layoutNode.outerCoordinator = coordinator
     } else {
-        layoutNode = new LayoutNode(coordinator)
+        layoutNode = new LayoutNode(node, coordinator, measurePolicy ?? null)
         node.extensions.set(LayoutNodeExtensionKey, layoutNode)
+    }
+
+    {
+        let current = coordinator
+        while (true) {
+            current.layoutNode = layoutNode
+            if (current instanceof LayoutModifierNodeCoordinator)
+                current = current.nextCoordinator
+            else
+                break
+        }
     }
 
     return layoutNode

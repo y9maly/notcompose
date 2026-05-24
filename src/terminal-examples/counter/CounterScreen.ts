@@ -10,7 +10,6 @@ import {rememberState} from "../../notcompose/runtime-highlevel/rememberState";
 import {DisposableEffect} from "../../notcompose/runtime-highlevel/DisposableEffect";
 import {ExampleHeader} from "../common/ExampleHeader";
 
-
 export function CounterScreen(modifier: Modifier = new Modifier()) {
     // THIS will be invoked only once
 

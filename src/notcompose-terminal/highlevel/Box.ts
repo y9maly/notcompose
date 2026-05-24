@@ -8,7 +8,6 @@ import {MeasureResult} from "../runtime/layout/Measurable";
 import {MeasurePolicy} from "../runtime/layout/MeasurePolicy";
 import {NameElement} from "../../notcompose/runtime/modifiers/NameElement";
 
-
 export const BoxMeasurePolicy = (
     alignment: Alignment = Alignment.TopStart,
     propagateMinConstraints: boolean = false,

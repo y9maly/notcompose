@@ -1,45 +1,61 @@
 import {State} from "../runtime/State";
 import {GlobalSnapshot} from "../runtime/Snapshot";
-
+import {Disposable} from "vitest/optional-runtime-types.js";
 
 export class StateDependenciesMap<
     CONSUMER extends NonNullable<unknown>,
     DIRTY_OBJECT extends NonNullable<unknown> = CONSUMER,
 > {
     constructor(
-        private dirtyObjectOf: (consumer: CONSUMER) => DIRTY_OBJECT,
+        private dirtyObjectOf: (consumer: CONSUMER, writtenState: State<unknown>) => DIRTY_OBJECT | null,
         private onDirty: (object: DIRTY_OBJECT) => void,
     ) {}
 
     private stateConsumers = new Map<State<unknown>, Set<CONSUMER>>()
     private consumerDependencies = new Map<CONSUMER, Set<State<unknown>>>()
-    private observers = new Map<State<unknown>, Disposable>()
     public readonly dirtyObjects = new Set<DIRTY_OBJECT>()
+
+    // Используется только во время композиции.
+    // Нужно, чтобы не инвалидировать ноды, которые зависят от стейта, но ещё не прочитали старое значение.
+    // todo Это должно находится не здесь. Временно пока пусть тут будет.
+    private currentStateReadsMap = new Map<CONSUMER, Set<State<unknown>>>()
 
     //
 
+    // todo Нужно только для currentStateReadsMap
+    startNode(consumer: CONSUMER) {
+        this.currentStateReadsMap.set(consumer, new Set())
+    }
+
+    // todo Нужно только для currentStateReadsMap
+    endNode(consumer: CONSUMER) {
+        this.currentStateReadsMap.delete(consumer)
+    }
+
     onStateRead(consumer: CONSUMER, state: State<unknown>) {
+        let set = this.currentStateReadsMap.get(consumer)
+        if (set === undefined) {
+            set = new Set()
+            this.currentStateReadsMap.set(consumer, set)
+        }
+        set.add(state)
+
         this.addDependency(consumer, state)
         this.observeIfNotObservedYet(state)
     }
 
     onStatesChanged(consumer: CONSUMER, states: Set<State<unknown>>) {
+        this.currentStateReadsMap.delete(consumer)
         this.clearDependencies(consumer)
+
         if (states.size === 0)
             return
 
-        this.setDependencies(consumer, states)
+        this.setDependencies(consumer, new Set(states))
 
-        const deletedDependencies = new Set<State<unknown>>(this.consumerDependencies.get(consumer) ?? [])
-        states.forEach(newDependency => deletedDependencies.delete(newDependency))
-
-        // Useless because [onStateRead] already added observer for this state
-        // states.forEach(newDependency => this.observeIfNotObservedYet(newDependency))
-
-        deletedDependencies.forEach(deletedDependency => {
-            if ((this.stateConsumers.get(deletedDependency)?.size ?? -1) === 0)
-                this.deleteObserver(deletedDependency)
-        })
+        // Useless when we don't use clearDependencies. Because [onStateRead] already added observer for this state
+        // But we are use clearDependencies.
+        states.forEach(newDependency => this.observeIfNotObservedYet(newDependency))
     }
 
     forget(consumer: CONSUMER) {
@@ -48,31 +64,42 @@ export class StateDependenciesMap<
 
     //
 
+    private observed = new Set<State<unknown>>()
+    private observerDisposable: Disposable | null = null
     private observeIfNotObservedYet(state: State<unknown>) {
-        if (this.observers.has(state)) {
+        this.observed.add(state)
+        if (this.observerDisposable !== null)
             return
-        }
 
-        const observer = GlobalSnapshot.observeStateWrites((writtenState) => {
-            if (writtenState !== state)
-                return
+        this.observerDisposable = GlobalSnapshot.observeStateWrites((writtenState) => {
             const consumers = this.stateConsumers.get(state)
             if (consumers === undefined)
                 throw new Error(`Must be unreachable; This state observed but it doesn't have any consumer`)
             for (const consumer of consumers) {
-                const object = this.dirtyObjectOf(consumer)
-                if (addToSet(this.dirtyObjects, object)) {
-                    this.onDirty(object)
+                let canBeDirty = true
+                const currentStateReads = this.currentStateReadsMap.get(consumer)
+                if (currentStateReads !== undefined && !currentStateReads.has(writtenState))
+                    canBeDirty = false
+
+                if (canBeDirty) {
+                    const object = this.dirtyObjectOf(consumer, writtenState)
+                    if (object !== null) {
+                        if (addToSet(this.dirtyObjects, object)) {
+                            this.onDirty(object)
+                        }
+                    }
                 }
             }
         })
-
-        this.observers.set(state, observer)
     }
 
     private deleteObserver(state: State<unknown>) {
-        this.observers.get(state)?.[Symbol.dispose]()
-        this.observers.delete(state)
+        this.observed.delete(state)
+        if (this.observed.size === 0 && this.observerDisposable !== null) {
+            const disposable = this.observerDisposable
+            this.observerDisposable = null
+            disposable[Symbol.dispose]()
+        }
     }
 
     private addDependency(consumer: CONSUMER, dependency: State<unknown>): void {
@@ -100,8 +127,10 @@ export class StateDependenciesMap<
         dependencies.forEach(dependency => {
             const consumers = this.stateConsumers.get(dependency)!
             consumers.delete(consumer)
-            if (consumers.size === 0)
+            if (consumers.size === 0) {
                 this.stateConsumers.delete(dependency)
+                this.deleteObserver(dependency)
+            }
         })
     }
 

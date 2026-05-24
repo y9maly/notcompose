@@ -4,7 +4,6 @@ import {NodeExtension} from "./NodeExtension.js";
 import {ComposerPlugin, PartialComposerPlugin} from "./ComposerPlugin.js";
 import {ComposerPluginContext} from "./ComposerPluginContext";
 
-
 export type Key = number | string
 
 export interface Frame {

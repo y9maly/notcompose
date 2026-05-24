@@ -6,7 +6,6 @@ import {Modifier} from "../../notcompose/runtime/Modifier";
 import {Box} from "../../notcompose-terminal/highlevel/Box";
 import {DrawModifier} from "../../notcompose-terminal/runtime/modifiers/DrawModifier";
 
-
 interface Vec3 {
     x: number, y: number, z: number
 }

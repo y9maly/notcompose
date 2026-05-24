@@ -2,7 +2,6 @@ import {remember} from "./remember.js";
 import {RememberObserver} from "../runtime-plugins/rememberObserver/RememberObserver.js";
 import {currentComposer} from "../runtime/currentComposer";
 
-
 const Empty = Symbol()
 
 export function LaunchedEffect(
@@ -41,8 +40,11 @@ class LaunchedEffectImpl implements RememberObserver {
 
     onRemembered(): void {
         currentComposer().exitComposition()
-        this.block()
-        currentComposer().reenterComposition()
+        try {
+            this.block()
+        } finally {
+            currentComposer().reenterComposition()
+        }
     }
 
     onForgotten(): void {}

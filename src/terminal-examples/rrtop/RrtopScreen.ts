@@ -21,7 +21,6 @@ import {Divider} from "../common/Divider";
 import {Text} from "../../notcompose-terminal/highlevel/Text";
 import {Row} from "../../notcompose-terminal/highlevel/Row";
 
-
 type Screen = 'Main' | 'RawInfo'
 const screens: Screen[] = ['Main', 'RawInfo']
 

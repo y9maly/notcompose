@@ -6,7 +6,6 @@ import {HeightModifier} from "../../notcompose-terminal/runtime/modifiers/SizeMo
 import {Color} from "../../notcompose-terminal/runtime/ui/Color";
 import {elvis} from "../../notcompose/runtime-highlevel/elvis";
 
-
 export function Divider(symbol: string = '-', params?: {
     color?: Color | null,
 }) {

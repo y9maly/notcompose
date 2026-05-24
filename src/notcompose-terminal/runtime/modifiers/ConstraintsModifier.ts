@@ -1,7 +1,6 @@
 import {LayoutModifier} from "./LayoutModifier";
 import {MeasureResult} from "../layout/Measurable";
 
-
 export const ConstraintsModifiers = {
     MinusMaxWidth: (value: number) => LayoutModifier((measurable, constraints) => {
         const placeable = measurable.measure(constraints.minusMaxWidth(value))

@@ -7,7 +7,6 @@ import {Column} from "../../notcompose-terminal/highlevel/Column";
 import {Text} from "../../notcompose-terminal/highlevel/Text";
 import {LaunchedEffect} from "../../notcompose/runtime-highlevel/LaunchedEffect";
 
-
 const screen1LaunchedEffectCounter = mutableStateOf(0)
 
 setTerminalContent(() => {

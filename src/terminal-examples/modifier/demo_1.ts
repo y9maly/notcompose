@@ -7,7 +7,6 @@ import {PaddingModifier} from "../../notcompose-terminal/runtime/modifiers/Paddi
 import {BackgroundModifier} from "../../notcompose-terminal/runtime/modifiers/BackgroundModifier";
 import {SizeModifier} from "../../notcompose-terminal/runtime/modifiers/SizeModifier";
 
-
 setTerminalContent(() => {
     Column(() => {
         Box(() => {

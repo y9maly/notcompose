@@ -1,6 +1,5 @@
 import {ModifierElement} from "../Modifier.js";
 
-
 /**
  * Для дебага
  */

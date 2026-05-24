@@ -6,7 +6,6 @@ import {TransformationMatrix} from "./TransformationMatrix";
 import {Size} from "../Size";
 import {Rect} from "../Rect";
 
-
 export class TextBufferCanvas implements TextCanvas {
     constructor(
         public readonly buffer: TextBuffer,

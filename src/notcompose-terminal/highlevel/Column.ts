@@ -6,7 +6,6 @@ import {Placeable} from "../runtime/layout/Placeable";
 import {MeasurePolicy} from "../runtime/layout/MeasurePolicy";
 import {NameElement} from "../../notcompose/runtime/modifiers/NameElement";
 
-
 export const ColumnMeasurePolicy = (
     horizontalAlignment: HorizontalAlignment = Alignment.Start
 ) => MeasurePolicy((measurables, constraints) => {

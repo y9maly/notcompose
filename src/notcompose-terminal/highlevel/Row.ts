@@ -6,7 +6,6 @@ import {Placeable} from "../runtime/layout/Placeable";
 import {MeasurePolicy} from "../runtime/layout/MeasurePolicy";
 import {NameElement} from "../../notcompose/runtime/modifiers/NameElement";
 
-
 export const RowMeasurePolicy = (
     verticalAlignment: VerticalAlignment = Alignment.Top
 ) => MeasurePolicy((measurables, constraints) => {
@@ -16,12 +15,8 @@ export const RowMeasurePolicy = (
     const placeables: Placeable[] = []
     let currentConstraints = constraints.copyMaxDimensions()
     measurables.forEach(measurable => {
-        let x = false
         const placeable = measurable.measure(currentConstraints)
         placeables.push(placeable)
-        if (x) {
-            measurable.measure(currentConstraints)
-        }
         const { width, height } = placeable
         currentConstraints = currentConstraints.minusMaxWidth(width)
         totalWidth += width

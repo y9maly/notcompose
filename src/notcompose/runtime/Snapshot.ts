@@ -1,11 +1,11 @@
 import {State} from "./State";
 
-
 const stateReadObservers = new Set<(state: State<unknown>) => void>()
 const stateWriteObservers = new Set<(state: State<unknown>) => void>()
 
 export class GlobalSnapshot {
     private static disableReadObservation = false
+    private static disableWriteObservation = false
 
     static observeStateReads(callback: (state: State<unknown>) => void): Disposable {
         stateReadObservers.add(callback)
@@ -34,6 +34,8 @@ export class GlobalSnapshot {
     }
 
     static observeWrite(state: State<unknown>) {
+        if (this.disableWriteObservation)
+            return
         const observersSnapshot = [...stateWriteObservers]
 
         for (const observer of observersSnapshot) {
@@ -41,6 +43,23 @@ export class GlobalSnapshot {
                 observer(state)
             }
         }
+    }
+
+    static withoutReadWriteObservation<T>(content: () => T): T {
+        if (this.disableReadObservation && this.disableWriteObservation)
+            return content()
+        const oldDisableReadObservation = this.disableReadObservation
+        const oldDisableWriteObservation = this.disableWriteObservation
+        this.disableReadObservation = true
+        this.disableWriteObservation = true
+        let value: T
+        try {
+            value = content()
+        } finally {
+            this.disableReadObservation = oldDisableReadObservation
+            this.disableWriteObservation = oldDisableWriteObservation
+        }
+        return value
     }
 
     static withoutReadObservation<T>(content: () => T): T {
@@ -52,6 +71,19 @@ export class GlobalSnapshot {
             value = content()
         } finally {
             this.disableReadObservation = false
+        }
+        return value
+    }
+
+    static withoutWriteObservation<T>(content: () => T): T {
+        if (this.disableWriteObservation)
+            return content()
+        this.disableWriteObservation = true
+        let value: T
+        try {
+            value = content()
+        } finally {
+            this.disableWriteObservation = false
         }
         return value
     }

@@ -4,7 +4,6 @@ import {Text} from "../../notcompose-terminal/highlevel/Text";
 import {Alignment} from "../../notcompose-terminal/runtime/ui/Alignment";
 import {Divider} from "./Divider";
 
-
 export function ExampleHeader(text: string) {
     Box(() => {
         Divider()

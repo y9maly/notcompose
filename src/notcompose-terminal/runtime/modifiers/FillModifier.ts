@@ -3,7 +3,6 @@ import {LayoutModifier} from "./LayoutModifier";
 import {Constraints} from "../layout/Constraints";
 import {MeasureResult} from "../layout/Measurable";
 
-
 /**
  * @param fraction 0 - 0%; 1 - 100%
  */

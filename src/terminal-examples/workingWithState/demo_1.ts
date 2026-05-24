@@ -3,7 +3,6 @@ import {mutableStateOf} from "../../notcompose/runtime-highlevel/mutableStateOf"
 import {Text} from "../../notcompose-terminal/highlevel/Text";
 import {MutableState} from "../../notcompose/runtime/State";
 
-
 const counter: MutableState<number> = mutableStateOf(0)
 
 setInterval(() => {

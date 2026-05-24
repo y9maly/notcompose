@@ -1,7 +1,6 @@
 import {Node} from "../../notcompose/runtime/Node";
 import {InputModifier} from "../runtime/modifiers/InputModifier";
 
-
 export interface InputDispatcher {
     dispatch(string: string, key: unknown): boolean
 }
