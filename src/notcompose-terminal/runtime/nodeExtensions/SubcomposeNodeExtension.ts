@@ -2,8 +2,9 @@
 import {Key} from "../../../notcompose/runtime/Composer";
 import {Constraints} from "../layout/Constraints";
 import {Measurable, MeasureResult} from "../layout/Measurable";
+import {NodeExtensionKey} from "../../../notcompose/runtime/NodeExtensionKey";
 
-export const SubcomposeNodeExtensionKey = Symbol('SubcomposeNodeExtensionKey')
+export const SubcomposeNodeExtensionKey = new NodeExtensionKey<SubcomposeNodeExtension>('Subcompose')
 
 export interface SubcomposeScope {
     subcompose(key: Key | null, content: () => void): ReadonlyArray<Measurable>

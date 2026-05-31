@@ -1,13 +1,13 @@
 import {Node} from "./Node.js";
 import {Modifier} from "./Modifier.js";
-import {NodeExtension} from "./NodeExtension.js";
-import {ComposerPlugin, PartialComposerPlugin} from "./ComposerPlugin.js";
+import {CompleteComposerPlugin, ComposerPlugin} from "./ComposerPlugin.js";
 import {ComposerPluginContext} from "./ComposerPluginContext";
+import {NodeExtensionKey} from "./NodeExtensionKey";
 
 export type Key = number | string
 
 export interface Frame {
-    isCompositionRoot: boolean
+    isTreeRoot: boolean
     node: Node
     key: Key | null
     composingState: 'NotComposed' | 'Composing' | 'Composed' // Initially 'NotComposed'
@@ -29,11 +29,11 @@ const Empty = Symbol('Empty')
  * Управляет удалением/добавлением дочерних Node, мемоизирует значения (remember)
  *
  * Root-нодой считается самая первая нода в корневой композиции. (frames[0])
- * Composition-root нодой считается первая ноды в текущем дереве композиции. (frames.first(it => it.isCompositionRoot))
- * Дерево композиции начинается с помощью [startRootNode] и заканчивается с помощью [endRootNode].
- * Вызовы [startRootNode]/[endRootNode] могут быть вложенными - создается новое дерево композиции.
+ * Tree-root нодой считается первая ноды в текущем дереве композиции. (frames.last(it => it.isTreeRoot))
+ * Tree-root нода начинается с помощью [startTree] и заканчивается с помощью [endTree].
+ * Вызовы [startTree]/[endTree] могут быть вложенными - создается новое дерево композиции.
  *
- * Все [startRootNode] должна быть закончены только с помощью [endRootNode].
+ * Все [startTree] должна быть закончены только с помощью [endTree].
  * Все [startNode] должна быть закончены только с помощью [endNode].
  *
  * Любое дерево может быть достроено позже, в том числе пока происходит композиция другого дерева.
@@ -41,8 +41,8 @@ const Empty = Symbol('Empty')
  *
  * Композиция ноды - это запуск "тела" ноды, в рамках которого происходит чтение стейта, compositionLocal, запуск дочерних нод.
  *
- * Начать построение дерева нужно с корня, для этого нужно вызвать [startRootNode].
- * По окончании нужно завершить построение при помощи [endRootNode].
+ * Начать построение дерева нужно с корня, для этого нужно вызвать [startTree].
+ * По окончании нужно завершить построение при помощи [endTree].
  *
  * [startNode] (Запуск ноды) - это использование уже существующей ноды у родительской ноды
  *                             либо создание, если в предыдущей композииции этой ноды не было либо это первая композиция.
@@ -57,15 +57,17 @@ export class Composer implements IComposer {
     } satisfies ComposerPluginContext
 
     private frames: Frame[] = []
-    private compositionRootFrames: (Frame & { isCompositionRoot: true })[] = []
+    private compositionRootFrames: (Frame & { isTreeRoot: true })[] = []
     private exitedComposition = false
 
-    private readonly plugins: ReadonlyArray<ComposerPlugin>
+    private readonly plugins: ReadonlyArray<CompleteComposerPlugin>
     constructor(
-        plugins: ReadonlyArray<ComposerPlugin | PartialComposerPlugin>,
+        plugins: ReadonlyArray<ComposerPlugin>,
     ) {
-        this.plugins = plugins.map(it => PartialComposerPlugin(it))
-        this.plugins.forEach(plugin => plugin.attach(this.context))
+        this.plugins = plugins.map(plugin => {
+            const substitutedPlugin = plugin.attach ? plugin.attach(this.context) : undefined
+            return CompleteComposerPlugin(substitutedPlugin ?? plugin)
+        })
     }
 
     get currentCompositionRootFrame(): Frame | null { return this.compositionRootFrames.length === 0 ? null : this.compositionRootFrames[this.compositionRootFrames.length - 1] }
@@ -94,11 +96,11 @@ export class Composer implements IComposer {
         this.plugins.forEach(plugin => plugin.reenterComposition())
     }
 
-    startRootNode(node: Node) {
+    startTree(node: Node) {
         this.ensureInComposition()
 
-        const frame: (Frame & { isCompositionRoot: true }) = {
-            isCompositionRoot: true,
+        const frame: (Frame & { isTreeRoot: true }) = {
+            isTreeRoot: true,
             node: node,
             key: null,
             composingState: 'NotComposed',
@@ -113,16 +115,16 @@ export class Composer implements IComposer {
 
         if (this.frames.length === 1)
             this.plugins.forEach(plugin => plugin.initially())
-        this.plugins.forEach(plugin => plugin.onStartRootNode(node))
+        this.plugins.forEach(plugin => plugin.onStartTree(node))
     }
 
-    endRootNode() {
+    endTree() {
         this.ensureInComposition()
         const frame = this.currentFrame
         if (frame === null)
             throw new Error('Could not end root node here: No frames')
-        if (!frame.isCompositionRoot)
-            throw new Error('Could not end root node here: Current frame is not root')
+        if (!frame.isTreeRoot)
+            throw new Error('Could not end tree root node here: Current frame is not root')
         this.frames.pop()
         const rootFrame = this.compositionRootFrames.pop()
         if (frame !== rootFrame)
@@ -130,7 +132,7 @@ export class Composer implements IComposer {
         if (rootFrame.composingState === 'Composing')
             throw new Error(`Cannot end root node here: Composition is still active. Do you forgot to call 'endComposingNode'?`)
 
-        this.plugins.forEach(plugin => plugin.onEndRootNode(rootFrame.node))
+        this.plugins.forEach(plugin => plugin.onEndTree(rootFrame.node))
         if (this.frames.length === 0)
             this.plugins.forEach(plugin => plugin.finally())
     }
@@ -164,7 +166,7 @@ export class Composer implements IComposer {
         }
 
         const frame: Frame = {
-            isCompositionRoot: false,
+            isTreeRoot: false,
             key: key ?? null,
             node: node,
             composingState: 'NotComposed',
@@ -198,7 +200,7 @@ export class Composer implements IComposer {
         }
 
         const frame: Frame = {
-            isCompositionRoot: false,
+            isTreeRoot: false,
             key: key ?? null,
             node: node,
             composingState: 'NotComposed',
@@ -317,18 +319,18 @@ export class Composer implements IComposer {
         return null
     }
 
-    applyExtension(key: symbol, value: NodeExtension): void {
+    applyExtension<T>(key: NodeExtensionKey<T>, value: T): void {
         this.ensureInComposition()
         if (this.currentFrame === null)
             throw new Error('Could not apply extension here')
-        this.currentFrame.node.extensions.set(key, value)
+        this.currentFrame.node.setExtension(key, value)
     }
 
     endNode(): void {
         if (this.currentFrame === null)
             throw new Error('Cound not end node here')
-        if (this.currentFrame.isCompositionRoot)
-            throw new Error('Cound not end root node')
+        if (this.currentFrame.isTreeRoot)
+            throw new Error('Cound not end tree root node')
         if (this.currentFrame.composingState === 'Composing')
             throw new Error(`Cannot end root node here: Composition is still active. Do you forgot to call 'endComposingNode'?`)
         const node = this.frames.pop()!.node
@@ -390,5 +392,9 @@ export class Composer implements IComposer {
         } else {
             this.plugins.forEach(plugin => plugin.onKeyedValueUpdated(this.currentNode!, key, oldValue, newValue))
         }
+    }
+
+    dispose(): void {
+        this.plugins.forEach(plugin => plugin.dispose())
     }
 }

@@ -1,9 +1,9 @@
-import {PartialComposerPlugin} from "../../runtime/ComposerPlugin";
+import {ComposerPlugin} from "../../runtime/ComposerPlugin";
 import {ComposerPluginContext} from "../../runtime/ComposerPluginContext";
 import {Node} from "../../runtime/Node";
 import {Composer} from "../../runtime/Composer";
 
-export class PluginVerifierPlugin implements PartialComposerPlugin {
+export class PluginVerifierPlugin implements ComposerPlugin {
     private context!: ComposerPluginContext
     private composer!: Composer
 
@@ -29,12 +29,12 @@ export class PluginVerifierPlugin implements PartialComposerPlugin {
         this.initiallyCalled = false
     }
 
-    onStartRootNode(node: Node): void {
+    onStartTree(treeRoot: Node): void {
         this.ensureInitiallyCalled()
-        this.ensureInComposition('onStartRootNode')
-        this.rootNodes.push(node)
-        this.knownNodes.add(node)
-        this.onStartNode(node)
+        this.ensureInComposition('onStartTree')
+        this.rootNodes.push(treeRoot)
+        this.knownNodes.add(treeRoot)
+        this.onStartNode(treeRoot)
     }
 
     exitComposition(): void {
@@ -50,14 +50,14 @@ export class PluginVerifierPlugin implements PartialComposerPlugin {
         this.exitedComposition = false
     }
 
-    onEndRootNode(node: Node): void {
+    onEndTree(treeRoot: Node): void {
         this.ensureInitiallyCalled()
-        this.ensureInComposition('onEndRootNode')
+        this.ensureInComposition('onEndTree')
         if (this.rootNodesCount === 0)
-            error('Unexpected onEndRootNode')
+            error('Unexpected onEndTree')
         const expectedNode = this.rootNodes.pop()!
-        if (node !== expectedNode)
-            error(`Wrong onEndRootNode: expected '${expectedNode}' actual '${node}'`)
+        if (treeRoot !== expectedNode)
+            error(`Wrong onEndTree: expected '${expectedNode}' actual '${treeRoot}'`)
     }
 
     //
@@ -90,7 +90,7 @@ export class PluginVerifierPlugin implements PartialComposerPlugin {
 
     onStartNode(node: Node): void {
         if (this.rootNodes.length === 0)
-            error(`onStartNode called before onStartRootNode`)
+            error(`onStartNode called before onStartTree`)
         if (!this.knownNodes.has(node))
             error(`onStartNode called but onNodeCreated was not called for ${node}`)
         this.startedNodes.push(node)

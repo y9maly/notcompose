@@ -1,4 +1,4 @@
-import {PartialComposerPlugin} from "../../runtime/ComposerPlugin";
+import {ComposerPlugin} from "../../runtime/ComposerPlugin";
 import {Node} from "../../runtime/Node";
 import {GlobalSnapshot} from "../../runtime/Snapshot";
 import {ComposerPluginContext} from "../../runtime/ComposerPluginContext";
@@ -6,7 +6,7 @@ import {Composer} from "../../runtime/Composer";
 import {StateReadsObserver} from "./StateReadsObserver";
 import {StateReadsCollector} from "./StateReadsCollector";
 
-export class StateReadsPlugin implements PartialComposerPlugin {
+export class StateReadsPlugin implements ComposerPlugin {
     constructor(
         private readonly observer?: StateReadsObserver
     ) {}
@@ -32,11 +32,7 @@ export class StateReadsPlugin implements PartialComposerPlugin {
     onNodeForgotten(node: Node) {
         if (!this.observer)
             return
-
-        this.observer.onNodeCleared(node)
-        node.walkChildrenDFS(node => {
-            this.observer!.onNodeCleared(node)
-        })
+        this.observer.onNodeForgotten(node)
     }
 
     exitComposition() {

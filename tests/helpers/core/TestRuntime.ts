@@ -1,14 +1,15 @@
 import {Composer} from "../../../src/notcompose/runtime/Composer";
-import {currentComposerOrNull, setCurrentComposer} from "../../../src/notcompose/runtime/currentComposer";
-import {RecomposeLambdaExtensionKey} from "../../../src/notcompose/runtime-plugins/partialRecomposition/RecomposeLambda";
 import {Node} from "../../../src/notcompose/runtime/Node";
 import {error} from "../../../src/core/exceptions";
-
+import {Composition} from "../../../src/notcompose-terminal/Composition";
+import {Modifier} from "../../../src/notcompose/runtime/Modifier";
+import {NameElement} from "../../../src/notcompose/runtime/modifiers/NameElement";
 
 export class TestRuntime implements Record<string, unknown> {
     constructor(
         public readonly rootNode: Node,
         public readonly composer: Composer,
+        public readonly composition: Composition
     ) {}
 
     [name: string]: unknown
@@ -23,19 +24,8 @@ export class TestRuntime implements Record<string, unknown> {
     }
 
     render(content: () => void) {
-        const previousComposer = currentComposerOrNull()
-        setCurrentComposer(this.composer)
-
-        try {
-            this.composer.startRootNode(this.rootNode)
-            this.composer.applyExtension(RecomposeLambdaExtensionKey, content)
-            this.composer.startComposingNode()
-            content()
-            this.composer.endComposingNode()
-            this.composer.endRootNode()
-        } finally {
-            setCurrentComposer(previousComposer)
-        }
+        this.composition.setContent(content)
+        this.composition.compose(new Modifier([new NameElement('Root')]))
     }
 }
 

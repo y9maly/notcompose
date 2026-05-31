@@ -3,7 +3,6 @@ import {Recomposer} from "../../../src/notcompose/runtime-recomposer/Recomposer"
 import {error} from "../../../src/core/exceptions";
 import { elvis } from "../../../src/notcompose/runtime-highlevel/elvis";
 
-
 export function currentRecomposer(): Recomposer {
     const recomposer = currentTestRuntime()['recomposer']
     if (!(recomposer instanceof Recomposer)) error(`recomposer doesn't exist in this test runtime`)

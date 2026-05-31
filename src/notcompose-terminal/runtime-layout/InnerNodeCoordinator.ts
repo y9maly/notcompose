@@ -1,5 +1,5 @@
 import {MeasureContext, NodeCoordinator} from "./NodeCoordinator.js";
-import {MeasurePolicyNodeExtensionKey} from "../runtime/nodeExtensions/MeasurePolicyNodeExtension.js";
+import {MeasurePolicyExtensionKey} from "../runtime/nodeExtensions/MeasurePolicyNodeExtension.js";
 import {applyLayoutNode} from "./applyLayoutNode.js";
 import {Modifier, ModifierElement} from "../../notcompose/runtime/Modifier";
 import {Node} from "../../notcompose/runtime/Node";
@@ -214,10 +214,10 @@ function reuseChildrenLayoutNodes(
     while (queue.length > 0) {
         const node = queue.shift()!
 
-        if (node.extensions.has(MeasurePolicyNodeExtensionKey) || node.extensions.has(SubcomposeNodeExtensionKey)) {
+        if (node.hasExtension(MeasurePolicyExtensionKey) || node.hasExtension(SubcomposeNodeExtensionKey)) {
             // Если нода умеет распологать детей - добавить её как дочерний coordinator
             // Если дерево ещё не построено, то [coordinator] достроит его сам.
-            const layoutNode = node.extensions.get(LayoutNodeExtensionKey) as LayoutNode | undefined
+            const layoutNode = node.getExtension(LayoutNodeExtensionKey)
             if (layoutNode !== undefined)
                 result.push(layoutNode)
         } else {
@@ -239,7 +239,7 @@ function createChildrenLayoutNodes(
     while (queue.length > 0) {
         const node = queue.shift()!
 
-        if (node.extensions.has(MeasurePolicyNodeExtensionKey) || node.extensions.has(SubcomposeNodeExtensionKey)) {
+        if (node.hasExtension(MeasurePolicyExtensionKey) || node.hasExtension(SubcomposeNodeExtensionKey)) {
             // Если нода умеет распологать детей - добавить её как дочерний coordinator
             // Если дерево ещё не построено, то [coordinator] достроит его сам.
             const layoutNode = applyLayoutNode(node, insert)

@@ -32,91 +32,77 @@ import {ComposerPluginContext} from "./ComposerPluginContext";
  *   (Например SubcomposeLayout запускает композицию ноды уже после создания ноды, в фазе layout/measurement)
  */
 export interface ComposerPlugin {
-    attach(context: ComposerPluginContext): void
+    // return value используется для подмены текущего плагина на другой.
+    // Например, если этот плагин передается в несколько Composer'ов, полезно вернуть обёртку со своим контекстом для каждого Composer.
+    attach?(context: ComposerPluginContext): void | ComposerPlugin
 
     // Вызывается когда появляется самая первая root-нода (Появляется первый frame в ComposerImpl)
-    // Вызывается ДО [onStartRootNode]
-    initially(): void
+    // Вызывается ДО [onStartTree]
+    initially?(): void
     // Вызывается когда заканчивается самая первая root-нода (Исчезает последний frame в ComposerImpl)
-    // Вызывается ПОСЛЕ [onEndRootNode]
-    finally(): void
+    // Вызывается ПОСЛЕ [onEndTree]
+    finally?(): void
 
-    // Вызывается после startComposingWithRootNode.
-    onStartRootNode(node: Node): void
+    // Вызывается после startTree.
+    onStartTree?(treeRoot: Node): void
+    // Вызывается после endTree.
+    onEndTree?(treeRoot: Node): void
+
     // Вызывается при выходе из композиции. После этого может вызваться ТОЛЬКО reenterComposition.
-    exitComposition(): void
+    exitComposition?(): void
     // Вызывается при повторном входе в композицию. Вызывается ТОЛЬКО после exitComposition.
-    reenterComposition(): void
-    // Вызывается после endComposingWithRootNode.
-    onEndRootNode(node: Node): void
+    reenterComposition?(): void
 
     // Вызывается при создании дочерней ноды [node] (когда в первый раз появляется в композиции) (startNode)
-    onNodeCreated(node: Node): void
+    onNodeCreated?(node: Node): void
     // Вызывается при вставке дочерней ноды [node] (insertNode)
-    onNodeInserted(node: Node): void
+    onNodeInserted?(node: Node): void
     // Вызывается когда эта нода удаляется из её родительской.
     // Вызывается только для корня удалённого поддерева. Все дочерние ноды нужно обойти явно, если требуется обработать каждую.
-    onNodeForgotten(node: Node): void
+    onNodeForgotten?(node: Node): void
 
     // Вызывается после вызова startNode() (Для всех нод кроме корневой для текущей композиции)
-    onStartNode(node: Node): void
+    onStartNode?(node: Node): void
     // Вызывается после вызова endNode() (Для всех нод кроме корневой для текущей композиции)
-    onEndNode(node: Node): void
+    onEndNode?(node: Node): void
 
     // Вызывается когда эта нода начинает композироваться (Если используется lateCompose, то вызовется после onNodeEnded)
     // Кроме первой ноды в композиции.
-    onNodeCompositionStarted(node: Node): void
+    onNodeCompositionStarted?(node: Node): void
     // Вызывается когда эта нода заканчивает композироваться (Если используется lateCompose, то вызовется после onNodeEnded)
     // Кроме первой ноды в композиции.
-    onNodeCompositionEnded(node: Node): void
+    onNodeCompositionEnded?(node: Node): void
 
     // Вызывается когда запоминается значение в первый раз
-    onValueRemembered(node: Node, value: unknown): void
-    onKeyedValueRemembered(node: Node, key: Key, value: unknown): void
+    onValueRemembered?(node: Node, value: unknown): void
+    onKeyedValueRemembered?(node: Node, key: Key, value: unknown): void
     // Вызывается когда значение обновляется (Например если используется remember с ключами и ключи поменялись)
-    onValueUpdated(node: Node, oldValue: unknown, newValue: unknown): void
-    onKeyedValueUpdated(node: Node, key: Key, oldValue: unknown, newValue: unknown): void
+    onValueUpdated?(node: Node, oldValue: unknown, newValue: unknown): void
+    onKeyedValueUpdated?(node: Node, key: Key, oldValue: unknown, newValue: unknown): void
     // Вызывается когда значение забывается (Например когда remember выходит из композиции)
     // Вызывается только при рекомпозиции ноды, и только если она не была удалена.
     // Если нужно обработать ВСЕ забываемые значения, то нужно явно обрабатывать onNodeForgotten.
-    onValueForgotten(node: Node, lastValue: unknown): void
-    onKeyedValueForgotten(node: Node, key: Key, lastValue: unknown): void
-}
-
-export interface PartialComposerPlugin {
-    attach?(context: ComposerPluginContext): void
-    initially?(): void
-    finally?(): void
-    onStartRootNode?(node: Node): void
-    exitComposition?(): void
-    reenterComposition?(): void
-    onEndRootNode?(node: Node): void
-    onNodeCreated?(node: Node): void
-    onNodeInserted?(node: Node): void
-    onNodeForgotten?(node: Node): void
-    onStartNode?(node: Node): void
-    onEndNode?(node: Node): void
-    onNodeCompositionStarted?(node: Node): void
-    onNodeCompositionEnded?(node: Node): void
-    onValueRemembered?(node: Node, value: unknown): void
-    onKeyedValueRemembered?(node: Node, key: Key, value: unknown): void
-    onValueUpdated?(node: Node, oldValue: unknown, newValue: unknown): void
-    onKeyedValueUpdated?(node: Node, key: Key, oldValue: unknown, newValue: unknown): void
     onValueForgotten?(node: Node, lastValue: unknown): void
     onKeyedValueForgotten?(node: Node, key: Key, lastValue: unknown): void
+
+    // Вызывается для каждого плагина, когда был вызван [composer.dispose()]
+    dispose?(): void
+}
+
+export interface CompleteComposerPlugin extends Required<ComposerPlugin> {
 }
 
 function NoOp() {}
 
-export function PartialComposerPlugin(plugin: PartialComposerPlugin): ComposerPlugin {
-    return {
-        attach: plugin.attach?.bind(plugin) ?? NoOp,
+export function CompleteComposerPlugin(plugin: ComposerPlugin): CompleteComposerPlugin {
+    const completePlugin: CompleteComposerPlugin = {
+        attach: plugin.attach?.bind(plugin) ?? (() => completePlugin),
         initially: plugin.initially?.bind(plugin) ?? NoOp,
         finally: plugin.finally?.bind(plugin) ?? NoOp,
-        onStartRootNode: plugin.onStartRootNode?.bind(plugin) ?? NoOp,
+        onStartTree: plugin.onStartTree?.bind(plugin) ?? NoOp,
+        onEndTree: plugin.onEndTree?.bind(plugin) ?? NoOp,
         exitComposition: plugin.exitComposition?.bind(plugin) ?? NoOp,
         reenterComposition: plugin.reenterComposition?.bind(plugin) ?? NoOp,
-        onEndRootNode: plugin.onEndRootNode?.bind(plugin) ?? NoOp,
         onNodeCreated: plugin.onNodeCreated?.bind(plugin) ?? NoOp,
         onNodeInserted: plugin.onNodeInserted?.bind(plugin) ?? NoOp,
         onNodeForgotten: plugin.onNodeForgotten?.bind(plugin) ?? NoOp,
@@ -130,5 +116,7 @@ export function PartialComposerPlugin(plugin: PartialComposerPlugin): ComposerPl
         onKeyedValueUpdated: plugin.onKeyedValueUpdated?.bind(plugin) ?? NoOp,
         onValueForgotten: plugin.onValueForgotten?.bind(plugin) ?? NoOp,
         onKeyedValueForgotten: plugin.onKeyedValueForgotten?.bind(plugin) ?? NoOp,
+        dispose: plugin.dispose?.bind(plugin) ?? NoOp,
     }
+    return completePlugin
 }

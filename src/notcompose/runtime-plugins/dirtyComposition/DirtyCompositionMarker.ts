@@ -1,16 +1,17 @@
 import {Node} from "../../runtime/Node";
+import {NodeExtensionKey} from "../../runtime/NodeExtensionKey";
 
-const DirtyCompositionMarker = Symbol('DirtyCompositionMarker')
+const DirtyCompositionMarker = new NodeExtensionKey('DirtyCompositionMarker')
 
 
 export function isCompositionDirty(node: Node): boolean {
-    return node.extensions.get(DirtyCompositionMarker) === true
+    return node.getExtension(DirtyCompositionMarker) === true
 }
 
 export function markCompositionAsDirty(node: Node) {
-    node.extensions.set(DirtyCompositionMarker, true)
+    node.setExtension(DirtyCompositionMarker, true)
 }
 
 export function unmarkCompositionAsDirty(node: Node) {
-    node.extensions.delete(DirtyCompositionMarker)
+    node.deleteExtension(DirtyCompositionMarker)
 }

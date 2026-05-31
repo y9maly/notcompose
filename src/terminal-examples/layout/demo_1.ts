@@ -7,8 +7,8 @@ import {Placeable} from "../../notcompose-terminal/runtime/layout/Placeable";
 import {MeasurePolicy} from "../../notcompose-terminal/runtime/layout/MeasurePolicy";
 import {MeasureResult} from "../../notcompose-terminal/runtime/layout/Measurable";
 
-// Давайте создадим кастомный лэяут который распологает детей по горизонтали:
-// Сверзу-вниз, Слева-направо
+// Давайте создадим кастомный лэяут который располагает детей по диагонали:
+// Сверху вниз, слева направо
 // Вот так:
 //
 // MyLayout(() => {
@@ -30,9 +30,9 @@ import {MeasureResult} from "../../notcompose-terminal/runtime/layout/Measurable
  *
  * constraints это ограничения размера для текущего лэяута.
  * constraints.minWidth - число, минимально возможная ширина для этого лэяута
- * constraints.maxWidth - число, максимально возможная ширина для этого лэяута. Либо null, если ограчений на ширну нет.
+ * constraints.maxWidth - число, максимально возможная ширина для этого лэяута. Либо null, если ограничений на ширину нет.
  * constraints.minHeight - число, минимально возможная высота для этого лэяута
- * constraints.maxHeight - число, максимально возможная высота для этого лэяута. Либо null, если ограчений на высоту нет.
+ * constraints.maxHeight - число, максимально возможная высота для этого лэяута. Либо null, если ограничений на высоту нет.
  *
  * Для каждого ребёнка нужно определить его собственные constraints и передать их в Measurable.
  */
@@ -41,12 +41,12 @@ const MyMeasurePolicy: MeasurePolicy = MeasurePolicy((measurables, constraints) 
     let resultWidth = 0
     let resultHeight = 0
 
-    // [constraints] это ограчения размера для текущего лэяута.
+    // [constraints] это ограничения размера для текущего лэяута.
     // Например если нам сказали, что наш MyLayout должен быть шириной не меньше 20,
     // это не значит что все его дети тоже должны быть шириной не меньше 20.
     // Поэтому нам нужно скопировать
     let currentChildrenConstraints = constraints.copyMaxDimensions()
-    // То-же самое, что и:
+    // То же самое, что и:
     // let currentChildrenConstraints = new Constraints(
     //     0, // minWidth
     //     constraints.maxWidth, // maxWidth
@@ -68,7 +68,7 @@ const MyMeasurePolicy: MeasurePolicy = MeasurePolicy((measurables, constraints) 
 
         // Ограничим размер каждого следующего ребёнка.
         // Например если ширины не ограничена (=== null), то minusMaxWidth ничего не сделает.
-        // А если ограчена, то ширина следующего ребёнка не должна будет привышать
+        // А если ограничена, то ширина следующего ребёнка не должна будет превышать
         //   (Текущая максимальная ширина МИНУС Ширина текущего ребёнка)
         currentChildrenConstraints = currentChildrenConstraints
             .minusMaxWidth(placeable.width)
@@ -78,14 +78,14 @@ const MyMeasurePolicy: MeasurePolicy = MeasurePolicy((measurables, constraints) 
     }
 
     // Теперь нужно пройтись по всем Placeable, и измерить размер нашего лэяута
-    // Так как у нас дети распологаются горизонтально, ширина нашего лэяута равна
-    //   сумме широт всех детей, а высота равна сумме высот всех детей
+    // Так как у нас дети располагаются по диагонали, ширина нашего лэяута равна
+    //   сумме ширин всех детей, а высота равна сумме высот всех детей
     for (const placeable of placeables) {
         resultWidth = resultWidth + placeable.width
         resultHeight = resultHeight + placeable.height
     }
 
-    // Дополниительно ограничим наши получившиеся размеры с помощью входных constraints,
+    // Дополнительно ограничим наши получившиеся размеры с помощью входных constraints,
     //   чтобы размер лэяута соответствовал им.
     // Например если в нашем лэяуте не будет детей, но минимальная ширина будет 0,
     //   то здесь мы установим resultWidth = 20

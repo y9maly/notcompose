@@ -28,18 +28,18 @@ export class LayoutNode {
         public draw = outerCoordinator.draw.bind(outerCoordinator),
     ) {}
 
-    get hasSubconstraintComposition() { return this.node.extensions.has(SubconstraintsNodeExtensionKey) }
-    get hasSubcomposeComposition() { return this.node.extensions.has(SubcomposeNodeExtensionKey) }
+    get hasSubconstraintComposition() { return this.node.hasExtension(SubconstraintsNodeExtensionKey) }
+    get hasSubcomposeComposition() { return this.node.hasExtension(SubcomposeNodeExtensionKey) }
 
     composeSubconstraint(constraints: Constraints) {
-        const value = this.node.extensions.get(SubconstraintsNodeExtensionKey) as SubconstraintsNodeExtension | undefined
+        const value = this.node.getExtension(SubconstraintsNodeExtensionKey)
         if (value === undefined)
             throw new Error(`This layout node doesn't have subconstraints composition`)
         value.compose(constraints)
     }
 
     composeSubcompose(constraints: Constraints, scope: SubcomposeScope) {
-        const value = this.node.extensions.get(SubcomposeNodeExtensionKey) as SubcomposeNodeExtension | undefined
+        const value = this.node.getExtension(SubcomposeNodeExtensionKey)
         if (value === undefined)
             throw new Error(`This layout node doesn't have subcompose composition`)
         value.subcompose(constraints, scope)

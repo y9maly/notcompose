@@ -119,7 +119,7 @@ export class ConsoleOutputProcessor implements OutputProcessor {
 }
 
 function materialize(node: Node, canvas: TextCanvas) {
-    const layoutNode = node.extensions.get(LayoutNodeExtensionKey) as LayoutNode | undefined
+    const layoutNode = node.getExtension(LayoutNodeExtensionKey)
     if (layoutNode === undefined) {
         throw new Error(`Root node is not a layout node`)
     } else {

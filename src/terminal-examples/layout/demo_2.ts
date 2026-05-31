@@ -10,7 +10,7 @@ setTerminalContent(() => {
         Text(`Ширина терминала: ${constraints.maxWidth}`)
         Text(`Высота терминала: ${constraints.maxHeight}`)
 
-        // In out case `constraints.maxHeight` will never be null.
+        // In our case `constraints.maxWidth` will never be null.
         // But in some cases it is useful to catch this.
         if (constraints.maxWidth === null || constraints.maxWidth > 70) {
             LargeScreen()

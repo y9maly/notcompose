@@ -3,7 +3,7 @@ import {OutputProcessor} from "./runtime-output/OutputProcessor";
 import {Recomposer} from "../notcompose/runtime-recomposer/Recomposer";
 import {Composer} from "../notcompose/runtime/Composer";
 import {PluginVerifierPlugin} from "../notcompose/runtime-plugins/pluginVerifier/PluginVerifierPlugin";
-import {DirtyCompositionPlugin} from "../notcompose/runtime-plugins/dirtyComposition/DirtyCompositionPlugin";
+import {CleanCompositionPlugin} from "../notcompose/runtime-plugins/dirtyComposition/CleanCompositionPlugin";
 import {StateReadsPlugin} from "../notcompose/runtime-plugins/stateReads/StateReadsPlugin";
 import {RememberObserverPlugin} from "../notcompose/runtime-plugins/rememberObserver/RememberObserverPlugin";
 import {Composition} from "./Composition";
@@ -41,7 +41,7 @@ export function bootstrapTerminalComposition(): {
         // Для дебага, кинет исключение если методы плагинов вызовутся неправильно
         new PluginVerifierPlugin(),
         // Удаляет пометку о грязной ноде сразу после начала композиции
-        new DirtyCompositionPlugin(),
+        new CleanCompositionPlugin(),
         // Отслеживает чтения стейтов во время композиции;
         // Составляет список стейтов от которых зависит каждая нода;
         // Позже используется для рекомпозиции при изменении стейта;

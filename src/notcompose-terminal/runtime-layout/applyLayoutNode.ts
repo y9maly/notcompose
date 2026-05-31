@@ -1,7 +1,7 @@
 import {NodeCoordinator} from "./NodeCoordinator.js";
 import {InnerNodeCoordinator} from "./InnerNodeCoordinator.js";
 import {LayoutModifier} from "../runtime/modifiers/LayoutModifier.js";
-import {MeasurePolicyNodeExtensionKey} from "../runtime/nodeExtensions/MeasurePolicyNodeExtension.js";
+import {MeasurePolicyExtensionKey} from "../runtime/nodeExtensions/MeasurePolicyNodeExtension.js";
 import {LayoutModifierNodeCoordinator} from "./LayoutModifierNodeCoordinator.js";
 import {Node} from "../../notcompose/runtime/Node";
 import {MeasurePolicy} from "../runtime/layout/MeasurePolicy";
@@ -14,8 +14,8 @@ export function applyLayoutNode(
 ): LayoutNode {
     // TODO reuse node coordinator
 
-    const previousLayoutNode = node.extensions.get(LayoutNodeExtensionKey) as LayoutNode | undefined
-    const measurePolicy = node.extensions.get(MeasurePolicyNodeExtensionKey) as MeasurePolicy | undefined
+    const previousLayoutNode = node.getExtension(LayoutNodeExtensionKey)
+    const measurePolicy = node.getExtension(MeasurePolicyExtensionKey)
 
     const elements = []
     let layoutModifier: LayoutModifier | null = null
@@ -42,7 +42,7 @@ export function applyLayoutNode(
     }
 
     if (coordinator === null) {
-        const measurePolicy = node.extensions.get(MeasurePolicyNodeExtensionKey) as MeasurePolicy | undefined
+        const measurePolicy = node.getExtension(MeasurePolicyExtensionKey)
         coordinator = new InnerNodeCoordinator([...elements], insert, measurePolicy ?? null)
         elements.splice(0, elements.length)
     }
@@ -58,7 +58,7 @@ export function applyLayoutNode(
         layoutNode.outerCoordinator = coordinator
     } else {
         layoutNode = new LayoutNode(node, coordinator, measurePolicy ?? null)
-        node.extensions.set(LayoutNodeExtensionKey, layoutNode)
+        node.setExtension(LayoutNodeExtensionKey, layoutNode)
     }
 
     {

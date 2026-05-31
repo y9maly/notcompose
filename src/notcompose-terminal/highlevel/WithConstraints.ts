@@ -1,4 +1,4 @@
-import {MeasurePolicyNodeExtensionKey} from "../runtime/nodeExtensions/MeasurePolicyNodeExtension.js";
+import {MeasurePolicyExtensionKey} from "../runtime/nodeExtensions/MeasurePolicyNodeExtension.js";
 import {BoxMeasurePolicy} from "./Box.js";
 import {
     SubconstraintsNodeExtension,
@@ -49,7 +49,7 @@ export function LayoutWithConstraints(
     modifier: Modifier,
 ) {
     currentComposer().startNode(modifier.then(new NameElement('LayoutWithConstraints')))
-    currentComposer().applyExtension(MeasurePolicyNodeExtensionKey, policy)
+    currentComposer().applyExtension(MeasurePolicyExtensionKey, policy)
     currentComposer().applyExtension(SubconstraintsNodeExtensionKey, {
         compose(constraints: Constraints) {
             content(constraints)

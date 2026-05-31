@@ -8,19 +8,19 @@ import {Composer} from "../runtime/Composer";
 import {withComposer} from "../runtime/currentComposer";
 import {debug} from "../runtime/debug";
 import {StateDependenciesMap} from "./StateDependenciesMap";
-import {PartialComposerPlugin} from "../runtime/ComposerPlugin";
+import {ComposerPlugin} from "../runtime/ComposerPlugin";
 
 /**
  * Composer должен иметь плагин [StateReadsPlugin].
  */
-export class Recomposer implements StateReadsObserver, PartialComposerPlugin {
+export class Recomposer implements StateReadsObserver, ComposerPlugin {
     private awaitNeedRecomposePromiseResolve!: (value: void) => void
     private awaitNeedRecomposePromise = new Promise<void>((it => this.awaitNeedRecomposePromiseResolve = it))
 
     private stateDependenciesMap = new StateDependenciesMap<Node, Node>(
         (node) => {
             let currentNode = node
-            while (!currentNode.extensions.has(RecomposeLambdaExtensionKey) && currentNode.parent !== null) {
+            while (!currentNode.hasExtension(RecomposeLambdaExtensionKey) && currentNode.parent !== null) {
                 currentNode = currentNode.parent
             }
             return currentNode
@@ -66,17 +66,17 @@ export class Recomposer implements StateReadsObserver, PartialComposerPlugin {
         nodesToRecompose.forEach((node) => {
             if (!isCompositionDirty(node))
                 return
-            const recomposeLambda = node.extensions.get(RecomposeLambdaExtensionKey) as RecomposeLambda | undefined
+            const recomposeLambda = node.getExtension(RecomposeLambdaExtensionKey)
             if (recomposeLambda === undefined)
                 return
 
             withComposer(composer, () => {
-                composer.startRootNode(node)
+                composer.startTree(node)
                 composer.startComposingNode()
                 debug.log(`Recompose ${node.findName() ?? ''}`)
                 recomposeLambda()
                 composer.endComposingNode()
-                composer.endRootNode()
+                composer.endTree()
             })
         })
 
@@ -103,8 +103,12 @@ export class Recomposer implements StateReadsObserver, PartialComposerPlugin {
         this.stateDependenciesMap.onStatesChanged(node, states)
     }
 
-    onNodeCleared(node: Node) {
+    onNodeForgotten(node: Node) {
         this.stateDependenciesMap.forget(node)
         this.stateDependenciesMap.dirtyObjects.delete(node)
+        node.walkChildrenDFS(node => {
+            this.stateDependenciesMap.forget(node)
+            this.stateDependenciesMap.dirtyObjects.delete(node)
+        })
     }
 }

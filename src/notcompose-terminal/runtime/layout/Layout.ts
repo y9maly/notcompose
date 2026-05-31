@@ -1,4 +1,4 @@
-import {MeasurePolicyNodeExtensionKey} from "../nodeExtensions/MeasurePolicyNodeExtension.js";
+import {MeasurePolicyExtensionKey} from "../nodeExtensions/MeasurePolicyNodeExtension.js";
 import {Modifier} from "../../../notcompose/runtime/Modifier";
 import {currentComposer} from "../../../notcompose/runtime/currentComposer";
 import {
@@ -17,7 +17,7 @@ export function Layout(content: () => void, measurePolicy: MeasurePolicy, modifi
     //     debug.log(`Can't skip ${currentComposer().nextNode()?.findName() ?? '...'}`)
     // }
     currentComposer().startNode(modifier.then(new NameElement('Layout')))
-    currentComposer().applyExtension(MeasurePolicyNodeExtensionKey, measurePolicy)
+    currentComposer().applyExtension(MeasurePolicyExtensionKey, measurePolicy)
     currentComposer().applyExtension(RecomposeLambdaExtensionKey, content satisfies RecomposeLambda)
     currentComposer().startComposingNode()
     content()

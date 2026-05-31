@@ -1,5 +1,5 @@
 import {AnnotatedString} from "../AnnotatedString";
-import {Rect} from "../Rect";
+import {Rect, RectLike} from "../Rect";
 import {TransformationMatrix} from "./TransformationMatrix";
 import {Float} from "../../../../core/types";
 import {Size} from "../Size";
@@ -42,10 +42,10 @@ export interface TextCanvas {
     // Clip
 
     clipRect(left: Float, top: Float, right: Float, bottom: Float): void
-    clipRect(rect: Rect): void
+    clipRect(rect: RectLike): void
 
     clipOutRect(left: Float, top: Float, right: Float, bottom: Float): void
-    clipOutRect(rect: Rect): void
+    clipOutRect(rect: RectLike): void
 
     // Drawing
 

@@ -87,4 +87,25 @@ export class GlobalSnapshot {
         }
         return value
     }
+
+    // static recordStateReads(): () => Set<State<unknown>>
+    // static recordStateReads(block: () => void): Set<State<unknown>>
+    // static recordStateReads(block?: () => void) {
+    //     if (block !== undefined) {
+    //         const finalize = this.recordStateReads()
+    //         block()
+    //         return finalize()
+    //     }
+    //
+    //     const set = new Set<State<unknown>>()
+    //     const dispose: Disposable = GlobalSnapshot.observeStateReads(state => set.add(state))
+    //     let disposed = false
+    //     return () => {
+    //         if (disposed)
+    //             throw new Error('This can be called only once!')
+    //         dispose[Symbol.dispose]()
+    //         disposed = true
+    //         return set
+    //     }
+    // }
 }
