@@ -1,9 +1,9 @@
-import {Layout} from "../runtime/layout/Layout.js";
+import {Layout} from "../runtime/Layout.js";
 import {Modifier} from "../../notcompose/runtime/Modifier";
 import {elvis} from "../../notcompose/runtime-highlevel/elvis";
-import {Alignment, HorizontalAlignment} from "../runtime/ui/Alignment";
-import {Placeable} from "../runtime/layout/Placeable";
-import {MeasurePolicy} from "../runtime/layout/MeasurePolicy";
+import {Alignment, HorizontalAlignment} from "../runtime/core/Alignment";
+import {Placeable} from "../runtime/Placeable";
+import {MeasurePolicy} from "../runtime/MeasurePolicy";
 import {NameElement} from "../../notcompose/runtime/modifiers/NameElement";
 
 export const ColumnMeasurePolicy = (

@@ -777,17 +777,17 @@ _________
 ```
 
 В данном случае:
- * Сначала измерится изначальный размер Box (он будет равен 5x1) ([Исходный код BoxMeasurePolicy](src/notcompose-terminal/highlevel/Box.ts))
+ * Сначала измерится изначальный размер Box (он будет равен 5x1) ([Исходный код BoxMeasurePolicy](src/notcompose-layout/highlevel/Box.ts))
  * Затем применится модификатор Padding, который увеличит размер лэяута на 4 единицы по высоте и ширине, затем модификатор Padding расположит оригинальный Box по координатам x=2, y=2. Теперь размер лэяута равен 9x5 ([Исходный код PaddingModifier](src/notcompose-terminal/modifiers/PaddingModifier.ts))
  * Затем запустится модификатор BackgroundModifier, и так как размер лэяута 9x5, фон нарисуется размером 9x5
 
 Более подробно:
  * Фаза Measurement:
- * Сначала measure вызовется на [PaddingModifier](src/notcompose-terminal/modifiers/PaddingModifier.ts), он уменьшит максимальные constraints на 4 по ширине и высоте, и начнёт измерять оригинальный контент в Box используя [BoxMeasurePolicy](src/notcompose-terminal/highlevel/Box.ts)
- * [BoxMeasurePolicy](src/notcompose-terminal/highlevel/Box.ts) вернёт размер 5x1
+ * Сначала measure вызовется на [PaddingModifier](src/notcompose-terminal/modifiers/PaddingModifier.ts), он уменьшит максимальные constraints на 4 по ширине и высоте, и начнёт измерять оригинальный контент в Box используя [BoxMeasurePolicy](src/notcompose-layout/highlevel/Box.ts)
+ * [BoxMeasurePolicy](src/notcompose-layout/highlevel/Box.ts) вернёт размер 5x1
  * [PaddingModifier](src/notcompose-terminal/modifiers/PaddingModifier.ts) увеличит этот размер на 4 единицы по высоте и ширине, и вернёт модифицированный MeasureResult с новым размером.
  * Фаза Positioning:
- * Вызывается [PaddingModifier](src/notcompose-terminal/modifiers/PaddingModifier.ts).placeChildren(), он располагает следующий Layout-элемент (оригинальный [BoxMeasurePolicy](src/notcompose-terminal/highlevel/Box.ts)) по относительным координатам x=2 y=2
+ * Вызывается [PaddingModifier](src/notcompose-terminal/modifiers/PaddingModifier.ts).placeChildren(), он располагает следующий Layout-элемент (оригинальный [BoxMeasurePolicy](src/notcompose-layout/highlevel/Box.ts)) по относительным координатам x=2 y=2
  * Фаза Drawing:
  * Так как BackgroundModifier применён ПОСЛЕ PaddingModifier, ему приходит информация о модифицированных им размерах лэяута, а именно 9x5. Поэтому отрисовка фона в данном случае рисует область размером 9x5
 
@@ -840,7 +840,7 @@ ___________
 ```
 
 Здесь добавляется модификатор [SizeModifier](src/notcompose-terminal/modifiers/SizeModifier.ts) который заставляет оригинальный лэяут стать размером 7x7 (constraints = { minWidth: 7, maxWidth: 7, minHeight: 7, maxHeight: 7 }).
-[BoxMeasurePolicy](src/notcompose-terminal/highlevel/Box.ts) Уважает эти constraints и становится размером 7x7.
+[BoxMeasurePolicy](src/notcompose-layout/highlevel/Box.ts) Уважает эти constraints и становится размером 7x7.
 [PaddingModifier](src/notcompose-terminal/modifiers/PaddingModifier.ts) добавляет ещё 4 пикселя размера по вертикали и горизонтали.
 [BackgroundModifier](src/notcompose-terminal/modifiers/BackgroundModifier.ts) рисуется в области 11x11
 

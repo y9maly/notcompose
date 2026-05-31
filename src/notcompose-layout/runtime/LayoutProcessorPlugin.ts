@@ -1,7 +1,7 @@
-import {MeasureResult} from "../runtime/layout/Measurable";
-import {LayoutNode} from "./LayoutNode";
-import {Constraints} from "../runtime/layout/Constraints";
+import {MeasureResult} from "./Measurable";
+import {Constraints} from "./Constraints";
 import {debug} from "../../notcompose/runtime/debug";
+import {LayoutNode} from "./layoutNode/LayoutNode";
 
 export interface LayoutProcessorPlugin {
     beforeMeasure(layoutNode: LayoutNode, constraints: Constraints):

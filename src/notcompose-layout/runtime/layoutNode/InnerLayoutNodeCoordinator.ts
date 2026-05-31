@@ -1,5 +1,5 @@
 import {ModifierElement} from "../../../notcompose/runtime/Modifier";
-import {MeasurePolicy} from "../../../notcompose-terminal/runtime/layout/MeasurePolicy";
+import {MeasurePolicy} from "../MeasurePolicy";
 import {BaseLayoutNodeCoordinator} from "./LayoutNodeCoordinator";
 import {Node} from "../../../notcompose/runtime/Node";
 

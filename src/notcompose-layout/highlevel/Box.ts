@@ -1,11 +1,11 @@
-import {Layout} from "../runtime/layout/Layout.js";
+import {Layout} from "../runtime/Layout.js";
 import {Modifier} from "../../notcompose/runtime/Modifier";
-import {Alignment} from "../runtime/ui/Alignment";
-import {Size} from "../runtime/ui/Size";
+import {Alignment} from "../runtime/core/Alignment";
+import {Size} from "../runtime/core/Size";
 import {elvis} from "../../notcompose/runtime-highlevel/elvis";
-import {Placeable} from "../runtime/layout/Placeable";
-import {MeasureResult} from "../runtime/layout/Measurable";
-import {MeasurePolicy} from "../runtime/layout/MeasurePolicy";
+import {Placeable} from "../runtime/Placeable";
+import {MeasureResult} from "../runtime/Measurable";
+import {MeasurePolicy} from "../runtime/MeasurePolicy";
 import {NameElement} from "../../notcompose/runtime/modifiers/NameElement";
 
 export const BoxMeasurePolicy = (

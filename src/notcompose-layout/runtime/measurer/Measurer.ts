@@ -1,8 +1,8 @@
 import {CompleteMeasurerPlugin, MeasurerPlugin} from "./MeasurerPlugin";
 import {MeasurerPluginContext} from "./MeasurerPluginContext";
-import {MeasureResult} from "../../../notcompose-terminal/runtime/layout/Measurable";
+import {MeasureResult} from "../Measurable";
 import {LayoutNodeCoordinator} from "../layoutNode/LayoutNodeCoordinator";
-import {Constraints} from "../../../notcompose-terminal/runtime/layout/Constraints";
+import {Constraints} from "../Constraints";
 
 interface Frame {
     coordinator: LayoutNodeCoordinator

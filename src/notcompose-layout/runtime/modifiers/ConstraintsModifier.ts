@@ -1,5 +1,5 @@
 import {LayoutModifier} from "./LayoutModifier";
-import {MeasureResult} from "../layout/Measurable";
+import {MeasureResult} from "../Measurable";
 
 export const ConstraintsModifiers = {
     MinusMaxWidth: (value: number) => LayoutModifier((measurable, constraints) => {

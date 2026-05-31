@@ -1,12 +1,12 @@
 import {Node} from "../../../notcompose/runtime/Node";
 import {LayoutNode, LayoutNodeExtensionKey} from "./LayoutNode";
-import {MeasurePolicyExtensionKey} from "../../../notcompose-terminal/runtime/nodeExtensions/MeasurePolicyNodeExtension";
-import {EmptyMeasurePolicy} from "../../../notcompose-terminal/highlevel/Empty";
+import {MeasurePolicyExtensionKey} from "../nodeExtensions/MeasurePolicyNodeExtension";
+import {EmptyMeasurePolicy} from "../../highlevel/Empty";
 import {LayoutModifierLayoutNodeCoordinator} from "./LayoutModifierLayoutNodeCoordinator";
-import {LayoutModifier} from "../../../notcompose-terminal/runtime/modifiers/LayoutModifier";
+import {LayoutModifier} from "../modifiers/LayoutModifier";
 import {InnerLayoutNodeCoordinator} from "./InnerLayoutNodeCoordinator";
 import {LayoutNodeCoordinator} from "./LayoutNodeCoordinator";
-import {MeasurePolicy} from "../../../notcompose-terminal/runtime/layout/MeasurePolicy";
+import {MeasurePolicy} from "../MeasurePolicy";
 
 export function applyLayoutNode(node: Node): LayoutNode {
     const layoutNode = node.getExtension(LayoutNodeExtensionKey)

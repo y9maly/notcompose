@@ -1,33 +1,32 @@
 import {Node} from "../../notcompose/runtime/Node";
 import {Composer, Key} from "../../notcompose/runtime/Composer";
-import {applyLayoutNode as oldApplyLayoutNode} from "../../notcompose-terminal/runtime-layout/applyLayoutNode";
 import {currentComposer, withComposer} from "../../notcompose/runtime/currentComposer";
 
-import {Constraints} from "../../notcompose-terminal/runtime/layout/Constraints";
+import {Constraints} from "./Constraints";
 import {
     RecomposeLambda,
     RecomposeLambdaExtensionKey
 } from "../../notcompose/runtime-plugins/partialRecomposition/RecomposeLambda";
-import {LayoutProcessorPluginDebug} from "../../notcompose-terminal/runtime-layout/LayoutProcessorPlugin";
-import {MeasurePolicyExtensionKey} from "../../notcompose-terminal/runtime/nodeExtensions/MeasurePolicyNodeExtension";
-import {EmptyMeasurePolicy} from "../../notcompose-terminal/highlevel/Empty";
+import {LayoutProcessorPluginDebug} from "./LayoutProcessorPlugin";
+import {MeasurePolicyExtensionKey} from "./nodeExtensions/MeasurePolicyNodeExtension";
 import {
     SubcomposeNodeExtension,
-    SubcomposeNodeExtensionKey, SubcomposeScope
-} from "../../notcompose-terminal/runtime/nodeExtensions/SubcomposeNodeExtension";
+    SubcomposeNodeExtensionKey,
+    SubcomposeScope
+} from "./nodeExtensions/SubcomposeNodeExtension";
 import {LayoutNode, LayoutNodeExtensionKey} from "./layoutNode/LayoutNode";
 import {applyLayoutNode as newApplyLayoutNode} from "./layoutNode/applyLayoutNode";
 import {Measurer} from "./measurer/Measurer";
 import {LayoutNodeCoordinator} from "./layoutNode/LayoutNodeCoordinator";
 import {LayoutModifierLayoutNodeCoordinator} from "./layoutNode/LayoutModifierLayoutNodeCoordinator";
 import {currentMeasurer, withMeasurer} from "./measurer/currentMeasurer";
-import {Measurable, MeasureResult} from "../../notcompose-terminal/runtime/layout/Measurable";
-import {Placeable} from "../../notcompose-terminal/runtime/layout/Placeable";
+import {Measurable, MeasureResult} from "./Measurable";
+import {Placeable} from "./Placeable";
 import {InnerLayoutNodeCoordinator} from "./layoutNode/InnerLayoutNodeCoordinator";
 import {
     SubconstraintsNodeExtension,
     SubconstraintsNodeExtensionKey
-} from "../../notcompose-terminal/runtime/nodeExtensions/SubconstraintsNodeExtension";
+} from "./nodeExtensions/SubconstraintsNodeExtension";
 import {Modifier} from "../../notcompose/runtime/Modifier";
 import {assertUInt} from "../../core/types";
 

@@ -1,7 +1,7 @@
 import {ModifierElement} from "../../../notcompose/runtime/Modifier";
 import {LayoutModifier} from "./LayoutModifier";
-import {Constraints} from "../layout/Constraints";
-import {MeasureResult} from "../layout/Measurable";
+import {Constraints} from "../Constraints";
+import {MeasureResult} from "../Measurable";
 
 /**
  * @param fraction 0 - 0%; 1 - 100%

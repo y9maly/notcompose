@@ -1,8 +1,8 @@
 import {NodeExtensionKey} from "../../../notcompose/runtime/NodeExtensionKey";
-import {Measurable} from "../../../notcompose-terminal/runtime/layout/Measurable";
+import {Measurable} from "../Measurable";
 import {LayoutModifierLayoutNodeCoordinator} from "./LayoutModifierLayoutNodeCoordinator";
 import {Node} from "../../../notcompose/runtime/Node";
-import {MeasurePolicy} from "../../../notcompose-terminal/runtime/layout/MeasurePolicy";
+import {MeasurePolicy} from "../MeasurePolicy";
 import {LayoutNodeCoordinator} from "./LayoutNodeCoordinator";
 
 export const LayoutNodeExtensionKey = new NodeExtensionKey<LayoutNode>('LayoutNode')

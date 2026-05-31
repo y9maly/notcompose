@@ -6,8 +6,8 @@ import {
     SubcomposeNodeExtensionKey,
     SubcomposeScope
 } from "../runtime/nodeExtensions/SubcomposeNodeExtension";
-import {Constraints} from "../runtime/layout/Constraints";
-import {Measurable, MeasureResult} from "../runtime/layout/Measurable";
+import {Constraints} from "../runtime/Constraints";
+import {Measurable, MeasureResult} from "../runtime/Measurable";
 import {NameElement} from "../../notcompose/runtime/modifiers/NameElement";
 
 export function SubcomposeLayout(content: (constraints: Constraints) => MeasureResult, modifier: Modifier = new Modifier()) {

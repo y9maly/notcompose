@@ -1,7 +1,7 @@
 
 import {Key} from "../../../notcompose/runtime/Composer";
-import {Constraints} from "../layout/Constraints";
-import {Measurable, MeasureResult} from "../layout/Measurable";
+import {Constraints} from "../Constraints";
+import {Measurable, MeasureResult} from "../Measurable";
 import {NodeExtensionKey} from "../../../notcompose/runtime/NodeExtensionKey";
 
 export const SubcomposeNodeExtensionKey = new NodeExtensionKey<SubcomposeNodeExtension>('Subcompose')

@@ -1,5 +1,5 @@
-import {Size} from "../ui/Size";
-import {assertUInt} from "../../../core/types";
+import {Size} from "./core/Size";
+import {assertUInt} from "../../core/types";
 
 export class Constraints {
     minWidth: number         // 0..

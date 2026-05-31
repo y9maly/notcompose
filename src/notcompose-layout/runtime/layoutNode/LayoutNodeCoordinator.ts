@@ -1,6 +1,6 @@
 import {LayoutModifierLayoutNodeCoordinator} from "./LayoutModifierLayoutNodeCoordinator";
 import {InnerLayoutNodeCoordinator} from "./InnerLayoutNodeCoordinator";
-import {MeasureResult} from "../../../notcompose-terminal/runtime/layout/Measurable";
+import {MeasureResult} from "../Measurable";
 
 export type LayoutNodeCoordinator = LayoutModifierLayoutNodeCoordinator | InnerLayoutNodeCoordinator
 
