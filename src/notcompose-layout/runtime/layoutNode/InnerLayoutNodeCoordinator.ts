@@ -1,7 +1,7 @@
-import {ModifierElement} from "../../notcompose/runtime/Modifier";
-import {MeasurePolicy} from "../../notcompose-terminal/runtime/layout/MeasurePolicy";
+import {ModifierElement} from "../../../notcompose/runtime/Modifier";
+import {MeasurePolicy} from "../../../notcompose-terminal/runtime/layout/MeasurePolicy";
 import {BaseLayoutNodeCoordinator} from "./LayoutNodeCoordinator";
-import {Node} from "../../notcompose/runtime/Node";
+import {Node} from "../../../notcompose/runtime/Node";
 
 export class InnerLayoutNodeCoordinator extends BaseLayoutNodeCoordinator {
     constructor(

@@ -1,11 +1,12 @@
 import {CompleteMeasurerPlugin, MeasurerPlugin} from "./MeasurerPlugin";
 import {MeasurerPluginContext} from "./MeasurerPluginContext";
-import {LayoutModifierLayoutNodeCoordinator} from "./LayoutModifierLayoutNodeCoordinator";
-import {MeasureResult} from "../../notcompose-terminal/runtime/layout/Measurable";
-import {LayoutNodeCoordinator} from "./LayoutNodeCoordinator";
+import {MeasureResult} from "../../../notcompose-terminal/runtime/layout/Measurable";
+import {LayoutNodeCoordinator} from "../layoutNode/LayoutNodeCoordinator";
+import {Constraints} from "../../../notcompose-terminal/runtime/layout/Constraints";
 
 interface Frame {
     coordinator: LayoutNodeCoordinator
+    constraints: Constraints
 }
 
 export class Measurer {
@@ -25,9 +26,9 @@ export class Measurer {
 
     private readonly frames: Frame[] = []
 
-    startMeasurement(coordinator: LayoutNodeCoordinator) {
-        this.frames.push({ coordinator })
-        this.plugins.forEach(plugin => plugin.onStartMeasurement(coordinator))
+    startMeasurement(coordinator: LayoutNodeCoordinator, constraints: Constraints) {
+        this.frames.push({ coordinator, constraints })
+        this.plugins.forEach(plugin => plugin.onStartMeasurement(coordinator, constraints))
     }
 
     exitMeasurement() {
@@ -42,10 +43,10 @@ export class Measurer {
         const frame = this.frames.pop()
         if (frame === undefined)
             throw new Error('Cannot end measurement here')
-        const { coordinator } = frame
+        const { coordinator, constraints } = frame
 
-        coordinator.measure(measureResult)
+        coordinator.makeMeasured(measureResult)
 
-        this.plugins.forEach(plugin => plugin.onEndMeasurement(coordinator))
+        this.plugins.forEach(plugin => plugin.onEndMeasurement(coordinator, constraints, measureResult))
     }
 }

@@ -1,5 +1,7 @@
 import {MeasurerPluginContext} from "./MeasurerPluginContext";
-import {LayoutNodeCoordinator} from "./LayoutNodeCoordinator";
+import {LayoutNodeCoordinator} from "../layoutNode/LayoutNodeCoordinator";
+import {MeasureResult} from "../../../notcompose-terminal/runtime/layout/Measurable";
+import {Constraints} from "../../../notcompose-terminal/runtime/layout/Constraints";
 
 export interface MeasurerPlugin {
     attach?(context: MeasurerPluginContext): void | MeasurerPlugin
@@ -7,10 +9,10 @@ export interface MeasurerPlugin {
     finally?(): void
     dispose?(): void
 
-    onStartMeasurement?(coordinator: LayoutNodeCoordinator): void
+    onStartMeasurement?(coordinator: LayoutNodeCoordinator, constraints: Constraints): void
     onExitMeasurement?(): void
     onReenterMeasurement?(): void
-    onEndMeasurement?(coordinator: LayoutNodeCoordinator): void
+    onEndMeasurement?(coordinator: LayoutNodeCoordinator, constraints: Constraints, measureResult: MeasureResult): void
 }
 
 export interface CompleteMeasurerPlugin extends Required<MeasurerPlugin> {
