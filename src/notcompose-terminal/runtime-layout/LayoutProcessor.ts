@@ -55,6 +55,7 @@ export class LayoutProcessor {
         const placeable = this.measure(layoutNode, constraints)
         // layoutNode.outerCoordinator = InnerNodeCoordinator()
 
+        // todo Placer
         placeable.place(0, 0, 0)
 
         // this.params.interceptPlacement(() => layoutNode.place(0, 0, 0))
@@ -84,7 +85,7 @@ function coordinatorAsMeasurable(coordinator: LayoutNodeCoordinator): Measurable
 function layoutModifierCoordinatorAsMeasurable(coordinator: LayoutModifierLayoutNodeCoordinator): Measurable {
     return {
         measure: function (constraints: Constraints): Placeable {
-            const nextMeasurable = coordinatorAsMeasurable(coordinator.next)
+            const nextMeasurable = coordinatorAsMeasurable(coordinator.nextCoordinator)
 
             currentMeasurer().startMeasurement(coordinator)
             const measureResult = coordinator.layoutModifier.measure(nextMeasurable, constraints)

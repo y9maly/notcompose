@@ -3,9 +3,18 @@ import {TextCanvas} from "../runtime/ui/graphics/TextCanvas";
 import {TextBuffer, TextBufferCanvas, TextCell, TextRow} from "../runtime/ui/graphics/TextBufferCanvas";
 import {Char} from "../../core/types";
 import {DebugTextSpanProcessor, TextSpanProcessor} from "./TextSpanProcessor";
-import {LayoutNode} from "../runtime-layout/LayoutNode";
-import {LayoutNodeExtensionKey} from "../runtime/nodeExtensions/LayoutNodeExtension";
 import {BehaviorSubject} from "rxjs";
+import {LayoutNode, LayoutNodeExtensionKey} from "../../notcompose-layout/runtime/LayoutNode";
+import {LayoutNodeCoordinator} from "../../notcompose-layout/runtime/LayoutNodeCoordinator";
+import {LayoutModifier} from "../runtime/modifiers/LayoutModifier";
+import {LayoutModifierLayoutNodeCoordinator} from "../../notcompose-layout/runtime/LayoutModifierLayoutNodeCoordinator";
+import {DrawModifier} from "../runtime/modifiers/DrawModifier";
+import {ContentDrawScope} from "../runtime/ui/graphics/ContentDrawScope";
+import {DrawScope} from "../runtime/ui/graphics/DrawScope";
+import {Key} from "../../notcompose/runtime/Composer";
+import {MeasurePolicyExtensionKey} from "../runtime/nodeExtensions/MeasurePolicyNodeExtension";
+import {SubcomposeNodeExtensionKey} from "../runtime/nodeExtensions/SubcomposeNodeExtension";
+import {applyLayoutNode as newApplyLayoutNode} from "../../notcompose-layout/runtime/applyLayoutNode";
 
 export interface OutputProcessor {
     // todo Subject to change
@@ -122,7 +131,86 @@ function materialize(node: Node, canvas: TextCanvas) {
     const layoutNode = node.getExtension(LayoutNodeExtensionKey)
     if (layoutNode === undefined) {
         throw new Error(`Root node is not a layout node`)
-    } else {
-        layoutNode.draw(canvas)
     }
+
+    let currentCoordinator = layoutNode.outerCoordinator
+    while (true) {
+        drawCoordinator(currentCoordinator, canvas)
+
+        if (currentCoordinator instanceof LayoutModifierLayoutNodeCoordinator)
+            currentCoordinator = currentCoordinator.nextCoordinator
+        else
+            break
+    }
+}
+
+function drawCoordinator(coordinator: LayoutNodeCoordinator, canvas: TextCanvas) {
+    if (!coordinator.isPlaced)
+        return
+
+    let nextDrawModifierIndex = coordinator.modifierElements
+        .findIndex(it => DrawModifier.is(it))
+    const nextDrawModifierLambda = () => {
+        if (nextDrawModifierIndex === -1)
+            return nextDrawLambdaOf(coordinator, canvas)
+
+        const nextDrawModifier = DrawModifier.of(coordinator.modifierElements[nextDrawModifierIndex])!
+        nextDrawModifierIndex = coordinator.modifierElements
+            .findIndex((it, index) => index > nextDrawModifierIndex && DrawModifier.is(it))
+        return () => {
+            canvas.save()
+            nextDrawModifier.draw(ContentDrawScope(DrawScope(canvas, coordinator.width, coordinator.height), nextDrawModifierLambda()))
+            canvas.restore()
+        }
+    }
+
+    canvas.translate(coordinator.x, coordinator.y)
+    nextDrawModifierLambda()()
+}
+
+function nextDrawLambdaOf(coordinator: LayoutNodeCoordinator, canvas: TextCanvas) {
+    if (coordinator instanceof LayoutModifierLayoutNodeCoordinator) {
+        return () => {
+            canvas.save()
+            drawCoordinator(coordinator.nextCoordinator, canvas)
+            canvas.restore()
+        }
+    } else {
+        return () => {
+            const childrenLayoutNodes = reuseChildrenLayoutNodes(coordinator.node.children)
+                .sort((a, b) => a.outerCoordinator.z - b.outerCoordinator.z)
+
+            for (const childrenLayoutNode of childrenLayoutNodes) {
+                if (childrenLayoutNode.outerCoordinator.isPlaced) {
+                    canvas.save()
+                    drawCoordinator(childrenLayoutNode.outerCoordinator, canvas)
+                    canvas.restore()
+                }
+            }
+        }
+    }
+}
+
+function reuseChildrenLayoutNodes(
+    children: ReadonlyArray<{ key: Key | null, node: Node }>,
+): LayoutNode[] {
+    const result: LayoutNode[] = []
+
+    const queue = children.map(it => it.node)
+    while (queue.length > 0) {
+        const node = queue.shift()!
+
+        if (node.hasExtension(MeasurePolicyExtensionKey) || node.hasExtension(SubcomposeNodeExtensionKey)) {
+            // Если нода умеет распологать детей - добавить её как дочерний coordinator
+            // Если дерево ещё не построено, то [coordinator] достроит его сам.
+            const layoutNode = node.getExtension(LayoutNodeExtensionKey)
+            if (layoutNode !== undefined)
+                result.push(layoutNode)
+        } else {
+            // Если нода НЕ умеет распологать детей - добавить её детей напрямую
+            queue.unshift(...node.children.map(it => it.node))
+        }
+    }
+
+    return result
 }

@@ -44,6 +44,6 @@ export function assertUInt(...values: number[] | [Iterable<number>]): void {
 }
 
 export function assertChar(string: string): void {
-    if (string.length != 1)
+    if (string.length !== 1)
         throw new RangeError(`Char length should be 1. String "${string}" cannot be a char.`)
 }

@@ -18,7 +18,7 @@ export class LayoutModifierLayoutNodeCoordinator extends BaseLayoutNodeCoordinat
         return this._layoutModifier
     }
 
-    get next() {
+    get nextCoordinator() {
         return this._next
     }
 
