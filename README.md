@@ -663,7 +663,7 @@ P.S. На самом деле "Ты ввёл мало текста" будет �
 ## Modifiers
 
 Есть 3 основных модификатора:
- * RawTextModifier (Для отрисовки на TextCanvas)
+ * DrawModifier (Для отрисовки на TextCanvas)
  * LayoutModifier  (Для изменения логики вычисления размера и позиционирования)
  * InputModifier   (Для обработки ввода)
 
