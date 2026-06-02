@@ -15,11 +15,11 @@
 
  * [Counter](src/terminal-examples/counter)
 
-   https://github.com/user-attachments/assets/b5c395c7-880c-447c-a3a6-cf89884d23e1
+   https://github.com/user-attachments/assets/e4b7ffd2-bf66-44de-9ed3-e6f236318d36
 
  * [File explorer](src/terminal-examples/fileExplorer)
 
-   https://github.com/user-attachments/assets/0053a14b-3c0f-4d88-9bc2-f826916aed50
+   https://github.com/user-attachments/assets/6d6d6531-273f-48c7-be6a-a66513a3c623
 
  * [rrtop](src/terminal-examples/rrtop)
 
