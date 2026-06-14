@@ -1,25 +1,12 @@
-import {remember} from "../../notcompose/runtime-highlevel/remember";
-import {MainViewModel} from "./mainScreen/MainViewModel";
-import {DisposableEffect} from "../../notcompose/runtime-highlevel/DisposableEffect";
-import {
-    FakeSystemInfoRepository,
-    NodejsSystemInfoRepository,
-    SystemInfoRepository
-} from "./repository/SystemInfoRepository";
-import {rememberState} from "../../notcompose/runtime-highlevel/rememberState";
-import {Key} from "../../notcompose/runtime-highlevel/Key";
-import {MainScreen} from "./mainScreen/MainScreen";
-import {Column} from "../../notcompose-terminal/highlevel/Column";
-import {Modifier} from "../../notcompose/runtime/Modifier";
-import {FillMaxSizeModifier} from "../../notcompose-terminal/runtime/modifiers/FillModifier";
-import {RawInfoViewModel} from "./rawInfoScreen/RawInfoViewModel";
-import {RawInfoScreen} from "./rawInfoScreen/RawInfoScreen";
-import {input} from "../../notcompose-terminal/runtime/Input";
-import {Box} from "../../notcompose-terminal/highlevel/Box";
-import {ConstraintsModifiers} from "../../notcompose-terminal/runtime/modifiers/ConstraintsModifier";
-import {Divider} from "../common/Divider";
-import {Text} from "../../notcompose-terminal/highlevel/Text";
-import {Row} from "../../notcompose-terminal/highlevel/Row";
+import {DisposableEffect, Key, Modifier, remember, rememberState} from "notcompose";
+import {MainViewModel} from "./mainScreen/MainViewModel.js";
+import {NodejsSystemInfoRepository, SystemInfoRepository} from "./repository/SystemInfoRepository.js";
+import {MainScreen} from "./mainScreen/MainScreen.js";
+import {Box, Column, ConstraintsModifiers, FillMaxSizeModifier, Row} from "notcompose/layout";
+import {RawInfoViewModel} from "./rawInfoScreen/RawInfoViewModel.js";
+import {RawInfoScreen} from "./rawInfoScreen/RawInfoScreen.js";
+import {input, Text} from "notcompose/terminal";
+import {Divider} from "../common/Divider.js";
 
 type Screen = 'Main' | 'RawInfo'
 const screens: Screen[] = ['Main', 'RawInfo']

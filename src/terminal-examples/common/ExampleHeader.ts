@@ -1,8 +1,7 @@
-import {Box} from "../../notcompose-terminal/highlevel/Box";
-import {Modifier} from "../../notcompose/runtime/Modifier";
-import {Text} from "../../notcompose-terminal/highlevel/Text";
-import {Alignment} from "../../notcompose-terminal/runtime/ui/Alignment";
-import {Divider} from "./Divider";
+import {Alignment, Box} from "notcompose/layout";
+import {Modifier} from "notcompose";
+import {Text} from "notcompose/terminal";
+import {Divider} from "./Divider.js";
 
 export function ExampleHeader(text: string) {
     Box(() => {

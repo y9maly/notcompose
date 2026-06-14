@@ -1,9 +1,7 @@
-import {Item} from "./utils";
-import {Modifier} from "../../notcompose/runtime/Modifier";
-import {rememberState} from "../../notcompose/runtime-highlevel/rememberState";
-import {DisposableEffect} from "../../notcompose/runtime-highlevel/DisposableEffect";
-import {Row} from "../../notcompose-terminal/highlevel/Row";
-import {Text} from "../../notcompose-terminal/highlevel/Text";
+import {Item} from "./utils.js";
+import {DisposableEffect, Modifier, rememberState} from "notcompose";
+import {Row} from "notcompose/layout";
+import {Text} from "notcompose/terminal";
 
 export function ListItem(
     item: Item,

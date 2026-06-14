@@ -1,9 +1,9 @@
-import {PartialComposerPlugin} from "../../runtime/ComposerPlugin";
-import {Node} from "../../runtime/Node";
-import {RememberObserver} from "./RememberObserver";
-import {Key} from "../../runtime/Composer";
+import {ComposerPlugin} from "../../runtime/ComposerPlugin.js";
+import {Node} from "../../runtime/Node.js";
+import {RememberObserver} from "./RememberObserver.js";
+import {Key} from "../../runtime/Composer.js";
 
-export class RememberObserverPlugin implements PartialComposerPlugin {
+export class RememberObserverPlugin implements ComposerPlugin {
     onValueRemembered(node: Node, value: unknown) {
         RememberObserver.of(value)?.onRemembered()
     }

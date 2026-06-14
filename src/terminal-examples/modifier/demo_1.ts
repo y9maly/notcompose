@@ -1,11 +1,6 @@
-import {setTerminalContent} from "../../notcompose-terminal/setTerminalContent";
-import {Column} from "../../notcompose-terminal/highlevel/Column";
-import {Text} from "../../notcompose-terminal/highlevel/Text";
-import {Box} from "../../notcompose-terminal/highlevel/Box";
-import {Modifier} from "../../notcompose/runtime/Modifier";
-import {PaddingModifier} from "../../notcompose-terminal/runtime/modifiers/PaddingModifier";
-import {BackgroundModifier} from "../../notcompose-terminal/runtime/modifiers/BackgroundModifier";
-import {SizeModifier} from "../../notcompose-terminal/runtime/modifiers/SizeModifier";
+import {BackgroundModifier, setTerminalContent, Text} from "notcompose/terminal";
+import {Box, Column, PaddingModifier, SizeModifier} from "notcompose/layout";
+import {Modifier} from "notcompose";
 
 setTerminalContent(() => {
     Column(() => {

@@ -1,16 +1,20 @@
-import {AnnotatedString} from "../AnnotatedString";
-import {TextCanvas} from "./TextCanvas";
-import {TextSpan, TextSpanType} from "../TextSpan";
-import {assertInt, assertUInt, Char, Float} from "../../../../core/types";
-import {TransformationMatrix} from "./TransformationMatrix";
-import {Size} from "../Size";
-import {Rect} from "../Rect";
+import {AnnotatedString} from "../AnnotatedString.js";
+import {TextCanvas} from "./TextCanvas.js";
+import {TextSpanType} from "../TextSpan.js";
+import {Char, Float} from "../../../../core/types.js";
+import {TransformationMatrix} from "./TransformationMatrix.js";
+import {Rect, Size} from "notcompose/layout";
 
 export class TextBufferCanvas implements TextCanvas {
     constructor(
         public readonly buffer: TextBuffer,
         public width: number,
         public height: number,
+        public readonly config: {
+            drawThreshold: number
+        } = {
+            drawThreshold: 0.5,
+        }
     ) {}
 
     get size() { return new Size(this.width, this.height) }
@@ -139,6 +143,7 @@ export class TextBufferCanvas implements TextCanvas {
                     const char = Char(rawString[charIndex])
                     const spans = text instanceof AnnotatedString ? text.spans : []
 
+                    // todo Уважать this.config.drawThreshold
                     this.buffer.rows[ry].cells[rx] = new TextCell(
                         char,
                         spans

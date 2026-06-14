@@ -1,4 +1,4 @@
-import { BehaviorSubject } from 'rxjs'
+import {BehaviorSubject} from 'rxjs'
 
 // Реализация с использованием RxJs лежит в файле complexDemo-rxjs.ts
 

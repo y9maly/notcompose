@@ -1,14 +1,5 @@
-import {Composer} from "../notcompose/runtime/Composer";
-import {Modifier} from "../notcompose/runtime/Modifier";
-import {withComposer} from "../notcompose/runtime/currentComposer";
-import {MeasurePolicyNodeExtensionKey} from "./runtime/nodeExtensions/MeasurePolicyNodeExtension";
-import {
-    RecomposeLambda,
-    RecomposeLambdaExtensionKey
-} from "../notcompose/runtime-plugins/partialRecomposition/RecomposeLambda";
-import {Node} from "../notcompose/runtime/Node";
-import {MeasurePolicy} from "./runtime/layout/MeasurePolicy";
-import {MeasureResult} from "./runtime/layout/Measurable";
+import {Composer, Modifier, Node, RecomposeLambda, RecomposeLambdaExtensionKey, withComposer} from "notcompose";
+import {MeasurePolicy, MeasurePolicyExtensionKey, MeasureResult} from "notcompose/layout";
 
 const RootMeasurePolicy = MeasurePolicy(
     (measurables, constraints) => {
@@ -57,13 +48,13 @@ export class Composition {
 
         withComposer(this.composer, () => {
             this.rootNode.modifier = modifier
-            this.composer.startRootNode(this.rootNode)
-            this.composer.applyExtension(MeasurePolicyNodeExtensionKey, RootMeasurePolicy)
+            this.composer.startTree(this.rootNode)
+            this.composer.applyExtension(MeasurePolicyExtensionKey, RootMeasurePolicy)
             this.composer.applyExtension(RecomposeLambdaExtensionKey, this.content! satisfies RecomposeLambda)
             this.composer.startComposingNode()
             this.content!()
             this.composer.endComposingNode()
-            this.composer.endRootNode()
+            this.composer.endTree()
         })
     }
 }

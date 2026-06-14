@@ -1,5 +1,6 @@
+import {NodeExtensionKey} from "../../runtime/NodeExtensionKey.js";
 
-export const RecomposeLambdaExtensionKey = Symbol("RecomposeLambdaExtensionKey")
+export const RecomposeLambdaExtensionKey = new NodeExtensionKey<RecomposeLambda>('RecomposeLambda')
 
 export interface RecomposeLambda {
     (): void

@@ -1,10 +1,9 @@
 import path from "path";
-import {rememberState} from "../../notcompose/runtime-highlevel/rememberState";
-import {input} from "../../notcompose-terminal/runtime/Input";
-import {Modifier} from "../../notcompose/runtime/Modifier";
-import {getDirectoryContents} from "./utils";
-import {Content} from "./Content";
-
+import {Modifier, remember, rememberState, rememberUpdatedState} from "notcompose";
+import {input} from "notcompose/terminal";
+import {getDirectoryContents} from "./utils.js";
+import {Content} from "./Content.js";
+import process from "node:process";
 
 export function FileExplorerScreen(
     modifier: Modifier = new Modifier(),

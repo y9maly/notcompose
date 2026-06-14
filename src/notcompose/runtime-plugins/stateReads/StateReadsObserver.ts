@@ -1,6 +1,6 @@
-import {Node} from "../../runtime/Node";
-import {State} from "../../runtime/State";
-import {StateReads} from "./StateReads";
+import {Node} from "../../runtime/Node.js";
+import {State} from "../../runtime/State.js";
+import {StateReads} from "./StateReads.js";
 
 // Отслеживает изменение StateReads у ноды.
 export interface StateReadsObserver {
@@ -12,6 +12,7 @@ export interface StateReadsObserver {
     // [state] - все стейты которая читала эта нода.
     onStatesChanged(node: Node, states: StateReads): void
 
-    // Вызывается для удалённых из композиции нод
-    onNodeCleared(node: Node): void
+    // Вызывается когда эта нода удаляется из её родительской.
+    // Вызывается только для корня удалённого поддерева. Все дочерние ноды нужно обойти явно, если требуется обработать каждую.
+    onNodeForgotten(node: Node): void
 }

@@ -1,15 +1,15 @@
-import {rememberState} from "../../notcompose/runtime-highlevel/rememberState";
-import {DisposableEffect} from "../../notcompose/runtime-highlevel/DisposableEffect";
-import {Column} from "../../notcompose-terminal/highlevel/Column";
-import {Modifier} from "../../notcompose/runtime/Modifier";
-import {NameElement, NameModifier} from "../../notcompose/runtime/modifiers/NameElement";
-import {Text} from "../../notcompose-terminal/highlevel/Text";
-import {remember} from "../../notcompose/runtime-highlevel/remember";
-import {MutableState} from "../../notcompose/runtime/State";
-import {input} from "../../notcompose-terminal/runtime/Input";
-import {Box} from "../../notcompose-terminal/highlevel/Box";
-import {Key} from "../../notcompose/runtime-highlevel/Key";
-import {setTerminalContent} from "../../notcompose-terminal/setTerminalContent";
+import {
+    DisposableEffect,
+    Key,
+    Modifier,
+    MutableState,
+    NameElement,
+    NameModifier,
+    remember,
+    rememberState
+} from "notcompose";
+import {Box, Column} from "notcompose/layout";
+import {input, setTerminalContent, Text} from "notcompose/terminal";
 
 setTerminalContent(() => {
     DemoScreen()

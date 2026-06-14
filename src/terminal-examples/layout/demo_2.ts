@@ -1,16 +1,12 @@
-import {setTerminalContent} from "../../notcompose-terminal/setTerminalContent";
-import {BoxWithConstraints, ColumnWithConstraints} from "../../notcompose-terminal/highlevel/WithConstraints";
-import {Text} from "../../notcompose-terminal/highlevel/Text";
-import {Row} from "../../notcompose-terminal/highlevel/Row";
-import {Column} from "../../notcompose-terminal/highlevel/Column";
-import {Constraints} from "../../notcompose-terminal/runtime/layout/Constraints";
+import {setTerminalContent, Text} from "notcompose/terminal";
+import {Column, ColumnWithConstraints, Constraints, Row} from "notcompose/layout";
 
 setTerminalContent(() => {
     ColumnWithConstraints((constraints: Constraints) => {
         Text(`Ширина терминала: ${constraints.maxWidth}`)
         Text(`Высота терминала: ${constraints.maxHeight}`)
 
-        // In out case `constraints.maxHeight` will never be null.
+        // In our case `constraints.maxWidth` will never be null.
         // But in some cases it is useful to catch this.
         if (constraints.maxWidth === null || constraints.maxWidth > 70) {
             LargeScreen()

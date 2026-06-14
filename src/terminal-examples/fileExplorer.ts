@@ -1,7 +1,7 @@
-import {setTerminalContent} from "../notcompose-terminal/setTerminalContent";
-import {FileExplorerScreen} from "./fileExplorer/FileExplorerScreen";
-import {Modifier} from "../notcompose/runtime/Modifier";
-import {FillMaxSizeModifier} from "../notcompose-terminal/runtime/modifiers/FillModifier";
+import {setTerminalContent} from "notcompose/terminal";
+import {FileExplorerScreen} from "./fileExplorer/FileExplorerScreen.js";
+import {Modifier} from "notcompose";
+import {FillMaxSizeModifier} from "notcompose/layout";
 
 setTerminalContent(() => {
     FileExplorerScreen(new Modifier([FillMaxSizeModifier()]))

@@ -1,8 +1,7 @@
-import {AnnotatedString} from "../AnnotatedString";
-import {Rect} from "../Rect";
-import {TransformationMatrix} from "./TransformationMatrix";
-import {Float} from "../../../../core/types";
-import {Size} from "../Size";
+import {AnnotatedString} from "../AnnotatedString.js";
+import {RectLike, Size} from "notcompose/layout";
+import {TransformationMatrix} from "./TransformationMatrix.js";
+import {Float} from "../../../../core/types.js";
 
 export interface TextCanvas {
     get width(): number
@@ -42,10 +41,10 @@ export interface TextCanvas {
     // Clip
 
     clipRect(left: Float, top: Float, right: Float, bottom: Float): void
-    clipRect(rect: Rect): void
+    clipRect(rect: RectLike): void
 
     clipOutRect(left: Float, top: Float, right: Float, bottom: Float): void
-    clipOutRect(rect: Rect): void
+    clipOutRect(rect: RectLike): void
 
     // Drawing
 

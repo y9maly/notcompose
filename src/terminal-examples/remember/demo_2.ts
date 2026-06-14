@@ -1,8 +1,5 @@
-import {setTerminalContent} from "../../notcompose-terminal/setTerminalContent";
-import {MutableState} from "../../notcompose/runtime/State";
-import {mutableStateOf} from "../../notcompose/runtime-highlevel/mutableStateOf";
-import {remember} from "../../notcompose/runtime-highlevel/remember";
-import {Text} from "../../notcompose-terminal/highlevel/Text";
+import {setTerminalContent, Text} from "notcompose/terminal";
+import {MutableState, mutableStateOf, remember} from "notcompose";
 
 const counter: MutableState<number> = mutableStateOf(0)
 

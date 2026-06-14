@@ -1,16 +1,17 @@
-import {InputProcessor} from "./runtime-input/InputProcessor";
-import {OutputProcessor} from "./runtime-output/OutputProcessor";
-import {Recomposer} from "../notcompose/runtime-recomposer/Recomposer";
-import {Composer} from "../notcompose/runtime/Composer";
-import {PluginVerifierPlugin} from "../notcompose/runtime-plugins/pluginVerifier/PluginVerifierPlugin";
-import {DirtyCompositionPlugin} from "../notcompose/runtime-plugins/dirtyComposition/DirtyCompositionPlugin";
-import {StateReadsPlugin} from "../notcompose/runtime-plugins/stateReads/StateReadsPlugin";
-import {RememberObserverPlugin} from "../notcompose/runtime-plugins/rememberObserver/RememberObserverPlugin";
-import {Composition} from "./Composition";
-import {LayoutProcessor} from "./runtime-layout/LayoutProcessor";
-import {Constraints} from "./runtime/layout/Constraints";
-import {Modifier} from "../notcompose/runtime/Modifier";
-import {NameElement} from "../notcompose/runtime/modifiers/NameElement";
+import {InputProcessor} from "./runtime-input/InputProcessor.js";
+import {OutputProcessor} from "./runtime-output/OutputProcessor.js";
+import {
+    CleanCompositionPlugin,
+    Composer,
+    Modifier,
+    NameElement,
+    PluginVerifierPlugin,
+    Recomposer,
+    RememberObserverPlugin,
+    StateReadsPlugin
+} from "notcompose";
+import {Composition} from "./Composition.js";
+import {Constraints, LayoutProcessor} from "notcompose/layout";
 
 type StartParams = {
     inputProcessor: InputProcessor
@@ -41,7 +42,7 @@ export function bootstrapTerminalComposition(): {
         // Для дебага, кинет исключение если методы плагинов вызовутся неправильно
         new PluginVerifierPlugin(),
         // Удаляет пометку о грязной ноде сразу после начала композиции
-        new DirtyCompositionPlugin(),
+        new CleanCompositionPlugin(),
         // Отслеживает чтения стейтов во время композиции;
         // Составляет список стейтов от которых зависит каждая нода;
         // Позже используется для рекомпозиции при изменении стейта;

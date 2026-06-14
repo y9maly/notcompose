@@ -1,4 +1,4 @@
-import {TextCanvas} from "./TextCanvas";
+import {TextCanvas} from "./TextCanvas.js";
 
 // todo do not inherent TextCanvas
 export interface DrawScope extends TextCanvas {

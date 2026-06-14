@@ -1,4 +1,4 @@
-import {ModifierElement} from "../../../notcompose/runtime/Modifier";
+import {ModifierElement} from "notcompose";
 
 export interface InputModifier extends ModifierElement {
     pass: 'Initial' | 'Main' | 'Final'
