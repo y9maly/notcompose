@@ -8,7 +8,12 @@
     "build": "tsc",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:types": "tsc -p tsconfig.vitest.json --noEmit"
+    "test:types": "tsc -p tsconfig.vitest.json --noEmit",
+    "example:rrtop": "tsx ./src/terminal-examples/rrtop.ts",
+    "example:cube": "tsx ./src/terminal-examples/cube.ts",
+    "example:counter": "tsx ./src/terminal-examples/counter.ts",
+    "example:fileExplorer": "tsx ./src/terminal-examples/fileExplorer.ts",
+    "main": "tsx ./src/main.ts"
   },
   "exports": {
     ".": {
@@ -35,6 +40,7 @@
   "packageManager": "pnpm@10.20.0",
   "devDependencies": {
     "@types/node": "^25.5.2",
+    "tsx": "^4.22.4",
     "typescript": "^6.0.2",
     "vite-tsconfig-paths": "^6.1.1",
     "vitest": "^4.1.7"
