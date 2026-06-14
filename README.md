@@ -33,6 +33,21 @@
  
    Это не Terminal UI. Это другой модуль notcompose-molecule: Позволяет декларативно создавать одно реактивное состояние из множества других. В примере используется rxjs.
 
+# Как потестить самому?
+
+```
+git clone https://github.com/y9maly/notcompose.git && cd notcompose
+npm install -g pnpm
+pnpm install
+
+pnpm run test
+pnpm run example:rrtop
+pnpm run example:cube
+pnpm run example:counter
+pnpm run example:fileExplorer
+pnpm run main
+```
+
 # Как назвать этот заголовок?
 
 Я не знаю можно ли назвать это фреймворком, но формально это он. Поэтому дальше буду использовать это определение.
