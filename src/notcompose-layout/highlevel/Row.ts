@@ -1,10 +1,8 @@
 import {Layout} from "../runtime/Layout.js";
-import {Modifier} from "../../notcompose/runtime/Modifier";
-import {Alignment, VerticalAlignment} from "../runtime/core/Alignment";
-import {elvis} from "../../notcompose/runtime-highlevel/elvis";
-import {Placeable} from "../runtime/Placeable";
-import {MeasurePolicy} from "../runtime/MeasurePolicy";
-import {NameElement} from "../../notcompose/runtime/modifiers/NameElement";
+import {elvis, Modifier, NameElement} from "notcompose";
+import {Alignment, VerticalAlignment} from "../runtime/core/Alignment.js";
+import {Placeable} from "../runtime/Placeable.js";
+import {MeasurePolicy} from "../runtime/MeasurePolicy.js";
 
 export const RowMeasurePolicy = (
     verticalAlignment: VerticalAlignment = Alignment.Top

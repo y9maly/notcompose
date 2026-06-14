@@ -1,5 +1,5 @@
-import {Node} from "../../runtime/Node";
-import {NodeExtensionKey} from "../../runtime/NodeExtensionKey";
+import {Node} from "../../runtime/Node.js";
+import {NodeExtensionKey} from "../../runtime/NodeExtensionKey.js";
 
 const DirtyCompositionMarker = new NodeExtensionKey('DirtyCompositionMarker')
 

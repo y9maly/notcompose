@@ -1,12 +1,6 @@
-import {Modifier} from "../../../notcompose/runtime/Modifier";
-import {Box} from "../../../notcompose-layout/highlevel/Box";
-import {BorderModifier} from "../../../notcompose-terminal/runtime/modifiers/BorderModifier";
-import {Text} from "../../../notcompose-terminal/highlevel/Text";
-import {OffsetXModifier} from "../../../notcompose-layout/runtime/modifiers/OffsetModifier";
-import {Color} from "../../../notcompose-terminal/runtime/ui/Color";
-import {elvis} from "../../../notcompose/runtime-highlevel/elvis";
-import {Row} from "../../../notcompose-layout/highlevel/Row";
-import {colored} from "../../../notcompose-terminal/runtime/ui/AnnotatedString";
+import {elvis, Modifier} from "notcompose";
+import {Box, OffsetXModifier, Row} from "notcompose/layout";
+import {BorderModifier, Color, colored, Text} from "notcompose/terminal";
 
 /**
  * ```

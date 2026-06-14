@@ -1,12 +1,12 @@
-import {Node} from "../../../notcompose/runtime/Node";
-import {LayoutNode, LayoutNodeExtensionKey} from "./LayoutNode";
-import {MeasurePolicyExtensionKey} from "../nodeExtensions/MeasurePolicyNodeExtension";
-import {EmptyMeasurePolicy} from "../../highlevel/Empty";
-import {LayoutModifierLayoutNodeCoordinator} from "./LayoutModifierLayoutNodeCoordinator";
-import {LayoutModifier} from "../modifiers/LayoutModifier";
-import {InnerLayoutNodeCoordinator} from "./InnerLayoutNodeCoordinator";
-import {LayoutNodeCoordinator} from "./LayoutNodeCoordinator";
-import {MeasurePolicy} from "../MeasurePolicy";
+import {Node} from "notcompose";
+import {LayoutNode, LayoutNodeExtensionKey} from "./LayoutNode.js";
+import {MeasurePolicyExtensionKey} from "../nodeExtensions/MeasurePolicyNodeExtension.js";
+import {EmptyMeasurePolicy} from "../../highlevel/Empty.js";
+import {LayoutModifierLayoutNodeCoordinator} from "./LayoutModifierLayoutNodeCoordinator.js";
+import {LayoutModifier} from "../modifiers/LayoutModifier.js";
+import {InnerLayoutNodeCoordinator} from "./InnerLayoutNodeCoordinator.js";
+import {LayoutNodeCoordinator} from "./LayoutNodeCoordinator.js";
+import {MeasurePolicy} from "../MeasurePolicy.js";
 
 export function applyLayoutNode(node: Node): LayoutNode {
     const layoutNode = node.getExtension(LayoutNodeExtensionKey)

@@ -1,5 +1,5 @@
-import {currentTestRuntime} from "./TestRuntime";
-import {TestInput} from "../notcompose-terminal/TestInput";
+import {currentTestRuntime} from "./TestRuntime.js";
+import {TestInput} from "../notcompose-terminal/TestInput.js";
 
 export function currentTestInput(): TestInput {
     return currentTestRuntime()['testInput'] as TestInput

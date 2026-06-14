@@ -1,10 +1,34 @@
-import {BehaviorSubject, Observable, combineLatest, distinctUntilChanged, map, of, shareReplay, switchMap} from 'rxjs'
+import {BehaviorSubject, combineLatest, distinctUntilChanged, map, Observable, of, shareReplay, switchMap} from 'rxjs'
 import {
-    ActivityFeedVm, AssigneeBadgeVm, CommentPreviewVm, DashboardContentVm, DashboardVm, HeaderVm, Presence, Project,
-    ProjectDashboardVm, ProjectPickerVm, Task, TaskListVm, TaskRowVm, User, buildTaskActions, commentsByTaskSubject,
-    currentUserSubject, formatPriority, formatTaskStatus, presencesSubject, priorityWeight, projectsSubject,
-    searchQuerySubject, selectedProjectIdSubject, shallowEqual, sortModeSubject, tasksByProjectSubject, usersSubject,
-} from './complexDemo'
+    ActivityFeedVm,
+    AssigneeBadgeVm,
+    buildTaskActions,
+    CommentPreviewVm,
+    commentsByTaskSubject,
+    currentUserSubject,
+    DashboardContentVm,
+    DashboardVm,
+    formatPriority,
+    formatTaskStatus,
+    HeaderVm,
+    Presence,
+    presencesSubject,
+    priorityWeight,
+    Project,
+    ProjectDashboardVm,
+    ProjectPickerVm,
+    projectsSubject,
+    searchQuerySubject,
+    selectedProjectIdSubject,
+    shallowEqual,
+    sortModeSubject,
+    Task,
+    TaskListVm,
+    TaskRowVm,
+    tasksByProjectSubject,
+    User,
+    usersSubject,
+} from './complexDemo.js'
 
 const currentUser$ = currentUserSubject.asObservable()
 const users$ = usersSubject.asObservable()

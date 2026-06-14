@@ -1,8 +1,8 @@
 import {Node} from "./Node.js";
 import {Modifier} from "./Modifier.js";
 import {CompleteComposerPlugin, ComposerPlugin} from "./ComposerPlugin.js";
-import {ComposerPluginContext} from "./ComposerPluginContext";
-import {NodeExtensionKey} from "./NodeExtensionKey";
+import {ComposerPluginContext} from "./ComposerPluginContext.js";
+import {NodeExtensionKey} from "./NodeExtensionKey.js";
 
 export type Key = number | string
 
@@ -51,7 +51,7 @@ const Empty = Symbol('Empty')
  */
 export class Composer implements IComposer {
     composer = this
-    context = {
+    private context = {
         composer: this.composer,
         currentCompositionRootNode() { return this.composer.currentCompositionRootNode }
     } satisfies ComposerPluginContext

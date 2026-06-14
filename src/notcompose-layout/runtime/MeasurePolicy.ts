@@ -1,7 +1,7 @@
-import {Measurable, MeasureResult} from "./Measurable";
-import {Constraints} from "./Constraints";
-import {IntrinsicMeasurable} from "./IntrinsicMeasurable";
-import {Placeable} from "./Placeable";
+import {Measurable, MeasureResult} from "./Measurable.js";
+import {Constraints} from "./Constraints.js";
+import {IntrinsicMeasurable} from "./IntrinsicMeasurable.js";
+import {Placeable} from "./Placeable.js";
 
 export interface MeasurePolicy {
     measure(measurables: ReadonlyArray<Measurable>, constraints: Constraints): MeasureResult
@@ -132,4 +132,3 @@ class EmptyPlaceable implements Placeable {
 
     place(x: number, y: number): void {}
 }
-

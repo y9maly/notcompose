@@ -1,9 +1,8 @@
-import {ModifierElement} from "../../../notcompose/runtime/Modifier";
-import {DrawModifier} from "./DrawModifier";
-import {ContentDrawScope} from "../ui/graphics/ContentDrawScope";
-import {Color} from "../ui/Color";
-import {elvis} from "../../../notcompose/runtime-highlevel/elvis";
-import {colored} from "../ui/AnnotatedString";
+import {elvis, ModifierElement} from "notcompose";
+import {DrawModifier} from "./DrawModifier.js";
+import {ContentDrawScope} from "../ui/graphics/ContentDrawScope.js";
+import {Color} from "../ui/Color.js";
+import {colored} from "../ui/AnnotatedString.js";
 
 export function BackgroundModifier(
     symbol: string,

@@ -1,20 +1,21 @@
-import {Node} from "../../notcompose/runtime/Node";
-import {TextCanvas} from "../runtime/ui/graphics/TextCanvas";
-import {TextBuffer, TextBufferCanvas, TextCell, TextRow} from "../runtime/ui/graphics/TextBufferCanvas";
-import {Char} from "../../core/types";
-import {DebugTextSpanProcessor, TextSpanProcessor} from "./TextSpanProcessor";
+import {Node} from "notcompose";
+import {TextCanvas} from "../runtime/ui/graphics/TextCanvas.js";
+import {TextBuffer, TextBufferCanvas, TextCell, TextRow} from "../runtime/ui/graphics/TextBufferCanvas.js";
+import {Char} from "../../core/types.js";
+import {DebugTextSpanProcessor, TextSpanProcessor} from "./TextSpanProcessor.js";
 import {BehaviorSubject} from "rxjs";
-import {LayoutNode, LayoutNodeExtensionKey} from "../../notcompose-layout/runtime/layoutNode/LayoutNode";
-import {LayoutNodeCoordinator} from "../../notcompose-layout/runtime/layoutNode/LayoutNodeCoordinator";
-import {LayoutModifier} from "../../notcompose-layout/runtime/modifiers/LayoutModifier";
-import {LayoutModifierLayoutNodeCoordinator} from "../../notcompose-layout/runtime/layoutNode/LayoutModifierLayoutNodeCoordinator";
-import {DrawModifier} from "../runtime/modifiers/DrawModifier";
-import {ContentDrawScope} from "../runtime/ui/graphics/ContentDrawScope";
-import {DrawScope} from "../runtime/ui/graphics/DrawScope";
-import {Key} from "../../notcompose/runtime/Composer";
-import {MeasurePolicyExtensionKey} from "../../notcompose-layout/runtime/nodeExtensions/MeasurePolicyNodeExtension";
-import {SubcomposeNodeExtensionKey} from "../../notcompose-layout/runtime/nodeExtensions/SubcomposeNodeExtension";
-import {applyLayoutNode as newApplyLayoutNode} from "../../notcompose-layout/runtime/layoutNode/applyLayoutNode";
+import {
+    LayoutModifierLayoutNodeCoordinator,
+    LayoutNode,
+    LayoutNodeCoordinator,
+    LayoutNodeExtensionKey,
+    MeasurePolicyExtensionKey,
+    SubcomposeNodeExtensionKey
+} from "notcompose/layout";
+import {DrawModifier} from "../runtime/modifiers/DrawModifier.js";
+import {ContentDrawScope} from "../runtime/ui/graphics/ContentDrawScope.js";
+import {DrawScope} from "../runtime/ui/graphics/DrawScope.js";
+import {Key} from "../../notcompose/runtime/Composer.js";
 
 export interface OutputProcessor {
     // todo Subject to change

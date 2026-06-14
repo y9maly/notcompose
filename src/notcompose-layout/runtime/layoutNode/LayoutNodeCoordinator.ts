@@ -1,6 +1,6 @@
-import {LayoutModifierLayoutNodeCoordinator} from "./LayoutModifierLayoutNodeCoordinator";
-import {InnerLayoutNodeCoordinator} from "./InnerLayoutNodeCoordinator";
-import {MeasureResult} from "../Measurable";
+import {LayoutModifierLayoutNodeCoordinator} from "./LayoutModifierLayoutNodeCoordinator.js";
+import {InnerLayoutNodeCoordinator} from "./InnerLayoutNodeCoordinator.js";
+import {MeasureResult} from "../Measurable.js";
 
 export type LayoutNodeCoordinator = LayoutModifierLayoutNodeCoordinator | InnerLayoutNodeCoordinator
 

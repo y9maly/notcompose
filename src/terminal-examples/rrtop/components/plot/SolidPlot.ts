@@ -1,16 +1,16 @@
-import {HistoryData} from "./HistoryData";
-import {Modifier} from "../../../../notcompose/runtime/Modifier";
-import {Alignment, VerticalAlignment} from "../../../../notcompose-layout/runtime/core/Alignment";
-import {RowWithConstraints} from "../../../../notcompose-layout/highlevel/WithConstraints";
-import {FillMaxWidthModifier} from "../../../../notcompose-layout/runtime/modifiers/FillModifier";
-import {repeat} from "../../../common/repeat";
-import {Text} from "../../../../notcompose-terminal/highlevel/Text";
-import {Spacer} from "../../../../notcompose-layout/highlevel/Spacer";
-import {BackgroundModifier} from "../../../../notcompose-terminal/runtime/modifiers/BackgroundModifier";
-import {HeightModifier, WidthModifier} from "../../../../notcompose-layout/runtime/modifiers/SizeModifier";
-import {Color} from "../../../../notcompose-terminal/runtime/ui/Color";
-import {elvis} from "../../../../notcompose/runtime-highlevel/elvis";
-import {colored} from "../../../../notcompose-terminal/runtime/ui/AnnotatedString";
+import {HistoryData} from "./HistoryData.js";
+import {elvis, Modifier} from "notcompose";
+import {
+    Alignment,
+    FillMaxWidthModifier,
+    HeightModifier,
+    RowWithConstraints,
+    Spacer,
+    VerticalAlignment,
+    WidthModifier
+} from "notcompose/layout";
+import {repeat} from "../../../common/repeat.js";
+import {BackgroundModifier, Color, colored, Text} from "notcompose/terminal";
 
 export function SolidPlot(
     historyData: HistoryData,

@@ -1,8 +1,8 @@
-import {ModifierElement} from "../../../notcompose/runtime/Modifier";
-import {Constraints} from "../Constraints";
-import {Placeable} from "../Placeable";
-import {IntrinsicMeasurable} from "../IntrinsicMeasurable";
-import {Measurable, MeasureResult} from "../Measurable";
+import {ModifierElement} from "notcompose";
+import {Constraints} from "../Constraints.js";
+import {Placeable} from "../Placeable.js";
+import {IntrinsicMeasurable} from "../IntrinsicMeasurable.js";
+import {Measurable, MeasureResult} from "../Measurable.js";
 
 export interface LayoutModifier extends ModifierElement {
     measure(measurable: Measurable, constraints: Constraints): MeasureResult

@@ -3,11 +3,31 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "build": "tsc",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:types": "tsc -p tsconfig.vitest.json --noEmit"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/notcompose/index.d.ts",
+      "import": "./dist/notcompose/index.js"
+    },
+    "./molecule": {
+      "types": "./dist/notcompose-molecule/index.d.ts",
+      "import": "./dist/notcompose-molecule/index.js"
+    },
+    "./layout": {
+      "types": "./dist/notcompose-layout/index.d.ts",
+      "import": "./dist/notcompose-layout/index.js"
+    },
+    "./terminal": {
+      "types": "./dist/notcompose-terminal/index.d.ts",
+      "import": "./dist/notcompose-terminal/index.js"
+    },
+    "./package.json": "./package.json"
   },
   "keywords": [],
   "author": "",

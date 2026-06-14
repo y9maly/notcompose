@@ -1,11 +1,6 @@
-import {setTerminalContent} from "../../notcompose-terminal/setTerminalContent";
-import {Layout} from "../../notcompose-layout/runtime/Layout";
-import {Text} from "../../notcompose-terminal/highlevel/Text";
-import {FillMaxSizeModifier} from "../../notcompose-layout/runtime/modifiers/FillModifier";
-import {Modifier} from "../../notcompose/runtime/Modifier";
-import {MeasurePolicy} from "../../notcompose-layout/runtime/MeasurePolicy";
-import {MeasureResult} from "../../notcompose-layout/runtime/Measurable";
-import {BackgroundModifier} from "../../notcompose-terminal/runtime/modifiers/BackgroundModifier";
+import {BackgroundModifier, setTerminalContent, Text} from "notcompose/terminal";
+import {FillMaxSizeModifier, Layout, MeasurePolicy, MeasureResult} from "notcompose/layout";
+import {Modifier} from "notcompose";
 
 setTerminalContent(() => {
     Layout(() => {

@@ -1,6 +1,6 @@
 import {LayoutModifier} from "./LayoutModifier.js";
-import {ModifierElement} from "../../../notcompose/runtime/Modifier";
-import {MeasureResult} from "../Measurable";
+import {ModifierElement} from "notcompose";
+import {MeasureResult} from "../Measurable.js";
 
 export function OffsetModifier(x: number, y: number): ModifierElement {
     return new OffsetModifierImpl(x, y)

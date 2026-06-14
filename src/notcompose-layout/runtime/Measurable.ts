@@ -1,6 +1,6 @@
-import {IntrinsicMeasurable} from "./IntrinsicMeasurable";
-import {Constraints} from "./Constraints";
-import {Placeable} from "./Placeable";
+import {IntrinsicMeasurable} from "./IntrinsicMeasurable.js";
+import {Constraints} from "./Constraints.js";
+import {Placeable} from "./Placeable.js";
 
 export interface Measurable extends IntrinsicMeasurable {
     measure(constraints: Constraints): Placeable

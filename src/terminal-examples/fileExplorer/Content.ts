@@ -1,13 +1,10 @@
-import {Item} from "./utils";
-import {Modifier} from "../../notcompose/runtime/Modifier";
-import {ColumnWithConstraints} from "../../notcompose-layout/highlevel/WithConstraints";
-import {Text} from "../../notcompose-terminal/highlevel/Text";
-import {Key} from "../../notcompose/runtime-highlevel/Key";
-import {ListItem} from "./ListItem";
-import {NameModifier} from "../../notcompose/runtime/modifiers/NameElement";
-import {ExampleHeader} from "../common/ExampleHeader";
-import {Divider} from "../common/Divider";
-import {Constraints} from "../../notcompose-layout/runtime/Constraints";
+import {Item} from "./utils.js";
+import {Key, Modifier, NameModifier} from "notcompose";
+import {ColumnWithConstraints, Constraints} from "notcompose/layout";
+import {Text} from "notcompose/terminal";
+import {ListItem} from "./ListItem.js";
+import {ExampleHeader} from "../common/ExampleHeader.js";
+import {Divider} from "../common/Divider.js";
 
 export function Content(
     currentDirectoryPath: string,

@@ -1,7 +1,7 @@
-import {BehaviorSubject, Subject} from "rxjs";
-import {State} from "../runtime/State";
-import {rememberState} from "../runtime-highlevel/rememberState";
-import {DisposableEffect} from "../runtime-highlevel/DisposableEffect";
+import {BehaviorSubject} from "rxjs";
+import {State} from "../runtime/State.js";
+import {rememberState} from "../runtime-highlevel/rememberState.js";
+import {DisposableEffect} from "../runtime-highlevel/DisposableEffect.js";
 
 export function subjectAsState<T>(subject: BehaviorSubject<T>): State<T> {
     const state = rememberState(() => subject.value)

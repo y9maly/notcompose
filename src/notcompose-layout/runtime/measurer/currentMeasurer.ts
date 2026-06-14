@@ -1,4 +1,4 @@
-import {Measurer} from "./Measurer";
+import {Measurer} from "./Measurer.js";
 
 let value: Measurer | null = null
 

@@ -1,6 +1,6 @@
-import {InputSource} from "../../../src/notcompose-terminal/runtime-input/InputSource";
+import {InputSource} from "notcompose/terminal";
 import {Disposable} from "vitest/optional-runtime-types.js";
-import {TestInput} from "./TestInput";
+import {TestInput} from "./TestInput.js";
 
 export class TestInputSource implements InputSource, TestInput {
     private listener?: (string: string, key: any) => void

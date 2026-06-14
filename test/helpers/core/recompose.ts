@@ -1,7 +1,5 @@
-import {currentTestRuntime} from "./TestRuntime";
-import {Recomposer} from "../../../src/notcompose/runtime-recomposer/Recomposer";
-import {error} from "../../../src/core/exceptions";
-import { elvis } from "../../../src/notcompose/runtime-highlevel/elvis";
+import {currentTestRuntime} from "./TestRuntime.js";
+import {elvis, error, Recomposer} from "notcompose";
 
 export function currentRecomposer(): Recomposer {
     const recomposer = currentTestRuntime()['recomposer']

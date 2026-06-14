@@ -1,8 +1,7 @@
-import {AnnotatedString} from "../AnnotatedString";
-import {Rect, RectLike} from "../../../../notcompose-layout/runtime/core/Rect";
-import {TransformationMatrix} from "./TransformationMatrix";
-import {Float} from "../../../../core/types";
-import {Size} from "../../../../notcompose-layout/runtime/core/Size";
+import {AnnotatedString} from "../AnnotatedString.js";
+import {RectLike, Size} from "notcompose/layout";
+import {TransformationMatrix} from "./TransformationMatrix.js";
+import {Float} from "../../../../core/types.js";
 
 export interface TextCanvas {
     get width(): number

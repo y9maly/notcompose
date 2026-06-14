@@ -1,5 +1,5 @@
-import {State} from "../runtime/State";
-import {GlobalSnapshot} from "../runtime/Snapshot";
+import {State} from "../runtime/State.js";
+import {GlobalSnapshot} from "../runtime/Snapshot.js";
 import {Disposable} from "vitest/optional-runtime-types.js";
 
 export class StateDependenciesMap<

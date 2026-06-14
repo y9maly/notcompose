@@ -1,22 +1,19 @@
-import {Modifier} from "../../../notcompose/runtime/Modifier";
-import {MainViewModel} from "./MainViewModel";
-import {BorderedTitledBox} from "../components/BorderedTitledBox";
-import {Column} from "../../../notcompose-layout/highlevel/Column";
-import {SolidPlot} from "../components/plot/SolidPlot";
+import {Modifier} from "notcompose";
+import {MainViewModel} from "./MainViewModel.js";
+import {BorderedTitledBox} from "../components/BorderedTitledBox.js";
 import {
+    Box,
+    Column,
+    ConstraintsModifiers,
     FillMaxHeightModifier,
     FillMaxSizeModifier,
-    FillMaxWidthModifier
-} from "../../../notcompose-layout/runtime/modifiers/FillModifier";
-import {Text} from "../../../notcompose-terminal/highlevel/Text";
-import {OffsetModifier} from "../../../notcompose-layout/runtime/modifiers/OffsetModifier";
-import {Row} from "../../../notcompose-layout/highlevel/Row";
-import {Box} from "../../../notcompose-layout/highlevel/Box";
-import {Divider} from "../../common/Divider";
-import {ConstraintsModifiers} from "../../../notcompose-layout/runtime/modifiers/ConstraintsModifier";
-import {input} from "../../../notcompose-terminal/runtime/Input";
-import {annotated, bold, colored} from "../../../notcompose-terminal/runtime/ui/AnnotatedString";
-import {Color} from "../../../notcompose-terminal/runtime/ui/Color";
+    FillMaxWidthModifier,
+    OffsetModifier,
+    Row
+} from "notcompose/layout";
+import {SolidPlot} from "../components/plot/SolidPlot.js";
+import {annotated, bold, Color, colored, input, Text} from "notcompose/terminal";
+import {Divider} from "../../common/Divider.js";
 
 export function MainScreen(
     viewModel: MainViewModel,

@@ -1,4 +1,4 @@
-import {AnnotatedString} from "../../../src/notcompose-terminal/runtime/ui/AnnotatedString";
+import {AnnotatedString} from "notcompose/terminal";
 
 export interface TestOutput {
     viewportWidth: number

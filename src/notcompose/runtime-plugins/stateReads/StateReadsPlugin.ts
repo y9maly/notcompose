@@ -1,10 +1,9 @@
-import {ComposerPlugin} from "../../runtime/ComposerPlugin";
-import {Node} from "../../runtime/Node";
-import {GlobalSnapshot} from "../../runtime/Snapshot";
-import {ComposerPluginContext} from "../../runtime/ComposerPluginContext";
-import {Composer} from "../../runtime/Composer";
-import {StateReadsObserver} from "./StateReadsObserver";
-import {StateReadsCollector} from "./StateReadsCollector";
+import {ComposerPlugin} from "../../runtime/ComposerPlugin.js";
+import {Node} from "../../runtime/Node.js";
+import {ComposerPluginContext} from "../../runtime/ComposerPluginContext.js";
+import {Composer} from "../../runtime/Composer.js";
+import {StateReadsObserver} from "./StateReadsObserver.js";
+import {StateReadsCollector} from "./StateReadsCollector.js";
 
 export class StateReadsPlugin implements ComposerPlugin {
     constructor(

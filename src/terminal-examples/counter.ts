@@ -1,7 +1,7 @@
-import {setTerminalContent} from "../notcompose-terminal/setTerminalContent";
-import {Modifier} from "../notcompose/runtime/Modifier";
-import {FillMaxSizeModifier} from "../notcompose-layout/runtime/modifiers/FillModifier";
-import {CounterScreen} from "./counter/CounterScreen";
+import {setTerminalContent} from "notcompose/terminal";
+import {Modifier} from "notcompose";
+import {FillMaxSizeModifier} from "notcompose/layout";
+import {CounterScreen} from "./counter/CounterScreen.js";
 
 setTerminalContent(() => {
     CounterScreen(new Modifier([FillMaxSizeModifier()]))

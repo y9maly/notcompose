@@ -1,5 +1,5 @@
-import {MeasurePolicy} from "../runtime/MeasurePolicy";
-import {MeasureResult} from "../runtime/Measurable";
+import {MeasurePolicy} from "../runtime/MeasurePolicy.js";
+import {MeasureResult} from "../runtime/Measurable.js";
 
 export const EmptyMeasurePolicy = MeasurePolicy(
     (measurables, constraints) => {

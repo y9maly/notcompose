@@ -1,14 +1,17 @@
-import {StateReadsObserver} from "../runtime-plugins/stateReads/StateReadsObserver";
-import {Node} from "../runtime/Node";
-import {State} from "../runtime/State";
-import {StateReads} from "../runtime-plugins/stateReads/StateReads";
-import {isCompositionDirty, markCompositionAsDirty} from "../runtime-plugins/dirtyComposition/DirtyCompositionMarker";
-import {RecomposeLambda, RecomposeLambdaExtensionKey} from "../runtime-plugins/partialRecomposition/RecomposeLambda";
-import {Composer} from "../runtime/Composer";
-import {withComposer} from "../runtime/currentComposer";
-import {debug} from "../runtime/debug";
-import {StateDependenciesMap} from "./StateDependenciesMap";
-import {ComposerPlugin} from "../runtime/ComposerPlugin";
+import {StateReadsObserver} from "../runtime-plugins/stateReads/StateReadsObserver.js";
+import {Node} from "../runtime/Node.js";
+import {State} from "../runtime/State.js";
+import {StateReads} from "../runtime-plugins/stateReads/StateReads.js";
+import {
+    isCompositionDirty,
+    markCompositionAsDirty
+} from "../runtime-plugins/dirtyComposition/DirtyCompositionMarker.js";
+import {RecomposeLambdaExtensionKey} from "../runtime-plugins/partialRecomposition/RecomposeLambda.js";
+import {Composer} from "../runtime/Composer.js";
+import {withComposer} from "../runtime/currentComposer.js";
+import {debug} from "../runtime/debug.js";
+import {StateDependenciesMap} from "./StateDependenciesMap.js";
+import {ComposerPlugin} from "../runtime/ComposerPlugin.js";
 
 /**
  * Composer должен иметь плагин [StateReadsPlugin].

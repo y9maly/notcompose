@@ -1,4 +1,4 @@
-import {Offset} from "./Offset";
+import {Offset} from "./Offset.js";
 
 export class Size {
     constructor(

@@ -1,11 +1,9 @@
-import {ModifierElement} from "../../../notcompose/runtime/Modifier";
-import {LayoutModifier} from "../../../notcompose-layout/runtime/modifiers/LayoutModifier";
-import {elvis} from "../../../notcompose/runtime-highlevel/elvis";
-import {MeasureResult} from "../../../notcompose-layout/runtime/Measurable";
-import {DrawModifier} from "./DrawModifier";
-import {ContentDrawScope} from "../ui/graphics/ContentDrawScope";
-import {Color} from "../ui/Color";
-import {AnnotatedString, colored} from "../ui/AnnotatedString";
+import {elvis, ModifierElement} from "notcompose";
+import {LayoutModifier, MeasureResult} from "notcompose/layout";
+import {DrawModifier} from "./DrawModifier.js";
+import {ContentDrawScope} from "../ui/graphics/ContentDrawScope.js";
+import {Color} from "../ui/Color.js";
+import {AnnotatedString, colored} from "../ui/AnnotatedString.js";
 
 export function BorderModifier(params?: {
     color?: Color | null,

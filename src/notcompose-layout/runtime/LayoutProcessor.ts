@@ -1,34 +1,28 @@
-import {Node} from "../../notcompose/runtime/Node";
-import {Composer, Key} from "../../notcompose/runtime/Composer";
-import {currentComposer, withComposer} from "../../notcompose/runtime/currentComposer";
+import {currentComposer, Modifier, Node, RecomposeLambda, RecomposeLambdaExtensionKey, withComposer} from "notcompose";
+import {Composer, Key} from "../../notcompose/runtime/Composer.js";
 
-import {Constraints} from "./Constraints";
-import {
-    RecomposeLambda,
-    RecomposeLambdaExtensionKey
-} from "../../notcompose/runtime-plugins/partialRecomposition/RecomposeLambda";
-import {LayoutProcessorPluginDebug} from "./LayoutProcessorPlugin";
-import {MeasurePolicyExtensionKey} from "./nodeExtensions/MeasurePolicyNodeExtension";
+import {Constraints} from "./Constraints.js";
+import {LayoutProcessorPluginDebug} from "./LayoutProcessorPlugin.js";
+import {MeasurePolicyExtensionKey} from "./nodeExtensions/MeasurePolicyNodeExtension.js";
 import {
     SubcomposeNodeExtension,
     SubcomposeNodeExtensionKey,
     SubcomposeScope
-} from "./nodeExtensions/SubcomposeNodeExtension";
-import {LayoutNode, LayoutNodeExtensionKey} from "./layoutNode/LayoutNode";
-import {applyLayoutNode as newApplyLayoutNode} from "./layoutNode/applyLayoutNode";
-import {Measurer} from "./measurer/Measurer";
-import {LayoutNodeCoordinator} from "./layoutNode/LayoutNodeCoordinator";
-import {LayoutModifierLayoutNodeCoordinator} from "./layoutNode/LayoutModifierLayoutNodeCoordinator";
-import {currentMeasurer, withMeasurer} from "./measurer/currentMeasurer";
-import {Measurable, MeasureResult} from "./Measurable";
-import {Placeable} from "./Placeable";
-import {InnerLayoutNodeCoordinator} from "./layoutNode/InnerLayoutNodeCoordinator";
+} from "./nodeExtensions/SubcomposeNodeExtension.js";
+import {LayoutNode, LayoutNodeExtensionKey} from "./layoutNode/LayoutNode.js";
+import {applyLayoutNode as newApplyLayoutNode} from "./layoutNode/applyLayoutNode.js";
+import {Measurer} from "./measurer/Measurer.js";
+import {LayoutNodeCoordinator} from "./layoutNode/LayoutNodeCoordinator.js";
+import {LayoutModifierLayoutNodeCoordinator} from "./layoutNode/LayoutModifierLayoutNodeCoordinator.js";
+import {currentMeasurer, withMeasurer} from "./measurer/currentMeasurer.js";
+import {Measurable, MeasureResult} from "./Measurable.js";
+import {Placeable} from "./Placeable.js";
+import {InnerLayoutNodeCoordinator} from "./layoutNode/InnerLayoutNodeCoordinator.js";
 import {
     SubconstraintsNodeExtension,
     SubconstraintsNodeExtensionKey
-} from "./nodeExtensions/SubconstraintsNodeExtension";
-import {Modifier} from "../../notcompose/runtime/Modifier";
-import {assertUInt} from "../../core/types";
+} from "./nodeExtensions/SubconstraintsNodeExtension.js";
+import {assertUInt} from "../../core/types.js";
 
 export class LayoutProcessor {
     constructor(

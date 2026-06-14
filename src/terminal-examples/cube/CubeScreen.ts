@@ -1,10 +1,6 @@
-import {Color} from "../../notcompose-terminal/runtime/ui/Color";
-import {TextCanvas} from "../../notcompose-terminal/runtime/ui/graphics/TextCanvas";
-import {colored} from "../../notcompose-terminal/runtime/ui/AnnotatedString";
-import {mutableStateOf} from "../../notcompose/runtime-highlevel/mutableStateOf";
-import {Modifier} from "../../notcompose/runtime/Modifier";
-import {Box} from "../../notcompose-layout/highlevel/Box";
-import {DrawModifier} from "../../notcompose-terminal/runtime/modifiers/DrawModifier";
+import {Color, colored, DrawModifier, TextCanvas} from "notcompose/terminal";
+import {Modifier, mutableStateOf} from "notcompose";
+import {Box} from "notcompose/layout";
 
 interface Vec3 {
     x: number, y: number, z: number

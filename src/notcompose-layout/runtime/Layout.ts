@@ -1,12 +1,6 @@
 import {MeasurePolicyExtensionKey} from "./nodeExtensions/MeasurePolicyNodeExtension.js";
-import {Modifier} from "../../notcompose/runtime/Modifier";
-import {currentComposer} from "../../notcompose/runtime/currentComposer";
-import {
-    RecomposeLambda,
-    RecomposeLambdaExtensionKey
-} from "../../notcompose/runtime-plugins/partialRecomposition/RecomposeLambda";
-import {MeasurePolicy} from "./MeasurePolicy";
-import {NameElement} from "../../notcompose/runtime/modifiers/NameElement";
+import {currentComposer, Modifier, NameElement, RecomposeLambda, RecomposeLambdaExtensionKey} from "notcompose";
+import {MeasurePolicy} from "./MeasurePolicy.js";
 
 export function Layout(content: () => void, measurePolicy: MeasurePolicy, modifier: Modifier = new Modifier()) {
     // if (canSkipComposition(...keys)) {

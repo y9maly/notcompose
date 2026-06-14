@@ -1,5 +1,4 @@
-import {NodeExtensionKey} from "../../../notcompose/runtime/NodeExtensionKey";
-import {MeasurePolicy} from "../MeasurePolicy";
+import {NodeExtensionKey} from "notcompose";
+import {MeasurePolicy} from "../MeasurePolicy.js";
 
 export const MeasurePolicyExtensionKey = new NodeExtensionKey<MeasurePolicy>('MeasurePolicy')
-

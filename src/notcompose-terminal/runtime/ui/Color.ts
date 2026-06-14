@@ -1,4 +1,4 @@
-import {assertUInt} from "../../../core/types";
+import {assertUInt} from "../../../core/types.js";
 
 export class Color {
     public readonly red: number

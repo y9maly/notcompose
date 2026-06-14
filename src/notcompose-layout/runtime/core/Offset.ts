@@ -1,4 +1,4 @@
-import {Float} from "../../../core/types";
+import {Float} from "../../../core/types.js";
 
 export interface OffsetLike {
     x?: Float // default 0

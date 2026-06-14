@@ -1,7 +1,6 @@
 import {Layout} from "../runtime/Layout.js";
-import {Modifier} from "../../notcompose/runtime/Modifier";
-import {EmptyMeasurePolicy} from "./Empty";
-import {NameElement} from "../../notcompose/runtime/modifiers/NameElement";
+import {Modifier, NameElement} from "notcompose";
+import {EmptyMeasurePolicy} from "./Empty.js";
 
 export function Spacer(modifier: Modifier = new Modifier()) {
     Layout(() => {}, EmptyMeasurePolicy, modifier.then(new NameElement('Spacer')))

@@ -6,12 +6,10 @@ import {
 } from "../runtime/nodeExtensions/SubconstraintsNodeExtension.js";
 import {ColumnMeasurePolicy} from "./Column.js";
 import {RowMeasurePolicy} from "./Row.js";
-import {Modifier} from "../../notcompose/runtime/Modifier";
-import {currentComposer} from "../../notcompose/runtime/currentComposer";
-import {Alignment, HorizontalAlignment, VerticalAlignment} from "../runtime/core/Alignment";
-import {Constraints} from "../runtime/Constraints";
-import {MeasurePolicy} from "../runtime/MeasurePolicy";
-import {NameElement} from "../../notcompose/runtime/modifiers/NameElement";
+import {currentComposer, Modifier, NameElement} from "notcompose";
+import {Alignment, HorizontalAlignment, VerticalAlignment} from "../runtime/core/Alignment.js";
+import {Constraints} from "../runtime/Constraints.js";
+import {MeasurePolicy} from "../runtime/MeasurePolicy.js";
 
 export function BoxWithConstraints(
     content: (constraints: Constraints) => void,

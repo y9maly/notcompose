@@ -1,9 +1,7 @@
 import {TextModifier} from "../runtime/modifiers/TextModifier.js";
-import {Layout} from "../../notcompose-layout/runtime/Layout.js";
-import {Modifier} from "../../notcompose/runtime/Modifier";
-import {EmptyMeasurePolicy} from "../../notcompose-layout/highlevel/Empty";
-import {AnnotatedString} from "../runtime/ui/AnnotatedString";
-import {NameElement} from "../../notcompose/runtime/modifiers/NameElement";
+import {EmptyMeasurePolicy, Layout} from "notcompose/layout";
+import {Modifier, NameElement} from "notcompose";
+import {AnnotatedString} from "../runtime/ui/AnnotatedString.js";
 
 export function Text(text: string | AnnotatedString, modifier: Modifier = new Modifier()) {
     Layout(() => {}, EmptyMeasurePolicy, modifier.then(TextModifier(text), new NameElement('Text')))

@@ -1,9 +1,7 @@
-import {OutputProcessor, RawOutputProcessor} from "../../../src/notcompose-terminal/runtime-output/OutputProcessor";
-import { Node } from "../../../src/notcompose/runtime/Node";
-import {annotated, AnnotatedString} from "../../../src/notcompose-terminal/runtime/ui/AnnotatedString";
-import {TestOutput} from "./TestOutput";
+import {annotated, AnnotatedString, OutputProcessor, RawOutputProcessor} from "notcompose/terminal";
+import {Node} from "notcompose";
+import {TestOutput} from "./TestOutput.js";
 import {BehaviorSubject} from "rxjs";
-import {Constraints} from "../../../src/notcompose-layout/runtime/Constraints";
 
 export class TestOutputProcessor implements OutputProcessor, TestOutput {
     lastOutput?: AnnotatedString[]

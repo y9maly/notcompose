@@ -1,11 +1,6 @@
-import {setTerminalContent} from "../../notcompose-terminal/setTerminalContent";
-import {rememberState} from "../../notcompose/runtime-highlevel/rememberState";
-import {input} from "../../notcompose-terminal/runtime/Input";
-import {subcompose, SubcomposeLayout} from "../../notcompose-layout/highlevel/SubcomposeLayout";
-import {Text} from "../../notcompose-terminal/highlevel/Text";
-import {Row} from "../../notcompose-layout/highlevel/Row";
-import {Key} from "../../notcompose/runtime-highlevel/Key";
-import {MeasureResult} from "../../notcompose-layout/runtime/Measurable";
+import {input, setTerminalContent, Text} from "notcompose/terminal";
+import {Key, rememberState} from "notcompose";
+import {MeasureResult, Row, subcompose, SubcomposeLayout} from "notcompose/layout";
 
 // P.S. На самом деле "Ты ввёл мало текста" будет отображаться всегда, если ширина терминала меньше 30.
 // Так как мы смотрим не на фактический размер введеного текста, а на ширину [placeable1].

@@ -1,7 +1,7 @@
 import {Key} from "./Composer.js";
 import {Modifier} from "./Modifier.js";
 import {NameElement} from "./modifiers/NameElement.js";
-import {NodeExtensionKey} from "./NodeExtensionKey";
+import {NodeExtensionKey} from "./NodeExtensionKey.js";
 
 export class Node {
     constructor(

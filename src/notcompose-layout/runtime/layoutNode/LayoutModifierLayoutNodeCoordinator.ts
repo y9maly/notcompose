@@ -1,7 +1,6 @@
-import {ModifierElement} from "../../../notcompose/runtime/Modifier";
-import {BaseLayoutNodeCoordinator, LayoutNodeCoordinator} from "./LayoutNodeCoordinator";
-import {LayoutModifier} from "../modifiers/LayoutModifier";
-import {MeasureResult} from "../Measurable";
+import {ModifierElement} from "notcompose";
+import {BaseLayoutNodeCoordinator, LayoutNodeCoordinator} from "./LayoutNodeCoordinator.js";
+import {LayoutModifier} from "../modifiers/LayoutModifier.js";
 
 export class LayoutModifierLayoutNodeCoordinator extends BaseLayoutNodeCoordinator {
     constructor(

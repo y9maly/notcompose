@@ -1,10 +1,7 @@
 import {describe, expect, it} from "vitest";
-import {defaultTestRuntime} from "../helpers/runtimes/defaultTestRuntime";
-import {mutableStateOf} from "../../src/notcompose/runtime-highlevel/mutableStateOf";
-import {LaunchedEffect} from "../../src/notcompose/runtime-highlevel/LaunchedEffect";
-import {flushRecompositions} from "../helpers/core/recompose";
-import {Key} from "../../src/notcompose/runtime-highlevel/Key";
-import {DisposableEffect} from "../../src/notcompose/runtime-highlevel/DisposableEffect";
+import {defaultTestRuntime} from "../helpers/runtimes/defaultTestRuntime.js";
+import {DisposableEffect, Key, LaunchedEffect, mutableStateOf} from "notcompose";
+import {flushRecompositions} from "../helpers/core/recompose.js";
 
 describe("effects tests", () => {
     it('LaunchedEffect works correctly ', () => {

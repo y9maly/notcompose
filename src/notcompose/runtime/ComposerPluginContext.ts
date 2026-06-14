@@ -1,5 +1,5 @@
-import {Composer} from "./Composer";
-import {Node} from "./Node";
+import {Composer} from "./Composer.js";
+import {Node} from "./Node.js";
 
 export interface ComposerPluginContext {
     composer: Composer

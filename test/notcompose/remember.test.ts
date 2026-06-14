@@ -1,11 +1,7 @@
 import {describe, expect, it} from "vitest";
-import {Key} from "../../src/notcompose/runtime-highlevel/Key.js";
-import {mutableStateOf} from "../../src/notcompose/runtime-highlevel/mutableStateOf.js";
-import {remember} from "../../src/notcompose/runtime-highlevel/remember.js";
-import {rememberState} from "../../src/notcompose/runtime-highlevel/rememberState.js";
-import {defaultTestRuntime} from "../helpers/runtimes/defaultTestRuntime";
-import {flushRecompositions} from "../helpers/core/recompose";
-import {strictEqualityPolicy} from "../../src/notcompose/runtime/State";
+import {Key, mutableStateOf, remember, rememberState, strictEqualityPolicy} from "notcompose";
+import {defaultTestRuntime} from "../helpers/runtimes/defaultTestRuntime.js";
+import {flushRecompositions} from "../helpers/core/recompose.js";
 
 
 describe("remember tests", () => {

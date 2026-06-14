@@ -1,13 +1,13 @@
 import * as fs from "node:fs";
-import * as NotcomposeRuntimeDebug from "../notcompose/runtime/debug";
+import * as NotcomposeRuntimeDebug from "../notcompose/runtime/debug.js";
 import * as Console from "node:console";
 import process from "node:process";
 import path from "path";
-import {InputProcessor} from "./runtime-input/InputProcessor";
-import {RootInputDispatcher} from "./runtime-input/InputDispatcher";
-import {bootstrapTerminalComposition} from "./bootstrapTerminalComposition";
-import {ConsoleOutputProcessor} from "./runtime-output/OutputProcessor";
-import {StdinInputSource} from "./runtime-input/StdinInputSource";
+import {InputProcessor} from "./runtime-input/InputProcessor.js";
+import {RootInputDispatcher} from "./runtime-input/InputDispatcher.js";
+import {bootstrapTerminalComposition} from "./bootstrapTerminalComposition.js";
+import {ConsoleOutputProcessor} from "./runtime-output/OutputProcessor.js";
+import {StdinInputSource} from "./runtime-input/StdinInputSource.js";
 
 const findAppLogFile = (dir: string = process.cwd()): string => {
     const file = fs.readdirSync(dir).find(it => it === 'app.log' || it === 'package.json')

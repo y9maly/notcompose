@@ -1,6 +1,6 @@
-import {ModifierElement} from "../../../notcompose/runtime/Modifier";
-import {ContentDrawScope} from "../ui/graphics/ContentDrawScope";
-import {DrawScope} from "../ui/graphics/DrawScope";
+import {ModifierElement} from "notcompose";
+import {ContentDrawScope} from "../ui/graphics/ContentDrawScope.js";
+import {DrawScope} from "../ui/graphics/DrawScope.js";
 
 export interface DrawModifier extends ModifierElement {
     draw(scope: ContentDrawScope): void

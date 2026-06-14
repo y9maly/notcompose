@@ -1,7 +1,7 @@
-import {MeasurerPluginContext} from "./MeasurerPluginContext";
-import {LayoutNodeCoordinator} from "../layoutNode/LayoutNodeCoordinator";
-import {MeasureResult} from "../Measurable";
-import {Constraints} from "../Constraints";
+import {MeasurerPluginContext} from "./MeasurerPluginContext.js";
+import {LayoutNodeCoordinator} from "../layoutNode/LayoutNodeCoordinator.js";
+import {MeasureResult} from "../Measurable.js";
+import {Constraints} from "../Constraints.js";
 
 export interface MeasurerPlugin {
     attach?(context: MeasurerPluginContext): void | MeasurerPlugin

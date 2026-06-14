@@ -1,6 +1,6 @@
-import {AnnotatedString} from "../../../src/notcompose-terminal/runtime/ui/AnnotatedString";
-import {TestOutput} from "../notcompose-terminal/TestOutput";
-import {currentTestRuntime} from "./TestRuntime";
+import {AnnotatedString} from "notcompose/terminal";
+import {TestOutput} from "../notcompose-terminal/TestOutput.js";
+import {currentTestRuntime} from "./TestRuntime.js";
 
 export function currentTestOutput(): TestOutput {
     return currentTestRuntime().testOutput as TestOutput

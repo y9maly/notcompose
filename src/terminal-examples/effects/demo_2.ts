@@ -1,12 +1,6 @@
-import {setTerminalContent} from "../../notcompose-terminal/setTerminalContent";
-import {mutableStateOf} from "../../notcompose/runtime-highlevel/mutableStateOf";
-import {remember} from "../../notcompose/runtime-highlevel/remember";
-import {input} from "../../notcompose-terminal/runtime/Input";
-import {Column} from "../../notcompose-layout/highlevel/Column";
-import {Text} from "../../notcompose-terminal/highlevel/Text";
-import {Key} from "../../notcompose/runtime-highlevel/Key";
-import {DisposableEffect} from "../../notcompose/runtime-highlevel/DisposableEffect";
-import {rememberState} from "../../notcompose/runtime-highlevel/rememberState";
+import {input, setTerminalContent, Text} from "notcompose/terminal";
+import {DisposableEffect, Key, mutableStateOf, remember, rememberState} from "notcompose";
+import {Column} from "notcompose/layout";
 
 setTerminalContent(() => {
     const screen = remember(() => mutableStateOf(1))

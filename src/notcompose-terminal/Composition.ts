@@ -1,14 +1,5 @@
-import {Composer} from "../notcompose/runtime/Composer";
-import {Modifier} from "../notcompose/runtime/Modifier";
-import {withComposer} from "../notcompose/runtime/currentComposer";
-import {MeasurePolicyExtensionKey} from "../notcompose-layout/runtime/nodeExtensions/MeasurePolicyNodeExtension";
-import {
-    RecomposeLambda,
-    RecomposeLambdaExtensionKey
-} from "../notcompose/runtime-plugins/partialRecomposition/RecomposeLambda";
-import {Node} from "../notcompose/runtime/Node";
-import {MeasurePolicy} from "../notcompose-layout/runtime/MeasurePolicy";
-import {MeasureResult} from "../notcompose-layout/runtime/Measurable";
+import {Composer, Modifier, Node, RecomposeLambda, RecomposeLambdaExtensionKey, withComposer} from "notcompose";
+import {MeasurePolicy, MeasurePolicyExtensionKey, MeasureResult} from "notcompose/layout";
 
 const RootMeasurePolicy = MeasurePolicy(
     (measurables, constraints) => {

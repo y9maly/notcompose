@@ -1,11 +1,8 @@
-import {TestRuntime} from "../core/TestRuntime";
-import {defaultTestRuntime} from "./defaultTestRuntime";
-import {bootstrapTerminalComposition} from "../../../src/notcompose-terminal/bootstrapTerminalComposition";
-import {InputProcessor} from "../../../src/notcompose-terminal/runtime-input/InputProcessor";
-import {RootInputDispatcher} from "../../../src/notcompose-terminal/runtime-input/InputDispatcher";
-import {TestInputSource} from "../notcompose-terminal/TestInputSource";
-import {TestOutputProcessor} from "../notcompose-terminal/TestOutputProcessor";
-import {TestLayout} from "../notcompose-terminal/TestLayout";
+import {TestRuntime} from "../core/TestRuntime.js";
+import {bootstrapTerminalComposition, InputProcessor, RootInputDispatcher} from "notcompose/terminal";
+import {TestInputSource} from "../notcompose-terminal/TestInputSource.js";
+import {TestOutputProcessor} from "../notcompose-terminal/TestOutputProcessor.js";
+import {TestLayout} from "../notcompose-terminal/TestLayout.js";
 
 export function terminalTestRuntime(): TestRuntime {
     const testInput = new TestInputSource()

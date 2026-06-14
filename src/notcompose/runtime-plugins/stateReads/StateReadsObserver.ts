@@ -1,6 +1,6 @@
-import {Node} from "../../runtime/Node";
-import {State} from "../../runtime/State";
-import {StateReads} from "./StateReads";
+import {Node} from "../../runtime/Node.js";
+import {State} from "../../runtime/State.js";
+import {StateReads} from "./StateReads.js";
 
 // Отслеживает изменение StateReads у ноды.
 export interface StateReadsObserver {

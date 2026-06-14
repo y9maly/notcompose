@@ -1,9 +1,5 @@
-import {Composer} from "../../../src/notcompose/runtime/Composer";
-import {Node} from "../../../src/notcompose/runtime/Node";
-import {error} from "../../../src/core/exceptions";
-import {Composition} from "../../../src/notcompose-terminal/Composition";
-import {Modifier} from "../../../src/notcompose/runtime/Modifier";
-import {NameElement} from "../../../src/notcompose/runtime/modifiers/NameElement";
+import {Composer, error, Modifier, NameElement, Node} from "notcompose";
+import {Composition} from "notcompose/terminal";
 
 export class TestRuntime implements Record<string, unknown> {
     constructor(

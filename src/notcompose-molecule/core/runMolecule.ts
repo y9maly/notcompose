@@ -1,16 +1,16 @@
-import {State} from "../../notcompose/runtime/State";
-import {rememberState} from "../../notcompose/runtime-highlevel/rememberState";
-import {BehaviorSubject, Subject} from "rxjs";
-import {Recomposer} from "../../notcompose/runtime-recomposer/Recomposer";
-import {Composer} from "../../notcompose/runtime/Composer";
-import {PluginVerifierPlugin} from "../../notcompose/runtime-plugins/pluginVerifier/PluginVerifierPlugin";
-import {CleanCompositionPlugin} from "../../notcompose/runtime-plugins/dirtyComposition/CleanCompositionPlugin";
-import {StateReadsPlugin} from "../../notcompose/runtime-plugins/stateReads/StateReadsPlugin";
-import {RememberObserverPlugin} from "../../notcompose/runtime-plugins/rememberObserver/RememberObserverPlugin";
-import {Composition} from "../../notcompose-terminal/Composition";
-import {Modifier} from "../../notcompose/runtime/Modifier";
-import {NameElement} from "../../notcompose/runtime/modifiers/NameElement";
-import {mutableStateOf} from "../../notcompose/runtime-highlevel/mutableStateOf";
+import {
+    CleanCompositionPlugin,
+    Composer,
+    Modifier,
+    mutableStateOf,
+    NameElement,
+    PluginVerifierPlugin,
+    Recomposer,
+    RememberObserverPlugin,
+    State,
+    StateReadsPlugin
+} from "notcompose";
+import {Composition} from "notcompose/terminal";
 
 const Empty = Symbol('Empty')
 export function runMolecule<T>(content: () => T): State<T> {

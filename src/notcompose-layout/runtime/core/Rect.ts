@@ -1,4 +1,4 @@
-import {Float} from "../../../core/types";
+import {Float} from "../../../core/types.js";
 
 export interface RectLike {
     left?: Float // default 0

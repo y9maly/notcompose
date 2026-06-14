@@ -1,16 +1,17 @@
-import {InputProcessor} from "./runtime-input/InputProcessor";
-import {OutputProcessor} from "./runtime-output/OutputProcessor";
-import {Recomposer} from "../notcompose/runtime-recomposer/Recomposer";
-import {Composer} from "../notcompose/runtime/Composer";
-import {PluginVerifierPlugin} from "../notcompose/runtime-plugins/pluginVerifier/PluginVerifierPlugin";
-import {CleanCompositionPlugin} from "../notcompose/runtime-plugins/dirtyComposition/CleanCompositionPlugin";
-import {StateReadsPlugin} from "../notcompose/runtime-plugins/stateReads/StateReadsPlugin";
-import {RememberObserverPlugin} from "../notcompose/runtime-plugins/rememberObserver/RememberObserverPlugin";
-import {Composition} from "./Composition";
-import {LayoutProcessor} from "../notcompose-layout/runtime/LayoutProcessor";
-import {Constraints} from "../notcompose-layout/runtime/Constraints";
-import {Modifier} from "../notcompose/runtime/Modifier";
-import {NameElement} from "../notcompose/runtime/modifiers/NameElement";
+import {InputProcessor} from "./runtime-input/InputProcessor.js";
+import {OutputProcessor} from "./runtime-output/OutputProcessor.js";
+import {
+    CleanCompositionPlugin,
+    Composer,
+    Modifier,
+    NameElement,
+    PluginVerifierPlugin,
+    Recomposer,
+    RememberObserverPlugin,
+    StateReadsPlugin
+} from "notcompose";
+import {Composition} from "./Composition.js";
+import {Constraints, LayoutProcessor} from "notcompose/layout";
 
 type StartParams = {
     inputProcessor: InputProcessor

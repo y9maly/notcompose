@@ -1,7 +1,7 @@
-import {setTerminalContent} from "../notcompose-terminal/setTerminalContent";
-import {Modifier} from "../notcompose/runtime/Modifier";
-import {FillMaxSizeModifier} from "../notcompose-layout/runtime/modifiers/FillModifier";
-import {RrtopScreen} from "./rrtop/RrtopScreen";
+import {setTerminalContent} from "notcompose/terminal";
+import {Modifier} from "notcompose";
+import {FillMaxSizeModifier} from "notcompose/layout";
+import {RrtopScreen} from "./rrtop/RrtopScreen.js";
 
 setTerminalContent(() => {
     RrtopScreen(new Modifier([FillMaxSizeModifier()]))

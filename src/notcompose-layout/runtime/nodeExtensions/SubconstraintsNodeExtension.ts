@@ -1,5 +1,5 @@
-import {Constraints} from "../Constraints";
-import {NodeExtensionKey} from "../../../notcompose/runtime/NodeExtensionKey";
+import {Constraints} from "../Constraints.js";
+import {NodeExtensionKey} from "notcompose";
 
 export const SubconstraintsNodeExtensionKey = new NodeExtensionKey<SubconstraintsNodeExtension>('Subconstraints')
 

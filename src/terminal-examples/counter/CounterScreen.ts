@@ -1,14 +1,7 @@
-import {Modifier} from "../../notcompose/runtime/Modifier";
-import {Box} from "../../notcompose-layout/highlevel/Box";
-import {PaddingModifier} from "../../notcompose-layout/runtime/modifiers/PaddingModifier";
-import {BackgroundModifier} from "../../notcompose-terminal/runtime/modifiers/BackgroundModifier";
-import {NameModifier} from "../../notcompose/runtime/modifiers/NameElement";
-import {Column} from "../../notcompose-layout/highlevel/Column";
-import {Text} from "../../notcompose-terminal/highlevel/Text";
-import {Alignment} from "../../notcompose-layout/runtime/core/Alignment";
-import {rememberState} from "../../notcompose/runtime-highlevel/rememberState";
-import {DisposableEffect} from "../../notcompose/runtime-highlevel/DisposableEffect";
-import {ExampleHeader} from "../common/ExampleHeader";
+import {DisposableEffect, Modifier, NameModifier, rememberState} from "notcompose";
+import {Alignment, Box, Column, PaddingModifier} from "notcompose/layout";
+import {BackgroundModifier, Text} from "notcompose/terminal";
+import {ExampleHeader} from "../common/ExampleHeader.js";
 
 export function CounterScreen(modifier: Modifier = new Modifier()) {
     // THIS will be invoked only once

@@ -1,10 +1,9 @@
-import {AnnotatedString} from "../AnnotatedString";
-import {TextCanvas} from "./TextCanvas";
-import {TextSpan, TextSpanType} from "../TextSpan";
-import {assertInt, assertUInt, Char, Float} from "../../../../core/types";
-import {TransformationMatrix} from "./TransformationMatrix";
-import {Size} from "../../../../notcompose-layout/runtime/core/Size";
-import {Rect} from "../../../../notcompose-layout/runtime/core/Rect";
+import {AnnotatedString} from "../AnnotatedString.js";
+import {TextCanvas} from "./TextCanvas.js";
+import {TextSpanType} from "../TextSpan.js";
+import {Char, Float} from "../../../../core/types.js";
+import {TransformationMatrix} from "./TransformationMatrix.js";
+import {Rect, Size} from "notcompose/layout";
 
 export class TextBufferCanvas implements TextCanvas {
     constructor(

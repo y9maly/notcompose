@@ -1,6 +1,6 @@
-import {LayoutDirection} from "./LayoutDirection";
-import {Size} from "./Size";
-import {Offset} from "./Offset";
+import {LayoutDirection} from "./LayoutDirection.js";
+import {Size} from "./Size.js";
+import {Offset} from "./Offset.js";
 
 export interface Alignment {
     /* align */(size: Size, space: Size, layoutDirection?: LayoutDirection): Offset
