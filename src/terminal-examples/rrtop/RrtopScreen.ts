@@ -9,17 +9,17 @@ import {
 import {rememberState} from "../../notcompose/runtime-highlevel/rememberState";
 import {Key} from "../../notcompose/runtime-highlevel/Key";
 import {MainScreen} from "./mainScreen/MainScreen";
-import {Column} from "../../notcompose-terminal/highlevel/Column";
+import {Column} from "../../notcompose-layout/highlevel/Column";
 import {Modifier} from "../../notcompose/runtime/Modifier";
-import {FillMaxSizeModifier} from "../../notcompose-terminal/runtime/modifiers/FillModifier";
+import {FillMaxSizeModifier} from "../../notcompose-layout/runtime/modifiers/FillModifier";
 import {RawInfoViewModel} from "./rawInfoScreen/RawInfoViewModel";
 import {RawInfoScreen} from "./rawInfoScreen/RawInfoScreen";
 import {input} from "../../notcompose-terminal/runtime/Input";
-import {Box} from "../../notcompose-terminal/highlevel/Box";
-import {ConstraintsModifiers} from "../../notcompose-terminal/runtime/modifiers/ConstraintsModifier";
+import {Box} from "../../notcompose-layout/highlevel/Box";
+import {ConstraintsModifiers} from "../../notcompose-layout/runtime/modifiers/ConstraintsModifier";
 import {Divider} from "../common/Divider";
 import {Text} from "../../notcompose-terminal/highlevel/Text";
-import {Row} from "../../notcompose-terminal/highlevel/Row";
+import {Row} from "../../notcompose-layout/highlevel/Row";
 
 type Screen = 'Main' | 'RawInfo'
 const screens: Screen[] = ['Main', 'RawInfo']

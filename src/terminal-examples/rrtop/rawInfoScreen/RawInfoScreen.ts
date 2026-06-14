@@ -1,8 +1,8 @@
 import {RawInfoViewModel} from "./RawInfoViewModel";
 import {Modifier} from "../../../notcompose/runtime/Modifier";
-import {Column} from "../../../notcompose-terminal/highlevel/Column";
+import {Column} from "../../../notcompose-layout/highlevel/Column";
 import {Text} from "../../../notcompose-terminal/highlevel/Text";
-import {Alignment} from "../../../notcompose-terminal/runtime/ui/Alignment";
+import {Alignment} from "../../../notcompose-layout/runtime/core/Alignment";
 
 export function RawInfoScreen(
     viewModel: RawInfoViewModel,

@@ -3,7 +3,7 @@ import { Node } from "../../../src/notcompose/runtime/Node";
 import {annotated, AnnotatedString} from "../../../src/notcompose-terminal/runtime/ui/AnnotatedString";
 import {TestOutput} from "./TestOutput";
 import {BehaviorSubject} from "rxjs";
-import {Constraints} from "../../../src/notcompose-terminal/runtime/layout/Constraints";
+import {Constraints} from "../../../src/notcompose-layout/runtime/Constraints";
 
 export class TestOutputProcessor implements OutputProcessor, TestOutput {
     lastOutput?: AnnotatedString[]

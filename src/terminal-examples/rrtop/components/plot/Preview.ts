@@ -1,9 +1,9 @@
 import {setTerminalContent} from "../../../../notcompose-terminal/setTerminalContent";
 import {SolidPlot} from "./SolidPlot";
 import {Modifier} from "../../../../notcompose/runtime/Modifier";
-import {SizeModifier} from "../../../../notcompose-terminal/runtime/modifiers/SizeModifier";
+import {SizeModifier} from "../../../../notcompose-layout/runtime/modifiers/SizeModifier";
 import {BorderedTitledBox} from "../BorderedTitledBox";
-import {Column} from "../../../../notcompose-terminal/highlevel/Column";
+import {Column} from "../../../../notcompose-layout/highlevel/Column";
 import {Text} from "../../../../notcompose-terminal/highlevel/Text";
 
 setTerminalContent(() => {

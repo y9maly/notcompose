@@ -2,8 +2,8 @@ import {MutableState} from "../../notcompose/runtime/State";
 import {mutableStateOf} from "../../notcompose/runtime-highlevel/mutableStateOf";
 import {setTerminalContent} from "../../notcompose-terminal/setTerminalContent";
 import {Text} from "../../notcompose-terminal/highlevel/Text";
-import {Column} from "../../notcompose-terminal/highlevel/Column";
-import {Box} from "../../notcompose-terminal/highlevel/Box";
+import {Column} from "../../notcompose-layout/highlevel/Column";
+import {Box} from "../../notcompose-layout/highlevel/Box";
 
 const counter: MutableState<number> = mutableStateOf(0)
 

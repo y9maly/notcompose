@@ -3,21 +3,21 @@ import {terminalTestRuntime} from "../helpers/runtimes/terminalTestRuntime";
 import { Text } from "../../src/notcompose-terminal/highlevel/Text";
 import {assertVisuallyIdentical, setViewport} from "../helpers/core/output";
 import {Modifier} from "../../src/notcompose/runtime/Modifier";
-import {OffsetModifier, OffsetXModifier} from "../../src/notcompose-terminal/runtime/modifiers/OffsetModifier";
+import {OffsetModifier, OffsetXModifier} from "../../src/notcompose-layout/runtime/modifiers/OffsetModifier";
 import {draw, redraw, relayout} from "../helpers/core/layout";
 import {recompose} from "../helpers/core/recompose";
-import {Box} from "../../src/notcompose-terminal/highlevel/Box";
-import {SizeModifier} from "../../src/notcompose-terminal/runtime/modifiers/SizeModifier";
+import {Box} from "../../src/notcompose-layout/highlevel/Box";
+import {SizeModifier} from "../../src/notcompose-layout/runtime/modifiers/SizeModifier";
 import {BackgroundModifier} from "../../src/notcompose-terminal/runtime/modifiers/BackgroundModifier";
 import {BorderModifier} from "../../src/notcompose-terminal/runtime/modifiers/BorderModifier";
 import {DrawModifier} from "../../src/notcompose-terminal/runtime/modifiers/DrawModifier";
 import {mutableStateOf} from "../../src/notcompose/runtime-highlevel/mutableStateOf";
-import {Spacer} from "../../src/notcompose-terminal/highlevel/Spacer";
-import { PaddingModifier } from "../../src/notcompose-terminal/runtime/modifiers/PaddingModifier";
-import {Layout} from "../../src/notcompose-terminal/runtime/layout/Layout";
-import {MeasurePolicy} from "../../src/notcompose-terminal/runtime/layout/MeasurePolicy";
-import {MeasureResult} from "../../src/notcompose-terminal/runtime/layout/Measurable";
-import {subcompose, SubcomposeLayout} from "../../src/notcompose-terminal/highlevel/SubcomposeLayout";
+import {Spacer} from "../../src/notcompose-layout/highlevel/Spacer";
+import { PaddingModifier } from "../../src/notcompose-layout/runtime/modifiers/PaddingModifier";
+import {Layout} from "../../src/notcompose-layout/runtime/Layout";
+import {MeasurePolicy} from "../../src/notcompose-layout/runtime/MeasurePolicy";
+import {MeasureResult} from "../../src/notcompose-layout/runtime/Measurable";
+import {subcompose, SubcomposeLayout} from "../../src/notcompose-layout/highlevel/SubcomposeLayout";
 
 
 describe("Draw", () => {

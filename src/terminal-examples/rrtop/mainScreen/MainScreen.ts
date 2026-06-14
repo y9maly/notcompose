@@ -1,19 +1,19 @@
 import {Modifier} from "../../../notcompose/runtime/Modifier";
 import {MainViewModel} from "./MainViewModel";
 import {BorderedTitledBox} from "../components/BorderedTitledBox";
-import {Column} from "../../../notcompose-terminal/highlevel/Column";
+import {Column} from "../../../notcompose-layout/highlevel/Column";
 import {SolidPlot} from "../components/plot/SolidPlot";
 import {
     FillMaxHeightModifier,
     FillMaxSizeModifier,
     FillMaxWidthModifier
-} from "../../../notcompose-terminal/runtime/modifiers/FillModifier";
+} from "../../../notcompose-layout/runtime/modifiers/FillModifier";
 import {Text} from "../../../notcompose-terminal/highlevel/Text";
-import {OffsetModifier} from "../../../notcompose-terminal/runtime/modifiers/OffsetModifier";
-import {Row} from "../../../notcompose-terminal/highlevel/Row";
-import {Box} from "../../../notcompose-terminal/highlevel/Box";
+import {OffsetModifier} from "../../../notcompose-layout/runtime/modifiers/OffsetModifier";
+import {Row} from "../../../notcompose-layout/highlevel/Row";
+import {Box} from "../../../notcompose-layout/highlevel/Box";
 import {Divider} from "../../common/Divider";
-import {ConstraintsModifiers} from "../../../notcompose-terminal/runtime/modifiers/ConstraintsModifier";
+import {ConstraintsModifiers} from "../../../notcompose-layout/runtime/modifiers/ConstraintsModifier";
 import {input} from "../../../notcompose-terminal/runtime/Input";
 import {annotated, bold, colored} from "../../../notcompose-terminal/runtime/ui/AnnotatedString";
 import {Color} from "../../../notcompose-terminal/runtime/ui/Color";

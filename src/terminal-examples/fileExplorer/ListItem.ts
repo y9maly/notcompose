@@ -2,7 +2,7 @@ import {Item} from "./utils";
 import {Modifier} from "../../notcompose/runtime/Modifier";
 import {rememberState} from "../../notcompose/runtime-highlevel/rememberState";
 import {DisposableEffect} from "../../notcompose/runtime-highlevel/DisposableEffect";
-import {Row} from "../../notcompose-terminal/highlevel/Row";
+import {Row} from "../../notcompose-layout/highlevel/Row";
 import {Text} from "../../notcompose-terminal/highlevel/Text";
 
 export function ListItem(

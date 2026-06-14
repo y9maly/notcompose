@@ -4,7 +4,7 @@ import {mutableStateOf} from "../../notcompose/runtime-highlevel/mutableStateOf"
 import {input} from "../../notcompose-terminal/runtime/Input";
 import {Key} from "../../notcompose/runtime-highlevel/Key";
 import {Text} from "../../notcompose-terminal/highlevel/Text";
-import {Column} from "../../notcompose-terminal/highlevel/Column";
+import {Column} from "../../notcompose-layout/highlevel/Column";
 
 setTerminalContent(() => {
     const screen = remember(() => mutableStateOf(1))

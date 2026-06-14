@@ -1,8 +1,8 @@
 import {AnnotatedString} from "../AnnotatedString";
-import {Rect, RectLike} from "../Rect";
+import {Rect, RectLike} from "../../../../notcompose-layout/runtime/core/Rect";
 import {TransformationMatrix} from "./TransformationMatrix";
 import {Float} from "../../../../core/types";
-import {Size} from "../Size";
+import {Size} from "../../../../notcompose-layout/runtime/core/Size";
 
 export interface TextCanvas {
     get width(): number

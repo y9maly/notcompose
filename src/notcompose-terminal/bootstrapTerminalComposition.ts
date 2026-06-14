@@ -8,7 +8,7 @@ import {StateReadsPlugin} from "../notcompose/runtime-plugins/stateReads/StateRe
 import {RememberObserverPlugin} from "../notcompose/runtime-plugins/rememberObserver/RememberObserverPlugin";
 import {Composition} from "./Composition";
 import {LayoutProcessor} from "../notcompose-layout/runtime/LayoutProcessor";
-import {Constraints} from "./runtime/layout/Constraints";
+import {Constraints} from "../notcompose-layout/runtime/Constraints";
 import {Modifier} from "../notcompose/runtime/Modifier";
 import {NameElement} from "../notcompose/runtime/modifiers/NameElement";
 

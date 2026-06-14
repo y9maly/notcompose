@@ -1,6 +1,6 @@
-import {LayoutModifier} from "./LayoutModifier.js";
+import {LayoutModifier} from "../../../notcompose-layout/runtime/modifiers/LayoutModifier.js";
 import {ModifierElement} from "../../../notcompose/runtime/Modifier";
-import {MeasureResult} from "../layout/Measurable";
+import {MeasureResult} from "../../../notcompose-layout/runtime/Measurable";
 import {annotated, AnnotatedString} from "../ui/AnnotatedString";
 import {TextSpan} from "../ui/TextSpan";
 import {DrawModifier} from "./DrawModifier";

@@ -1,8 +1,10 @@
 import {BehaviorSubject} from "rxjs";
 import {subjectMolecule} from "./rxjs/subjectMolecule";
 import {subjectAsState} from "../notcompose/runtime-rxjs/subjectAsState";
-import {State} from "../notcompose/runtime/State";
+import {MutableState, State} from "../notcompose/runtime/State";
 import * as console from "node:console";
+import {rememberState} from "../notcompose/runtime-highlevel/rememberState";
+import {DisposableEffect} from "../notcompose/runtime-highlevel/DisposableEffect";
 
 // --- Domain ---
 

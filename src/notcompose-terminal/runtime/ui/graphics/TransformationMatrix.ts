@@ -1,6 +1,6 @@
 import {Float, Int} from "../../../../core/types";
-import {Rect} from "../Rect";
-import {Offset} from "../Offset";
+import {Rect} from "../../../../notcompose-layout/runtime/core/Rect";
+import {Offset} from "../../../../notcompose-layout/runtime/core/Offset";
 
 export class TransformationMatrix {
     constructor(

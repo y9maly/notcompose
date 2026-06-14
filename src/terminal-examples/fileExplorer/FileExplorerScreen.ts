@@ -4,7 +4,9 @@ import {input} from "../../notcompose-terminal/runtime/Input";
 import {Modifier} from "../../notcompose/runtime/Modifier";
 import {getDirectoryContents} from "./utils";
 import {Content} from "./Content";
-
+import process from "node:process";
+import {rememberUpdatedState} from "../../notcompose/runtime-highlevel/rememberUpdatedState";
+import {remember} from "../../notcompose/runtime-highlevel/remember";
 
 export function FileExplorerScreen(
     modifier: Modifier = new Modifier(),

@@ -1,13 +1,13 @@
 import {HistoryData} from "./HistoryData";
 import {Modifier} from "../../../../notcompose/runtime/Modifier";
-import {Alignment, VerticalAlignment} from "../../../../notcompose-terminal/runtime/ui/Alignment";
-import {RowWithConstraints} from "../../../../notcompose-terminal/highlevel/WithConstraints";
-import {FillMaxWidthModifier} from "../../../../notcompose-terminal/runtime/modifiers/FillModifier";
+import {Alignment, VerticalAlignment} from "../../../../notcompose-layout/runtime/core/Alignment";
+import {RowWithConstraints} from "../../../../notcompose-layout/highlevel/WithConstraints";
+import {FillMaxWidthModifier} from "../../../../notcompose-layout/runtime/modifiers/FillModifier";
 import {repeat} from "../../../common/repeat";
 import {Text} from "../../../../notcompose-terminal/highlevel/Text";
-import {Spacer} from "../../../../notcompose-terminal/highlevel/Spacer";
+import {Spacer} from "../../../../notcompose-layout/highlevel/Spacer";
 import {BackgroundModifier} from "../../../../notcompose-terminal/runtime/modifiers/BackgroundModifier";
-import {HeightModifier, WidthModifier} from "../../../../notcompose-terminal/runtime/modifiers/SizeModifier";
+import {HeightModifier, WidthModifier} from "../../../../notcompose-layout/runtime/modifiers/SizeModifier";
 import {Color} from "../../../../notcompose-terminal/runtime/ui/Color";
 import {elvis} from "../../../../notcompose/runtime-highlevel/elvis";
 import {colored} from "../../../../notcompose-terminal/runtime/ui/AnnotatedString";

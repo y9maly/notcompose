@@ -3,7 +3,7 @@ import {TextCanvas} from "../../notcompose-terminal/runtime/ui/graphics/TextCanv
 import {colored} from "../../notcompose-terminal/runtime/ui/AnnotatedString";
 import {mutableStateOf} from "../../notcompose/runtime-highlevel/mutableStateOf";
 import {Modifier} from "../../notcompose/runtime/Modifier";
-import {Box} from "../../notcompose-terminal/highlevel/Box";
+import {Box} from "../../notcompose-layout/highlevel/Box";
 import {DrawModifier} from "../../notcompose-terminal/runtime/modifiers/DrawModifier";
 
 interface Vec3 {

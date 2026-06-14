@@ -4,17 +4,17 @@ import {TextBuffer, TextBufferCanvas, TextCell, TextRow} from "../runtime/ui/gra
 import {Char} from "../../core/types";
 import {DebugTextSpanProcessor, TextSpanProcessor} from "./TextSpanProcessor";
 import {BehaviorSubject} from "rxjs";
-import {LayoutNode, LayoutNodeExtensionKey} from "../../notcompose-layout/runtime/LayoutNode";
-import {LayoutNodeCoordinator} from "../../notcompose-layout/runtime/LayoutNodeCoordinator";
-import {LayoutModifier} from "../runtime/modifiers/LayoutModifier";
-import {LayoutModifierLayoutNodeCoordinator} from "../../notcompose-layout/runtime/LayoutModifierLayoutNodeCoordinator";
+import {LayoutNode, LayoutNodeExtensionKey} from "../../notcompose-layout/runtime/layoutNode/LayoutNode";
+import {LayoutNodeCoordinator} from "../../notcompose-layout/runtime/layoutNode/LayoutNodeCoordinator";
+import {LayoutModifier} from "../../notcompose-layout/runtime/modifiers/LayoutModifier";
+import {LayoutModifierLayoutNodeCoordinator} from "../../notcompose-layout/runtime/layoutNode/LayoutModifierLayoutNodeCoordinator";
 import {DrawModifier} from "../runtime/modifiers/DrawModifier";
 import {ContentDrawScope} from "../runtime/ui/graphics/ContentDrawScope";
 import {DrawScope} from "../runtime/ui/graphics/DrawScope";
 import {Key} from "../../notcompose/runtime/Composer";
-import {MeasurePolicyExtensionKey} from "../runtime/nodeExtensions/MeasurePolicyNodeExtension";
-import {SubcomposeNodeExtensionKey} from "../runtime/nodeExtensions/SubcomposeNodeExtension";
-import {applyLayoutNode as newApplyLayoutNode} from "../../notcompose-layout/runtime/applyLayoutNode";
+import {MeasurePolicyExtensionKey} from "../../notcompose-layout/runtime/nodeExtensions/MeasurePolicyNodeExtension";
+import {SubcomposeNodeExtensionKey} from "../../notcompose-layout/runtime/nodeExtensions/SubcomposeNodeExtension";
+import {applyLayoutNode as newApplyLayoutNode} from "../../notcompose-layout/runtime/layoutNode/applyLayoutNode";
 
 export interface OutputProcessor {
     // todo Subject to change
