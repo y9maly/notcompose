@@ -1,9 +1,9 @@
 import {DisposableEffect, Modifier, NameModifier, rememberState} from "notcompose";
-import {Alignment, Box, Column, PaddingModifier} from "notcompose/layout";
-import {BackgroundModifier, Text} from "notcompose/terminal";
+import {Alignment, Box, Column, padding} from "notcompose/layout";
+import {background, Text} from "notcompose/terminal";
 import {ExampleHeader} from "../common/ExampleHeader.js";
 
-export function CounterScreen(modifier: Modifier = new Modifier()) {
+export function CounterScreen(modifier: Modifier = Modifier) {
     // THIS will be invoked only once
 
 
@@ -30,11 +30,11 @@ export function CounterScreen(modifier: Modifier = new Modifier()) {
             // THIS will be re-invoked every second because we are reading state [counter] here
 
             Text(`counter: ${counter.value}`)
-        }, new Modifier([
-            NameModifier('Box'), // for debug
-            BackgroundModifier('.'),
-            PaddingModifier({ vertical: 2, horizontal: 4 })
-        ]))
+        }, Modifier
+            .then(NameModifier('Box')) // debug information
+            .then(background('.'))
+            .then(padding({ vertical: 2, horizontal: 4 }))
+        )
     }, modifier, {
         horizontalAlignment: Alignment.CenterHorizontally
     })

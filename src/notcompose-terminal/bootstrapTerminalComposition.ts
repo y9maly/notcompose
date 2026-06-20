@@ -4,7 +4,7 @@ import {
     CleanCompositionPlugin,
     Composer,
     Modifier,
-    NameElement,
+    NameModifier,
     PluginVerifierPlugin,
     Recomposer,
     RememberObserverPlugin,
@@ -90,7 +90,7 @@ export function bootstrapTerminalComposition(): {
             new Constraints(0, currentWidth(), 0, currentHeight())
 
         const recompose = () => {
-            composition.compose(new Modifier([new NameElement('Root')]))
+            composition.compose(Modifier.then(NameModifier('Root')))
         }
 
         const relayout = () => {

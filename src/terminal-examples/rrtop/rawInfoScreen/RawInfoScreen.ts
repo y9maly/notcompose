@@ -5,14 +5,14 @@ import {Text} from "notcompose/terminal";
 
 export function RawInfoScreen(
     viewModel: RawInfoViewModel,
-    modifier: Modifier = new Modifier(),
+    modifier: Modifier = Modifier,
 ) {
     Variant2(viewModel, modifier)
 }
 
 function Variant1(
     viewModel: RawInfoViewModel,
-    modifier: Modifier = new Modifier(),
+    modifier: Modifier = Modifier,
 ) {
     Column(() => {
         Text(`CPU's count      : ${viewModel.cpusCount.value}`)
@@ -30,7 +30,7 @@ function Variant1(
 
 function Variant2(
     viewModel: RawInfoViewModel,
-    modifier: Modifier = new Modifier(),
+    modifier: Modifier = Modifier,
 ) {
     Column(() => {
         Text(`CPU's count : ${viewModel.cpusCount.value}`)

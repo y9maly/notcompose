@@ -13,7 +13,7 @@ DrawModifier.is = (o: unknown): o is { [symbol]: DrawModifier } =>
 DrawModifier.of = (o: unknown): DrawModifier | null =>
     DrawModifier.is(o) ? o[symbol] : null
 
-export function DrawBehindModifier(draw: (scope: DrawScope) => void): DrawModifier {
+export function drawBehind(draw: (scope: DrawScope) => void): DrawModifier {
     return DrawModifier(scope => {
         scope.drawContent()
         draw(scope)

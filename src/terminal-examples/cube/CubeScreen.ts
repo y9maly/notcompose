@@ -108,7 +108,7 @@ setInterval(() => {
 }, 1000 / 30)
 
 export function CubeScreen(
-    modifier: Modifier = new Modifier(),
+    modifier: Modifier = Modifier,
 ) {
     // Redraw отдельно от Recompose пока делать не умеем.
     // Это будет триггерить recompose->relayout->redraw каждый кадр.

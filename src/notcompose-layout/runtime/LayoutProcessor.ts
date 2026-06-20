@@ -201,7 +201,7 @@ function subcompose(
     const subcomposes: { key: Key | null, node: Node }[] = []
     extension.subcompose(constraints, {
         subcompose(key, content) {
-            const node = new Node(null, new Modifier())
+            const node = new Node(null, Modifier)
             subcomposes.push({ key, node })
 
             measurer.exitMeasurement()

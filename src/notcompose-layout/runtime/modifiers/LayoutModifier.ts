@@ -20,6 +20,7 @@ LayoutModifier.of = (o: unknown): LayoutModifier | null => {
     return o[LayoutModifier.symbol] as LayoutModifier
 }
 
+export const layout = LayoutModifier
 export function LayoutModifier(
     measure: (measurable: Measurable, constraints: Constraints) => MeasureResult,
     minIntrinsicWidth?: (measurable: IntrinsicMeasurable, height: number | null) => number,

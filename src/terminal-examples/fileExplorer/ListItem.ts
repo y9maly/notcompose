@@ -6,7 +6,7 @@ import {Text} from "notcompose/terminal";
 export function ListItem(
     item: Item,
     isSelected: boolean,
-    modifier: Modifier = new Modifier(),
+    modifier: Modifier = Modifier,
 ) {
     const cursor = rememberState<string>(() => '  ')
     let icon = item.filename === '..' ? `🔙` : (item.isDirectory ? `📁` : `📄`)

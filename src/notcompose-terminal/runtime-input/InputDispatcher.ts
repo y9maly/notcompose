@@ -1,5 +1,5 @@
 import {Node} from "notcompose";
-import {InputModifier} from "../runtime/modifiers/InputModifier.js";
+import {InputHandler} from "../runtime/modifiers/InputHandler.js";
 
 export interface InputDispatcher {
     dispatch(string: string, key: unknown): boolean
@@ -20,7 +20,7 @@ export class RootInputDispatcher implements InputDispatcher {
             const node = nodeQueue.shift()!
 
             for (const modifier of node.modifier.elements) {
-                const inputModifier = InputModifier.of(modifier)
+                const inputModifier = InputHandler.of(modifier)
                 if (inputModifier === null)
                     continue
                 if (inputModifier.process(string, key))

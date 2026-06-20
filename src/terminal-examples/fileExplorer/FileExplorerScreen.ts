@@ -6,7 +6,7 @@ import {Content} from "./Content.js";
 import process from "node:process";
 
 export function FileExplorerScreen(
-    modifier: Modifier = new Modifier(),
+    modifier: Modifier = Modifier,
 ) {
     const currentDirectoryPath = rememberState(() => process.cwd())
     const items = rememberState(() => getDirectoryContents(process.cwd()))

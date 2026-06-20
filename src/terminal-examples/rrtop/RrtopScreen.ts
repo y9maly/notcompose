@@ -2,11 +2,12 @@ import {DisposableEffect, Key, Modifier, remember, rememberState} from "notcompo
 import {MainViewModel} from "./mainScreen/MainViewModel.js";
 import {NodejsSystemInfoRepository, SystemInfoRepository} from "./repository/SystemInfoRepository.js";
 import {MainScreen} from "./mainScreen/MainScreen.js";
-import {Box, Column, ConstraintsModifiers, FillMaxSizeModifier, Row} from "notcompose/layout";
+import {Box, Column, ConstraintsModifiers, fillMaxSize, Row} from "notcompose/layout";
 import {RawInfoViewModel} from "./rawInfoScreen/RawInfoViewModel.js";
 import {RawInfoScreen} from "./rawInfoScreen/RawInfoScreen.js";
 import {input, Text} from "notcompose/terminal";
 import {Divider} from "../common/Divider.js";
+const minusMaxHeight = ConstraintsModifiers.minusMaxHeight
 
 type Screen = 'Main' | 'RawInfo'
 const screens: Screen[] = ['Main', 'RawInfo']
@@ -15,7 +16,7 @@ const screens: Screen[] = ['Main', 'RawInfo']
 const systemInfoRepository: SystemInfoRepository = new NodejsSystemInfoRepository()
 
 export function RrtopScreen(
-    modifier: Modifier = new Modifier(),
+    modifier: Modifier = Modifier,
 ) {
     const mainViewModel = remember(() => new MainViewModel(systemInfoRepository))
 
@@ -44,20 +45,20 @@ export function RrtopScreen(
         Box(() => {
             Key(activeScreen, () => {
                 if (activeScreen === 'Main') {
-                    MainScreen(mainViewModel, new Modifier([FillMaxSizeModifier()]))
+                    MainScreen(mainViewModel, Modifier.then(fillMaxSize()))
                 }
 
                 if (activeScreen === 'RawInfo') {
                     const viewModel = remember(() => new RawInfoViewModel(systemInfoRepository))
 
-                    RawInfoScreen(viewModel, new Modifier([FillMaxSizeModifier()]))
+                    RawInfoScreen(viewModel, Modifier.then(fillMaxSize()))
                 }
             })
-        }, new Modifier([
+        }, Modifier
             // Сделать так, чтобы этот виджет занял всю высоту И минус 2 "пикселя?" высоты.
             // Это лучше было бы сделать через Weight или IntrinsicSize, но пока их нет
-            ConstraintsModifiers.MinusMaxHeight(2),
-        ]))
+            .then(minusMaxHeight(2)),
+        )
 
         Divider(`━`)
 

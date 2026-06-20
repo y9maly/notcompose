@@ -1,5 +1,5 @@
 import {Layout} from "../runtime/Layout.js";
-import {elvis, Modifier, NameElement} from "notcompose";
+import {elvis, Modifier, NameModifier} from "notcompose";
 import {Alignment, HorizontalAlignment} from "../runtime/core/Alignment.js";
 import {Placeable} from "../runtime/Placeable.js";
 import {MeasurePolicy} from "../runtime/MeasurePolicy.js";
@@ -36,12 +36,12 @@ export const ColumnMeasurePolicy = (
     }
 })
 
-export function Column(content: () => void, modifier: Modifier = new Modifier(), params?: {
+export function Column(content: () => void, modifier: Modifier = Modifier, params?: {
     horizontalAlignment?: HorizontalAlignment,
 }) {
     const { horizontalAlignment } = elvis(params, {
         horizontalAlignment: Alignment.Start
     })
 
-    Layout(content, ColumnMeasurePolicy(horizontalAlignment), modifier.then(new NameElement('Column')))
+    Layout(content, ColumnMeasurePolicy(horizontalAlignment), modifier.then(NameModifier('Column')))
 }

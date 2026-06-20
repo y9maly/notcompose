@@ -5,19 +5,21 @@ import {
     Box,
     Column,
     ConstraintsModifiers,
-    FillMaxHeightModifier,
-    FillMaxSizeModifier,
-    FillMaxWidthModifier,
-    OffsetModifier,
+    fillMaxHeight,
+    fillMaxSize,
+    fillMaxWidth,
+    offset,
     Row
 } from "notcompose/layout";
 import {SolidPlot} from "../components/plot/SolidPlot.js";
 import {annotated, bold, Color, colored, input, Text} from "notcompose/terminal";
 import {Divider} from "../../common/Divider.js";
 
+const minusMaxHeight = ConstraintsModifiers.minusMaxHeight
+
 export function MainScreen(
     viewModel: MainViewModel,
-    modifier: Modifier = new Modifier(),
+    modifier: Modifier = Modifier,
 ) {
     input((str) => {
         if (str === '0') {
@@ -48,26 +50,26 @@ export function MainScreen(
 
         Text(``)
 
-        CpuInfo(viewModel, new Modifier([
-            FillMaxWidthModifier(),
-            FillMaxHeightModifier(0.4),
-        ]))
+        CpuInfo(viewModel, Modifier
+            .then(fillMaxWidth())
+            .then(fillMaxHeight(0.4))
+        )
 
         Row(() => {
-            MemoryInfo(viewModel, new Modifier([
-                FillMaxWidthModifier(0.5),
-                FillMaxHeightModifier(),
-            ]))
+            MemoryInfo(viewModel, Modifier
+                .then(fillMaxWidth(0.5))
+                .then(fillMaxHeight())
+            )
 
-            NetworkInfo(viewModel, new Modifier([
-                FillMaxWidthModifier(),
-                FillMaxHeightModifier(),
-            ]))
-        }, new Modifier([
+            NetworkInfo(viewModel, Modifier
+                .then(fillMaxWidth())
+                .then(fillMaxHeight())
+            )
+        }, Modifier
             // Сделать так, чтобы этот виджет занял всю высоту И минус 2 "пикселя?" высоты.
             // Это лучше было бы сделать через Weight или IntrinsicSize, но пока их нет
-            ConstraintsModifiers.MinusMaxHeight(2),
-        ]))
+            .then(minusMaxHeight(2))
+        )
 
         Divider(`━`)
 
@@ -77,7 +79,7 @@ export function MainScreen(
 
 function CpuInfo(
     viewModel: MainViewModel,
-    modifier: Modifier = new Modifier(),
+    modifier: Modifier = Modifier,
 ) {
     const cpuLoad = viewModel.cpuLoad.value.toString().padStart(3, ' ')
     const processes = viewModel.processCount.value ?? '??'
@@ -88,7 +90,7 @@ function CpuInfo(
         () => {
             SolidPlot(
                 viewModel.cpuLoadHistory.value,
-                new Modifier([FillMaxSizeModifier()]),
+                Modifier.then(fillMaxSize()),
                 {
                     color: Color.Gray,
                     minValue: 0,
@@ -99,9 +101,7 @@ function CpuInfo(
             Column(() => {
                 Text(colored(Color.Gray, `Processes: ${processes}`))
                 Text(colored(Color.Gray, `Uptime: ${uptime}`))
-            }, new Modifier([
-                OffsetModifier(2, 1)
-            ]))
+            }, Modifier.then(offset(2, 1)))
         }, modifier, {
             color: Color.DarkGray,
         }
@@ -110,7 +110,7 @@ function CpuInfo(
 
 function MemoryInfo(
     viewModel: MainViewModel,
-    modifier: Modifier = new Modifier(),
+    modifier: Modifier = Modifier,
 ) {
     const total = formatBytes(viewModel.totalMemory.value)
     const free = formatBytes(viewModel.freeMemory.value)
@@ -128,7 +128,7 @@ function MemoryInfo(
     }, () => {
         SolidPlot(
             viewModel.usedMemoryHistory.value,
-            new Modifier([FillMaxSizeModifier()]),
+            Modifier.then(fillMaxSize()),
             {
                 color: Color.Gray,
                 minValue: 0,
@@ -139,9 +139,7 @@ function MemoryInfo(
         Column(() => {
             Text(colored(Color.Gray, `Total: ${total}`))
             Text(colored(Color.Gray, `Free: ${free}`))
-        }, new Modifier([
-            OffsetModifier(2, 1)
-        ]))
+        }, Modifier.then(offset(2, 1)))
     }, modifier, {
         color: Color.DarkGray,
     })
@@ -149,7 +147,7 @@ function MemoryInfo(
 
 function NetworkInfo(
     viewModel: MainViewModel,
-    modifier: Modifier = new Modifier(),
+    modifier: Modifier = Modifier,
 ) {
     const download = `${formatBytes(viewModel.rx.value * (viewModel.networkRefreshRate.value / 1000))}/s`
     const upload = `${formatBytes(viewModel.tx.value * (viewModel.networkRefreshRate.value / 1000))}/s`
@@ -161,7 +159,7 @@ function NetworkInfo(
             Box(() => {
                 SolidPlot(
                     viewModel.rxHistory.value,
-                    new Modifier([FillMaxSizeModifier()]),
+                    Modifier.then(fillMaxSize()),
                     {
                         color: Color.Gray,
                         minValue: 0,
@@ -170,26 +168,22 @@ function NetworkInfo(
 
                 Column(() => {
                     Text(colored(Color.Gray, `download: ${download}`))
-                }, new Modifier([
-                    OffsetModifier(1, 0)
-                ]))
-            }, new Modifier([
-                FillMaxWidthModifier(),
-
+                }, Modifier.then(offset(1, 0)))
+            }, Modifier
+                .then(fillMaxWidth())
                 // Сделать так, чтобы этот виджет занял половину доступной высоты И минус один "пиксель?" высоты.
                 // Без этого download виджет будет в среднем на 1-2 "пикселя?" больше по высоте чем upload виджет.
                 // Это лучше было бы сделать через Weight или IntrinsicSize, но пока их нет
-                ConstraintsModifiers.MinusMaxHeight(1),
-
-                FillMaxHeightModifier(0.5),
-            ]))
+                .then(minusMaxHeight(1))
+                .then(fillMaxHeight(0.5))
+            )
 
             Divider('-', { color: Color.DarkGray })
 
             Box(() => {
                 SolidPlot(
                     viewModel.txHistory.value,
-                    new Modifier([FillMaxSizeModifier()]),
+                    Modifier.then(fillMaxSize()),
                     {
                         color: Color.Gray,
                         minValue: 0,
@@ -198,13 +192,8 @@ function NetworkInfo(
 
                 Column(() => {
                     Text(colored(Color.Gray, `upload: ${upload}`))
-                }, new Modifier([
-                    OffsetModifier(1, 0)
-                ]))
-            }, new Modifier([
-                FillMaxWidthModifier(),
-                FillMaxHeightModifier(),
-            ]))
+                }, Modifier.then(offset(1, 0)))
+            }, Modifier.then(fillMaxSize()))
         })
     }, modifier, {
         color: Color.DarkGray,

@@ -1,13 +1,13 @@
-import {BackgroundModifier, setTerminalContent, Text} from "notcompose/terminal";
-import {FillMaxSizeModifier, Layout, MeasurePolicy, MeasureResult} from "notcompose/layout";
+import {background, setTerminalContent, Text} from "notcompose/terminal";
+import {fillMaxSize, Layout, MeasurePolicy, MeasureResult} from "notcompose/layout";
 import {Modifier} from "notcompose";
 
 setTerminalContent(() => {
     Layout(() => {
-        Text('Hello', new Modifier([
-            BackgroundModifier('-'),
-            FillMaxSizeModifier()
-        ]))
+        Text('Hello', Modifier
+            .then(background('-'))
+            .then(fillMaxSize())
+        )
 
         Text('World')
     }, MeasurePolicy((measurables, constraints) => {

@@ -1,4 +1,4 @@
-import {BackgroundModifier, setTerminalContent, Text} from "notcompose/terminal";
+import {background, setTerminalContent, Text} from "notcompose/terminal";
 import {Layout, MeasurePolicy, MeasureResult, Placeable} from "notcompose/layout";
 import {Modifier} from "notcompose";
 
@@ -135,7 +135,7 @@ const MyMeasurePolicy2 = MeasurePolicy((measurables, constraints) => {
 function MyLayout(
     // Контент нашего лэяута
     content: () => void,
-    modifier: Modifier = new Modifier()
+    modifier: Modifier = Modifier
 ) {
     Layout(content, MyMeasurePolicy2, modifier)
 }
@@ -148,10 +148,10 @@ setTerminalContent(() => {
         Text('2')
         Text('3')
         Text('4')
-    }, new Modifier([
+    }, Modifier
         // Заполним фон нашего лэяута решётками, чтобы чётко увидеть границы
-        BackgroundModifier('#')
-    ]))
+        .then(background('#'))
+    )
 })
 
 // Output:

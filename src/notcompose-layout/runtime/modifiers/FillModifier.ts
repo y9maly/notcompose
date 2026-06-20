@@ -6,21 +6,21 @@ import {MeasureResult} from "../Measurable.js";
 /**
  * @param fraction 0 - 0%; 1 - 100%
  */
-export function FillMaxSizeModifier(fraction: number = 1): ModifierElement {
+export function fillMaxSize(fraction: number = 1): ModifierElement {
     return new FillModifierImpl(fraction, fraction, true, true)
 }
 
 /**
  * @param fraction 0 - 0%; 1 - 100%
  */
-export function FillMaxWidthModifier(fraction: number = 1): ModifierElement {
+export function fillMaxWidth(fraction: number = 1): ModifierElement {
     return new FillModifierImpl(fraction, 0, true, false)
 }
 
 /**
  * @param fraction 0 - 0%; 1 - 100%
  */
-export function FillMaxHeightModifier(fraction: number = 1): ModifierElement {
+export function fillMaxHeight(fraction: number = 1): ModifierElement {
     return new FillModifierImpl(0, fraction, false, true)
 }
 

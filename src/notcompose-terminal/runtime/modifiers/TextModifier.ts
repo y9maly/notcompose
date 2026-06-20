@@ -2,10 +2,10 @@ import {LayoutModifier, MeasureResult} from "notcompose/layout";
 import {ModifierElement} from "notcompose";
 import {annotated, AnnotatedString} from "../ui/AnnotatedString.js";
 import {TextSpan} from "../ui/TextSpan.js";
-import {DrawModifier} from "./DrawModifier.js";
 import {ContentDrawScope} from "../ui/graphics/ContentDrawScope.js";
+import {DrawModifier} from "./DrawModifier.js";
 
-export function TextModifier(text: string | AnnotatedString): ModifierElement {
+export function drawText(text: string | AnnotatedString): ModifierElement {
     return new TextModifierImpl(text)
 }
 

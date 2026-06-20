@@ -1,6 +1,6 @@
 import {elvis, Modifier} from "notcompose";
-import {Box, OffsetXModifier, Row} from "notcompose/layout";
-import {BorderModifier, Color, colored, Text} from "notcompose/terminal";
+import {Box, offsetX, Row} from "notcompose/layout";
+import {border, Color, colored, Text} from "notcompose/terminal";
 
 /**
  * ```
@@ -12,7 +12,7 @@ import {BorderModifier, Color, colored, Text} from "notcompose/terminal";
 export function BorderedTitledBox(
     title: () => void,
     content: () => void,
-    modifier: Modifier = new Modifier(),
+    modifier: Modifier = Modifier,
     params?: {
         color?: Color | null,
     }
@@ -22,12 +22,12 @@ export function BorderedTitledBox(
     })
 
     Box(() => {
-        Box(content, new Modifier([BorderModifier({ color: color })]))
+        Box(content, Modifier.then(border({ color: color })))
 
         Row(() => {
             Text(colored(color, `┐`))
             title()
             Text(colored(color, `┌`))
-        }, new Modifier([OffsetXModifier(1)]))
+        }, Modifier.then(offsetX(1)))
     }, modifier)
 }

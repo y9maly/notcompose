@@ -26,7 +26,9 @@ function MainScreen(second: number) {
     Column(() => {
         Text(`Global second: ${second}`)
         Text(`Local second: ${localSecond.value}`)
-    }, new Modifier([new NameElement('MainScreenColumn')]))
+    }, Modifier
+        .then(NameModifier('MainScreenColumn')) // debug information
+    )
 }
 
 function DetailsScreen(second: number) {
@@ -54,7 +56,9 @@ function DetailsScreen(second: number) {
         Text(`Console info:`)
         Text(`    Width: ${width}`)
         Text(`    Height: ${height}`)
-    }, new Modifier([new NameElement('DetailsScreenColumn')]))
+    }, Modifier
+        .then(NameModifier('DetailsScreenColumn'))
+    )
 }
 
 export function DemoScreen() {
@@ -90,11 +94,11 @@ export function DemoScreen() {
     })
 
     Column(() => {
-        Text(`Frame ${frameCounter}`, new Modifier([NameModifier('Root/Column/Frame')]))
+        Text(`Frame ${frameCounter}`, Modifier.then(NameModifier('Root/Column/Frame')))
         Box(() => {
             Text(`Frame ${frameCounter}`)
             Text(`> ${command.value}`)
-        }, new Modifier([NameModifier('Root/Column/Input')]))
+        }, Modifier.then(NameModifier('Root/Column/Input')))
 
         Text(`----------------------------`)
         if (screen.value === 'Main')
@@ -110,5 +114,5 @@ export function DemoScreen() {
                 DetailsScreen(second.value)
             }
         })
-    }, new Modifier([NameModifier('Root/Column')]))
+    }, Modifier.then(NameModifier('Root/Column')))
 }

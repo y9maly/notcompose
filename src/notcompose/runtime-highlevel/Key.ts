@@ -4,7 +4,7 @@ import {Key} from "../runtime/Composer.js";
 import {RecomposeLambdaExtensionKey} from "../runtime-plugins/partialRecomposition/RecomposeLambda.js";
 
 export function Key<T>(key: Key, content: () => T): T {
-    currentComposer().startNode(new Modifier(), key)
+    currentComposer().startNode(Modifier, key)
     currentComposer().applyExtension(RecomposeLambdaExtensionKey, content)
     currentComposer().startComposingNode()
     const value = content()

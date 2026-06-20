@@ -1,5 +1,5 @@
 import {Layout} from "../runtime/Layout.js";
-import {elvis, Modifier, NameElement} from "notcompose";
+import {elvis, Modifier, NameModifier} from "notcompose";
 import {Alignment} from "../runtime/core/Alignment.js";
 import {Size} from "../runtime/core/Size.js";
 import {Placeable} from "../runtime/Placeable.js";
@@ -33,12 +33,12 @@ export const BoxMeasurePolicy = (
     })
 })
 
-export function Box(content: () => void, modifier: Modifier = new Modifier(), params?: {
+export function Box(content: () => void, modifier: Modifier = Modifier, params?: {
     alignment?: Alignment,
 }) {
     const { alignment } = elvis(params, {
         alignment: Alignment.TopStart
     })
 
-    Layout(content, BoxMeasurePolicy(alignment), modifier.then(new NameElement('Box')))
+    Layout(content, BoxMeasurePolicy(alignment), modifier.then(NameModifier('Box')))
 }

@@ -1,4 +1,4 @@
-import {Composer, error, Modifier, NameElement, Node} from "notcompose";
+import {Composer, error, Modifier, NameModifier, Node} from "notcompose";
 import {Composition} from "notcompose/terminal";
 
 export class TestRuntime implements Record<string, unknown> {
@@ -21,7 +21,7 @@ export class TestRuntime implements Record<string, unknown> {
 
     render(content: () => void) {
         this.composition.setContent(content)
-        this.composition.compose(new Modifier([new NameElement('Root')]))
+        this.composition.compose(Modifier.then(NameModifier('Root')))
     }
 }
 

@@ -1,11 +1,11 @@
 import {elvis, ModifierElement} from "notcompose";
 import {LayoutModifier, MeasureResult} from "notcompose/layout";
-import {DrawModifier} from "./DrawModifier.js";
 import {ContentDrawScope} from "../ui/graphics/ContentDrawScope.js";
 import {Color} from "../ui/Color.js";
 import {AnnotatedString, colored} from "../ui/AnnotatedString.js";
+import {DrawModifier} from "./DrawModifier.js";
 
-export function BorderModifier(params?: {
+export function border(params?: {
     color?: Color | null,
     topStart?: string,
     topEnd?: string,

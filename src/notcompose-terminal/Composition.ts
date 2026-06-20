@@ -19,7 +19,7 @@ const RootMeasurePolicy = MeasurePolicy(
 )
 
 export class Composition {
-    public rootNode = new Node(null, new Modifier())
+    public rootNode = new Node(null, Modifier)
     private content: (() => void) | null = null
     private invalidatedCallback: (() => void) | null = null
 

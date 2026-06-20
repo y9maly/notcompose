@@ -11,7 +11,7 @@ export function Content(
     items: Item[],
     selectedItemIndex: number,
     statusMessage: string,
-    modifier: Modifier = new Modifier(),
+    modifier: Modifier = Modifier,
 ) {
     ColumnWithConstraints((constraints: Constraints) => {
         // IntrinsicSize пока нету, поэтому захардкодил девятку. 9 это кол-во строк снизу и сверху этой Column.
@@ -40,9 +40,9 @@ export function Content(
             const isSelected = actualIndex === selectedItemIndex
 
             Key(item.path, () => {
-                ListItem(item, isSelected, new Modifier([
-                    NameModifier(`List item '${item.filename}'`) // for debug
-                ]))
+                ListItem(item, isSelected, Modifier
+                    .then(NameModifier(`List item '${item.filename}'`)) // debug information
+                )
             })
         })
 
@@ -54,6 +54,6 @@ export function Content(
 
         Text(` Total items: ${items.length} (Showing ${startId + 1}-${startId + visibleItems.length})`)
     }, modifier.then(
-        NameModifier('ColumnWithConstraints') // for debug
+        NameModifier('ColumnWithConstraints') // debug information
     ))
 }

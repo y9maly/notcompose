@@ -3,7 +3,7 @@ import {
     Composer,
     Modifier,
     mutableStateOf,
-    NameElement,
+    NameModifier,
     PluginVerifierPlugin,
     Recomposer,
     RememberObserverPlugin,
@@ -38,9 +38,7 @@ export function runMolecule<T>(content: () => T): State<T> {
     })
 
     function recompose() {
-        composition.compose(new Modifier([
-            new NameElement('Root')
-        ]))
+        composition.compose(Modifier.then(NameModifier('Root')))
     }
 
     recompose();

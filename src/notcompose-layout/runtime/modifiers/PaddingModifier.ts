@@ -2,10 +2,10 @@ import {LayoutModifier} from "./LayoutModifier.js";
 import {ModifierElement} from "notcompose";
 import {MeasureResult} from "../Measurable.js";
 
-export function PaddingModifier(all: number): ModifierElement
-export function PaddingModifier(horizontal: number, vertical: number): ModifierElement
-export function PaddingModifier(start: number, top: number, end: number, bottom: number): ModifierElement
-export function PaddingModifier(
+export function padding(all: number): ModifierElement
+export function padding(horizontal: number, vertical: number): ModifierElement
+export function padding(start: number, top: number, end: number, bottom: number): ModifierElement
+export function padding(
     paddingValues:
         | { all?: number }
         | { vertical?: number, horizontal?: number }
@@ -14,7 +14,7 @@ export function PaddingModifier(
         | { start?: number, top?: number, end?: number, bottom?: number }
 ): ModifierElement
 
-export function PaddingModifier(
+export function padding(
     a:
         | number
         | { all?: number }

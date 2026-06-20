@@ -1,8 +1,8 @@
 import {setTerminalContent} from "notcompose/terminal";
 import {Modifier} from "notcompose";
-import {FillMaxSizeModifier} from "notcompose/layout";
+import {fillMaxSize} from "notcompose/layout";
 import {CubeScreen} from "./cube/CubeScreen.js";
 
 setTerminalContent(() => {
-    CubeScreen(new Modifier([FillMaxSizeModifier()]))
+    CubeScreen(Modifier.then(fillMaxSize()))
 })

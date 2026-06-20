@@ -1,14 +1,14 @@
 import {describe, it} from "vitest";
 import {terminalTestRuntime} from "../helpers/runtimes/terminalTestRuntime.js";
-import {BackgroundModifier, BorderModifier, DrawModifier, Text} from "notcompose/terminal";
+import {background, border, DrawModifier, Text} from "notcompose/terminal";
 import {assertVisuallyIdentical, setViewport} from "../helpers/core/output.js";
 import {Modifier} from "notcompose";
 import {
     Box,
     MeasureResult,
-    OffsetModifier,
-    OffsetXModifier,
-    PaddingModifier,
+    offset,
+    offsetX,
+    padding,
     subcompose,
     SubcomposeLayout
 } from "notcompose/layout";
@@ -25,7 +25,7 @@ describe("Draw", () => {
         setup()
 
         draw(() => {
-            Text('Hello', new Modifier([OffsetXModifier(4)]))
+            Text('Hello', Modifier.then(offsetX(4)))
         })
 
         assertVisuallyIdentical(`
@@ -39,12 +39,12 @@ describe("Draw", () => {
         draw(() => {
             Box(() => {
                 Text("Test")
-            }, new Modifier([
-                OffsetModifier(2, 1),
-                BackgroundModifier('+'),
-                PaddingModifier(2, 1),
-                OffsetXModifier(4)
-            ]))
+            }, Modifier
+                .then(offset(2, 1))
+                .then(background('+'))
+                .then(padding(2, 1))
+                .then(offsetX(4))
+            )
         })
 
         assertVisuallyIdentical(`
@@ -61,10 +61,10 @@ describe("Draw", () => {
         draw(() => {
             Box(() => {
                 Text('Hello')
-            }, new Modifier([
-                OffsetModifier(1, 1),
-                BorderModifier(),
-            ]))
+            }, Modifier
+                .then(offset(1, 1))
+                .then(border())
+            )
         })
 
         assertVisuallyIdentical(`
@@ -79,13 +79,11 @@ describe("Draw", () => {
         setup(12, 6)
 
         draw(() => {
-            Text('A', new Modifier([
-                DrawModifier(scope => {
-                    scope.drawContent()
-                    scope.translate(3, 0)
-                    scope.drawContent()
-                }),
-            ]))
+            Text('A', Modifier.then(DrawModifier(scope => {
+                scope.drawContent()
+                scope.translate(3, 0)
+                scope.drawContent()
+            })))
         })
 
         assertVisuallyIdentical(`
@@ -99,10 +97,8 @@ A  A
         draw(() => {
             Box(() => {
                 Text("Hello world, hii!")
-                Text("notcompose", new Modifier([OffsetXModifier(6)]))
-            }, new Modifier([
-                BackgroundModifier('-')
-            ]))
+                Text("notcompose", Modifier.then(offsetX(6)))
+            }, Modifier.then(background('-')))
         })
 
         assertVisuallyIdentical(`
@@ -130,9 +126,7 @@ Hello notcompose!
                     a.place(0, 0, aZIndex)
                     b.place(0, 0, bZIndex)
                 })
-            }, new Modifier([
-                BackgroundModifier('-')
-            ]))
+            }, Modifier.then(background('-')))
         })
 
         assertVisuallyIdentical(`

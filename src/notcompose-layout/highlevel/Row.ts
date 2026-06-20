@@ -1,5 +1,5 @@
 import {Layout} from "../runtime/Layout.js";
-import {elvis, Modifier, NameElement} from "notcompose";
+import {elvis, Modifier, NameModifier} from "notcompose";
 import {Alignment, VerticalAlignment} from "../runtime/core/Alignment.js";
 import {Placeable} from "../runtime/Placeable.js";
 import {MeasurePolicy} from "../runtime/MeasurePolicy.js";
@@ -37,12 +37,12 @@ export const RowMeasurePolicy = (
 })
 
 
-export function Row(content: () => void, modifier: Modifier = new Modifier(), params?: {
+export function Row(content: () => void, modifier: Modifier = Modifier, params?: {
     verticalAlignment?: VerticalAlignment,
 }) {
     const { verticalAlignment } = elvis(params, {
         verticalAlignment: Alignment.Top
     })
 
-    Layout(content, RowMeasurePolicy(verticalAlignment), modifier.then(new NameElement('Row')))
+    Layout(content, RowMeasurePolicy(verticalAlignment), modifier.then(NameModifier('Row')))
 }

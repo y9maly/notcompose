@@ -2,15 +2,27 @@ import {LayoutModifier} from "./LayoutModifier.js";
 import {ModifierElement} from "notcompose";
 import {MeasureResult} from "../Measurable.js";
 
-export function OffsetModifier(x: number, y: number): ModifierElement {
-    return new OffsetModifierImpl(x, y)
+export function offset(x: number): ModifierElement
+export function offset(x: number, y: number): ModifierElement
+export function offset(params: { x?: number, y?: number }): ModifierElement
+export function offset(a: any, b?: number): ModifierElement {
+    let x, y = 0
+    if (typeof a === 'object') {
+        x = a.x ?? 0
+        y = a.y ?? 0
+    } else {
+        x = a
+        y = b ?? 0
+    }
+
+    return new OffsetModifierImpl(x, y ?? 0)
 }
 
-export function OffsetXModifier(offset: number): ModifierElement {
+export function offsetX(offset: number): ModifierElement {
     return new OffsetModifierImpl(offset, 0)
 }
 
-export function OffsetYModifier(offset: number): ModifierElement {
+export function offsetY(offset: number): ModifierElement {
     return new OffsetModifierImpl(0, offset)
 }
 

@@ -504,7 +504,7 @@ const MyMeasurePolicy: MeasurePolicy = MeasurePolicy((measurables, constraints) 
 function MyLayout(
     // Контент нашего лэяута
     content: () => void,
-    modifier: Modifier = new Modifier()
+    modifier: Modifier = Modifier
 ) {
     Layout(content, MyMeasurePolicy, modifier)
 }
@@ -517,10 +517,10 @@ setTerminalContent(() => {
         Text('2')
         Text('3')
         Text('4')
-    }, new Modifier([
+    }, Modifier
         // Заполним фон нашего лэяута решётками, чтобы чётко увидеть границы
-        BackgroundModifier('#')
-    ]))
+        .then(background('#'))
+    )
 })
 ```
 
@@ -696,39 +696,39 @@ setTerminalContent(() => {
     Column(() => {
         Box(() => {
             Text('Hello')
-        }, new Modifier([
-            BackgroundModifier('_'),
-            PaddingModifier({ horizontal: 2, vertical: 2 }),
-        ]))
+        }, Modifier
+            .then(background('_'))
+            .then(padding({ horizontal: 2, vertical: 2 }))
+        )
 
         Text('-----------------------------------------')
 
         Box(() => {
             Text('Hello')
-        }, new Modifier([
-            PaddingModifier({ horizontal: 2, vertical: 2 }),
-            BackgroundModifier('_'),
-        ]))
+        }, Modifier
+            .then(padding({ horizontal: 2, vertical: 2 }))
+            .then(background('_'))
+        )
 
         Text('-----------------------------------------')
 
         Box(() => {
             Text('Hello')
-        }, new Modifier([
-            BackgroundModifier('_'),
-            PaddingModifier({ horizontal: 2, vertical: 2 }),
-            SizeModifier(7),
-        ]))
+        }, Modifier
+            .then(background('_'))
+            .then(padding({ horizontal: 2, vertical: 2 }))
+            .then(size(7))
+        )
 
         Text('-----------------------------------------')
 
         Box(() => {
             Text('Hello')
-        }, new Modifier([
-            SizeModifier(7),
-            BackgroundModifier('_'),
-            PaddingModifier({ horizontal: 2, vertical: 2 }),
-        ]))
+        }, Modifier
+            .then(size(7))
+            .then(background('_'))
+            .then(padding({ horizontal: 2, vertical: 2 }))
+        )
     })
 })
 
@@ -777,10 +777,10 @@ setTerminalContent(() => {
 ```typescript
 Box(() => {
     Text('Hello')
-}, new Modifier([
-    BackgroundModifier('_'),
-    PaddingModifier({ horizontal: 2, vertical: 2 }),
-]))
+}, Modifier
+    .then(background('_'))
+    .then(padding({ horizontal: 2, vertical: 2 }))
+)
 ```
 
 ```
@@ -811,10 +811,10 @@ _________
 ```typescript
 Box(() => {
     Text('Hello')
-}, new Modifier([
-    PaddingModifier({ horizontal: 2, vertical: 2 }),
-    BackgroundModifier('_'),
-]))
+}, Modifier
+    .then(padding({ horizontal: 2, vertical: 2 }))
+    .then(background('_')),
+)
 ```
 
 ```
@@ -833,11 +833,11 @@ Box(() => {
 ```typescript
 Box(() => {
     Text('Hello')
-}, new Modifier([
-    BackgroundModifier('_'),
-    PaddingModifier({ horizontal: 2, vertical: 2 }),
-    SizeModifier(7),
-]))
+}, Modifier
+    .then(background('_'))
+    .then(padding({ horizontal: 2, vertical: 2 }))
+    .then(size(7))
+)
 ```
 
 ```

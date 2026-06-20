@@ -6,27 +6,27 @@ import {MeasureResult} from "../Measurable.js";
 // Fixed size
 
 
-export function SizeModifier(all: number): ModifierElement
-export function SizeModifier(width: number, height: number): ModifierElement
-export function SizeModifier(a: number, b?: number): ModifierElement {
+export function size(all: number): ModifierElement
+export function size(width: number, height: number): ModifierElement
+export function size(a: number, b?: number): ModifierElement {
     if (b === undefined)
         return new SizeModifierImpl(a, a, a, a, true)
     return new SizeModifierImpl(a, a, b, b, true)
 }
 
-export function WidthModifier(width: number): ModifierElement {
-    return WidthInModifier(width, width)
+export function width(width: number): ModifierElement {
+    return widthIn(width, width)
 }
 
-export function HeightModifier(height: number): ModifierElement {
-    return HeightInModifier(height, height)
+export function height(height: number): ModifierElement {
+    return heightIn(height, height)
 }
 
 
 // Size in
 
 
-export function SizeInModifier(values: {
+export function sizeIn(values: {
     minWidth?: number,
     maxWidth?: number | null,
     minHeight?: number,
@@ -35,27 +35,27 @@ export function SizeInModifier(values: {
     return new SizeModifierImpl(values.minWidth, values.maxWidth, values.minHeight, values.maxHeight, true)
 }
 
-export function WidthInModifier(minWidth: number, maxWidth: number): ModifierElement {
+export function widthIn(minWidth: number, maxWidth: number): ModifierElement {
     return new SizeModifierImpl(minWidth, maxWidth, undefined, undefined, true)
 }
 
-export function MinWidthModifier(minWidth: number): ModifierElement {
+export function minWidth(minWidth: number): ModifierElement {
     return new SizeModifierImpl(minWidth, undefined, undefined, undefined, true)
 }
 
-export function MaxWidthModifier(maxWidth: number): ModifierElement {
+export function maxWidth(maxWidth: number): ModifierElement {
     return new SizeModifierImpl(undefined, maxWidth, undefined, undefined, true)
 }
 
-export function HeightInModifier(minHeight: number, maxHeight: number): ModifierElement {
+export function heightIn(minHeight: number, maxHeight: number): ModifierElement {
     return new SizeModifierImpl(undefined, undefined, minHeight, maxHeight, true)
 }
 
-export function MinHeightModifier(minHeight: number): ModifierElement {
+export function minHeight(minHeight: number): ModifierElement {
     return new SizeModifierImpl(undefined, undefined, minHeight, undefined, true)
 }
 
-export function MaxHeightModifier(maxHeight: number): ModifierElement {
+export function maxHeight(maxHeight: number): ModifierElement {
     return new SizeModifierImpl(undefined, undefined, undefined, maxHeight, true)
 }
 
@@ -63,15 +63,15 @@ export function MaxHeightModifier(maxHeight: number): ModifierElement {
 // Required size
 
 
-export function RequiredSizeModifier(all: number): ModifierElement {
+export function requiredSize(all: number): ModifierElement {
     return new SizeModifierImpl(all, all, all, all, false)
 }
 
-export function RequiredWidthModifier(width: number): ModifierElement {
+export function requiredWidth(width: number): ModifierElement {
     return new SizeModifierImpl(width, width, undefined, undefined, false)
 }
 
-export function RequiredHeightModifier(height: number): ModifierElement {
+export function requiredHeight(height: number): ModifierElement {
     return new SizeModifierImpl(undefined, undefined, height, height, false)
 }
 
@@ -79,7 +79,7 @@ export function RequiredHeightModifier(height: number): ModifierElement {
 // Required size in
 
 
-export function RequiredSizeInModifier(values: {
+export function requiredSizeIn(values: {
     minWidth?: number,
     maxWidth?: number | null,
     minHeight?: number,

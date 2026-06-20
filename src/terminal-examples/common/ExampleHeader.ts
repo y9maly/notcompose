@@ -7,7 +7,7 @@ export function ExampleHeader(text: string) {
     Box(() => {
         Divider()
         Text(text)
-    }, new Modifier(), {
+    }, Modifier, {
         alignment: Alignment.Center
     })
 }

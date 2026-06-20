@@ -1,4 +1,4 @@
-import {currentComposer, Modifier, NameElement} from "notcompose";
+import {currentComposer, Modifier, NameElement, NameModifier} from "notcompose";
 import {Key} from "../../notcompose/runtime/Composer.js";
 import {
     SubcomposeNodeExtension,
@@ -8,8 +8,8 @@ import {
 import {Constraints} from "../runtime/Constraints.js";
 import {Measurable, MeasureResult} from "../runtime/Measurable.js";
 
-export function SubcomposeLayout(content: (constraints: Constraints) => MeasureResult, modifier: Modifier = new Modifier()) {
-    currentComposer().startNode(modifier.then(new NameElement('SubcomposeLayout')))
+export function SubcomposeLayout(content: (constraints: Constraints) => MeasureResult, modifier: Modifier = Modifier) {
+    currentComposer().startNode(modifier.then(NameModifier('SubcomposeLayout')))
     currentComposer().applyExtension(SubcomposeNodeExtensionKey, {
         subcompose(constraints, scope) {
             const previousScope = _scope

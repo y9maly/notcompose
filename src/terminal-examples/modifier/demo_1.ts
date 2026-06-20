@@ -1,44 +1,44 @@
-import {BackgroundModifier, setTerminalContent, Text} from "notcompose/terminal";
-import {Box, Column, PaddingModifier, SizeModifier} from "notcompose/layout";
+import {background, setTerminalContent, Text} from "notcompose/terminal";
+import {Box, Column, padding, size} from "notcompose/layout";
 import {Modifier} from "notcompose";
 
 setTerminalContent(() => {
     Column(() => {
         Box(() => {
             Text('Hello')
-        }, new Modifier([
-            BackgroundModifier('_'),
-            PaddingModifier({ horizontal: 2, vertical: 2 }),
-        ]))
+        }, Modifier
+            .then(background('_'))
+            .then(padding({ horizontal: 2, vertical: 2 }))
+        )
 
         Text('-----------------------------------------')
 
         Box(() => {
             Text('Hello')
-        }, new Modifier([
-            PaddingModifier({ horizontal: 2, vertical: 2 }),
-            BackgroundModifier('_'),
-        ]))
+        }, Modifier
+            .then(padding({ horizontal: 2, vertical: 2 }))
+            .then(background('_'))
+        )
 
         Text('-----------------------------------------')
 
         Box(() => {
             Text('Hello')
-        }, new Modifier([
-            BackgroundModifier('_'),
-            PaddingModifier({ horizontal: 2, vertical: 2 }),
-            SizeModifier(7),
-        ]))
+        }, Modifier
+            .then(background('_'))
+            .then(padding({ horizontal: 2, vertical: 2 }))
+            .then(size(7))
+        )
 
         Text('-----------------------------------------')
 
         Box(() => {
             Text('Hello')
-        }, new Modifier([
-            SizeModifier(7),
-            BackgroundModifier('_'),
-            PaddingModifier({ horizontal: 2, vertical: 2 }),
-        ]))
+        }, Modifier
+            .then(size(7))
+            .then(background('_'))
+            .then(padding({ horizontal: 2, vertical: 2 }))
+        )
     })
 })
 
