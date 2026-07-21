@@ -1,10 +1,6 @@
 import {Node as CompositionNode, NodeExtensionKey} from "notcompose";
-import {
-    DomAttributesSnapshot,
-    DomEventListener,
-    DomRef,
-    emptyDomAttributes
-} from "./attributes/AttrsScope.js";
+import {ListenerModifier} from "./modifiers/ListenerModifier.js";
+import {DomRef} from "./modifiers/RefModifier.js";
 
 export const DomNodeExtensionKey = new NodeExtensionKey<DomNodeState>('DomNode')
 
@@ -22,10 +18,9 @@ export interface DomElementState extends DomContainerState {
     readonly node: Element
     readonly tagName: string
 
-    desiredAttributes: DomAttributesSnapshot
     committedAttributes: Map<string, string>
     committedStyles: Map<string, string>
-    installedListeners: DomEventListener[]
+    installedListeners: ListenerModifier[]
 
     activeRef: DomRef<Element> | null
     refCleanup: (() => void) | null
@@ -53,7 +48,6 @@ export function createDomElementState(node: Element, tagName: string): DomElemen
         kind: 'element',
         node,
         tagName,
-        desiredAttributes: emptyDomAttributes(),
         committedAttributes: new Map(),
         committedStyles: new Map(),
         installedListeners: [],

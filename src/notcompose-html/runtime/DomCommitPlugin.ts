@@ -1,4 +1,4 @@
-import {ComposerPlugin, Node as CompositionNode} from "notcompose";
+import {ComposerPlugin, ModifierElement, Node as CompositionNode} from "notcompose";
 import {
     DomElementState,
     DomNodeState,
@@ -6,9 +6,14 @@ import {
     domNodeStateOf,
     isDomContainerState
 } from "./DomNodeState.js";
+import {AttributeModifier} from "./modifiers/AttributeModifier.js";
+import {StyleModifier} from "./modifiers/StyleModifier.js";
+import {ListenerModifier} from "./modifiers/ListenerModifier.js";
+import {PropertyModifier} from "./modifiers/PropertyModifier.js";
+import {DomRef, RefModifier} from "./modifiers/RefModifier.js";
 
 export class DomCommitPlugin implements ComposerPlugin {
-    private readonly dirtyStates = new Set<DomNodeState>()
+    private readonly dirtyNodes = new Set<CompositionNode>()
     private readonly dirtyContainers = new Set<CompositionNode>()
     private readonly roots = new Set<CompositionNode>()
 
@@ -27,7 +32,7 @@ export class DomCommitPlugin implements ComposerPlugin {
             return
         }
 
-        this.dirtyStates.add(state)
+        this.dirtyNodes.add(node)
         if (isDomContainerState(state))
             this.dirtyContainers.add(node)
     }
@@ -41,7 +46,7 @@ export class DomCommitPlugin implements ComposerPlugin {
             const state = domNodeStateOf(forgottenNode)
             if (state === null)
                 return
-            this.dirtyStates.delete(state)
+            this.dirtyNodes.delete(forgottenNode)
             this.dirtyContainers.delete(forgottenNode)
             cleanupDomState(state)
         })
@@ -50,9 +55,13 @@ export class DomCommitPlugin implements ComposerPlugin {
     finally() {
         const pendingRefs: DomElementState[] = []
 
-        this.dirtyStates.forEach(state => {
+        this.dirtyNodes.forEach(node => {
+            const state = domNodeStateOf(node)
+            if (state === null)
+                return
+
             if (state.kind === 'element') {
-                commitElement(state, pendingRefs)
+                commitElement(node, state, pendingRefs)
             } else if (state.kind === 'text') {
                 commitText(state)
             }
@@ -69,7 +78,7 @@ export class DomCommitPlugin implements ComposerPlugin {
             state.refCleanup = ref(state.node) ?? null
         })
 
-        this.dirtyStates.clear()
+        this.dirtyNodes.clear()
         this.dirtyContainers.clear()
     }
 
@@ -88,7 +97,7 @@ export class DomCommitPlugin implements ComposerPlugin {
             }
         })
 
-        this.dirtyStates.clear()
+        this.dirtyNodes.clear()
         this.dirtyContainers.clear()
         this.roots.clear()
     }
@@ -101,50 +110,120 @@ function commitText(state: Extract<DomNodeState, {kind: 'text'}>) {
     state.committedData = state.desiredData
 }
 
-function commitElement(state: DomElementState, pendingRefs: DomElementState[]) {
-    const desired = state.desiredAttributes
+function commitElement(
+    compositionNode: CompositionNode,
+    state: DomElementState,
+    pendingRefs: DomElementState[],
+) {
+    const modifiers = compositionNode.modifier.elements
+    const desiredAttributes = collectAttributes(modifiers)
 
     state.committedAttributes.forEach((_, name) => {
-        if (!desired.attributes.has(name))
+        if (!desiredAttributes.has(name))
             state.node.removeAttribute(name)
     })
-    desired.attributes.forEach((value, name) => {
+    desiredAttributes.forEach((value, name) => {
         if (state.committedAttributes.get(name) !== value)
             state.node.setAttribute(name, value)
     })
-    state.committedAttributes = new Map(desired.attributes)
+    state.committedAttributes = desiredAttributes
 
+    const desiredStyles = collectStyles(modifiers)
     const style = inlineStyleOf(state.node)
     if (style !== null) {
         state.committedStyles.forEach((_, name) => {
-            if (!desired.styles.has(name))
+            if (!desiredStyles.has(name))
                 style.removeProperty(name)
         })
-        desired.styles.forEach((value, name) => {
+        desiredStyles.forEach((value, name) => {
             if (state.committedStyles.get(name) !== value)
                 style.setProperty(name, value)
         })
     }
-    state.committedStyles = new Map(desired.styles)
+    state.committedStyles = desiredStyles
 
     state.installedListeners.forEach(listener => {
         state.node.removeEventListener(listener.type, listener.listener, listener.options)
     })
-    state.installedListeners = [...desired.listeners.values()]
+    state.installedListeners = collectListeners(modifiers)
     state.installedListeners.forEach(listener => {
         state.node.addEventListener(listener.type, listener.listener, listener.options)
     })
 
-    desired.propertyUpdates.forEach(update => update(state.node))
+    modifiers.forEach(modifier => {
+        if (modifier instanceof PropertyModifier)
+            modifier.update(state.node)
+    })
 
-    if (state.activeRef !== null && desired.ref === null) {
+    const desiredRef = collectRef(modifiers)
+    if (state.activeRef !== null && desiredRef === null) {
         state.refCleanup?.()
         state.refCleanup = null
         state.activeRef = null
-    } else if (state.activeRef === null && desired.ref !== null) {
-        state.activeRef = desired.ref
+    } else if (state.activeRef === null && desiredRef !== null) {
+        state.activeRef = desiredRef
         pendingRefs.push(state)
     }
+}
+
+function collectAttributes(modifiers: ReadonlyArray<ModifierElement>): Map<string, string> {
+    const attributes = new Map<string, string>()
+
+    modifiers.forEach(modifier => {
+        if (!(modifier instanceof AttributeModifier))
+            return
+
+        if (modifier.value === null || modifier.value === undefined || modifier.value === false) {
+            attributes.delete(modifier.name)
+        } else {
+            attributes.set(modifier.name, modifier.value === true ? '' : String(modifier.value))
+        }
+    })
+
+    return attributes
+}
+
+function collectStyles(modifiers: ReadonlyArray<ModifierElement>): Map<string, string> {
+    const styles = new Map<string, string>()
+
+    modifiers.forEach(modifier => {
+        if (!(modifier instanceof StyleModifier))
+            return
+
+        const propertyName = cssPropertyName(modifier.name)
+        if (modifier.value === null || modifier.value === undefined) {
+            styles.delete(propertyName)
+        } else {
+            styles.set(propertyName, String(modifier.value))
+        }
+    })
+
+    return styles
+}
+
+function collectListeners(modifiers: ReadonlyArray<ModifierElement>): ListenerModifier[] {
+    const listeners = new Map<string, ListenerModifier>()
+
+    modifiers.forEach(modifier => {
+        if (!(modifier instanceof ListenerModifier))
+            return
+
+        const capture = typeof modifier.options === 'boolean'
+            ? modifier.options
+            : modifier.options?.capture ?? false
+        listeners.set(`${modifier.type}:${capture}`, modifier)
+    })
+
+    return [...listeners.values()]
+}
+
+function collectRef(modifiers: ReadonlyArray<ModifierElement>): DomRef<Element> | null {
+    let ref: DomRef<Element> | null = null
+    modifiers.forEach(modifier => {
+        if (modifier instanceof RefModifier)
+            ref = modifier.effect as DomRef<Element>
+    })
+    return ref
 }
 
 function reconcileDomChildren(node: CompositionNode) {
@@ -216,6 +295,12 @@ function inlineStyleOf(element: Element): CSSStyleDeclaration | null {
     if (!('style' in element))
         return null
     return (element as Element & {style: CSSStyleDeclaration}).style
+}
+
+function cssPropertyName(name: string): string {
+    if (name.startsWith('--') || name.includes('-'))
+        return name
+    return name.replace(/[A-Z]/g, match => `-${match.toLowerCase()}`)
 }
 
 function arraysEqual<T>(a: readonly T[], b: readonly T[]): boolean {

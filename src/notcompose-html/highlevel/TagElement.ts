@@ -1,24 +1,23 @@
 import {
-    Modifier,
     NameModifier,
     Node as CompositionNode,
     RecomposeLambda,
     RecomposeLambdaExtensionKey,
     currentComposer
 } from "notcompose";
-import {AttrsScope} from "../runtime/attributes/AttrsScope.js";
 import {
     DomNodeExtensionKey,
     createDomElementState,
     domNodeStateOf
 } from "../runtime/DomNodeState.js";
+import {Modifier} from "../HtmlModifier.js";
 
 export interface ElementScope<ELEMENT extends Element> {
     readonly element: ELEMENT
 }
 
 export interface ElementOptions<ELEMENT extends Element> {
-    readonly attrs?: (scope: AttrsScope<ELEMENT>) => void
+    readonly modifier?: Modifier
     readonly content?: (scope: ElementScope<ELEMENT>) => void
 }
 
@@ -44,14 +43,14 @@ export function TagElement<ELEMENT extends Element>(
     const normalizedTagName = tagName.toLowerCase()
     const options = normalizeArgument(argument)
 
-    composer.startNode(Modifier.then(NameModifier(`<${normalizedTagName}>`)))
+    composer.startNode(Modifier.then(
+        NameModifier(`<${normalizedTagName}>`),
+        ...(options.modifier?.elements ?? []),
+    ))
     const compositionNode = composer.currentNode!
     const state = ensureElementState<ELEMENT>(compositionNode, normalizedTagName)
 
     const composeElement = (() => {
-        const attrsScope = new AttrsScope<ELEMENT>()
-        options.attrs?.(attrsScope)
-        state.desiredAttributes = attrsScope.build()
         options.content?.({element: state.node as ELEMENT})
     }) satisfies RecomposeLambda
 
