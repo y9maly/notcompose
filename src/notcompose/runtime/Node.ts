@@ -33,6 +33,15 @@ export class Node {
         return this.modifier.elements.find(it => it instanceof NameElement)?.name ?? null
     }
 
+    walkDFS(block: (node: Node) => void) {
+        const stack: { key: any, node: Node }[] = [{ key: null, node: this }]
+        while (stack.length > 0) {
+            const {node} = stack.pop()!
+            block(node)
+            stack.push(...node.children)
+        }
+    }
+
     walkChildrenDFS(block: (node: Node) => void) {
         const stack = [...this.children]
         while (stack.length > 0) {

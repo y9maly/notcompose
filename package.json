@@ -9,6 +9,9 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:types": "tsc -p tsconfig.vitest.json --noEmit",
+    "example:html": "vite --config ./vite.html.config.ts",
+    "example:html:build": "vite build --config ./vite.html.config.ts",
+    "example:html:preview": "vite preview --config ./vite.html.config.ts",
     "example:rrtop": "tsx ./src/terminal-examples/rrtop.ts",
     "example:cube": "tsx ./src/terminal-examples/cube.ts",
     "example:counter": "tsx ./src/terminal-examples/counter.ts",
@@ -23,6 +26,10 @@
     "./molecule": {
       "types": "./dist/notcompose-molecule/index.d.ts",
       "import": "./dist/notcompose-molecule/index.js"
+    },
+    "./html": {
+      "types": "./dist/notcompose-html/index.d.ts",
+      "import": "./dist/notcompose-html/index.js"
     },
     "./layout": {
       "types": "./dist/notcompose-layout/index.d.ts",
@@ -40,8 +47,10 @@
   "packageManager": "pnpm@10.20.0",
   "devDependencies": {
     "@types/node": "^25.5.2",
+    "happy-dom": "^20.11.0",
     "tsx": "^4.22.4",
     "typescript": "^6.0.2",
+    "vite": "^8.1.5",
     "vite-tsconfig-paths": "^6.1.1",
     "vitest": "^4.1.7"
   },

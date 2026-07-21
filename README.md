@@ -2,11 +2,12 @@
 
 Нууу я решил па приколу сделать что-то типа Jetpack Compose на JS.
 
-В этом репозитории есть 2 имплементации:
+В этом репозитории есть 3 имплементации:
 - notcompose-terminal (Для Terminal UI, весь этот README описывает именно его)
 - [notcompose-molecule](src/notcompose-molecule) (Не связан с UI. Позволяет декларативно создавать одно реактивное состояние из множества других)
+- [notcompose-html](src/notcompose-html) (Для декларативного построения DOM в браузере.)
 
-Но фреймворк этими двумя имплементациями не ограничивается: runtime часть позволяет декларативно строить любые деревья, работать с любым реактивным состоянием.
+Но фреймворк этими тремя имплементациями не ограничивается: runtime часть позволяет декларативно строить любые деревья, работать с любым реактивным состоянием.
 
 Здесь тоже есть Composer который строит дерево, отслеживает стейты, запускает рекомпозиции и так далее.
 Это не попытка полностью скопировать Kotlin Compose: некоторые концепции отличаются, ну а с некоторыми в оригинальном Kotlin Compose я вообще даже не разбирался.
@@ -33,6 +34,10 @@
  
    Это не Terminal UI. Это другой модуль notcompose-molecule: Позволяет декларативно создавать одно реактивное состояние из множества других. В примере используется rxjs.
 
+ * [notcompose-html examples](src/html-examples)
+
+   Примеры html
+
 # Как потестить самому?
 
 ```
@@ -40,12 +45,18 @@ git clone https://github.com/y9maly/notcompose.git && cd notcompose
 npm install -g pnpm
 pnpm install
 
+# Запуск тестов
 pnpm run test
+
+# Примеры терминала
 pnpm run example:rrtop
 pnpm run example:cube
 pnpm run example:counter
 pnpm run example:fileExplorer
 pnpm run main
+
+# Примере html
+pnpm run example:html
 ```
 
 # Как назвать этот заголовок?

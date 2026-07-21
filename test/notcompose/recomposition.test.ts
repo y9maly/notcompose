@@ -169,4 +169,31 @@ describe("recomposition tests", () => {
         expect(dynamicFrames).toBe(2)
         expect(seenValues).toEqual([0, 1])
     })
+
+    it("recomposes consumers of the state that was actually written", () => {
+        const runtime = defaultTestRuntime().use()
+        const first = mutableStateOf(0)
+        const second = mutableStateOf(0)
+
+        let firstFrames = 0
+        let secondFrames = 0
+
+        runtime.render(() => {
+            Key("first", () => {
+                firstFrames++
+                first.value
+            })
+
+            Key("second", () => {
+                secondFrames++
+                second.value
+            })
+        })
+
+        second.value++
+        flushRecompositions()
+
+        expect(firstFrames).toBe(1)
+        expect(secondFrames).toBe(2)
+    })
 })

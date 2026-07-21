@@ -1,9 +1,11 @@
 node_modules/
 dist/
+dist-html-examples/
 .nyc_output/
 **/.DS_Store
 .idea
 .vscode
+.pnpm-store
 *.log
 *.tsbuildinfo
 .env

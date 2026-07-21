@@ -1,7 +1,7 @@
 {
     "compilerOptions": {
         "types": ["node"],
-        "lib": ["es2024", "ESNext.Array", "ESNext.Collection", "ESNext.Iterator", "ESNext.Promise"],
+        "lib": ["es2024", "DOM", "DOM.Iterable", "ESNext.Array", "ESNext.Collection", "ESNext.Iterator", "ESNext.Promise"],
 
         "module": "nodenext",
         "moduleResolution": "nodenext",
@@ -12,6 +12,7 @@
         "paths": {
             "notcompose": ["./src/notcompose/index.ts"],
             "notcompose/molecule": ["./src/notcompose-molecule/index.ts"],
+            "notcompose/html": ["./src/notcompose-html/index.ts"],
             "notcompose/layout": ["./src/notcompose-layout/index.ts"],
             "notcompose/terminal": ["./src/notcompose-terminal/index.ts"]
         },
