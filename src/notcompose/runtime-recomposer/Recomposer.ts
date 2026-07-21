@@ -114,4 +114,8 @@ export class Recomposer implements StateReadsObserver, ComposerPlugin {
             this.stateDependenciesMap.dirtyObjects.delete(node)
         })
     }
+
+    dispose() {
+        this.stateDependenciesMap.dispose()
+    }
 }

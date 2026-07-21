@@ -62,6 +62,16 @@ export class StateDependenciesMap<
         this.clearDependencies(consumer)
     }
 
+    dispose() {
+        this.observerDisposable?.[Symbol.dispose]()
+        this.observerDisposable = null
+        this.observed.clear()
+        this.stateConsumers.clear()
+        this.consumerDependencies.clear()
+        this.currentStateReadsMap.clear()
+        this.dirtyObjects.clear()
+    }
+
     //
 
     private observed = new Set<State<unknown>>()
@@ -72,9 +82,9 @@ export class StateDependenciesMap<
             return
 
         this.observerDisposable = GlobalSnapshot.observeStateWrites((writtenState) => {
-            const consumers = this.stateConsumers.get(state)
+            const consumers = this.stateConsumers.get(writtenState)
             if (consumers === undefined)
-                throw new Error(`Must be unreachable; This state observed but it doesn't have any consumer`)
+                return
             for (const consumer of consumers) {
                 let canBeDirty = true
                 const currentStateReads = this.currentStateReadsMap.get(consumer)

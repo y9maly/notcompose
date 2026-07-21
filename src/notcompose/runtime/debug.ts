@@ -1,11 +1,11 @@
-import {Writable} from "node:stream";
-import * as console from "node:console";
+export interface DebugConsole {
+    log(...data: unknown[]): void
+}
 
-export let debug: console.Console = new console.Console({
-    stdout: new Writable(),
-    stderr: new Writable(),
-})
+export let debug: DebugConsole = {
+    log() {},
+}
 
-export function setDebugConsole(value: console.Console) {
+export function setDebugConsole(value: DebugConsole) {
     debug = value
 }
