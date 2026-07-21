@@ -1,5 +1,5 @@
 import {HistoryData} from "./HistoryData.js";
-import {elvis, Modifier} from "notcompose";
+import {elvis} from "notcompose";
 import {
     Alignment,
     fillMaxWidth,
@@ -10,7 +10,7 @@ import {
     width
 } from "notcompose/layout";
 import {repeat} from "../../../common/repeat.js";
-import {background, Color, colored, Text} from "notcompose/terminal";
+import {background, Color, colored, Modifier, Text} from "notcompose/terminal";
 
 export function SolidPlot(
     historyData: HistoryData,
@@ -51,15 +51,13 @@ export function SolidPlot(
                 Text(colored(color, '▂'))
             } else {
                 Spacer(Modifier
-                    .then(background('█', { color: color }))
-                    .then(width(1))
-                    .then(height(columnHeight))
+                    .background('█', { color: color })
+                    .width(1)
+                    .height(columnHeight)
                 )
             }
         }
-    }, modifier.then(
-        fillMaxWidth(),
-    ), {
+    }, Modifier(modifier).fillMaxWidth(), {
         verticalAlignment: params?.alignment ?? Alignment.Bottom,
     })
 }

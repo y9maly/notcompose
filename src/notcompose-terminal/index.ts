@@ -1,6 +1,7 @@
 export * from "./setTerminalContent.js"
 export * from "./bootstrapTerminalComposition.js"
 export * from "./Composition.js"
+export * from "./TerminalModifier.js"
 export * from "./highlevel/Text.js"
 export * from "./highlevel/Input.js"
 export * from "./runtime/modifiers/BackgroundModifier.js"

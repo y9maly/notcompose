@@ -1,6 +1,5 @@
-import {setTerminalContent, Text} from "notcompose/terminal";
+import {Modifier, setTerminalContent, Text} from "notcompose/terminal";
 import {SolidPlot} from "./SolidPlot.js";
-import {Modifier} from "notcompose";
 import {Column, size} from "notcompose/layout";
 import {BorderedTitledBox} from "../BorderedTitledBox.js";
 
@@ -24,7 +23,7 @@ setTerminalContent(() => {
                             { value: 0 },
                         ],
                     },
-                    Modifier.then(size(35, 10))
+                    Modifier.size(35, 10),
                 )
             }
         )
