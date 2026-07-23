@@ -22,7 +22,7 @@ export abstract class BaseLayoutNodeCoordinator {
         while (true) {
             // if (current instanceof InnerLayoutNodeCoordinator)
             if (!('nextCoordinator' in current))
-                return current as unknown as InnerLayoutNodeCoordinator
+                return current
             current = current.nextCoordinator
         }
     }

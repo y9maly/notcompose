@@ -32,7 +32,7 @@ export function LayoutModifier(
 }
 
 class LayoutModifierImpl implements LayoutModifier {
-    [LayoutModifier.symbol] = this;
+    [LayoutModifier.symbol] = this
 
     measure: (measurable: Measurable, constraints: Constraints) => MeasureResult
     minIntrinsicWidth: (measurable: IntrinsicMeasurable, height: number | null) => number

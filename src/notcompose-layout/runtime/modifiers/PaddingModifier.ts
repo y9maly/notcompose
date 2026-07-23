@@ -1,5 +1,5 @@
 import {LayoutModifier} from "./LayoutModifier.js";
-import {ModifierElement} from "notcompose";
+import { ModifierElement } from "notcompose";
 import {MeasureResult} from "../Measurable.js";
 
 export function padding(all: number): ModifierElement
@@ -26,7 +26,7 @@ export function padding(
     c?: number,
     d?: number,
 ): ModifierElement {
-    let start, top, end, bottom;
+    let start, top, end, bottom
     if (typeof a === 'object') {
         const paddingValues: any = a
         start = paddingValues.start ?? paddingValues.horizontal ?? paddingValues.all ?? 0

@@ -25,7 +25,7 @@ export function LaunchedEffect(
         block = a as () => void
     } else {
         keys = a as unknown[]
-        block = b as () => void
+        block = b satisfies () => void
     }
 
     remember(keys, () => new LaunchedEffectImpl(block))

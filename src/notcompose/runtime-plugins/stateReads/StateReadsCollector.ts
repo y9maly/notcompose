@@ -18,7 +18,7 @@ export class StateReadsCollector<CONSUMER extends NonNullable<unknown>> {
             const current = this.current()
             if (current === null)
                 throw new Error('Current cannot be null because observer must be disposed when [stop] called and [start] was called and [stop] was not called yet')
-            let stateReads = this.temporalStateReadsMap.get(current)
+            const stateReads = this.temporalStateReadsMap.get(current)
             if (stateReads === undefined) return
             if (addToSet(stateReads, state))
                 this.onStateRead(state, current)
@@ -28,7 +28,7 @@ export class StateReadsCollector<CONSUMER extends NonNullable<unknown>> {
     stop() {
         if (this.disposable === null)
             throw new Error(`Stop cannot be called before start`)
-        this.disposable![Symbol.dispose]()
+        this.disposable[Symbol.dispose]()
         this.disposable = null
     }
 

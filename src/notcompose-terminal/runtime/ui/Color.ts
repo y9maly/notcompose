@@ -52,9 +52,9 @@ export class Color {
     static Transparent = new Color(0x00000000)
 
     equals(other: Color): boolean {
-        return this.red === other.red &&
-            this.green === other.green &&
-            this.blue === other.blue &&
-            this.alpha === other.alpha
+        return this.red === other.red
+            && this.green === other.green
+            && this.blue === other.blue
+            && this.alpha === other.alpha
     }
 }

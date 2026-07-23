@@ -23,28 +23,28 @@ const randomScore = () => randomNumber(1000, 1000000)
 
 const usernameSubject = new BehaviorSubject(randomUsername())
 const ageSubject = new BehaviorSubject(randomAge())
-const scoreSubject = new BehaviorSubject(randomScore());
+const scoreSubject = new BehaviorSubject(randomScore())
 
-(async () => {
+void (async () => {
     while (true) {
         await delay(randomNumber(500, 1500))
         usernameSubject.next(randomUsername())
     }
-})();
+})()
 
-(async () => {
+void (async () => {
     while (true) {
         await delay(randomNumber(500, 1500))
         ageSubject.next(randomAge())
     }
-})();
+})()
 
-(async () => {
+void (async () => {
     while (true) {
         await delay(randomNumber(500, 1500))
         scoreSubject.next(randomScore())
     }
-})();
+})()
 
 // --- Molecule ---
 

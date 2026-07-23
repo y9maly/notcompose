@@ -58,7 +58,7 @@ class FillModifierImpl {
         return MeasureResult(placeable.width, placeable.height, () => {
             placeable.place(0, 0)
         })
-    });
+    })
 
     equals(other: ModifierElement): boolean {
         return other instanceof FillModifierImpl

@@ -15,17 +15,17 @@ export class Constraints {
     )
 
     constructor(values?: {
-        minWidth?: number,        // 0 by default
-        maxWidth?: number | null, // null by default
-        minHeight?: number,       // 0 by default
+        minWidth?: number         // 0 by default
+        maxWidth?: number | null  // null by default
+        minHeight?: number        // 0 by default
         maxHeight?: number | null // null by default
     })
 
     constructor(
         a: number | undefined | {
-            minWidth?: number,        // 0 by default
-            maxWidth?: number | null, // null by default
-            minHeight?: number,       // 0 by default
+            minWidth?: number         // 0 by default
+            maxWidth?: number | null  // null by default
+            minHeight?: number        // 0 by default
             maxHeight?: number | null // null by default
         },
         b?: number | null,

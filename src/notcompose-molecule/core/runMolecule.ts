@@ -41,9 +41,9 @@ export function runMolecule<T>(content: () => T): State<T> {
         composition.compose(Modifier.then(NameModifier('Root')))
     }
 
-    recompose();
+    recompose()
 
-    (async () => {
+    void (async () => {
         // noinspection InfiniteLoopJS
         while (true) {
             await recomposer.awaitNeedRecompose()

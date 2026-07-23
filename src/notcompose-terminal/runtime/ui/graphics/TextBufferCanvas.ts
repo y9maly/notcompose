@@ -69,8 +69,8 @@ export class TextBufferCanvas implements TextCanvas {
         ))
     }
 
-    scale(scale: Float):void
-    scale(scaleX: Float, scaleY: Float):void
+    scale(scale: Float): void
+    scale(scaleX: Float, scaleY: Float): void
     scale(scaleX: Float, scaleY?: Float) {
         scaleY = scaleY ?? scaleX
 
@@ -136,9 +136,10 @@ export class TextBufferCanvas implements TextCanvas {
             for (let rx = minX; rx <= maxX; rx++) {
                 const { x: localX, y: localY } = this.invertMatrix.mapPoint(rx + 0.5, ry + 0.5)
 
-                if (localX >= x && localX < x + width &&
-                    localY >= y && localY < y + height) {
-
+                if (
+                    localX >= x && localX < x + width
+                    && localY >= y && localY < y + height
+                ) {
                     const charIndex = Math.floor(localX - x)
                     const char = Char(rawString[charIndex])
                     const spans = text instanceof AnnotatedString ? text.spans : []

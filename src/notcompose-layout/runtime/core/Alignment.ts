@@ -1,6 +1,7 @@
 import {LayoutDirection} from "./LayoutDirection.js";
 import {Size} from "./Size.js";
 import {Offset} from "./Offset.js";
+import { assertType } from 'notcompose'
 
 export interface Alignment {
     /* align */(size: Size, space: Size, layoutDirection?: LayoutDirection): Offset
@@ -258,9 +259,9 @@ Alignment.Start = HorizontalAlignment((size, space, layoutDirection) => {
     return 0
 })
 
-Alignment.CenterHorizontally = Alignment.CenterVertically as HorizontalAlignment
-Alignment.CenterHorizontallyL = Alignment.CenterVerticallyL as HorizontalAlignment
-Alignment.CenterHorizontallyR = Alignment.CenterVerticallyR as HorizontalAlignment
+Alignment.CenterHorizontally = assertType<HorizontalAlignment>(Alignment.CenterVertically)
+Alignment.CenterHorizontallyL = assertType<HorizontalAlignment>(Alignment.CenterVerticallyL)
+Alignment.CenterHorizontallyR = assertType<HorizontalAlignment>(Alignment.CenterVerticallyR)
 
 Alignment.End = HorizontalAlignment((size, space, layoutDirection) => {
     if (layoutDirection === LayoutDirection.RTL) return 0

@@ -38,7 +38,7 @@ export class TransformationMatrix {
     mapPoint(x: number, y: number): Offset
     mapPoint(a: Offset | number, b?: number): Offset {
         const x = b === undefined ? (a as Offset).x : a as number
-        const y = b === undefined ? (a as Offset).y : b as number
+        const y = b === undefined ? (a as Offset).y : b satisfies number
 
         const pW = 1 / (this.v30 * x + this.v31 * y + this.v33)
         return new Offset(pW * (this.v00 * x + this.v01 * y + this.v03), pW * (this.v10 * x + this.v11 * y + this.v13))

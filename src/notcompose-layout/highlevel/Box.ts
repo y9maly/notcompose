@@ -34,7 +34,7 @@ export const BoxMeasurePolicy = (
 })
 
 export function Box(content: () => void, modifier: Modifier = Modifier, params?: {
-    alignment?: Alignment,
+    alignment?: Alignment
 }) {
     const { alignment } = elvis(params, {
         alignment: Alignment.TopStart

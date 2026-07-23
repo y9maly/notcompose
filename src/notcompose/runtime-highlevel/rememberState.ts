@@ -25,7 +25,7 @@ export function rememberState<T>(
         calculation = a as () => T
     } else {
         keys = a as unknown[]
-        calculation = b as () => T
+        calculation = b satisfies () => T
     }
 
     const state = remember(() => mutableStateOf<T | typeof Empty>(Empty))

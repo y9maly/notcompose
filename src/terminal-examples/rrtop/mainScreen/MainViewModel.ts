@@ -1,4 +1,4 @@
-import {mutableStateOf} from "notcompose";
+import {mutableStateOf} from 'notcompose'
 import {HistoryData} from "../components/plot/HistoryData.js";
 import {SystemInfoRepository} from "../repository/SystemInfoRepository.js";
 

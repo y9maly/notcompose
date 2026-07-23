@@ -14,7 +14,7 @@ export function ParentDataModifier(modifyParentData: (parentData: unknown) => un
 }
 
 class ParentDataModifierImpl implements ParentDataModifier {
-    [ParentDataModifier.symbol] = this;
+    [ParentDataModifier.symbol] = this
 
     constructor(
         public modifyParentData: (parentData: unknown) => unknown

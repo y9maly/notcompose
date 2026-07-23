@@ -62,12 +62,12 @@ export class StringOutputProcessor implements OutputProcessor {
         this.raw = new RawOutputProcessor(this.viewportSize, (textRows, width) => {
             const rows: string[] = []
 
-            let output = []
+            const output: string[] = []
 
             for (let y = 0; y < textRows.length; y++) {
-                const rawRow = new Array(width)
+                const rawRow = new Array<string>(width)
                 this.spanProcessor.transform(textRows[y], rawRow)
-                let rowString = rawRow.join('')
+                const rowString = rawRow.join('')
                 rows.push(rowString)
             }
 
@@ -89,9 +89,9 @@ export class ConsoleOutputProcessor implements OutputProcessor {
     constructor(
         private stream: NodeJS.WriteStream,
         private options?: {
-            onResize?: (width: number, height: number) => void,
-            before?: () => void,
-            after?: () => void,
+            onResize?: (width: number, height: number) => void
+            before?: () => void
+            after?: () => void
         }
     ) {
         this.viewportSize = new BehaviorSubject([process.stdout.columns, process.stdout.rows])

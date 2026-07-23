@@ -25,6 +25,7 @@ class TerminalModifier {
     padding(...args: any[]): this {
         // todo
         // @ts-ignore
+        // eslint-disable-next-line explicit-any/no-unsafe-argument
         return Modifier.then(...this.elements, padding(...args))
     }
 
@@ -33,6 +34,7 @@ class TerminalModifier {
     size(...args: any[]): this {
         // todo
         // @ts-ignore
+        // eslint-disable-next-line explicit-any/no-unsafe-argument
         return Modifier.then(...this.elements, size(...args))
     }
 

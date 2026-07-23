@@ -27,10 +27,10 @@ export function height(height: number): ModifierElement {
 
 
 export function sizeIn(values: {
-    minWidth?: number,
-    maxWidth?: number | null,
-    minHeight?: number,
-    maxHeight?: number | null,
+    minWidth?: number
+    maxWidth?: number | null
+    minHeight?: number
+    maxHeight?: number | null
 }): ModifierElement {
     return new SizeModifierImpl(values.minWidth, values.maxWidth, values.minHeight, values.maxHeight, true)
 }
@@ -80,10 +80,10 @@ export function requiredHeight(height: number): ModifierElement {
 
 
 export function requiredSizeIn(values: {
-    minWidth?: number,
-    maxWidth?: number | null,
-    minHeight?: number,
-    maxHeight?: number | null,
+    minWidth?: number
+    maxWidth?: number | null
+    minHeight?: number
+    maxHeight?: number | null
 }): ModifierElement {
     return new SizeModifierImpl(values.minWidth, values.maxWidth, values.minHeight, values.maxHeight, false)
 }

@@ -37,7 +37,7 @@ export const ColumnMeasurePolicy = (
 })
 
 export function Column(content: () => void, modifier: Modifier = Modifier, params?: {
-    horizontalAlignment?: HorizontalAlignment,
+    horizontalAlignment?: HorizontalAlignment
 }) {
     const { horizontalAlignment } = elvis(params, {
         horizontalAlignment: Alignment.Start

@@ -10,19 +10,19 @@ import {
     width
 } from "notcompose/layout";
 import {repeat} from "../../../common/repeat.js";
-import {background, Color, colored, Modifier, Text} from "notcompose/terminal";
+import {background, Color, colored, Modifier, Text} from 'notcompose/terminal'
 
 export function SolidPlot(
     historyData: HistoryData,
     modifier: Modifier = Modifier,
     params?: {
-        color?: Color | null,
-        minValue?: number,
-        maxValue?: number,
-        alignment?: VerticalAlignment,
-    }
+        color?: Color | null
+        minValue?: number
+        maxValue?: number
+        alignment?: VerticalAlignment
+    },
 ) {
-    const { color } = elvis(params, {
+    const {color} = elvis(params, {
         color: null,
     })
 
@@ -51,7 +51,7 @@ export function SolidPlot(
                 Text(colored(color, '▂'))
             } else {
                 Spacer(Modifier
-                    .background('█', { color: color })
+                    .background('█', {color: color})
                     .width(1)
                     .height(columnHeight)
                 )

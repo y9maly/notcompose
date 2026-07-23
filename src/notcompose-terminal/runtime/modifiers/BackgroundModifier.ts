@@ -18,7 +18,7 @@ export function background(
 }
 
 class BackgroundModifierImpl implements DrawModifier {
-    [DrawModifier.symbol] = this;
+    [DrawModifier.symbol] = this
 
     constructor(private symbol: string, private color: Color | null) {}
 

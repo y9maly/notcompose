@@ -15,7 +15,7 @@ export function BoxWithConstraints(
     content: (constraints: Constraints) => void,
     modifier: Modifier = Modifier,
     params?: {
-        alignment?: Alignment,
+        alignment?: Alignment
     }
 ) {
     LayoutWithConstraints(content, BoxMeasurePolicy(params?.alignment), modifier.then(NameModifier('BoxWithConstraints')))
@@ -25,7 +25,7 @@ export function ColumnWithConstraints(
     content: (constraints: Constraints) => void,
     modifier: Modifier = Modifier,
     params?: {
-        horizontalAlignment?: HorizontalAlignment,
+        horizontalAlignment?: HorizontalAlignment
     }
 ) {
     LayoutWithConstraints(content, ColumnMeasurePolicy(params?.horizontalAlignment), modifier.then(NameModifier('ColumnWithConstraints')))
@@ -35,7 +35,7 @@ export function RowWithConstraints(
     content: (constraints: Constraints) => void,
     modifier: Modifier = Modifier,
     params?: {
-        verticalAlignment?: VerticalAlignment,
+        verticalAlignment?: VerticalAlignment
     }
 ) {
     LayoutWithConstraints(content, RowMeasurePolicy(params?.verticalAlignment), modifier.then(NameModifier('RowWithConstraints')))

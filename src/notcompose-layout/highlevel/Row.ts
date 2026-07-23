@@ -38,7 +38,7 @@ export const RowMeasurePolicy = (
 
 
 export function Row(content: () => void, modifier: Modifier = Modifier, params?: {
-    verticalAlignment?: VerticalAlignment,
+    verticalAlignment?: VerticalAlignment
 }) {
     const { verticalAlignment } = elvis(params, {
         verticalAlignment: Alignment.Top

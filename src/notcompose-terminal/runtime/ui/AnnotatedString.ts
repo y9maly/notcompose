@@ -1,13 +1,4 @@
-import {
-    BackgroundColorTextSpan,
-    BoldTextSpan,
-    ColorTextSpan,
-    ItalicTextSpan,
-    StrikethroughTextSpan,
-    TextSpan,
-    TextSpanType,
-    UnderlineTextSpan
-} from "./TextSpan.js";
+import { BackgroundColorTextSpan, BoldTextSpan, ColorTextSpan, ItalicTextSpan, StrikethroughTextSpan, TextSpan, TextSpanType, UnderlineTextSpan } from "./TextSpan.js";
 import {Color} from "./Color.js";
 
 export class AnnotatedString {
@@ -82,7 +73,7 @@ function annotatedBuilder(
     values: ReadonlyArray<string | AnnotatedString>
 ): AnnotatedString {
     let length = 0
-    let result = []
+    const result = []
     const resultSpans: TextSpan[] = []
 
     for (let i = 0; i < strings.length; i++) {
@@ -93,7 +84,7 @@ function annotatedBuilder(
             continue
 
         const value = values[i]
-        if (typeof value === "string") {
+        if (typeof value === 'string') {
             length += value.length
             result.push(value)
             continue

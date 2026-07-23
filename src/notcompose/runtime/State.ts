@@ -2,12 +2,14 @@ import {GlobalSnapshot} from "./Snapshot.js";
 
 export interface State<out T> {
     readonly value: T
+    // todo (): T
 }
 
 export interface MutationPolicy<T> {
     (a: T, b: T): boolean
 }
 
+// eslint-disable-next-line eqeqeq
 function LooseEqualityPolicy<T>(a: T, b: T) { return a == b }
 function StrictEqualityPolicy<T>(a: T, b: T) { return Object.is(a, b) }
 function NeverEqualPolicy() { return false }

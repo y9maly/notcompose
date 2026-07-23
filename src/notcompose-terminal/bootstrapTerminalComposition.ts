@@ -107,10 +107,10 @@ export function bootstrapTerminalComposition(): {
                 recompose()
                 relayout()
                 redraw()
-            });
+            })
         }
 
-        (async () => {
+        void (async () => {
             if (params.fps === 'unlimited') {
                 while (!isStopped) {
                     await recomposer.awaitNeedRecompose()

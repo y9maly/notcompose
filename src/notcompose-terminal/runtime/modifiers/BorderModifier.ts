@@ -33,7 +33,7 @@ export function border(params?: {
 
 
 class BorderModifierImpl implements DrawModifier {
-    [DrawModifier.symbol] = this;
+    [DrawModifier.symbol] = this
 
     constructor(
         private color: Color | null,

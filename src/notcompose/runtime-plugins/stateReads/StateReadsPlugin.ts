@@ -14,6 +14,7 @@ export class StateReadsPlugin implements ComposerPlugin {
         () => this.composer.currentNode,
         (state, node) => this.observer?.onStateRead(node, state),
     )
+
     private composer!: Composer
 
     attach(context: ComposerPluginContext) {

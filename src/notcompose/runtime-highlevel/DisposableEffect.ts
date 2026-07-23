@@ -25,7 +25,7 @@ export function DisposableEffect(
         block = a as (() => (() => void) | void)
     } else {
         keys = a as unknown[]
-        block = b as (() => (() => void) | void)
+        block = b satisfies (() => (() => void) | void)
     }
 
     remember(keys, () => new DisposableEffectImpl(block))

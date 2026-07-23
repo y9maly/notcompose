@@ -10,10 +10,10 @@ export function drawText(text: string | AnnotatedString): ModifierElement {
 }
 
 class TextModifierImpl implements DrawModifier {
-    [DrawModifier.symbol] = this;
+    [DrawModifier.symbol] = this
 
-    private requiredWidth = 0
-    private requiredHeight = 1
+    private readonly requiredWidth: number = 0
+    private readonly requiredHeight: number = 1
     constructor(private text: string | AnnotatedString) {
         if (text !== '') {
             let lineWidth = 0
@@ -63,9 +63,9 @@ class TextModifierImpl implements DrawModifier {
         maxWidth: number,
         maxHeight: number
     ): AnnotatedString {
-        let newString = []
+        const newString = []
 
-        const oldToNewMap = new Array(rawString.length).fill(-1)
+        const oldToNewMap = new Array<number>(rawString.length).fill(-1)
 
         let cx = 0
         let cy = 0

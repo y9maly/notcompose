@@ -23,7 +23,7 @@ export function remember<T>(
         calculation = a as () => T
     } else {
         keys = a as unknown[]
-        calculation = b as () => T
+        calculation = b satisfies () => T
     }
 
     const previousKeys = currentComposer().hasRememberedValue()
@@ -39,9 +39,9 @@ export function remember<T>(
     }
 
     if (
-        keys.length !== previousKeys.length ||
+        keys.length !== previousKeys.length
         // todo i dont like this `Object.is`
-        keys.some((a, index) => !Object.is(a, previousKeys[index]))
+        || keys.some((a, index) => !Object.is(a, previousKeys[index]))
     ) {
         currentComposer().rememberValue(keys)
         const newValue = calculation()

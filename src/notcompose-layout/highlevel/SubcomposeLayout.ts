@@ -38,7 +38,7 @@ export function subcompose(key: Key | (() => void), content: (() => void) | type
         _scope = scope
         return measurables
     } else {
-        const measurables = scope.subcompose(key as Key, content as (() => void))
+        const measurables = scope.subcompose(key as Key, content satisfies (() => void))
         _scope = scope
         return measurables
     }

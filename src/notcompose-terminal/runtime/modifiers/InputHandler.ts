@@ -8,7 +8,7 @@ export interface InputHandlerModifier extends ModifierElement {
 const symbol = Symbol()
 InputHandler.symbol = symbol
 InputHandler.is = (o: unknown): o is { [symbol]: InputHandlerModifier } =>
-    !(!o || typeof o !== 'object' || !(InputHandler.symbol in o));
+    !(!o || typeof o !== 'object' || !(InputHandler.symbol in o))
 InputHandler.of = (o: unknown): InputHandlerModifier | null =>
     InputHandler.is(o) ? o[symbol] : null
 
@@ -20,7 +20,7 @@ export function InputHandler(
 }
 
 class InputHandlerModifierImpl implements InputHandlerModifier {
-    [InputHandler.symbol] = this;
+    [InputHandler.symbol] = this
 
     // todo
     pass = 'Main' as const
