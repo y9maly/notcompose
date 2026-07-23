@@ -1,13 +1,10 @@
-import {createModifierType, Modifier as BaseModifier, ModifierElement} from "notcompose";
-import {AttributeValue} from "./runtime/attributes/attributes.js";
-import {AttributeModifier} from "./runtime/modifiers/AttributeModifier.js";
-import {StyleModifier, StyleValue} from "./runtime/modifiers/StyleModifier.js";
-import {
-    DomEvent,
-    ListenerModifier
-} from "./runtime/modifiers/ListenerModifier.js";
-import {PropertyModifier} from "./runtime/modifiers/PropertyModifier.js";
-import {DomRef, RefModifier} from "./runtime/modifiers/RefModifier.js";
+import { createModifierCollection, Modifier as BaseModifier, ModifierElement } from 'notcompose'
+import { AttributeValue } from './runtime/attributes/attributes.js'
+import { AttributeModifier } from './runtime/modifiers/AttributeModifier.js'
+import { StyleModifier, StyleValue } from './runtime/modifiers/StyleModifier.js'
+import { DomEvent, ListenerModifier } from './runtime/modifiers/ListenerModifier.js'
+import { PropertyModifier } from './runtime/modifiers/PropertyModifier.js'
+import { DomRef, RefModifier } from './runtime/modifiers/RefModifier.js'
 
 class HtmlModifier {
     constructor(
@@ -130,4 +127,4 @@ class HtmlModifier {
 }
 
 export type Modifier = BaseModifier
-export const Modifier = createModifierType(HtmlModifier)
+export const Modifier = createModifierCollection(HtmlModifier)

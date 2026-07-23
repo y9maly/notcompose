@@ -33,30 +33,47 @@ class ModifierImpl implements Modifier {
     }
 }
 
-export function createModifierType<M extends { elements: ReadonlyArray<ModifierElement> }>(
-    constructor: new (elements: ReadonlyArray<ModifierElement>) => M,
-): Modifier & M & ((modifier: Modifier) => Modifier & M) {
-    return createModifier([], constructor)
+export type ModifierCollection<MC> = Modifier & MC
+
+export type ModifierCollectionDefinition<MC> = ModifierCollection<MC> & {
+    (modifier: Modifier): ModifierCollection<MC>
 }
 
-function createModifier<M extends { elements: ReadonlyArray<ModifierElement> }>(
-    baseElements: ReadonlyArray<ModifierElement>,
-    constructor: new (elements: ReadonlyArray<ModifierElement>) => M,
-): Modifier & M & ((modifier: Modifier) => Modifier & M) {
-    const base = new constructor(baseElements)
+export function createModifierCollection<MC extends { elements: ReadonlyArray<ModifierElement> }>(
+    constructor: new (elements: ReadonlyArray<ModifierElement>) => MC,
+): ModifierCollectionDefinition<MC> {
+    return _createModifierCollectionDefinition(constructor)
+}
 
-    const modifier = {
+function _createModifierCollectionDefinition<MC extends { elements: ReadonlyArray<ModifierElement> }>(
+    constructor: new (elements: ReadonlyArray<ModifierElement>) => MC,
+): ModifierCollectionDefinition<MC> {
+    const modifierCollection: ModifierCollection<MC> = _createModifierCollection([], constructor)
+
+    const modifierCollectionDefinition: ModifierCollectionDefinition<MC> = Object.assign(
+        (modifier: Modifier) => _createModifierCollection(modifier.elements, constructor),
+        modifierCollection
+    )
+
+    Object.setPrototypeOf(modifierCollectionDefinition, assertAny(Object.getPrototypeOf(modifierCollection)))
+
+    return modifierCollectionDefinition
+}
+
+function _createModifierCollection<MC extends { elements: ReadonlyArray<ModifierElement> }>(
+    baseElements: ReadonlyArray<ModifierElement>,
+    constructor: new (elements: ReadonlyArray<ModifierElement>) => MC,
+): ModifierCollection<MC> {
+    const base: MC = new constructor(baseElements)
+
+    const modifierCollection: ModifierCollection<MC> = {
         ...base,
-        then(...elements: ReadonlyArray<ModifierElement>): Modifier & M {
-            return createModifier([...baseElements, ...elements], constructor)
+        then(...elements: ReadonlyArray<ModifierElement>): ModifierCollection<MC> {
+            return _createModifierCollection([...baseElements, ...elements], constructor)
         }
     }
 
-    return Object.setPrototypeOf(
-        Object.assign(
-            (modifier: Modifier) => createModifier(modifier.elements, constructor),
-            modifier
-        ),
-        Object.getPrototypeOf(base)
-    )
+    Object.setPrototypeOf(modifierCollection, assertAny(Object.getPrototypeOf(base)))
+
+    return modifierCollection
 }
