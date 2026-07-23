@@ -6,6 +6,8 @@
   "type": "module",
   "scripts": {
     "build": "tsc",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:types": "tsc -p tsconfig.vitest.json --noEmit",
@@ -46,10 +48,15 @@
   "license": "ISC",
   "packageManager": "pnpm@10.20.0",
   "devDependencies": {
+    "@antfu/eslint-config": "^9.2.0",
     "@types/node": "^25.5.2",
+    "@typescript-eslint/eslint-plugin": "^8.65.0",
+    "@typescript-eslint/utils": "^8.65.0",
+    "eslint": "^10.7.0",
     "happy-dom": "^20.11.0",
     "tsx": "^4.22.4",
     "typescript": "^6.0.2",
+    "typescript-eslint": "^8.65.0",
     "vite": "^8.1.5",
     "vite-tsconfig-paths": "^6.1.1",
     "vitest": "^4.1.7"

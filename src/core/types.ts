@@ -10,12 +10,22 @@ export function Char(string: string): Char {
 
 // Asserts
 
+type IsAny<T> = 0 extends (1 & T) ? true : false
+type OnlyAny<T> = IsAny<T> extends true ? T : never
+export function assertAny<T>(value: OnlyAny<T>): any {
+    return value
+}
+
+export function assertType<T = never>(value: NoInfer<T>): T {
+    return value
+}
+
 
 export function assertInt(...values: number[]): void
 export function assertInt(values: Iterable<number>): void
 export function assertInt(...values: number[] | [Iterable<number>]): void {
-    let numbers = values.length === 1 && typeof values[0] === 'object'
-        ? values[0] as Iterable<number>
+    const numbers = values.length === 1 && typeof values[0] === 'object'
+        ? values[0]
         : values as number[]
 
     let index = 0
@@ -29,8 +39,8 @@ export function assertInt(...values: number[] | [Iterable<number>]): void {
 export function assertUInt(...values: number[]): void
 export function assertUInt(values: Iterable<number>): void
 export function assertUInt(...values: number[] | [Iterable<number>]): void {
-    let numbers = values.length === 1 && typeof values[0] === 'object'
-        ? values[0] as Iterable<number>
+    const numbers = values.length === 1 && typeof values[0] === 'object'
+        ? values[0]
         : values as number[]
 
     let index = 0

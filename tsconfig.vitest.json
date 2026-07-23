@@ -5,5 +5,5 @@
         "noEmit": true,
         "types": ["node", "vitest/globals"]
     },
-    "include": ["./src", "./test", "./vitest.config.ts"]
+    "include": ["./src", "./test", "./eslint", "./vitest.config.ts"]
 }
