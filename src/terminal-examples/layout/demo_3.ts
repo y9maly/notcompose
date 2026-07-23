@@ -1,6 +1,6 @@
-import {input, setTerminalContent, Text} from "notcompose/terminal";
-import {Key, rememberState} from "notcompose";
-import {MeasureResult, Row, subcompose, SubcomposeLayout} from "notcompose/layout";
+import { input, setTerminalContent, Text } from 'notcompose/terminal'
+import { Key, rememberState } from 'notcompose'
+import { MeasureResult, Row, subcompose, SubcomposeLayout } from 'notcompose/layout'
 
 // P.S. На самом деле "Ты ввёл мало текста" будет отображаться всегда, если ширина терминала меньше 30.
 // Так как мы смотрим не на фактический размер введеного текста, а на ширину [placeable1].

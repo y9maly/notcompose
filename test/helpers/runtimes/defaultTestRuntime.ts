@@ -1,13 +1,6 @@
-import {TestRuntime} from "../core/TestRuntime.js";
-import {
-    CleanCompositionPlugin,
-    Composer,
-    PluginVerifierPlugin,
-    Recomposer,
-    RememberObserverPlugin,
-    StateReadsPlugin
-} from "notcompose";
-import {Composition} from "notcompose/terminal";
+import { TestRuntime } from '../core/TestRuntime.js'
+import { CleanCompositionPlugin, Composer, PluginVerifierPlugin, Recomposer, RememberObserverPlugin, StateReadsPlugin } from 'notcompose'
+import { Composition } from 'notcompose/terminal'
 
 export function defaultTestRuntime(): TestRuntime {
     const recomposer = new Recomposer()

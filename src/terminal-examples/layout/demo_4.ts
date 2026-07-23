@@ -1,6 +1,6 @@
-import {background, setTerminalContent, Text} from "notcompose/terminal";
-import {fillMaxSize, Layout, MeasurePolicy, MeasureResult} from "notcompose/layout";
-import {Modifier} from "notcompose";
+import { background, setTerminalContent, Text } from 'notcompose/terminal'
+import { fillMaxSize, Layout, MeasurePolicy, MeasureResult } from 'notcompose/layout'
+import { Modifier } from 'notcompose'
 
 setTerminalContent(() => {
     Layout(() => {

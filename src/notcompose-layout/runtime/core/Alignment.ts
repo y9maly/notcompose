@@ -1,6 +1,6 @@
-import {LayoutDirection} from "./LayoutDirection.js";
-import {Size} from "./Size.js";
-import {Offset} from "./Offset.js";
+import { LayoutDirection } from './LayoutDirection.js'
+import { Size } from './Size.js'
+import { Offset } from './Offset.js'
 import { assertType } from 'notcompose'
 
 export interface Alignment {

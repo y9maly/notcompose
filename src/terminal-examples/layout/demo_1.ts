@@ -1,6 +1,6 @@
-import {background, setTerminalContent, Text} from "notcompose/terminal";
-import {Layout, MeasurePolicy, MeasureResult, Placeable} from "notcompose/layout";
-import {Modifier} from "notcompose";
+import { background, setTerminalContent, Text } from 'notcompose/terminal'
+import { Layout, MeasurePolicy, MeasureResult, Placeable } from 'notcompose/layout'
+import { Modifier } from 'notcompose'
 
 // Давайте создадим кастомный лэяут который располагает детей по диагонали:
 // Сверху вниз, слева направо

@@ -1,6 +1,6 @@
-import {LayoutModifier} from "./LayoutModifier.js";
-import { ModifierElement } from "notcompose";
-import {MeasureResult} from "../Measurable.js";
+import { LayoutModifier } from './LayoutModifier.js'
+import { ModifierElement } from 'notcompose'
+import { MeasureResult } from '../Measurable.js'
 
 export function padding(all: number): ModifierElement
 export function padding(horizontal: number, vertical: number): ModifierElement

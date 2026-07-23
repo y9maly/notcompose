@@ -1,7 +1,7 @@
-import {Key} from "./Composer.js";
-import {Modifier} from "./Modifier.js";
-import {NameElement} from "./modifiers/NameElement.js";
-import {NodeExtensionKey} from "./NodeExtensionKey.js";
+import { Key } from './Composer.js'
+import { Modifier } from './Modifier.js'
+import { NameElement } from './modifiers/NameElement.js'
+import { NodeExtensionKey } from './NodeExtensionKey.js'
 
 export class Node {
     constructor(
@@ -36,7 +36,7 @@ export class Node {
     walkDFS(block: (node: Node) => void) {
         const stack: { key: any, node: Node }[] = [{ key: null, node: this }]
         while (stack.length > 0) {
-            const {node} = stack.pop()!
+            const { node } = stack.pop()!
             block(node)
             stack.push(...node.children)
         }
@@ -45,7 +45,7 @@ export class Node {
     walkChildrenDFS(block: (node: Node) => void) {
         const stack = [...this.children]
         while (stack.length > 0) {
-            const {node} = stack.pop()!
+            const { node } = stack.pop()!
             block(node)
             stack.push(...node.children)
         }

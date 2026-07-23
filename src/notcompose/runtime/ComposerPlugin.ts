@@ -1,6 +1,6 @@
-import {Node} from "./Node.js";
-import {Key} from "./Composer.js";
-import {ComposerPluginContext} from "./ComposerPluginContext.js";
+import { Node } from './Node.js'
+import { Key } from './Composer.js'
+import { ComposerPluginContext } from './ComposerPluginContext.js'
 
 /**
  * Composer вызывает на плагинах калбеки, передавая ноды.

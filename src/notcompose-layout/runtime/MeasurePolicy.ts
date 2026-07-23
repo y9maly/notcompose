@@ -1,7 +1,7 @@
-import {Measurable, MeasureResult} from "./Measurable.js";
-import {Constraints} from "./Constraints.js";
-import {IntrinsicMeasurable} from "./IntrinsicMeasurable.js";
-import {Placeable} from "./Placeable.js";
+import { Measurable, MeasureResult } from './Measurable.js'
+import { Constraints } from './Constraints.js'
+import { IntrinsicMeasurable } from './IntrinsicMeasurable.js'
+import { Placeable } from './Placeable.js'
 
 export interface MeasurePolicy {
     measure(measurables: ReadonlyArray<Measurable>, constraints: Constraints): MeasureResult

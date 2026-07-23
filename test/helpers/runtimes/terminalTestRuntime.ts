@@ -1,8 +1,8 @@
-import {TestRuntime} from "../core/TestRuntime.js";
-import {bootstrapTerminalComposition, InputProcessor, RootInputDispatcher} from "notcompose/terminal";
-import {TestInputSource} from "../notcompose-terminal/TestInputSource.js";
-import {TestOutputProcessor} from "../notcompose-terminal/TestOutputProcessor.js";
-import {TestLayout} from "../notcompose-terminal/TestLayout.js";
+import { TestRuntime } from '../core/TestRuntime.js'
+import { bootstrapTerminalComposition, InputProcessor, RootInputDispatcher } from 'notcompose/terminal'
+import { TestInputSource } from '../notcompose-terminal/TestInputSource.js'
+import { TestOutputProcessor } from '../notcompose-terminal/TestOutputProcessor.js'
+import { TestLayout } from '../notcompose-terminal/TestLayout.js'
 
 export function terminalTestRuntime(): TestRuntime {
     const testInput = new TestInputSource()
@@ -26,6 +26,6 @@ export function terminalTestRuntime(): TestRuntime {
     runtime['recomposer'] = bootstrap.recomposer
     runtime['testInput'] = testInput
     runtime['testOutput'] = testOutput
-    runtime['testLayout'] = start as TestLayout
+    runtime['testLayout'] = start
     return runtime
 }

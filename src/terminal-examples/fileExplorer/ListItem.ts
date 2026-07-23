@@ -1,7 +1,7 @@
-import {Item} from "./utils.js";
-import {DisposableEffect, Modifier, rememberState} from "notcompose";
-import {Row} from "notcompose/layout";
-import {Text} from "notcompose/terminal";
+import { Item } from './utils.js'
+import { DisposableEffect, Modifier, rememberState } from 'notcompose'
+import { Row } from 'notcompose/layout'
+import { Text } from 'notcompose/terminal'
 
 export function ListItem(
     item: Item,
@@ -9,7 +9,7 @@ export function ListItem(
     modifier: Modifier = Modifier,
 ) {
     const cursor = rememberState<string>(() => '  ')
-    let icon = item.filename === '..' ? `🔙` : (item.isDirectory ? `📁` : `📄`)
+    const icon = item.filename === '..' ? `🔙` : (item.isDirectory ? `📁` : `📄`)
 
     DisposableEffect([isSelected], () => {
         if (!isSelected) {
@@ -33,13 +33,13 @@ export function ListItem(
     })
 
     Row(() => {
-        Text(` ${cursor.value} `);
-        Text(`${icon} `);
+        Text(` ${cursor.value} `)
+        Text(`${icon} `)
 
         if (isSelected) {
-            Text(`[ ${item.filename} ]`);
+            Text(`[ ${item.filename} ]`)
         } else {
-            Text(`  ${item.filename}`);
+            Text(`  ${item.filename}`)
         }
     }, modifier)
 }

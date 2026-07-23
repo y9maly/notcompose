@@ -1,6 +1,6 @@
-import {State} from "../runtime/State.js";
-import {GlobalSnapshot} from "../runtime/Snapshot.js";
-import {Disposable} from "vitest/optional-runtime-types.js";
+import { State } from '../runtime/State.js'
+import { GlobalSnapshot } from '../runtime/Snapshot.js'
+import { Disposable } from 'vitest/optional-runtime-types.js'
 
 export class StateDependenciesMap<
     CONSUMER extends NonNullable<unknown>,

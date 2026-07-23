@@ -1,6 +1,6 @@
-import {background, setTerminalContent, Text} from "notcompose/terminal";
-import {Box, Column, padding, size} from "notcompose/layout";
-import {Modifier} from "notcompose";
+import { background, setTerminalContent, Text } from 'notcompose/terminal'
+import { Box, Column, padding, size } from 'notcompose/layout'
+import { Modifier } from 'notcompose'
 
 setTerminalContent(() => {
     Column(() => {

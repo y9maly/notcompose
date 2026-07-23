@@ -1,9 +1,9 @@
-import {describe, expect, it} from "vitest";
-import {defaultTestRuntime} from "../helpers/runtimes/defaultTestRuntime.js";
-import {DisposableEffect, Key, LaunchedEffect, mutableStateOf} from "notcompose";
-import {flushRecompositions} from "../helpers/core/recompose.js";
+import { describe, expect, it } from 'vitest'
+import { defaultTestRuntime } from '../helpers/runtimes/defaultTestRuntime.js'
+import { DisposableEffect, Key, LaunchedEffect, mutableStateOf } from 'notcompose'
+import { flushRecompositions } from '../helpers/core/recompose.js'
 
-describe("effects tests", () => {
+describe('effects tests', () => {
     it('LaunchedEffect works correctly ', () => {
         const runtime = defaultTestRuntime().use()
         const launchKey = mutableStateOf(0)
@@ -27,7 +27,7 @@ describe("effects tests", () => {
         expect(launches).toEqual([0, 2])
     })
 
-    it("DisposableEffect works correctly", () => {
+    it('DisposableEffect works correctly', () => {
         const runtime = defaultTestRuntime().use()
         const effectKey = mutableStateOf(0)
         const enabled = mutableStateOf(true)
@@ -38,7 +38,7 @@ describe("effects tests", () => {
             if (!enabled.value)
                 return
 
-            Key("effect-branch", () => {
+            Key('effect-branch', () => {
                 const currentKey = effectKey.value
 
                 DisposableEffect([currentKey], () => {
@@ -57,10 +57,10 @@ describe("effects tests", () => {
         flushRecompositions()
 
         expect(events).toEqual([
-            "start:0",
-            "dispose:0",
-            "start:1",
-            "dispose:1",
+            'start:0',
+            'dispose:0',
+            'start:1',
+            'dispose:1',
         ])
     })
 })

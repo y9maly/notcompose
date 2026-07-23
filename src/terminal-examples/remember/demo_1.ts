@@ -1,6 +1,6 @@
-import {input, setTerminalContent, Text} from "notcompose/terminal";
-import {Key, mutableStateOf, remember} from "notcompose";
-import {Column} from "notcompose/layout";
+import { input, setTerminalContent, Text } from 'notcompose/terminal'
+import { Key, mutableStateOf, remember } from 'notcompose'
+import { Column } from 'notcompose/layout'
 
 setTerminalContent(() => {
     const screen = remember(() => mutableStateOf(1))

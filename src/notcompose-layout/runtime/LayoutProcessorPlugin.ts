@@ -1,7 +1,7 @@
-import {MeasureResult} from "./Measurable.js";
-import {Constraints} from "./Constraints.js";
-import {debug} from "notcompose";
-import {LayoutNode} from "./layoutNode/LayoutNode.js";
+import { MeasureResult } from './Measurable.js'
+import { Constraints } from './Constraints.js'
+import { debug } from 'notcompose'
+import { LayoutNode } from './layoutNode/LayoutNode.js'
 
 export interface LayoutProcessorPlugin {
     beforeMeasure(layoutNode: LayoutNode, constraints: Constraints):

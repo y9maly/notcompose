@@ -1,6 +1,6 @@
-import {InputSource} from "./InputSource.js";
-import * as readline from "node:readline";
-import process from "node:process";
+import { InputSource } from './InputSource.js'
+import * as readline from 'node:readline'
+import process from 'node:process'
 
 export class StdinInputSource implements InputSource {
     start(listener: (string: string, key: any) => void): Disposable {

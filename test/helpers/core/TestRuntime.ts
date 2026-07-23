@@ -1,5 +1,5 @@
-import {Composer, error, Modifier, NameModifier, Node} from "notcompose";
-import {Composition} from "notcompose/terminal";
+import { Composer, error, Modifier, NameModifier, Node } from 'notcompose'
+import { Composition } from 'notcompose/terminal'
 
 export class TestRuntime implements Record<string, unknown> {
     constructor(

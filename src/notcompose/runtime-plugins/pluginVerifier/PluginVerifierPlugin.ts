@@ -1,7 +1,7 @@
-import {ComposerPlugin} from "../../runtime/ComposerPlugin.js";
-import {ComposerPluginContext} from "../../runtime/ComposerPluginContext.js";
-import {Node} from "../../runtime/Node.js";
-import {Composer} from "../../runtime/Composer.js";
+import { ComposerPlugin } from '../../runtime/ComposerPlugin.js'
+import { ComposerPluginContext } from '../../runtime/ComposerPluginContext.js'
+import { Node } from '../../runtime/Node.js'
+import { Composer } from '../../runtime/Composer.js'
 
 export class PluginVerifierPlugin implements ComposerPlugin {
     private context!: ComposerPluginContext

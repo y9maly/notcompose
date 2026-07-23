@@ -1,7 +1,7 @@
-import {BehaviorSubject} from "rxjs";
-import {subjectMolecule} from "./rxjs/subjectMolecule.js";
-import {DisposableEffect, MutableState, rememberState, State, subjectAsState} from "notcompose";
-import * as console from "node:console";
+import { BehaviorSubject } from 'rxjs'
+import { subjectMolecule } from './rxjs/subjectMolecule.js'
+import { DisposableEffect, MutableState, rememberState, State, subjectAsState } from 'notcompose'
+import * as console from 'node:console'
 
 // --- Domain ---
 

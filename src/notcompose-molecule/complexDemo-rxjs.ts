@@ -1,34 +1,5 @@
-import {BehaviorSubject, combineLatest, distinctUntilChanged, map, Observable, of, shareReplay, switchMap} from 'rxjs'
-import {
-    ActivityFeedVm,
-    AssigneeBadgeVm,
-    buildTaskActions,
-    CommentPreviewVm,
-    commentsByTaskSubject,
-    currentUserSubject,
-    DashboardContentVm,
-    DashboardVm,
-    formatPriority,
-    formatTaskStatus,
-    HeaderVm,
-    Presence,
-    presencesSubject,
-    priorityWeight,
-    Project,
-    ProjectDashboardVm,
-    ProjectPickerVm,
-    projectsSubject,
-    searchQuerySubject,
-    selectedProjectIdSubject,
-    shallowEqual,
-    sortModeSubject,
-    Task,
-    TaskListVm,
-    TaskRowVm,
-    tasksByProjectSubject,
-    User,
-    usersSubject,
-} from './complexDemo.js'
+import { BehaviorSubject, combineLatest, distinctUntilChanged, map, Observable, of, shareReplay, switchMap } from 'rxjs'
+import { ActivityFeedVm, AssigneeBadgeVm, buildTaskActions, CommentPreviewVm, commentsByTaskSubject, currentUserSubject, DashboardContentVm, DashboardVm, formatPriority, formatTaskStatus, HeaderVm, Presence, presencesSubject, priorityWeight, Project, ProjectDashboardVm, ProjectPickerVm, projectsSubject, searchQuerySubject, selectedProjectIdSubject, shallowEqual, sortModeSubject, Task, TaskListVm, TaskRowVm, tasksByProjectSubject, User, usersSubject, } from './complexDemo.js'
 
 const currentUser$ = currentUserSubject.asObservable()
 const users$ = usersSubject.asObservable()
@@ -67,12 +38,12 @@ const header$: Observable<HeaderVm> = combineLatest([
                 ? `Signed in as ${currentUser.username}`
                 : 'Anonymous',
             canCreateProject:
-                currentUser?.role === 'admin' ||
-                currentUser?.role === 'manager',
+                currentUser?.role === 'admin'
+                || currentUser?.role === 'manager',
         }
     }),
     distinctUntilChanged(shallowEqual),
-    shareReplay({bufferSize: 1, refCount: true}),
+    shareReplay({ bufferSize: 1, refCount: true }),
 )
 
 const projectPicker$: Observable<ProjectPickerVm> = combineLatest([
@@ -95,7 +66,7 @@ const projectPicker$: Observable<ProjectPickerVm> = combineLatest([
         }
     }),
     distinctUntilChanged(shallowEqual),
-    shareReplay({bufferSize: 1, refCount: true}),
+    shareReplay({ bufferSize: 1, refCount: true }),
 )
 
 const selectedProject$: Observable<Project | null> = combineLatest([
@@ -106,7 +77,7 @@ const selectedProject$: Observable<Project | null> = combineLatest([
         return projects.find(project => project.id === selectedProjectId) ?? null
     }),
     distinctUntilChanged((a, b) => a?.id === b?.id),
-    shareReplay({bufferSize: 1, refCount: true}),
+    shareReplay({ bufferSize: 1, refCount: true }),
 )
 
 const dashboardContent$: Observable<DashboardContentVm> = selectedProject$.pipe(
@@ -120,14 +91,14 @@ const dashboardContent$: Observable<DashboardContentVm> = selectedProject$.pipe(
 
         return projectDashboardVm$(project)
     }),
-    shareReplay({bufferSize: 1, refCount: true}),
+    shareReplay({ bufferSize: 1, refCount: true }),
 )
 
 function projectDashboardVm$(project: Project): Observable<ProjectDashboardVm> {
     const canEditProject$ = currentUser$.pipe(
         map(user => user?.role === 'admin' || user?.role === 'manager'),
         distinctUntilChanged(),
-        shareReplay({bufferSize: 1, refCount: true}),
+        shareReplay({ bufferSize: 1, refCount: true }),
     )
 
     return combineLatest([
@@ -146,7 +117,7 @@ function projectDashboardVm$(project: Project): Observable<ProjectDashboardVm> {
             }
         }),
         distinctUntilChanged(shallowEqual),
-        shareReplay({bufferSize: 1, refCount: true}),
+        shareReplay({ bufferSize: 1, refCount: true }),
     )
 }
 
@@ -204,7 +175,7 @@ function taskListVm$(
             )
         }),
         distinctUntilChanged(shallowEqual),
-        shareReplay({bufferSize: 1, refCount: true}),
+        shareReplay({ bufferSize: 1, refCount: true }),
     )
 }
 
@@ -253,7 +224,7 @@ function taskRowVm$(
             }
         }),
         distinctUntilChanged(shallowEqual),
-        shareReplay({bufferSize: 1, refCount: true}),
+        shareReplay({ bufferSize: 1, refCount: true }),
     )
 }
 
@@ -305,7 +276,7 @@ function activityFeedVm$(projectId: string): Observable<ActivityFeedVm> {
             }
         }),
         distinctUntilChanged(shallowEqual),
-        shareReplay({bufferSize: 1, refCount: true}),
+        shareReplay({ bufferSize: 1, refCount: true }),
     )
 }
 
@@ -322,7 +293,7 @@ export const dashboardVm$: Observable<DashboardVm> = combineLatest([
         }
     }),
     distinctUntilChanged(shallowEqual),
-    shareReplay({bufferSize: 1, refCount: true}),
+    shareReplay({ bufferSize: 1, refCount: true }),
 )
 
 // Example usage:

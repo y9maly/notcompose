@@ -1,5 +1,5 @@
-import { BackgroundColorTextSpan, BoldTextSpan, ColorTextSpan, ItalicTextSpan, StrikethroughTextSpan, TextSpan, TextSpanType, UnderlineTextSpan } from "./TextSpan.js";
-import {Color} from "./Color.js";
+import { BackgroundColorTextSpan, BoldTextSpan, ColorTextSpan, ItalicTextSpan, StrikethroughTextSpan, TextSpan, TextSpanType, UnderlineTextSpan } from './TextSpan.js'
+import { Color } from './Color.js'
 
 export class AnnotatedString {
     public readonly length: number

@@ -1,5 +1,5 @@
-import {Size} from "./core/Size.js";
-import {assertUInt} from "../../core/types.js";
+import { Size } from './core/Size.js'
+import { assertUInt } from '../../core/types.js'
 
 export class Constraints {
     minWidth: number         // 0..
@@ -166,9 +166,9 @@ export class Constraints {
     }
 
     copy(params: {
-        minWidth?: number,
-        maxWidth?: number | null,
-        minHeight?: number,
+        minWidth?: number
+        maxWidth?: number | null
+        minHeight?: number
         maxHeight?: number | null
     }) {
         return new Constraints(

@@ -1,6 +1,6 @@
-import {ModifierElement, Node} from "notcompose";
-import {MeasurePolicy} from "../MeasurePolicy.js";
-import {BaseLayoutNodeCoordinator} from "./LayoutNodeCoordinator.js";
+import { ModifierElement, Node } from 'notcompose'
+import { MeasurePolicy } from '../MeasurePolicy.js'
+import { BaseLayoutNodeCoordinator } from './LayoutNodeCoordinator.js'
 
 export class InnerLayoutNodeCoordinator extends BaseLayoutNodeCoordinator {
     constructor(

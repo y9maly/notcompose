@@ -1,5 +1,5 @@
-import {currentTestRuntime} from "./TestRuntime.js";
-import {TestLayout} from "../notcompose-terminal/TestLayout.js";
+import { currentTestRuntime } from './TestRuntime.js'
+import { TestLayout } from '../notcompose-terminal/TestLayout.js'
 
 export function currentTestLayout(): TestLayout {
     return currentTestRuntime()['testLayout'] as TestLayout

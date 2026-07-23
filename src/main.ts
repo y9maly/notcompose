@@ -1,6 +1,6 @@
-import {Modifier} from "notcompose";
-import {Column, offset} from "notcompose/layout";
-import {Color, colored, setTerminalContent, Text} from "notcompose/terminal";
+import { Modifier } from 'notcompose'
+import { Column, offset } from 'notcompose/layout'
+import { Color, colored, setTerminalContent, Text } from 'notcompose/terminal'
 
 setTerminalContent(() => {
     Column(() => {

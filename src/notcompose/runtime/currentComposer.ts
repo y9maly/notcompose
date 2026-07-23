@@ -1,4 +1,4 @@
-import {Composer} from "./Composer.js";
+import { Composer } from './Composer.js'
 
 let value: Composer | null = null
 

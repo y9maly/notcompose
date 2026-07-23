@@ -1,6 +1,6 @@
-import {input, setTerminalContent, Text} from "notcompose/terminal";
-import {Key, LaunchedEffect, mutableStateOf, remember} from "notcompose";
-import {Column} from "notcompose/layout";
+import { input, setTerminalContent, Text } from 'notcompose/terminal'
+import { Key, LaunchedEffect, mutableStateOf, remember } from 'notcompose'
+import { Column } from 'notcompose/layout'
 
 const screen1LaunchedEffectCounter = mutableStateOf(0)
 

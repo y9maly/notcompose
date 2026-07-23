@@ -1,10 +1,10 @@
-import {describe, expect, it} from "vitest";
-import {Key, mutableStateOf, remember, rememberState, strictEqualityPolicy} from "notcompose";
-import {defaultTestRuntime} from "../helpers/runtimes/defaultTestRuntime.js";
-import {flushRecompositions} from "../helpers/core/recompose.js";
+import { describe, expect, it } from 'vitest'
+import { Key, mutableStateOf, remember, rememberState, strictEqualityPolicy } from 'notcompose'
+import { defaultTestRuntime } from '../helpers/runtimes/defaultTestRuntime.js'
+import { flushRecompositions } from '../helpers/core/recompose.js'
 
-describe("recomposition tests", () => {
-    it("no extra recompositions", () => {
+describe('recomposition tests', () => {
+    it('no extra recompositions', () => {
         const runtime = defaultTestRuntime().use()
         const keyState = mutableStateOf(0)
 
@@ -30,7 +30,7 @@ describe("recomposition tests", () => {
         expect(calculations).toBe(3)
     })
 
-    it("no extra recompositions when setting equal value to the state", () => {
+    it('no extra recompositions when setting equal value to the state', () => {
         const runtime = defaultTestRuntime().use()
         const trigger = mutableStateOf<number>(0, strictEqualityPolicy())
 
@@ -61,7 +61,7 @@ describe("recomposition tests", () => {
     // Если мы пишет стейт, и только после этого читаем - рекомпозировать НЕ нужно. Прочитано уже актуальное значение.
     // ---------------------------------------------------------------------------------------------------------------
 
-    it("no extra recompositions when write before read (manual)", () => {
+    it('no extra recompositions when write before read (manual)', () => {
         const runtime = defaultTestRuntime().use()
         const keyState = mutableStateOf(0)
 
@@ -85,7 +85,7 @@ describe("recomposition tests", () => {
         expect(calculationValues).toEqual([1, 2, 3])
     })
 
-    it("no extra recompositions when write before read (using rememberState)", () => {
+    it('no extra recompositions when write before read (using rememberState)', () => {
         const runtime = defaultTestRuntime().use()
         const keyState = mutableStateOf(0)
 
@@ -112,7 +112,7 @@ describe("recomposition tests", () => {
     // Если мы читаем стейт, а после этого он изменяется - состояние изменилось, нужно рекомпозировать.
     // ------------------------------------------------------------------------------------------------
 
-    it("has recomposition when write after read", () => {
+    it('has recomposition when write after read', () => {
         const runtime = defaultTestRuntime().use()
         const keyState = mutableStateOf(0)
 
@@ -139,7 +139,7 @@ describe("recomposition tests", () => {
 
     // ---
 
-    it("recomposes only the dirty subtree", () => {
+    it('recomposes only the dirty subtree', () => {
         const runtime = defaultTestRuntime().use()
         const counter = mutableStateOf(0)
 
@@ -151,11 +151,11 @@ describe("recomposition tests", () => {
         runtime.render(() => {
             rootFrames++
 
-            Key("static", () => {
+            Key('static', () => {
                 staticFrames++
             })
 
-            Key("dynamic", () => {
+            Key('dynamic', () => {
                 dynamicFrames++
                 seenValues.push(counter.value)
             })
@@ -170,7 +170,7 @@ describe("recomposition tests", () => {
         expect(seenValues).toEqual([0, 1])
     })
 
-    it("recomposes consumers of the state that was actually written", () => {
+    it('recomposes consumers of the state that was actually written', () => {
         const runtime = defaultTestRuntime().use()
         const first = mutableStateOf(0)
         const second = mutableStateOf(0)
@@ -179,12 +179,12 @@ describe("recomposition tests", () => {
         let secondFrames = 0
 
         runtime.render(() => {
-            Key("first", () => {
+            Key('first', () => {
                 firstFrames++
                 first.value
             })
 
-            Key("second", () => {
+            Key('second', () => {
                 secondFrames++
                 second.value
             })

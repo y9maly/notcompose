@@ -1,4 +1,4 @@
-import {currentComposer} from "../runtime/currentComposer.js";
+import { currentComposer } from '../runtime/currentComposer.js'
 
 const Empty = Symbol()
 

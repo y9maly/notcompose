@@ -1,7 +1,7 @@
-import {createModifierType, Modifier as BaseModifier, ModifierElement} from "notcompose";
-import {padding, size, width, height, fillMaxWidth, fillMaxHeight, fillMaxSize} from "notcompose/layout";
-import {Color} from "./runtime/ui/Color.js";
-import {background} from "./runtime/modifiers/BackgroundModifier.js";
+import { createModifierType, Modifier as BaseModifier, ModifierElement } from 'notcompose'
+import { padding, size, width, height, fillMaxWidth, fillMaxHeight, fillMaxSize } from 'notcompose/layout'
+import { Color } from './runtime/ui/Color.js'
+import { background } from './runtime/modifiers/BackgroundModifier.js'
 
 class TerminalModifier {
     constructor(
@@ -66,7 +66,7 @@ class TerminalModifier {
     background(
         symbol: string,
         params?: {
-            color?: Color | null,
+            color?: Color | null
         }
     ): this {
         // @ts-ignore

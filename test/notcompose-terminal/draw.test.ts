@@ -1,21 +1,13 @@
-import {describe, it} from "vitest";
-import {terminalTestRuntime} from "../helpers/runtimes/terminalTestRuntime.js";
-import {background, border, DrawModifier, Text} from "notcompose/terminal";
-import {assertVisuallyIdentical, setViewport} from "../helpers/core/output.js";
-import {Modifier} from "notcompose";
-import {
-    Box,
-    MeasureResult,
-    offset,
-    offsetX,
-    padding,
-    subcompose,
-    SubcomposeLayout
-} from "notcompose/layout";
-import {draw, redraw, relayout} from "../helpers/core/layout.js";
+import { describe, it } from 'vitest'
+import { terminalTestRuntime } from '../helpers/runtimes/terminalTestRuntime.js'
+import { background, border, DrawModifier, Text } from 'notcompose/terminal'
+import { assertVisuallyIdentical, setViewport } from '../helpers/core/output.js'
+import { Modifier } from 'notcompose'
+import { Box, MeasureResult, offset, offsetX, padding, subcompose, SubcomposeLayout } from 'notcompose/layout'
+import { draw, redraw, relayout } from '../helpers/core/layout.js'
 
 
-describe("Draw", () => {
+describe('Draw', () => {
     function setup(width: number = 32, height: number = 8) {
         terminalTestRuntime().use()
         setViewport(width, height)
@@ -38,7 +30,7 @@ describe("Draw", () => {
 
         draw(() => {
             Box(() => {
-                Text("Test")
+                Text('Test')
             }, Modifier
                 .then(offset(2, 1))
                 .then(background('+'))
@@ -96,8 +88,8 @@ A  A
 
         draw(() => {
             Box(() => {
-                Text("Hello world, hii!")
-                Text("notcompose", Modifier.then(offsetX(6)))
+                Text('Hello world, hii!')
+                Text('notcompose', Modifier.then(offsetX(6)))
             }, Modifier.then(background('-')))
         })
 
@@ -115,11 +107,11 @@ Hello notcompose!
         draw(() => {
             SubcomposeLayout((constraints) => {
                 const a = subcompose(() => {
-                    Text("x")
+                    Text('x')
                 })[0].measure(constraints)
 
                 const b = subcompose(() => {
-                    Text("###")
+                    Text('###')
                 })[0].measure(constraints)
 
                 return MeasureResult(10, 1, () => {

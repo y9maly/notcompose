@@ -1,15 +1,6 @@
-import {
-    DisposableEffect,
-    Key,
-    Modifier,
-    MutableState,
-    NameElement,
-    NameModifier,
-    remember,
-    rememberState
-} from "notcompose";
-import {Box, Column} from "notcompose/layout";
-import {input, setTerminalContent, Text} from "notcompose/terminal";
+import { DisposableEffect, Key, Modifier, MutableState, NameElement, NameModifier, remember, rememberState } from 'notcompose'
+import { Box, Column } from 'notcompose/layout'
+import { input, setTerminalContent, Text } from 'notcompose/terminal'
 
 setTerminalContent(() => {
     DemoScreen()
@@ -102,9 +93,9 @@ export function DemoScreen() {
 
         Text(`----------------------------`)
         if (screen.value === 'Main')
-            Text("--- <Main> ---  Details  ---")
+            Text('--- <Main> ---  Details  ---')
         else if (screen.value === 'Details')
-            Text("---  Main  --- <Details> ---")
+            Text('---  Main  --- <Details> ---')
         Text(`----------------------------`)
 
         Key(screen.value, () => {

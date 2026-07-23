@@ -1,7 +1,7 @@
-import {DisposableEffect, Modifier, NameModifier, rememberState} from "notcompose";
-import {Alignment, Box, Column, padding} from "notcompose/layout";
-import {background, Text} from "notcompose/terminal";
-import {ExampleHeader} from "../common/ExampleHeader.js";
+import { DisposableEffect, Modifier, NameModifier, rememberState } from 'notcompose'
+import { Alignment, Box, Column, padding } from 'notcompose/layout'
+import { background, Text } from 'notcompose/terminal'
+import { ExampleHeader } from '../common/ExampleHeader.js'
 
 export function CounterScreen(modifier: Modifier = Modifier) {
     // THIS will be invoked only once

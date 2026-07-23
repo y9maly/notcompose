@@ -1,5 +1,5 @@
-import {Node} from "notcompose";
-import {InputHandler} from "../runtime/modifiers/InputHandler.js";
+import { Node } from 'notcompose'
+import { InputHandler } from '../runtime/modifiers/InputHandler.js'
 
 export interface InputDispatcher {
     dispatch(string: string, key: unknown): boolean

@@ -1,16 +1,5 @@
-import {
-    CleanCompositionPlugin,
-    Composer,
-    Modifier,
-    mutableStateOf,
-    NameModifier,
-    PluginVerifierPlugin,
-    Recomposer,
-    RememberObserverPlugin,
-    State,
-    StateReadsPlugin
-} from "notcompose";
-import {Composition} from "notcompose/terminal";
+import { CleanCompositionPlugin, Composer, Modifier, mutableStateOf, NameModifier, PluginVerifierPlugin, Recomposer, RememberObserverPlugin, State, StateReadsPlugin } from 'notcompose'
+import { Composition } from 'notcompose/terminal'
 
 const Empty = Symbol('Empty')
 export function runMolecule<T>(content: () => T): State<T> {

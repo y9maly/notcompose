@@ -1,9 +1,9 @@
-import {AnnotatedString} from "../AnnotatedString.js";
-import {TextCanvas} from "./TextCanvas.js";
-import {TextSpanType} from "../TextSpan.js";
-import {Char, Float} from "../../../../core/types.js";
-import {TransformationMatrix} from "./TransformationMatrix.js";
-import {Rect, Size} from "notcompose/layout";
+import { AnnotatedString } from '../AnnotatedString.js'
+import { TextCanvas } from './TextCanvas.js'
+import { TextSpanType } from '../TextSpan.js'
+import { Char, Float } from '../../../../core/types.js'
+import { TransformationMatrix } from './TransformationMatrix.js'
+import { Rect, Size } from 'notcompose/layout'
 
 export class TextBufferCanvas implements TextCanvas {
     constructor(
@@ -47,7 +47,7 @@ export class TextBufferCanvas implements TextCanvas {
     restore() {
         this.localX = this.localY = 0
         if (this.saveStack.length === 0)
-            throw new Error("Nothing to restore")
+            throw new Error('Nothing to restore')
         this.matrix = this.saveStack.pop()!
     }
 

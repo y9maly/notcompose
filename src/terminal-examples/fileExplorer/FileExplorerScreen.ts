@@ -1,9 +1,9 @@
-import path from "path";
-import {Modifier, remember, rememberState, rememberUpdatedState} from "notcompose";
-import {input} from "notcompose/terminal";
-import {getDirectoryContents} from "./utils.js";
-import {Content} from "./Content.js";
-import process from "node:process";
+import path from 'node:path'
+import { Modifier, remember, rememberState, rememberUpdatedState } from 'notcompose'
+import { input } from 'notcompose/terminal'
+import { getDirectoryContents } from './utils.js'
+import { Content } from './Content.js'
+import process from 'node:process'
 
 export function FileExplorerScreen(
     modifier: Modifier = Modifier,

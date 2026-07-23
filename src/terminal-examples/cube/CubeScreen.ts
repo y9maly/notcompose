@@ -1,9 +1,11 @@
-import {Color, colored, DrawModifier, TextCanvas} from "notcompose/terminal";
-import {Modifier, mutableStateOf} from "notcompose";
-import {Box} from "notcompose/layout";
+import { Color, colored, DrawModifier, TextCanvas } from 'notcompose/terminal'
+import { Modifier, mutableStateOf } from 'notcompose'
+import { Box } from 'notcompose/layout'
 
 interface Vec3 {
-    x: number, y: number, z: number
+    x: number
+    y: number
+    z: number
 }
 
 function rotateX(v: Vec3, a: number) {
@@ -39,14 +41,14 @@ function project(v: Vec3, scale: number) {
 }
 
 const vertices = [
-    {x: -1, y: -1, z: -1},
-    {x: 1, y: -1, z: -1},
-    {x: 1, y: 1, z: -1},
-    {x: -1, y: 1, z: -1},
-    {x: -1, y: -1, z: 1},
-    {x: 1, y: -1, z: 1},
-    {x: 1, y: 1, z: 1},
-    {x: -1, y: 1, z: 1},
+    { x: -1, y: -1, z: -1 },
+    { x: 1, y: -1, z: -1 },
+    { x: 1, y: 1, z: -1 },
+    { x: -1, y: 1, z: -1 },
+    { x: -1, y: -1, z: 1 },
+    { x: 1, y: -1, z: 1 },
+    { x: 1, y: 1, z: 1 },
+    { x: -1, y: 1, z: 1 },
 ]
 
 const edges: ([number, number] | [number, number, Color])[] = [

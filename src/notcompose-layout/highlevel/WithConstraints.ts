@@ -1,15 +1,12 @@
-import {MeasurePolicyExtensionKey} from "../runtime/nodeExtensions/MeasurePolicyNodeExtension.js";
-import {BoxMeasurePolicy} from "./Box.js";
-import {
-    SubconstraintsNodeExtension,
-    SubconstraintsNodeExtensionKey
-} from "../runtime/nodeExtensions/SubconstraintsNodeExtension.js";
-import {ColumnMeasurePolicy} from "./Column.js";
-import {RowMeasurePolicy} from "./Row.js";
-import {currentComposer, Modifier, NameModifier} from "notcompose";
-import {Alignment, HorizontalAlignment, VerticalAlignment} from "../runtime/core/Alignment.js";
-import {Constraints} from "../runtime/Constraints.js";
-import {MeasurePolicy} from "../runtime/MeasurePolicy.js";
+import { MeasurePolicyExtensionKey } from '../runtime/nodeExtensions/MeasurePolicyNodeExtension.js'
+import { BoxMeasurePolicy } from './Box.js'
+import { SubconstraintsNodeExtension, SubconstraintsNodeExtensionKey } from '../runtime/nodeExtensions/SubconstraintsNodeExtension.js'
+import { ColumnMeasurePolicy } from './Column.js'
+import { RowMeasurePolicy } from './Row.js'
+import { currentComposer, Modifier, NameModifier } from 'notcompose'
+import { Alignment, HorizontalAlignment, VerticalAlignment } from '../runtime/core/Alignment.js'
+import { Constraints } from '../runtime/Constraints.js'
+import { MeasurePolicy } from '../runtime/MeasurePolicy.js'
 
 export function BoxWithConstraints(
     content: (constraints: Constraints) => void,

@@ -1,6 +1,6 @@
-import {MeasurePolicyExtensionKey} from "./nodeExtensions/MeasurePolicyNodeExtension.js";
-import {currentComposer, Modifier, NameModifier, RecomposeLambda, RecomposeLambdaExtensionKey} from "notcompose";
-import {MeasurePolicy} from "./MeasurePolicy.js";
+import { MeasurePolicyExtensionKey } from './nodeExtensions/MeasurePolicyNodeExtension.js'
+import { currentComposer, Modifier, NameModifier, RecomposeLambda, RecomposeLambdaExtensionKey } from 'notcompose'
+import { MeasurePolicy } from './MeasurePolicy.js'
 
 export function Layout(content: () => void, measurePolicy: MeasurePolicy, modifier: Modifier = Modifier) {
     // if (canSkipComposition(...keys)) {

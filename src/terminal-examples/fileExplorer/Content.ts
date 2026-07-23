@@ -1,10 +1,10 @@
-import {Item} from "./utils.js";
-import {Key, Modifier, NameModifier} from "notcompose";
-import {ColumnWithConstraints, Constraints} from "notcompose/layout";
-import {Text} from "notcompose/terminal";
-import {ListItem} from "./ListItem.js";
-import {ExampleHeader} from "../common/ExampleHeader.js";
-import {Divider} from "../common/Divider.js";
+import { Item } from './utils.js'
+import { Key, Modifier, NameModifier } from 'notcompose'
+import { ColumnWithConstraints, Constraints } from 'notcompose/layout'
+import { Text } from 'notcompose/terminal'
+import { ListItem } from './ListItem.js'
+import { ExampleHeader } from '../common/ExampleHeader.js'
+import { Divider } from '../common/Divider.js'
 
 export function Content(
     currentDirectoryPath: string,

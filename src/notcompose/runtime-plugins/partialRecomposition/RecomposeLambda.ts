@@ -1,4 +1,4 @@
-import {NodeExtensionKey} from "../../runtime/NodeExtensionKey.js";
+import { NodeExtensionKey } from '../../runtime/NodeExtensionKey.js'
 
 export const RecomposeLambdaExtensionKey = new NodeExtensionKey<RecomposeLambda>('RecomposeLambda')
 

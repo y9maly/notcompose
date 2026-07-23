@@ -1,6 +1,6 @@
-import {AnnotatedString} from "notcompose/terminal";
-import {TestOutput} from "../notcompose-terminal/TestOutput.js";
-import {currentTestRuntime} from "./TestRuntime.js";
+import { AnnotatedString } from 'notcompose/terminal'
+import { TestOutput } from '../notcompose-terminal/TestOutput.js'
+import { currentTestRuntime } from './TestRuntime.js'
 
 export function currentTestOutput(): TestOutput {
     return currentTestRuntime().testOutput as TestOutput
@@ -19,11 +19,11 @@ export function assertVisuallyIdentical(expectedFrame: string) {
 
     throw new Error(
         [
-            "Expected output:",
+            'Expected output:',
             renderFramedRows(diff.expectedRows, diff.frameWidth),
-            "Actual output:",
+            'Actual output:',
             renderFramedRows(diff.actualRows, diff.frameWidth),
-        ].join("\n"),
+        ].join('\n'),
     )
 }
 
@@ -47,8 +47,8 @@ function compareOutput(expectedFrame: string): OutputComparison {
     const normalizedActual = trimTrailingBlankRows(actualRows)
 
     const maxRows = Math.max(normalizedExpected.length, normalizedActual.length)
-    const isEqual = Array.from({length: maxRows}, (_, index) => {
-        return (normalizedExpected[index] ?? "") === (normalizedActual[index] ?? "")
+    const isEqual = Array.from({ length: maxRows }, (_, index) => {
+        return (normalizedExpected[index] ?? '') === (normalizedActual[index] ?? '')
     }).every(Boolean)
 
     return {
@@ -65,13 +65,13 @@ function compareOutput(expectedFrame: string): OutputComparison {
 }
 
 function normalizeExpectedRows(frame: string): string[] {
-    const lines = frame.replace(/\r\n/g, "\n").split("\n")
+    const lines = frame.replace(/\r\n/g, '\n').split('\n')
 
-    if (lines.length > 0 && lines[0].trim() === "") {
+    if (lines.length > 0 && lines[0].trim() === '') {
         lines.shift()
     }
 
-    if (lines.length > 0 && lines[lines.length - 1].trim() === "") {
+    if (lines.length > 0 && lines[lines.length - 1].trim() === '') {
         lines.pop()
     }
 
@@ -89,7 +89,7 @@ function normalizeActualRows(rows: AnnotatedString[] | undefined): string[] {
 function trimTrailingBlankRows(rows: string[]): string[] {
     const result = [...rows]
 
-    while (result.length > 0 && result[result.length - 1].trim() === "") {
+    while (result.length > 0 && result[result.length - 1].trim() === '') {
         result.pop()
     }
 
@@ -97,10 +97,10 @@ function trimTrailingBlankRows(rows: string[]): string[] {
 }
 
 function renderFramedRows(rows: string[], width: number): string {
-    const top = `┌${"─".repeat(width + 2)}┐`
-    const bottom = `└${"─".repeat(width + 2)}┘`
+    const top = `┌${'─'.repeat(width + 2)}┐`
+    const bottom = `└${'─'.repeat(width + 2)}┘`
 
-    const body = rows.map(row => `│ ${row.padEnd(width, " ")} │`)
+    const body = rows.map(row => `│ ${row.padEnd(width, ' ')} │`)
 
-    return [top, ...body, bottom].join("\n")
+    return [top, ...body, bottom].join('\n')
 }

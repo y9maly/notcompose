@@ -1,8 +1,8 @@
-import {CompleteMeasurerPlugin, MeasurerPlugin} from "./MeasurerPlugin.js";
-import {MeasurerPluginContext} from "./MeasurerPluginContext.js";
-import {MeasureResult} from "../Measurable.js";
-import {LayoutNodeCoordinator} from "../layoutNode/LayoutNodeCoordinator.js";
-import {Constraints} from "../Constraints.js";
+import { CompleteMeasurerPlugin, MeasurerPlugin } from './MeasurerPlugin.js'
+import { MeasurerPluginContext } from './MeasurerPluginContext.js'
+import { MeasureResult } from '../Measurable.js'
+import { LayoutNodeCoordinator } from '../layoutNode/LayoutNodeCoordinator.js'
+import { Constraints } from '../Constraints.js'
 
 interface Frame {
     coordinator: LayoutNodeCoordinator

@@ -1,11 +1,11 @@
-import {describe, expect, it} from "vitest";
-import {Key, mutableStateOf, remember, rememberState, strictEqualityPolicy} from "notcompose";
-import {defaultTestRuntime} from "../helpers/runtimes/defaultTestRuntime.js";
-import {flushRecompositions} from "../helpers/core/recompose.js";
+import { describe, expect, it } from 'vitest'
+import { Key, mutableStateOf, remember, rememberState, strictEqualityPolicy } from 'notcompose'
+import { defaultTestRuntime } from '../helpers/runtimes/defaultTestRuntime.js'
+import { flushRecompositions } from '../helpers/core/recompose.js'
 
 
-describe("remember tests", () => {
-    it("remember without keys works", () => {
+describe('remember tests', () => {
+    it('remember without keys works', () => {
         const runtime = defaultTestRuntime().use()
         const trigger = mutableStateOf<number>(0, strictEqualityPolicy())
 
@@ -32,7 +32,7 @@ describe("remember tests", () => {
         expect(rememberedValues.every(it => it === 'value')).toBeTruthy()
     })
 
-    it("remember with keys works", () => {
+    it('remember with keys works', () => {
         const runtime = defaultTestRuntime().use()
         const keyState = mutableStateOf(0)
 
@@ -53,7 +53,7 @@ describe("remember tests", () => {
         expect(calculations).toBe(3)
     })
 
-    it("rememberState without keys works", () => {
+    it('rememberState without keys works', () => {
         const runtime = defaultTestRuntime().use()
         const trigger = mutableStateOf<number>(0, strictEqualityPolicy())
 
@@ -78,7 +78,7 @@ describe("remember tests", () => {
         expect(calculations).toBe(1)
     })
 
-    it("rememberState with keys works", () => {
+    it('rememberState with keys works', () => {
         const runtime = defaultTestRuntime().use()
         const keyState = mutableStateOf(0)
 
@@ -96,18 +96,18 @@ describe("remember tests", () => {
         expect(calculations).toBe(3)
     })
 
-    it("forget remembered values after unmount", () => {
+    it('forget remembered values after unmount', () => {
         const runtime = defaultTestRuntime().use()
-        const screen = mutableStateOf<"A" | "B">("A")
+        const screen = mutableStateOf<'A' | 'B'>('A')
 
         let screenAValue: object | undefined
         let screenBValue: object | undefined
         let remountedScreenAValue: object | undefined
 
         runtime.render(() => {
-            if (screen.value === "A") {
-                Key("screen-a", () => {
-                    const value = remember(() => ({screen: "A"}))
+            if (screen.value === 'A') {
+                Key('screen-a', () => {
+                    const value = remember(() => ({ screen: 'A' }))
                     if (screenAValue === undefined) {
                         screenAValue = value
                     } else {
@@ -117,16 +117,16 @@ describe("remember tests", () => {
                     }
                 })
             } else {
-                Key("screen-b", () => {
-                    screenBValue = remember(() => ({screen: "B"}))
+                Key('screen-b', () => {
+                    screenBValue = remember(() => ({ screen: 'B' }))
                 })
             }
         })
 
-        screen.value = "B"
+        screen.value = 'B'
         flushRecompositions()
 
-        screen.value = "A"
+        screen.value = 'A'
         flushRecompositions()
 
         expect(screenBValue).toBeDefined()

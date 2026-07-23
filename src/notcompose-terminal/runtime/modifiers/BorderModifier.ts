@@ -1,20 +1,20 @@
-import {elvis, ModifierElement} from "notcompose";
-import {LayoutModifier, MeasureResult} from "notcompose/layout";
-import {ContentDrawScope} from "../ui/graphics/ContentDrawScope.js";
-import {Color} from "../ui/Color.js";
-import {AnnotatedString, colored} from "../ui/AnnotatedString.js";
-import {DrawModifier} from "./DrawModifier.js";
+import { elvis, ModifierElement } from 'notcompose'
+import { LayoutModifier, MeasureResult } from 'notcompose/layout'
+import { ContentDrawScope } from '../ui/graphics/ContentDrawScope.js'
+import { Color } from '../ui/Color.js'
+import { AnnotatedString, colored } from '../ui/AnnotatedString.js'
+import { DrawModifier } from './DrawModifier.js'
 
 export function border(params?: {
-    color?: Color | null,
-    topStart?: string,
-    topEnd?: string,
-    bottomStart?: string,
-    bottomEnd?: string,
-    verticalStart?: string,
-    verticalEnd?: string,
-    horizontalTop?: string,
-    horizontalBottom?: string,
+    color?: Color | null
+    topStart?: string
+    topEnd?: string
+    bottomStart?: string
+    bottomEnd?: string
+    verticalStart?: string
+    verticalEnd?: string
+    horizontalTop?: string
+    horizontalBottom?: string
 }): ModifierElement {
     const { color, topStart, topEnd, bottomStart, bottomEnd, verticalStart, verticalEnd, horizontalTop, horizontalBottom } = elvis(params, {
         color: null,
@@ -57,7 +57,7 @@ class BorderModifierImpl implements DrawModifier {
         return MeasureResult(width, height, () => {
             placeable.place(1, 1)
         })
-    });
+    })
 
     draw(scope: ContentDrawScope) {
         scope.drawContent()

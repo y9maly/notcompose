@@ -1,4 +1,4 @@
-import {DrawScope} from "./DrawScope.js";
+import { DrawScope } from './DrawScope.js'
 
 export interface ContentDrawScope extends DrawScope {
     drawContent(): void

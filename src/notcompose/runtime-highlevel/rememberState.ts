@@ -1,6 +1,6 @@
-import {MutableState} from "../runtime/State.js";
-import {remember} from "./remember.js";
-import {mutableStateOf} from "./mutableStateOf.js";
+import { MutableState } from '../runtime/State.js'
+import { remember } from './remember.js'
+import { mutableStateOf } from './mutableStateOf.js'
 
 const Empty = Symbol()
 
@@ -34,7 +34,7 @@ export function rememberState<T>(
     return {
         get value() { return state.value as T },
         set value(value: T) { state.value = value },
-        *[Symbol.iterator]() {
+        * [Symbol.iterator]() {
             yield state.value
             yield (value: T) => state.value = value
         }

@@ -1,6 +1,6 @@
-import {execSync} from "node:child_process";
-import * as os from "node:os";
-import fs from "fs";
+import { execSync } from 'node:child_process'
+import * as os from 'node:os'
+import fs from 'node:fs'
 
 export interface SystemInfoRepository {
     cpusCount(): number
@@ -11,7 +11,7 @@ export interface SystemInfoRepository {
     usedMemory(): number
     memoryUsagePercent(): number
 
-    networkSpeed(): { rx: number; tx: number }
+    networkSpeed(): { rx: number, tx: number }
 
     uptime(): number
 
@@ -56,7 +56,7 @@ export class FakeSystemInfoRepository implements SystemInfoRepository {
         return Math.floor(Math.random() * 101)
     }
 
-    networkSpeed(): { rx: number; tx: number; } {
+    networkSpeed(): { rx: number, tx: number } {
         return {
             rx: Math.floor(Math.random() * 10 * 1024 * 1024),
             tx: Math.floor(Math.random() * 10 * 1024 * 1024),
@@ -158,7 +158,7 @@ export class NodejsSystemInfoRepository implements SystemInfoRepository {
         )
     }
 
-    networkSpeed(): { rx: number; tx: number } {
+    networkSpeed(): { rx: number, tx: number } {
         const now = Date.now()
         const { rx, tx } = this.readNetworkBytes()
 
@@ -234,7 +234,7 @@ export class NodejsSystemInfoRepository implements SystemInfoRepository {
         }
     }
 
-    private readNetworkBytes(): { rx: number; tx: number } {
+    private readNetworkBytes(): { rx: number, tx: number } {
         try {
             // Linux fast path
             const data = fs.readFileSync('/proc/net/dev', 'utf-8')

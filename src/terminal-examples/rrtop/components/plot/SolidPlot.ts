@@ -1,16 +1,8 @@
-import {HistoryData} from "./HistoryData.js";
-import {elvis} from "notcompose";
-import {
-    Alignment,
-    fillMaxWidth,
-    height,
-    RowWithConstraints,
-    Spacer,
-    VerticalAlignment,
-    width
-} from "notcompose/layout";
-import {repeat} from "../../../common/repeat.js";
-import {background, Color, colored, Modifier, Text} from 'notcompose/terminal'
+import { HistoryData } from './HistoryData.js'
+import { elvis } from 'notcompose'
+import { Alignment, fillMaxWidth, height, RowWithConstraints, Spacer, VerticalAlignment, width } from 'notcompose/layout'
+import { repeat } from '../../../common/repeat.js'
+import { background, Color, colored, Modifier, Text } from 'notcompose/terminal'
 
 export function SolidPlot(
     historyData: HistoryData,
@@ -22,7 +14,7 @@ export function SolidPlot(
         alignment?: VerticalAlignment
     },
 ) {
-    const {color} = elvis(params, {
+    const { color } = elvis(params, {
         color: null,
     })
 
@@ -51,7 +43,7 @@ export function SolidPlot(
                 Text(colored(color, '▂'))
             } else {
                 Spacer(Modifier
-                    .background('█', {color: color})
+                    .background('█', { color: color })
                     .width(1)
                     .height(columnHeight)
                 )

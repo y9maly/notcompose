@@ -1,4 +1,4 @@
-import {AnnotatedString} from "notcompose/terminal";
+import { AnnotatedString } from 'notcompose/terminal'
 
 export interface TestOutput {
     viewportWidth: number

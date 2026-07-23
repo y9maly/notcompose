@@ -1,6 +1,6 @@
-import {MutableState, mutableStateOf} from "notcompose";
-import {setTerminalContent, Text} from "notcompose/terminal";
-import {Box, Column} from "notcompose/layout";
+import { MutableState, mutableStateOf } from 'notcompose'
+import { setTerminalContent, Text } from 'notcompose/terminal'
+import { Box, Column } from 'notcompose/layout'
 
 const counter: MutableState<number> = mutableStateOf(0)
 

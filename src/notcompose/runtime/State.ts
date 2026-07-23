@@ -1,4 +1,4 @@
-import {GlobalSnapshot} from "./Snapshot.js";
+import { GlobalSnapshot } from './Snapshot.js'
 
 export interface State<out T> {
     readonly value: T

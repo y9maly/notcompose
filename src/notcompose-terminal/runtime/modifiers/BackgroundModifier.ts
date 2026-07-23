@@ -1,13 +1,13 @@
-import {elvis, ModifierElement} from "notcompose";
-import {DrawModifier} from "./DrawModifier.js";
-import {ContentDrawScope} from "../ui/graphics/ContentDrawScope.js";
-import {Color} from "../ui/Color.js";
-import {colored} from "../ui/AnnotatedString.js";
+import { elvis, ModifierElement } from 'notcompose'
+import { DrawModifier } from './DrawModifier.js'
+import { ContentDrawScope } from '../ui/graphics/ContentDrawScope.js'
+import { Color } from '../ui/Color.js'
+import { colored } from '../ui/AnnotatedString.js'
 
 export function background(
     symbol: string,
     params?: {
-        color?: Color | null,
+        color?: Color | null
     }
 ): ModifierElement {
     const { color } = elvis(params, {

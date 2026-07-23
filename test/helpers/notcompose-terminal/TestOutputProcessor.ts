@@ -1,7 +1,7 @@
-import {annotated, AnnotatedString, OutputProcessor, RawOutputProcessor} from "notcompose/terminal";
-import {Node} from "notcompose";
-import {TestOutput} from "./TestOutput.js";
-import {BehaviorSubject} from "rxjs";
+import { annotated, AnnotatedString, OutputProcessor, RawOutputProcessor } from 'notcompose/terminal'
+import { Node } from 'notcompose'
+import { TestOutput } from './TestOutput.js'
+import { BehaviorSubject } from 'rxjs'
 
 export class TestOutputProcessor implements OutputProcessor, TestOutput {
     lastOutput?: AnnotatedString[]

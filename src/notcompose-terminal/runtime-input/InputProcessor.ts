@@ -1,5 +1,5 @@
-import {InputDispatcher} from "./InputDispatcher.js";
-import {InputSource} from "./InputSource.js";
+import { InputDispatcher } from './InputDispatcher.js'
+import { InputSource } from './InputSource.js'
 
 export class InputProcessor {
     constructor(

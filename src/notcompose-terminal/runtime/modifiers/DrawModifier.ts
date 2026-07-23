@@ -1,6 +1,6 @@
-import {ModifierElement} from "notcompose";
-import {ContentDrawScope} from "../ui/graphics/ContentDrawScope.js";
-import {DrawScope} from "../ui/graphics/DrawScope.js";
+import { ModifierElement } from 'notcompose'
+import { ContentDrawScope } from '../ui/graphics/ContentDrawScope.js'
+import { DrawScope } from '../ui/graphics/DrawScope.js'
 
 export interface DrawModifier extends ModifierElement {
     draw(scope: ContentDrawScope): void
@@ -25,7 +25,7 @@ export function DrawModifier(draw: (scope: ContentDrawScope) => void): DrawModif
 }
 
 class DrawModifierImpl implements DrawModifier {
-    [DrawModifier.symbol] = this;
+    [DrawModifier.symbol] = this
 
     constructor(
         public draw: (scope: ContentDrawScope) => void,

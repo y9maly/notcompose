@@ -1,35 +1,6 @@
-import {
-    ActivityFeedItemVm,
-    ActivityFeedVm,
-    AssigneeBadgeVm,
-    buildTaskActions,
-    Comment,
-    CommentPreviewVm,
-    commentsByTaskSubject,
-    currentUserSubject,
-    DashboardContentVm,
-    DashboardVm,
-    formatPriority,
-    formatTaskStatus,
-    HeaderVm,
-    presencesSubject,
-    priorityWeight,
-    Project,
-    ProjectDashboardVm,
-    ProjectPickerItemVm,
-    ProjectPickerVm,
-    projectsSubject,
-    searchQuerySubject,
-    selectedProjectIdSubject,
-    sortModeSubject,
-    Task,
-    TaskListVm,
-    TaskRowVm,
-    tasksByProjectSubject,
-    usersSubject,
-} from './complexDemo.js'
-import {subjectMolecule} from "./rxjs/subjectMolecule.js";
-import {Key, rememberState, subjectAsState} from "notcompose";
+import { ActivityFeedItemVm, ActivityFeedVm, AssigneeBadgeVm, buildTaskActions, Comment, CommentPreviewVm, commentsByTaskSubject, currentUserSubject, DashboardContentVm, DashboardVm, formatPriority, formatTaskStatus, HeaderVm, presencesSubject, priorityWeight, Project, ProjectDashboardVm, ProjectPickerItemVm, ProjectPickerVm, projectsSubject, searchQuerySubject, selectedProjectIdSubject, sortModeSubject, Task, TaskListVm, TaskRowVm, tasksByProjectSubject, usersSubject, } from './complexDemo.js'
+import { subjectMolecule } from './rxjs/subjectMolecule.js'
+import { Key, rememberState, subjectAsState } from 'notcompose'
 
 export const dashboardVm = subjectMolecule<DashboardVm>(() => {
     return {

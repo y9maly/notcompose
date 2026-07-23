@@ -1,19 +1,10 @@
-import {Modifier} from "notcompose";
-import {MainViewModel} from "./MainViewModel.js";
-import {BorderedTitledBox} from "../components/BorderedTitledBox.js";
-import {
-    Box,
-    Column,
-    ConstraintsModifiers,
-    fillMaxHeight,
-    fillMaxSize,
-    fillMaxWidth,
-    offset,
-    Row
-} from "notcompose/layout";
-import {SolidPlot} from "../components/plot/SolidPlot.js";
-import {annotated, bold, Color, colored, input, Text} from "notcompose/terminal";
-import {Divider} from "../../common/Divider.js";
+import { Modifier } from 'notcompose'
+import { MainViewModel } from './MainViewModel.js'
+import { BorderedTitledBox } from '../components/BorderedTitledBox.js'
+import { Box, Column, ConstraintsModifiers, fillMaxHeight, fillMaxSize, fillMaxWidth, offset, Row } from 'notcompose/layout'
+import { SolidPlot } from '../components/plot/SolidPlot.js'
+import { annotated, bold, Color, colored, input, Text } from 'notcompose/terminal'
+import { Divider } from '../../common/Divider.js'
 
 const minusMaxHeight = ConstraintsModifiers.minusMaxHeight
 
@@ -117,9 +108,9 @@ function MemoryInfo(
     const memoryUsageValue = viewModel.memoryUsagePercent.value
     const memoryUsage = memoryUsageValue.toString().padStart(3, ' ') + '%'
     const memoryColor =
-        memoryUsageValue >= 90 ? new Color(0xff7D2D27) :
-            memoryUsageValue >= 80 ? new Color(0xff746237) :
-        new Color(0xff28632F)
+        memoryUsageValue >= 90 ? new Color(0xff7D2D27)
+            : memoryUsageValue >= 80 ? new Color(0xff746237)
+                : new Color(0xff28632F)
 
     BorderedTitledBox(() => {
         Text(colored(Color.LightGray, `Memory used:`)

@@ -1,7 +1,7 @@
-import {RawInfoViewModel} from "./RawInfoViewModel.js";
-import {Modifier} from "notcompose";
-import {Alignment, Column} from "notcompose/layout";
-import {Text} from "notcompose/terminal";
+import { RawInfoViewModel } from './RawInfoViewModel.js'
+import { Modifier } from 'notcompose'
+import { Alignment, Column } from 'notcompose/layout'
+import { Text } from 'notcompose/terminal'
 
 export function RawInfoScreen(
     viewModel: RawInfoViewModel,

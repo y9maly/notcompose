@@ -1,5 +1,5 @@
-import {State} from "../../runtime/State.js";
-import {NodeExtensionKey} from "../../runtime/NodeExtensionKey.js";
+import { State } from '../../runtime/State.js'
+import { NodeExtensionKey } from '../../runtime/NodeExtensionKey.js'
 
 // Public Api
 export const StateReadsExtensionKey = new NodeExtensionKey<StateReads>('StateReads')

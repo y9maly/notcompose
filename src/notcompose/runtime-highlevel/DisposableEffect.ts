@@ -1,6 +1,6 @@
-import {currentComposer} from "../runtime/currentComposer.js";
-import {remember} from "./remember.js";
-import {RememberObserver} from "../runtime-plugins/rememberObserver/RememberObserver.js";
+import { currentComposer } from '../runtime/currentComposer.js'
+import { remember } from './remember.js'
+import { RememberObserver } from '../runtime-plugins/rememberObserver/RememberObserver.js'
 
 const Empty = Symbol()
 

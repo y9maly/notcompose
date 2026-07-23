@@ -1,5 +1,5 @@
-import {State} from "../../runtime/State.js";
-import {GlobalSnapshot} from "../../runtime/Snapshot.js";
+import { State } from '../../runtime/State.js'
+import { GlobalSnapshot } from '../../runtime/Snapshot.js'
 
 export class StateReadsCollector<CONSUMER extends NonNullable<unknown>> {
     private temporalStateReadsMap = new Map<CONSUMER, Set<State<unknown>>>()

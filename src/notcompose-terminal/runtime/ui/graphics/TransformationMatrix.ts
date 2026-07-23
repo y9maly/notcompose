@@ -1,5 +1,5 @@
-import {Float, Int} from "../../../../core/types.js";
-import {Offset, Rect} from "notcompose/layout";
+import { Float, Int } from '../../../../core/types.js'
+import { Offset, Rect } from 'notcompose/layout'
 
 export class TransformationMatrix {
     constructor(

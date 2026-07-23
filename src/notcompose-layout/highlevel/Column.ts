@@ -1,8 +1,8 @@
-import {Layout} from "../runtime/Layout.js";
-import {elvis, Modifier, NameModifier} from "notcompose";
-import {Alignment, HorizontalAlignment} from "../runtime/core/Alignment.js";
-import {Placeable} from "../runtime/Placeable.js";
-import {MeasurePolicy} from "../runtime/MeasurePolicy.js";
+import { Layout } from '../runtime/Layout.js'
+import { elvis, Modifier, NameModifier } from 'notcompose'
+import { Alignment, HorizontalAlignment } from '../runtime/core/Alignment.js'
+import { Placeable } from '../runtime/Placeable.js'
+import { MeasurePolicy } from '../runtime/MeasurePolicy.js'
 
 export const ColumnMeasurePolicy = (
     horizontalAlignment: HorizontalAlignment = Alignment.Start

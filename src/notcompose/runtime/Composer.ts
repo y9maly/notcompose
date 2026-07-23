@@ -1,8 +1,8 @@
-import {Node} from "./Node.js";
-import {Modifier} from "./Modifier.js";
-import {CompleteComposerPlugin, ComposerPlugin} from "./ComposerPlugin.js";
-import {ComposerPluginContext} from "./ComposerPluginContext.js";
-import {NodeExtensionKey} from "./NodeExtensionKey.js";
+import { Node } from './Node.js'
+import { Modifier } from './Modifier.js'
+import { CompleteComposerPlugin, ComposerPlugin } from './ComposerPlugin.js'
+import { ComposerPluginContext } from './ComposerPluginContext.js'
+import { NodeExtensionKey } from './NodeExtensionKey.js'
 
 export type Key = number | string
 

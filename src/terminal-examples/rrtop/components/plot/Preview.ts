@@ -1,7 +1,7 @@
-import {Modifier, setTerminalContent, Text} from "notcompose/terminal";
-import {SolidPlot} from "./SolidPlot.js";
-import {Column, size} from "notcompose/layout";
-import {BorderedTitledBox} from "../BorderedTitledBox.js";
+import { Modifier, setTerminalContent, Text } from 'notcompose/terminal'
+import { SolidPlot } from './SolidPlot.js'
+import { Column, size } from 'notcompose/layout'
+import { BorderedTitledBox } from '../BorderedTitledBox.js'
 
 setTerminalContent(() => {
 

@@ -1,35 +1,28 @@
-import {currentComposer, Modifier, Node, RecomposeLambda, RecomposeLambdaExtensionKey, withComposer} from "notcompose";
-import {Composer, Key} from "../../notcompose/runtime/Composer.js";
+import { currentComposer, Modifier, Node, RecomposeLambda, RecomposeLambdaExtensionKey, withComposer } from 'notcompose'
+import { Composer, Key } from '../../notcompose/runtime/Composer.js'
 
-import {Constraints} from "./Constraints.js";
-import {LayoutProcessorPluginDebug} from "./LayoutProcessorPlugin.js";
-import {MeasurePolicyExtensionKey} from "./nodeExtensions/MeasurePolicyNodeExtension.js";
-import {
-    SubcomposeNodeExtension,
-    SubcomposeNodeExtensionKey,
-    SubcomposeScope
-} from "./nodeExtensions/SubcomposeNodeExtension.js";
-import {LayoutNode, LayoutNodeExtensionKey} from "./layoutNode/LayoutNode.js";
-import {applyLayoutNode as newApplyLayoutNode} from "./layoutNode/applyLayoutNode.js";
-import {Measurer} from "./measurer/Measurer.js";
-import {LayoutNodeCoordinator} from "./layoutNode/LayoutNodeCoordinator.js";
-import {LayoutModifierLayoutNodeCoordinator} from "./layoutNode/LayoutModifierLayoutNodeCoordinator.js";
-import {currentMeasurer, withMeasurer} from "./measurer/currentMeasurer.js";
-import {Measurable, MeasureResult} from "./Measurable.js";
-import {Placeable} from "./Placeable.js";
-import {InnerLayoutNodeCoordinator} from "./layoutNode/InnerLayoutNodeCoordinator.js";
-import {
-    SubconstraintsNodeExtension,
-    SubconstraintsNodeExtensionKey
-} from "./nodeExtensions/SubconstraintsNodeExtension.js";
-import {assertUInt} from "../../core/types.js";
+import { Constraints } from './Constraints.js'
+import { LayoutProcessorPluginDebug } from './LayoutProcessorPlugin.js'
+import { MeasurePolicyExtensionKey } from './nodeExtensions/MeasurePolicyNodeExtension.js'
+import { SubcomposeNodeExtension, SubcomposeNodeExtensionKey, SubcomposeScope } from './nodeExtensions/SubcomposeNodeExtension.js'
+import { LayoutNode, LayoutNodeExtensionKey } from './layoutNode/LayoutNode.js'
+import { applyLayoutNode as newApplyLayoutNode } from './layoutNode/applyLayoutNode.js'
+import { Measurer } from './measurer/Measurer.js'
+import { LayoutNodeCoordinator } from './layoutNode/LayoutNodeCoordinator.js'
+import { LayoutModifierLayoutNodeCoordinator } from './layoutNode/LayoutModifierLayoutNodeCoordinator.js'
+import { currentMeasurer, withMeasurer } from './measurer/currentMeasurer.js'
+import { Measurable, MeasureResult } from './Measurable.js'
+import { Placeable } from './Placeable.js'
+import { InnerLayoutNodeCoordinator } from './layoutNode/InnerLayoutNodeCoordinator.js'
+import { SubconstraintsNodeExtension, SubconstraintsNodeExtensionKey } from './nodeExtensions/SubconstraintsNodeExtension.js'
+import { assertUInt } from '../../core/types.js'
 
 export class LayoutProcessor {
     constructor(
         // todo Subject to remove.
         private readonly params: {
-            interceptMeasurement: (invoke: () => void) => void,
-            interceptPlacement: (invoke: () => void) => void,
+            interceptMeasurement: (invoke: () => void) => void
+            interceptPlacement: (invoke: () => void) => void
         } = {
             interceptMeasurement: it => it(),
             interceptPlacement: it => it(),
@@ -115,19 +108,19 @@ function layoutModifierCoordinatorAsMeasurable(
         },
 
         minIntrinsicWidth: function (height: number | null): number {
-            throw new Error("Function not implemented.");
+            throw new Error('Function not implemented.')
         },
 
         maxIntrinsicWidth: function (height: number | null): number {
-            throw new Error("Function not implemented.");
+            throw new Error('Function not implemented.')
         },
 
         minIntrinsicHeight: function (width: number | null): number {
-            throw new Error("Function not implemented.");
+            throw new Error('Function not implemented.')
         },
 
         maxIntrinsicHeight: function (width: number | null): number {
-            throw new Error("Function not implemented.");
+            throw new Error('Function not implemented.')
         }
     }
 }
@@ -164,19 +157,19 @@ function innerCoordinatorAsMeasurable(
         },
 
         minIntrinsicWidth: function (height: number | null): number {
-            throw new Error("Function not implemented.");
+            throw new Error('Function not implemented.')
         },
 
         maxIntrinsicWidth: function (height: number | null): number {
-            throw new Error("Function not implemented.");
+            throw new Error('Function not implemented.')
         },
 
         minIntrinsicHeight: function (width: number | null): number {
-            throw new Error("Function not implemented.");
+            throw new Error('Function not implemented.')
         },
 
         maxIntrinsicHeight: function (width: number | null): number {
-            throw new Error("Function not implemented.");
+            throw new Error('Function not implemented.')
         }
     }
 }

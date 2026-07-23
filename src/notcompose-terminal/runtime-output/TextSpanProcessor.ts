@@ -1,5 +1,5 @@
-import {TextRow} from "../runtime/ui/graphics/TextBufferCanvas.js";
-import {BackgroundColorTextSpan, BoldTextSpan, ColorTextSpan, UnderlineTextSpan} from "../runtime/ui/TextSpan.js";
+import { TextRow } from '../runtime/ui/graphics/TextBufferCanvas.js'
+import { BackgroundColorTextSpan, BoldTextSpan, ColorTextSpan, UnderlineTextSpan } from '../runtime/ui/TextSpan.js'
 
 
 export interface TextSpanProcessor {

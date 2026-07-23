@@ -1,5 +1,5 @@
-import {currentTestRuntime} from "./TestRuntime.js";
-import {elvis, error, Recomposer} from "notcompose";
+import { currentTestRuntime } from './TestRuntime.js'
+import { elvis, error, Recomposer } from 'notcompose'
 
 export function currentRecomposer(): Recomposer {
     const recomposer = currentTestRuntime()['recomposer']
@@ -16,7 +16,7 @@ export function recompose() {
 }
 
 export function flushRecompositions(max: number | null = 1000, options?: { shouldThrow?: boolean }): number {
-    const {shouldThrow} = elvis(options, {
+    const { shouldThrow } = elvis(options, {
         shouldThrow: true,
     })
 

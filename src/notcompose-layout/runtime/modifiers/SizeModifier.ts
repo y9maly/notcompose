@@ -1,7 +1,7 @@
-import {ModifierElement} from "notcompose";
-import {LayoutModifier} from "./LayoutModifier.js";
-import {Constraints} from "../Constraints.js";
-import {MeasureResult} from "../Measurable.js";
+import { ModifierElement } from 'notcompose'
+import { LayoutModifier } from './LayoutModifier.js'
+import { Constraints } from '../Constraints.js'
+import { MeasureResult } from '../Measurable.js'
 
 // Fixed size
 

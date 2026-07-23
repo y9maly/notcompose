@@ -1,5 +1,5 @@
-import {setTerminalContent, Text} from "notcompose/terminal";
-import {Column, ColumnWithConstraints, Constraints, Row} from "notcompose/layout";
+import { setTerminalContent, Text } from 'notcompose/terminal'
+import { Column, ColumnWithConstraints, Constraints, Row } from 'notcompose/layout'
 
 setTerminalContent(() => {
     ColumnWithConstraints((constraints: Constraints) => {

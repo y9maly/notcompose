@@ -1,5 +1,5 @@
-import {input, setTerminalContent, Text} from "notcompose/terminal";
-import {MutableState, mutableStateOf, rememberState} from "notcompose";
+import { input, setTerminalContent, Text } from 'notcompose/terminal'
+import { MutableState, mutableStateOf, rememberState } from 'notcompose'
 
 const globalCounter: MutableState<number> = mutableStateOf(0)
 
