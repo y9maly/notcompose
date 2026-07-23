@@ -1,7 +1,98 @@
-/*
-
-todo add description
-
+/**
+ * We have 'ts/no-unsafe-argument' eslint rule, but I don't like it and created my own rules via plugin.
+ *
+ * Why I don't like it? See this short example:
+ * ```ts
+ * function something(stringA: string, stringB: string): void
+ * function something(numberA: number, numberB: number): void
+ * function something(a: string | number, b: string | number): void {
+ *     // We have invariant here:
+ *     // - Either both arguments are strings
+ *     // - Either both arguments are numbers
+ *     // So we exactly know:
+ *     // - if first argument is string, so second one is string also
+ *     // - if first argument is not string, so both arguments is numbers
+ *     if (typeof a === 'string') {
+ *         return somethingStrings(a, b as any)
+ *     }
+ *     return somethingNumbers(a as any, b as any)
+ * }
+ *
+ * declare function somethingStrings(stringA: string, stringB: string): void
+ * declare function somethingNumbers(numberA: number, numberB: number): void
+ * ```
+ *
+ * This example works fine. But when we have 'ts/no-unsafe-argument' rule enabled we got three warnings here:
+ * ```ts
+ * function something(a: string | number, b: string | number): void {
+ *     if (typeof a === 'string') {
+ *         // ESLint: Unsafe argument of type `any` assigned to a parameter of type `string`. (ts/no-unsafe-argument)
+ *         return somethingStrings(a, b as any)
+ *     }
+ *     // ESLint: Unsafe argument of type `any` assigned to a parameter of type `string`. (ts/no-unsafe-argument)
+ *     // ESLint: Unsafe argument of type `any` assigned to a parameter of type `number`. (ts/no-unsafe-argument)
+ *     return somethingNumbers(a as any, b as any)
+ * }
+ * ```
+ *
+ * But these warnings are useless! I know that I use 'any' here. I know that 'any' is escape hatch in type system. But I also know that I write this code correctly.
+ * I don't want to turn my code into thoughangs of useless `eslint-disable-next-line` suppresses just for ceremony.
+ *
+ * But I don't to disable 'ts/no-unsafe-argument' because it is useful for infered types. For example:
+ * ```ts
+ * function plus5(value: number): number { return value + 5 }
+ *
+ * // We can't say what getValue returns unless we watch them signature.
+ * // So 'value' has infered type.
+ * // This type can be changed at any time in the future.
+ * // Suppose that it returns 'number' now.
+ * // If return type is changed to 'string' in the future, it's not a problem because we receice typescript error 'Argument of type string is not assignable to parameter of type number'.
+ * // BUT If return type is changed to 'any' in the future, we don't receive any error in the future and function 'plus5' can receive not a number - so we got runtime type violation.
+ * const value = getValue()
+ *
+ * console.log(plus5(value))
+ * ```
+ *
+ * I want to say: 'as any' cast is already sufficent marker that I use 'any' here. But default 'ts/no-unsafe-argument' doesn't give me that.
+ *
+ * Sooo... This plugin fixes it!
+ *
+ * ```ts
+ * const ANY: any = 123
+ * const NUMBER: number = 123
+ *
+ * // ESLint: Unsafe assignment of an `any` value. (explicit-any/no-unsafe-assignment)
+ * // // We get this warning because 'any' type for 'v1' is infered, and we don't explicitly say that we want use 'any' here.
+ * const v1 = ANY
+ * // Ok
+ * // // We don't get warning here becaues we explicitly declare type 'any' here
+ * const v2: any = ANY
+ * // Ok
+ * // // We don't get warning here becaues we explicitly declare type 'any' here
+ * const v3 = NUMBER as any
+ *
+ * // Also we can use 'assertAny' function to declare that argument MUST be exactly 'any'.
+ * // It useful if we want to ensure that we use 'any' type here (useful when we update library version, for example).
+ * // It also guarantees that we WANT to use 'any' here.
+ * // (It might look line some magic, but it works)
+ *
+ * // Argument of type 123 is not assignable to parameter of type never
+ * // // We get warning here because NUMBER is not exacly 'any'
+ * const v4 = assertAny(NUMBER)
+ * // Ok
+ * // // We don't get warning here because ANY is exactly 'any'
+ * const v5 = assertAny(ANY)
+ * // Ok
+ * // // Inferred as 'any'. We don't get warning here because we explicitly say that we want to use 'any' here.
+ * const v6 = assertAny(ANY)
+ *
+ * // ESLint: Unsafe assignment of an `any` value. (explicit-any/no-unsafe-assignment)
+ * const something1 = ANY.something
+ * // Ok
+ * const something2 = assertAny(ANY).something
+ * // Ok
+ * const something3 = (NUMBER as any).something
+ * ```
  */
 
 import type { TSESTree } from '@typescript-eslint/utils'

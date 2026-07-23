@@ -7,6 +7,7 @@ export default antfu(
         type: 'lib',
         plugins: {
             'singleline-imports': singlelineImportsPlugin,
+            // see ./eslint/explicit-any-plugin.ts explanation
             'explicit-any': explicitAnyPlugin,
         },
         stylistic: {
