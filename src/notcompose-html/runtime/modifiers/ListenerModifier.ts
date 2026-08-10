@@ -1,4 +1,4 @@
-import {ModifierElement} from "notcompose";
+import { ModifierElement } from 'notcompose'
 
 export type DomEvent<ELEMENT extends Element, EVENT extends Event = Event> = EVENT & {
     readonly currentTarget: ELEMENT
@@ -19,9 +19,9 @@ export class ListenerModifier<
     }
 
     equals(other: ModifierElement): boolean {
-        return other instanceof ListenerModifier &&
-            other.type === this.type &&
-            other.listener === this.listener &&
-            other.options === this.options
+        return other instanceof ListenerModifier
+            && other.type === this.type
+            && other.listener === this.listener
+            && other.options === this.options
     }
 }

@@ -12,3 +12,15 @@ export function Key<T>(key: Key, content: () => T): T {
     currentComposer().endNode()
     return value
 }
+
+Key.start = (key: Key, recompose?: () => void) => {
+    currentComposer().startNode(Modifier, key)
+    if (recompose)
+        currentComposer().applyExtension(RecomposeLambdaExtensionKey, recompose)
+    currentComposer().startComposingNode()
+}
+
+Key.end = () => {
+    currentComposer().endComposingNode()
+    currentComposer().endNode()
+}

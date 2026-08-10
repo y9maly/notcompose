@@ -1,6 +1,6 @@
-import {Node as CompositionNode, NodeExtensionKey} from "notcompose";
-import {ListenerModifier} from "./modifiers/ListenerModifier.js";
-import {DomRef} from "./modifiers/RefModifier.js";
+import { Node as CompositionNode, NodeExtensionKey } from 'notcompose'
+import { ListenerModifier } from './modifiers/ListenerModifier.js'
+import { DomRef } from './modifiers/RefModifier.js'
 
 export const DomNodeExtensionKey = new NodeExtensionKey<DomNodeState>('DomNode')
 

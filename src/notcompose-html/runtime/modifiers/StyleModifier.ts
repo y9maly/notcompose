@@ -1,4 +1,4 @@
-import {ModifierElement} from "notcompose";
+import { ModifierElement } from 'notcompose'
 
 export type StyleValue = string | number | null | undefined
 
@@ -9,8 +9,8 @@ export class StyleModifier implements ModifierElement {
     ) {}
 
     equals(other: ModifierElement): boolean {
-        return other instanceof StyleModifier &&
-            other.name === this.name &&
-            Object.is(other.value, this.value)
+        return other instanceof StyleModifier
+            && other.name === this.name
+            && Object.is(other.value, this.value)
     }
 }

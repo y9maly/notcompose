@@ -1,4 +1,4 @@
-import { createModifierCollection, Modifier as BaseModifier, ModifierElement } from 'notcompose'
+import { createExtendedModifier, Modifier as BaseModifier, ModifierElement } from 'notcompose'
 import { padding, size, width, height, fillMaxWidth, fillMaxHeight, fillMaxSize } from 'notcompose/layout'
 import { Color } from './runtime/ui/Color.js'
 import { background } from './runtime/modifiers/BackgroundModifier.js'
@@ -75,4 +75,4 @@ class TerminalModifier {
 }
 
 export type Modifier = BaseModifier
-export const Modifier = createModifierCollection(TerminalModifier)
+export const Modifier = createExtendedModifier(TerminalModifier)

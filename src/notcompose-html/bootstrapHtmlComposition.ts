@@ -1,13 +1,6 @@
-import {
-    CleanCompositionPlugin,
-    Composer,
-    PluginVerifierPlugin,
-    Recomposer,
-    RememberObserverPlugin,
-    StateReadsPlugin
-} from "notcompose";
-import {HtmlComposition} from "./Composition.js";
-import {DomCommitPlugin} from "./runtime/DomCommitPlugin.js";
+import { CleanCompositionPlugin, Composer, PluginVerifierPlugin, Recomposer, RememberObserverPlugin, StateReadsPlugin } from 'notcompose'
+import { HtmlComposition } from './Composition.js'
+import { DomCommitPlugin } from './runtime/DomCommitPlugin.js'
 
 export interface HtmlCompositionController {
     flush(): void

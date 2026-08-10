@@ -1,15 +1,5 @@
-import {
-    Modifier,
-    NameModifier,
-    RecomposeLambda,
-    RecomposeLambdaExtensionKey,
-    currentComposer
-} from "notcompose";
-import {
-    DomNodeExtensionKey,
-    createDomTextState,
-    domNodeStateOf
-} from "../runtime/DomNodeState.js";
+import { Modifier, NameModifier, RecomposeLambda, RecomposeLambdaExtensionKey, currentComposer, Node as CompositionNode } from 'notcompose'
+import { DomNodeExtensionKey, createDomTextState, domNodeStateOf } from '../runtime/DomNodeState.js'
 
 export function Text(value: string | number | boolean) {
     const composer = currentComposer()
@@ -40,7 +30,7 @@ export function Text(value: string | number | boolean) {
     composer.endNode()
 }
 
-function ownerDocumentOf(node: import("notcompose").Node | null): Document {
+function ownerDocumentOf(node: CompositionNode | null): Document {
     let current = node
     while (current !== null) {
         const state = domNodeStateOf(current)

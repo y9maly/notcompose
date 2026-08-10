@@ -13,6 +13,7 @@
             "notcompose": ["./src/notcompose/index.ts"],
             "notcompose/molecule": ["./src/notcompose-molecule/index.ts"],
             "notcompose/html": ["./src/notcompose-html/index.ts"],
+            "notcompose/html/jsx-runtime": ["./src/notcompose-html/jsx-runtime.ts"],
             "notcompose/layout": ["./src/notcompose-layout/index.ts"],
             "notcompose/terminal": ["./src/notcompose-terminal/index.ts"]
         },
@@ -25,7 +26,13 @@
         "allowJs": true,
         "strict": true,
         "esModuleInterop": true,
-        "skipLibCheck": true
+        "skipLibCheck": true,
+        "jsx": "react-jsx",
+        "jsxImportSource": "notcompose/html",
+
+        "plugins": [
+            { "transform": "./compiler/transform.js" }
+        ],
     },
     "include": ["./src"]
 }

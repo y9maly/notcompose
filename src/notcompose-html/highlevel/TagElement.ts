@@ -1,62 +1,29 @@
-import {
-    NameModifier,
-    Node as CompositionNode,
-    RecomposeLambda,
-    RecomposeLambdaExtensionKey,
-    currentComposer
-} from "notcompose";
-import {
-    DomNodeExtensionKey,
-    createDomElementState,
-    domNodeStateOf
-} from "../runtime/DomNodeState.js";
-import {Modifier} from "../HtmlModifier.js";
-
-export interface ElementScope<ELEMENT extends Element> {
-    readonly element: ELEMENT
-}
-
-export interface ElementOptions<ELEMENT extends Element> {
-    readonly modifier?: Modifier
-    readonly content?: (scope: ElementScope<ELEMENT>) => void
-}
-
-export type ElementArgument<ELEMENT extends Element> =
-    | ElementOptions<ELEMENT>
-    | ((scope: ElementScope<ELEMENT>) => void)
+import { NameModifier, Node as CompositionNode, RecomposeLambda, RecomposeLambdaExtensionKey, currentComposer } from 'notcompose'
+import { DomNodeExtensionKey, createDomElementState, domNodeStateOf } from '../runtime/DomNodeState.js'
+import { Modifier } from '../HtmlModifier.js'
+import { Args, contentOf, modifierOf, Options, optionsOf } from './types.js'
 
 export function TagElement<TAG extends keyof HTMLElementTagNameMap>(
     tagName: TAG,
-    argument?: ElementArgument<HTMLElementTagNameMap[TAG]>,
-): void
-
-export function TagElement<ELEMENT extends Element = HTMLElement>(
-    tagName: string,
-    argument?: ElementArgument<ELEMENT>,
-): void
-
-export function TagElement<ELEMENT extends Element>(
-    tagName: string,
-    argument?: ElementArgument<ELEMENT>,
-) {
+    ...args: Args
+): void {
     const composer = currentComposer()
-    const normalizedTagName = tagName.toLowerCase()
-    const options = normalizeArgument(argument)
+    const lowerTagName = tagName.toLowerCase()
 
     composer.startNode(Modifier.then(
-        NameModifier(`<${normalizedTagName}>`),
-        ...(options.modifier?.elements ?? []),
+        NameModifier(`<${lowerTagName}>`),
+        ...modifierOf(args).elements,
+        // todo
+        ...Object.entries(optionsOf(args) ?? {}).flatMap(([key, value]) => Modifier.prop(key, value).elements)
     ))
     const compositionNode = composer.currentNode!
-    const state = ensureElementState<ELEMENT>(compositionNode, normalizedTagName)
+    const state = ensureElementState(compositionNode, lowerTagName)
 
-    const composeElement = (() => {
-        options.content?.({element: state.node as ELEMENT})
-    }) satisfies RecomposeLambda
+    const recompose = (() => { contentOf(args)?.() }) satisfies RecomposeLambda
 
-    composer.applyExtension(RecomposeLambdaExtensionKey, composeElement)
+    composer.applyExtension(RecomposeLambdaExtensionKey, recompose)
     composer.startComposingNode()
-    composeElement()
+    recompose()
     composer.endComposingNode()
     composer.endNode()
 }
@@ -94,12 +61,4 @@ function ownerDocumentOf(node: CompositionNode | null): Document {
         current = current.parent
     }
     throw new Error('Cannot create a DOM element outside an HTML composition')
-}
-
-function normalizeArgument<ELEMENT extends Element>(
-    argument?: ElementArgument<ELEMENT>,
-): ElementOptions<ELEMENT> {
-    if (typeof argument === 'function')
-        return {content: argument}
-    return argument ?? {}
 }

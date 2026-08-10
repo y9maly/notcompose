@@ -1,4 +1,4 @@
-import { createModifierCollection, Modifier as BaseModifier, ModifierElement } from 'notcompose'
+import { createExtendedModifier, Modifier as BaseModifier, ModifierElement } from 'notcompose'
 import { AttributeValue } from './runtime/attributes/attributes.js'
 import { AttributeModifier } from './runtime/modifiers/AttributeModifier.js'
 import { StyleModifier, StyleValue } from './runtime/modifiers/StyleModifier.js'
@@ -127,4 +127,4 @@ class HtmlModifier {
 }
 
 export type Modifier = BaseModifier
-export const Modifier = createModifierCollection(HtmlModifier)
+export const Modifier = createExtendedModifier(HtmlModifier)

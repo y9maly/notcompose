@@ -34,7 +34,7 @@ export default antfu(
     },
     {
         name: 'notcompose/project-rules',
-        files: ['**/*.ts'],
+        files: ['**/*.ts', '**/*.tsx'],
         rules: {
             /// ------ Javascript ------
 
@@ -99,7 +99,7 @@ export default antfu(
             }],
             'style/no-mixed-spaces-and-tabs': 'error',
             'style/no-multi-spaces': 'off',
-            'style/no-multiple-empty-lines': ['warn', { max: 3, maxBOF: 10, maxEOF: 10 }],
+            'style/no-multiple-empty-lines': ['off', { max: 3, maxBOF: 10, maxEOF: 10 }],
             'style/no-extra-parens': 'off',
             'style/no-tabs': 'error',
             'style/no-trailing-spaces': 'off',
@@ -124,6 +124,13 @@ export default antfu(
             'style/multiline-ternary': 'off',
             'style/quotes': ['warn', 'single', { allowTemplateLiterals: 'always', avoidEscape: true }],
             'style/semi': ['warn', 'never'],
+
+            /// ------ JSX ------
+
+            'style/jsx-wrap-multilines': 'off',
+            'style/jsx-closing-tag-location': 'off',
+            'style/jsx-tag-spacing': 'off',
+            'style/jsx-one-expression-per-line': 'off',
 
             /// ------ Other ------
 

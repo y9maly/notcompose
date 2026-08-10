@@ -1,6 +1,6 @@
-import {Composer, Recomposer} from "notcompose";
-import {HtmlComposition} from "./Composition.js";
-import {HtmlCompositionController, bootstrapHtmlComposition} from "./bootstrapHtmlComposition.js";
+import { Composer, Recomposer } from 'notcompose'
+import { HtmlComposition } from './Composition.js'
+import { HtmlCompositionController, bootstrapHtmlComposition } from './bootstrapHtmlComposition.js'
 
 export interface RenderedHtmlComposition extends HtmlCompositionController {
     readonly composer: Composer

@@ -1,4 +1,4 @@
-import {ModifierElement} from "notcompose";
+import { ModifierElement } from 'notcompose'
 
 export class PropertyModifier implements ModifierElement {
     constructor(

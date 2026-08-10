@@ -1,16 +1,10 @@
-import {ComposerPlugin, ModifierElement, Node as CompositionNode} from "notcompose";
-import {
-    DomElementState,
-    DomNodeState,
-    DomRootState,
-    domNodeStateOf,
-    isDomContainerState
-} from "./DomNodeState.js";
-import {AttributeModifier} from "./modifiers/AttributeModifier.js";
-import {StyleModifier} from "./modifiers/StyleModifier.js";
-import {ListenerModifier} from "./modifiers/ListenerModifier.js";
-import {PropertyModifier} from "./modifiers/PropertyModifier.js";
-import {DomRef, RefModifier} from "./modifiers/RefModifier.js";
+import { ComposerPlugin, ModifierElement, Node as CompositionNode } from 'notcompose'
+import { DomElementState, DomNodeState, DomRootState, domNodeStateOf, isDomContainerState } from './DomNodeState.js'
+import { AttributeModifier } from './modifiers/AttributeModifier.js'
+import { StyleModifier } from './modifiers/StyleModifier.js'
+import { ListenerModifier } from './modifiers/ListenerModifier.js'
+import { PropertyModifier } from './modifiers/PropertyModifier.js'
+import { DomRef, RefModifier } from './modifiers/RefModifier.js'
 
 export class DomCommitPlugin implements ComposerPlugin {
     private readonly dirtyNodes = new Set<CompositionNode>()
@@ -84,7 +78,7 @@ export class DomCommitPlugin implements ComposerPlugin {
 
     dispose() {
         this.roots.forEach(root => {
-            root.children.forEach(({node}) => node.walkDFS(child => {
+            root.children.forEach(({ node }) => node.walkDFS(child => {
                 const state = domNodeStateOf(child)
                 if (state !== null)
                     cleanupDomState(state)
@@ -103,7 +97,7 @@ export class DomCommitPlugin implements ComposerPlugin {
     }
 }
 
-function commitText(state: Extract<DomNodeState, {kind: 'text'}>) {
+function commitText(state: Extract<DomNodeState, { kind: 'text' }>) {
     if (state.committedData === state.desiredData)
         return
     state.node.data = state.desiredData
@@ -243,7 +237,7 @@ function reconcileDomChildren(node: CompositionNode) {
     }
 
     while (state.node.childNodes.length > desiredChildren.length) {
-        state.node.removeChild(state.node.childNodes.item(state.node.childNodes.length - 1)!)
+        state.node.removeChild(state.node.childNodes.item(state.node.childNodes.length - 1))
     }
 
     state.committedChildren = desiredChildren
@@ -294,7 +288,7 @@ function cleanupDomState(state: DomNodeState) {
 function inlineStyleOf(element: Element): CSSStyleDeclaration | null {
     if (!('style' in element))
         return null
-    return (element as Element & {style: CSSStyleDeclaration}).style
+    return (element as Element & { style: CSSStyleDeclaration }).style
 }
 
 function cssPropertyName(name: string): string {
