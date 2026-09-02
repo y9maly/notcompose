@@ -1,4 +1,4 @@
-import { createExtendedModifier, Modifier as BaseModifier, ModifierElement } from 'notcompose'
+import { createModifierCollection, Modifier as BaseModifier, ModifierCollection, ModifierElement } from 'notcompose'
 import { AttributeValue } from './runtime/attributes/attributes.js'
 import { AttributeModifier } from './runtime/modifiers/AttributeModifier.js'
 import { StyleModifier, StyleValue } from './runtime/modifiers/StyleModifier.js'
@@ -6,13 +6,13 @@ import { DomEvent, ListenerModifier } from './runtime/modifiers/ListenerModifier
 import { PropertyModifier } from './runtime/modifiers/PropertyModifier.js'
 import { DomRef, RefModifier } from './runtime/modifiers/RefModifier.js'
 
-class HtmlModifier {
+class HtmlCollection extends ModifierCollection {
     constructor(
         public readonly elements: ReadonlyArray<ModifierElement> = []
-    ) {}
+    ) { super() }
 
     attr(name: string, value: AttributeValue): this {
-        return this.append(new AttributeModifier(name, value))
+        return this.then(new AttributeModifier(name, value))
     }
 
     id(value: string): this { return this.attr('id', value) }
@@ -51,26 +51,26 @@ class HtmlModifier {
     classes(...values: (string | null | undefined | false)[]): this { return this.attr('class', values.filter((it): it is string => typeof it === 'string' && it.length > 0).join(' ')) }
     className(value: string): this { return this.attr('class', value) }
 
-    style(declarations: Readonly<Record<string, StyleValue>>): this
+    style(declarations: CSSStyleDeclaration | Readonly<Record<string, StyleValue>>): this
     style(name: string, value: StyleValue): this
-    style(nameOrDeclarations: string | Readonly<Record<string, StyleValue>>, value?: StyleValue): this {
+    style(nameOrDeclarations: string | CSSStyleDeclaration | Readonly<Record<string, StyleValue>>, value?: StyleValue): this {
         if (typeof nameOrDeclarations === 'string')
-            return this.append(new StyleModifier(nameOrDeclarations, value))
+            return this.then(new StyleModifier(nameOrDeclarations, value))
 
-        return this.append(
+        return this.then(
             ...Object.entries(nameOrDeclarations)
                 .map(([name, declarationValue]) => new StyleModifier(name, declarationValue))
         )
     }
 
     prop(name: PropertyKey, value: unknown): this {
-        return this.append(new PropertyModifier(element => {
+        return this.then(new PropertyModifier(element => {
             Reflect.set(element, name, value)
         }))
     }
 
     property<ELEMENT extends Element = Element>(update: (element: ELEMENT) => void): this {
-        return this.append(new PropertyModifier(element => update(element as ELEMENT)))
+        return this.then(new PropertyModifier(element => update(element as ELEMENT)))
     }
 
     on<ELEMENT extends Element = Element, EVENT extends Event = Event>(
@@ -78,7 +78,7 @@ class HtmlModifier {
         listener: (event: DomEvent<ELEMENT, EVENT>) => void,
         options?: boolean | AddEventListenerOptions,
     ): this {
-        return this.append(new ListenerModifier(type, listener, options))
+        return this.then(new ListenerModifier(type, listener, options))
     }
 
     onClick<ELEMENT extends Element = HTMLElement>(listener: (event: DomEvent<ELEMENT, MouseEvent>) => void): this {
@@ -118,13 +118,9 @@ class HtmlModifier {
     }
 
     ref<ELEMENT extends Element = HTMLElement>(effect: DomRef<ELEMENT>): this {
-        return this.append(new RefModifier(effect))
-    }
-
-    private append(...elements: ReadonlyArray<ModifierElement>): this {
-        return Modifier.then(...this.elements, ...elements) as unknown as this
+        return this.then(new RefModifier(effect))
     }
 }
 
 export type Modifier = BaseModifier
-export const Modifier = createExtendedModifier(HtmlModifier)
+export const Modifier: Modifier & HtmlCollection = createModifierCollection(HtmlCollection)

@@ -1,135 +1,94 @@
+import { KeyModifier } from './modifiers/KeyModifier.js'
+
 export interface ModifierElement {
     equals(other: ModifierElement): boolean
 }
 
 export interface Modifier {
     readonly elements: ReadonlyArray<ModifierElement>
-
     then(...elements: ReadonlyArray<ModifierElement>): this
 }
 
-interface ModifierConstructor extends Modifier {
-    readonly elements: ReadonlyArray<ModifierElement>
+interface ModifierCompanion extends Modifier {
+    readonly elements: readonly []
+    then(...elements: ReadonlyArray<ModifierElement>): this
 }
 
-export const Modifier: ModifierConstructor = {
-    elements: [],
+interface ModifierConstructor extends ModifierCompanion {
+    new (): Modifier
+}
 
-    then(...elements: ReadonlyArray<ModifierElement>): Modifier {
-        return new ModifierImpl(elements)
+class ModifierClass implements Modifier {
+    public readonly elements: ReadonlyArray<ModifierElement>
+    constructor(...elements: ReadonlyArray<ModifierElement>) {
+        this.elements = elements
     }
-}
-
-class ModifierImpl implements Modifier {
-    constructor(
-        public readonly elements: ReadonlyArray<ModifierElement> = []
-    ) {}
 
     then(...elements: ReadonlyArray<ModifierElement>): this {
-        const modifier = new ModifierImpl([...this.elements, ...elements])
-        return modifier as this
+        return new ModifierClass(...elements) as this
+    }
+
+    static [Symbol.hasInstance](value: unknown): value is Modifier {
+        return (typeof value === 'object' || typeof value === 'function') && (
+            // @ts-ignore
+            value?.[Symbol.hasInstance] === ModifierClass[Symbol.hasInstance]
+            || Function.prototype[Symbol.hasInstance].call(this, value)
+        )
     }
 }
 
-export type ModifierCollectionConstructor<ModifierCollection> = new (elements: ReadonlyArray<ModifierElement>) => ModifierCollection
+const ModifierClass$Companion: ModifierCompanion = {
+    elements: [],
 
-export type ExtendedModifier<MC> = Modifier & MC & {
-    (modifier: Modifier): ExtendedModifier<MC>
+    then(...elements: ReadonlyArray<ModifierElement>): ModifierConstructor {
+        return new ModifierClass(...elements) satisfies Modifier as ModifierConstructor
+    }
 }
 
-export function createExtendedModifier<MC extends { elements: ReadonlyArray<ModifierElement> }>(
-    Collection: ModifierCollectionConstructor<MC>,
-): ExtendedModifier<MC> {
-    const cast = (modifier: Modifier): ExtendedModifier<MC> => _createExtendedModifier(cast, modifier.elements, Collection)
-    return _createExtendedModifier(cast, [], Collection)
+export const Modifier: ModifierConstructor = Object.assign(ModifierClass, ModifierClass$Companion)
+
+// eslint-disable-next-line ts/no-unsafe-declaration-merging
+export interface ModifierCollection {
+    (modifier: Modifier): this
 }
 
-function _createExtendedModifier<MC extends { elements: ReadonlyArray<ModifierElement> }>(
-    cast: (modifier: Modifier) => ExtendedModifier<MC>,
-    baseElements: ReadonlyArray<ModifierElement>,
-    Collection: new (elements: ReadonlyArray<ModifierElement>) => MC,
-): ExtendedModifier<MC> {
-    const collection: MC = new Collection(baseElements)
+// eslint-disable-next-line ts/no-unsafe-declaration-merging
+export abstract class ModifierCollection implements Modifier {
+    declare elements: ReadonlyArray<ModifierElement>
+    declare then: (...elements: ReadonlyArray<ModifierElement>) => this
+}
 
-    const extensions = {
-        then(...elements: ReadonlyArray<ModifierElement>): ExtendedModifier<MC> {
-            return _createExtendedModifier(cast, [...baseElements, ...elements], Collection)
+export function createModifierCollection<COLLECTION>(...collectionConstructors: ReadonlyArray<{ new (): COLLECTION }>): Modifier & COLLECTION {
+    const createInstance = () => function ExtendedModifier(modifier: Modifier) {
+        return initializeInstance(createInstance(), ...modifier.elements)
+    }
+
+    class Instance extends Modifier {}
+    // @ts-ignore
+    Instance.prototype[Symbol.hasInstance] = Modifier[Symbol.hasInstance]
+    for (const collectionConstructor of collectionConstructors) {
+        // eslint-disable-next-line explicit-any/no-unsafe-argument
+        copyPrototype(Instance.prototype, collectionConstructor.prototype)
+    }
+
+    function initializeInstance(instance: any, ...elements: ReadonlyArray<ModifierElement>): Modifier & COLLECTION {
+        Object.setPrototypeOf(instance, Instance.prototype)
+
+        instance.elements = elements
+        instance.then = function (...newElements: ReadonlyArray<ModifierElement>): Modifier {
+            return initializeInstance(createInstance(), ...elements, ...newElements)
         }
+
+        return instance as Modifier & COLLECTION
     }
 
-    return _merge(cast, extensions, collection)
+    return initializeInstance(createInstance())
 }
 
-function _merge<BASE extends object, EXTENSIONS extends object, COLLECTION extends object>(
-    base: BASE,
-    extensions: EXTENSIONS,
-    collection: COLLECTION,
-): BASE & EXTENSIONS & COLLECTION {
-    const sources: readonly object[] = [
-        base,
-        extensions,
-        collection,
-    ]
-
-    function sourceOf(property: PropertyKey): object | undefined {
-        return sources.find(source => Reflect.has(source, property))
+function copyPrototype(target: object, source: object) {
+    for (const key of Reflect.ownKeys(source)) {
+        if (key === 'constructor') continue
+        const descriptor = Object.getOwnPropertyDescriptor(source, key)
+        if (descriptor) Object.defineProperty(target, key, descriptor)
     }
-
-    function ownSourceOf(property: PropertyKey): object | undefined {
-        return sources.find(source => Object.hasOwn(source, property))
-    }
-
-    return new Proxy(base, {
-        get(_, property, receiver): unknown {
-            const source = sourceOf(property)
-            if (source === undefined)
-                return undefined
-            return Reflect.get(source, property, receiver)
-        },
-
-        set(_, property, value) {
-            const source = sourceOf(property) ?? collection
-            return Reflect.set(source, property, value, source)
-        },
-
-        has(_, property) {
-            return sourceOf(property) !== undefined
-        },
-
-        ownKeys() {
-            const keys = new Set<string | symbol>()
-            for (const source of sources) {
-                for (const key of Reflect.ownKeys(source))
-                    keys.add(key)
-            }
-            return [...keys]
-        },
-
-        getOwnPropertyDescriptor(target, property) {
-            const targetDescriptor = Reflect.getOwnPropertyDescriptor(target, property)
-            if (targetDescriptor !== undefined)
-                return targetDescriptor
-
-            const source = ownSourceOf(property)
-            if (source === undefined)
-                return undefined
-
-            const descriptor = Reflect.getOwnPropertyDescriptor(source, property)!
-            return {
-                ...descriptor,
-                configurable: true,
-            }
-        },
-
-        deleteProperty(_, property) {
-            const source = ownSourceOf(property)
-            if (source === undefined)
-                return true
-            return Reflect.deleteProperty(source, property)
-        },
-
-        preventExtensions() {
-            return false
-        },
-    }) as BASE & EXTENSIONS & COLLECTION
 }
