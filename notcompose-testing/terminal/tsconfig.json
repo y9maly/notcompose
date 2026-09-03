@@ -1,0 +1,29 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "dist",
+
+    "skipLibCheck": true, // todo временно ; сделать build
+
+    "composite": true,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "inlineSources": true,
+
+    "types": [],
+    "lib": ["es2022", "ESNext.Disposable"],
+    "tsBuildInfoFile": "dist/.tsbuildinfo",
+  },
+  "include": ["src/**/*.ts"],
+  "references": [
+    { "path": "../../notcompose" },
+    { "path": "../../notcompose-layout" },
+    { "path": "../../notcompose-ui" },
+    { "path": "../../notcompose-terminal" },
+    { "path": "../../notcompose-testing/core" },
+    { "path": "../../notcompose-testing/layout" },
+    { "path": "../../notcompose-testing/ui" },
+  ]
+}

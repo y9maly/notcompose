@@ -1,9 +1,29 @@
 packages:
+  - test
+  - examples-terminal
+  - examples-html
   - notcompose
+  - notcompose/test
   - notcompose-layout
+  - notcompose-layout/test
+  - notcompose-ui
+  - notcompose-ui/test
   - notcompose-terminal
+  - notcompose-terminal/test
   - notcompose-molecule
+  - notcompose-molecule/test
+  - notcompose-molecule/notcompose-molecule-rxjs
+  - notcompose-molecule/notcompose-molecule-rxjs/test
   - notcompose-html
+  - notcompose-html/test
+  - notcompose-testing/core
+  - notcompose-testing/layout
+  - notcompose-testing/ui
+  - notcompose-testing/terminal
+  - notcompose-testing/molecule
+  - notcompose-testing/html
+
+linkWorkspacePackages: true
 
 allowBuilds:
   esbuild: false

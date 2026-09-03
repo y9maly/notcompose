@@ -44,7 +44,7 @@ function applyOuterCoordinator(node: Node, innerMeasurePolicy: MeasurePolicy): L
 
     for (let i = node.modifier.elements.length - 1; i >= 0; i--) {
         const element = node.modifier.elements[i]
-        if (LayoutModifier.symbol in element) {
+        if (LayoutModifier.is(element)) {
             if (coordinator === null) {
                 coordinator = new InnerLayoutNodeCoordinator(node, [...elements], innerMeasurePolicy)
                 elements.splice(0, elements.length)
@@ -56,7 +56,7 @@ function applyOuterCoordinator(node: Node, innerMeasurePolicy: MeasurePolicy): L
             }
 
             elements.unshift(element)
-            layoutModifier = element[LayoutModifier.symbol] as LayoutModifier
+            layoutModifier = LayoutModifier.of(element)!
         } else {
             elements.unshift(element)
         }

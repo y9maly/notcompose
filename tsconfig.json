@@ -1,10 +1,20 @@
 {
   "files": [],
   "references": [
+    { "path": "examples-terminal" },
+    { "path": "examples-html" },
     { "path": "notcompose" },
     { "path": "notcompose-layout" },
+    { "path": "notcompose-ui" },
     { "path": "notcompose-terminal" },
     { "path": "notcompose-molecule" },
+    { "path": "notcompose-molecule/notcompose-molecule-rxjs" },
     { "path": "notcompose-html" },
+    { "path": "notcompose-testing/core" },
+    { "path": "notcompose-testing/layout" },
+    { "path": "notcompose-testing/ui" },
+    { "path": "notcompose-testing/terminal" },
+    { "path": "notcompose-testing/molecule" },
+    { "path": "notcompose-testing/html" },
   ]
 }

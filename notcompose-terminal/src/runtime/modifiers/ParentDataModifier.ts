@@ -4,10 +4,10 @@ export interface ParentDataModifier {
 
 const symbol = Symbol()
 ParentDataModifier.symbol = symbol
-ParentDataModifier.of = (o: unknown): ParentDataModifier | null => {
-    if (!o || typeof o !== 'object' || !(ParentDataModifier.symbol in o)) return null
-    return o[ParentDataModifier.symbol] as ParentDataModifier
-}
+ParentDataModifier.is = (o: unknown): o is { [ParentDataModifier.symbol]: ParentDataModifier } =>
+    !(!o || typeof o !== 'object' || !(ParentDataModifier.symbol in o))
+ParentDataModifier.of = (o: unknown): ParentDataModifier | null =>
+    ParentDataModifier.is(o) ? o[ParentDataModifier.symbol] : null
 
 export function ParentDataModifier(modifyParentData: (parentData: unknown) => unknown): unknown {
     return new ParentDataModifierImpl(modifyParentData)

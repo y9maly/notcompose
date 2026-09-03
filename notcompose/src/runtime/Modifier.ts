@@ -27,7 +27,7 @@ class ModifierClass implements Modifier {
     }
 
     then(...elements: ReadonlyArray<ModifierElement>): this {
-        return new ModifierClass(...elements) as this
+        return new ModifierClass(...this.elements, ...elements) as this
     }
 
     key(key: string | number | boolean): this {

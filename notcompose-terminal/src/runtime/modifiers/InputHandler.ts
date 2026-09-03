@@ -7,10 +7,10 @@ export interface InputHandlerModifier extends ModifierElement {
 
 const symbol = Symbol()
 InputHandler.symbol = symbol
-InputHandler.is = (o: unknown): o is { [symbol]: InputHandlerModifier } =>
+InputHandler.is = (o: unknown): o is { [InputHandler.symbol]: InputHandlerModifier } =>
     !(!o || typeof o !== 'object' || !(InputHandler.symbol in o))
 InputHandler.of = (o: unknown): InputHandlerModifier | null =>
-    InputHandler.is(o) ? o[symbol] : null
+    InputHandler.is(o) ? o[InputHandler.symbol] : null
 
 export const handleInput = InputHandler
 export function InputHandler(

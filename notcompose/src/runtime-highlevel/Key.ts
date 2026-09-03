@@ -1,9 +1,9 @@
 import { currentComposer } from '../runtime/currentComposer.js'
 import { Modifier } from '../runtime/Modifier.js'
-import type { Key } from '../runtime/Composer.js'
+import type { Key as ComposerKey } from '../runtime/Composer.js'
 import { RecomposeLambdaExtensionKey } from '../runtime-plugins/partialRecomposition/RecomposeLambda.js'
 
-export function Key<T>(key: Key, content: () => T): T {
+export function Key<T>(key: ComposerKey, content: () => T): T {
     currentComposer().startNode(Modifier, key)
     currentComposer().applyExtension(RecomposeLambdaExtensionKey, content)
     currentComposer().startComposingNode()
@@ -13,7 +13,7 @@ export function Key<T>(key: Key, content: () => T): T {
     return value
 }
 
-Key.start = (key: Key, recompose?: () => void) => {
+Key.start = (key: ComposerKey, recompose?: () => void) => {
     currentComposer().startNode(Modifier, key)
     if (recompose)
         currentComposer().applyExtension(RecomposeLambdaExtensionKey, recompose)

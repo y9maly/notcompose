@@ -17,11 +17,11 @@ export default antfu(
             braceStyle: '1tbs',
         },
         typescript: {
-            tsconfigPath: 'tsconfig.vitest.json',
+            tsconfigPath: 'tsconfig.json',
             parserOptions: {
                 projectService: {
-                    allowDefaultProject: ['*.js', '*.config.ts', 'eslint/*.ts'],
-                    defaultProject: 'tsconfig.vitest.json',
+                    allowDefaultProject: ['*.config.ts', 'eslint/*.ts'],
+                    defaultProject: 'tsconfig.json',
                 },
             },
         },
@@ -215,13 +215,30 @@ export default antfu(
             'explicit-any/no-unsafe-return': 'off',
         },
     },
-    {
-        name: 'notcompose/tests',
-        files: ['test/**/*.ts'],
-        rules: {
-            'no-console': 'off',
-            'ts/dot-notation': 'off',
-            'ts/no-explicit-any': 'off',
-        },
-    },
+    // {
+    //     name: 'notcompose/no-testing-imports-in-src',
+    //     files: ['**/src/**/*.ts'],
+    //     rules: {
+    //         'no-restricted-imports': ['error', {
+    //             patterns: [
+    //                 {
+    //                     group: [
+    //                         '@notcompose/testing-*',
+    //                         '@notcompose/testing-*/**',
+    //                     ],
+    //                     message: `'notcompose-testing package can't be used in src/ folder.'`,
+    //                 },
+    //             ],
+    //         }],
+    //     },
+    // },
+    // {
+    //     name: 'notcompose/tests',
+    //     files: ['test/**/*.ts'],
+    //     rules: {
+    //         'no-console': 'off',
+    //         'ts/dot-notation': 'off',
+    //         'ts/no-explicit-any': 'off',
+    //     },
+    // },
 )

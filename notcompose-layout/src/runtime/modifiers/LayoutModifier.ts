@@ -15,10 +15,10 @@ export interface LayoutModifier extends ModifierElement {
 
 const symbol = Symbol()
 LayoutModifier.symbol = symbol
-LayoutModifier.of = (o: unknown): LayoutModifier | null => {
-    if (!o || typeof o !== 'object' || !(LayoutModifier.symbol in o)) return null
-    return o[LayoutModifier.symbol] as LayoutModifier
-}
+LayoutModifier.is = (o: unknown): o is { [LayoutModifier.symbol]: LayoutModifier } =>
+    !(!o || typeof o !== 'object' || !(LayoutModifier.symbol in o))
+LayoutModifier.of = (o: unknown): LayoutModifier | null =>
+    LayoutModifier.is(o) ? o[LayoutModifier.symbol] : null
 
 export const layout = LayoutModifier
 export function LayoutModifier(

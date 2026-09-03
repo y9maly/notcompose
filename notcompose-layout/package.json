@@ -21,9 +21,6 @@
   "peerDependencies": {
     "@notcompose/core": "^0.1.0"
   },
-  "devDependencies": {
-    "@notcompose/core": "workspace:*"
-  },
   "publishConfig": {
     "access": "public"
   },

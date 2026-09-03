@@ -1,0 +1,28 @@
+{
+  "name": "@tests/root",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@notcompose/core": "workspace:*",
+    "@notcompose/layout": "workspace:*",
+    "@notcompose/ui": "workspace:*",
+    "@notcompose/terminal": "workspace:*",
+    "@notcompose/molecule": "workspace:*",
+    "@notcompose/molecule-rxjs": "workspace:*",
+    "@notcompose/html": "workspace:*",
+    "@notcompose/testing-core": "workspace:*",
+    "@notcompose/testing-layout": "workspace:*",
+    "@notcompose/testing-ui": "workspace:*",
+    "@notcompose/testing-terminal": "workspace:*",
+    "@notcompose/testing-molecule": "workspace:*",
+    "@notcompose/testing-html": "workspace:*",
+    "rxjs": "^7.8.2"
+  },
+  "devDependencies": {
+    "@types/node": "^26.2.0"
+  }
+}

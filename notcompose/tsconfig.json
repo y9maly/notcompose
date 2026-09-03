@@ -10,7 +10,7 @@
     "sourceMap": true,
     "inlineSources": true,
 
-    "types": ["node"],
+    "types": [],
     "lib": ["es2022", "ESNext.Disposable"],
     "tsBuildInfoFile": "dist/.tsbuildinfo",
   },

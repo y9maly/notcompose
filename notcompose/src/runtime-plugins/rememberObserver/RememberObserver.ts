@@ -5,10 +5,10 @@ export interface RememberObserver {
 
 const symbol = Symbol('RememberObserver')
 RememberObserver.symbol = symbol
-RememberObserver.is = (o: unknown): o is { [symbol]: RememberObserver } =>
+RememberObserver.is = (o: unknown): o is { [RememberObserver.symbol]: RememberObserver } =>
     !(!o || typeof o !== 'object' || !(RememberObserver.symbol in o))
 RememberObserver.of = (o: unknown): RememberObserver | null =>
-    RememberObserver.is(o) ? o[symbol] : null
+    RememberObserver.is(o) ? o[RememberObserver.symbol] : null
 
 export function RememberObserver(
     onRemembered: () => void,

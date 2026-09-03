@@ -26,8 +26,6 @@
     "@notcompose/layout": "^0.1.0"
   },
   "devDependencies": {
-    "@notcompose/core": "workspace:*",
-    "@notcompose/layout": "workspace:*",
     "@types/node": "^26.2.0"
   },
   "publishConfig": {

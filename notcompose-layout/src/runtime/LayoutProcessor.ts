@@ -1,5 +1,5 @@
 import { type ComposerKey, currentComposer, Modifier, Node, type RecomposeLambda, RecomposeLambdaExtensionKey, withComposer } from '@notcompose/core'
-import { Composer } from '@notcompose/core'
+import { Composer, assertUInt  } from '@notcompose/core'
 import { Constraints } from './Constraints.js'
 import { LayoutProcessorPluginDebug } from './LayoutProcessorPlugin.js'
 import { MeasurePolicyExtensionKey } from './nodeExtensions/MeasurePolicyNodeExtension.js'
@@ -14,7 +14,6 @@ import { type Measurable, MeasureResult } from './Measurable.js'
 import type { Placeable } from './Placeable.js'
 import { InnerLayoutNodeCoordinator } from './layoutNode/InnerLayoutNodeCoordinator.js'
 import { type SubconstraintsNodeExtension, SubconstraintsNodeExtensionKey } from './nodeExtensions/SubconstraintsNodeExtension.js'
-import { assertUInt } from '@notcompose/core'
 
 export class LayoutProcessor {
     constructor(

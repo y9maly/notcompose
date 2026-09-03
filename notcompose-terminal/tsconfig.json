@@ -4,6 +4,8 @@
     "rootDir": "src",
     "outDir": "dist",
 
+    "skipLibCheck": true, // todo временно ; сделать build
+
     "composite": true,
     "declaration": true,
     "declarationMap": true,

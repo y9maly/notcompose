@@ -1,0 +1,35 @@
+{
+  "name": "@notcompose/molecule-rxjs",
+  "version": "0.1.0",
+  "description": "notcompose molecule (rxjs integration)",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest run",
+    "prepack": "pnpm run build"
+  },
+  "peerDependencies": {
+    "@notcompose/core": "^0.1.0",
+    "@notcompose/molecule": "^0.1.0",
+    "rxjs": "^7.8.2"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/y9maly/notcompose.git",
+    "directory": "notcompose-molecule/notcompose-molecule-rxjs"
+  }
+}

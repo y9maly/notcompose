@@ -8,10 +8,10 @@ export interface DrawModifier extends ModifierElement {
 
 const symbol = Symbol()
 DrawModifier.symbol = symbol
-DrawModifier.is = (o: unknown): o is { [symbol]: DrawModifier } =>
+DrawModifier.is = (o: unknown): o is { [DrawModifier.symbol]: DrawModifier } =>
     !(!o || typeof o !== 'object' || !(DrawModifier.symbol in o))
 DrawModifier.of = (o: unknown): DrawModifier | null =>
-    DrawModifier.is(o) ? o[symbol] : null
+    DrawModifier.is(o) ? o[DrawModifier.symbol] : null
 
 export function drawBehind(draw: (scope: DrawScope) => void): DrawModifier {
     return DrawModifier(scope => {

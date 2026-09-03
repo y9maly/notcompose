@@ -1,0 +1,41 @@
+{
+  "name": "@notcompose/testing-terminal",
+  "version": "0.1.0",
+  "description": "notcompose-testing utilities for notcompose-terminal",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "prepack": "pnpm run build"
+  },
+  "dependencies": {
+    "rxjs": "^7.8.2"
+  },
+  "peerDependencies": {
+    "@notcompose/core": "^0.1.0",
+    "@notcompose/layout": "^0.1.0",
+    "@notcompose/ui": "^0.1.0",
+    "@notcompose/terminal": "^0.1.0",
+    "@notcompose/testing-core": "^0.1.0",
+    "@notcompose/testing-layout": "^0.1.0",
+    "@notcompose/testing-ui": "^0.1.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/y9maly/notcompose.git",
+    "directory": "notcompose-testing/terminal"
+  }
+}

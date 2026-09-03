@@ -1,5 +1,5 @@
 import { createModifierCollection, Modifier as BaseModifier, ModifierCollection, type ModifierElement } from '@notcompose/core'
-import { fillMaxHeight, fillMaxSize, fillMaxWidth, height, padding, size, width } from '@notcompose/layout'
+import { fillMaxHeight, fillMaxSize, fillMaxWidth, height, offset, padding, size, width } from '@notcompose/layout'
 import { Color } from './runtime/ui/Color.js'
 import { background } from './runtime/modifiers/BackgroundModifier.js'
 
@@ -23,6 +23,14 @@ class TerminalCollection extends ModifierCollection {
         // @ts-ignore
         // eslint-disable-next-line explicit-any/no-unsafe-argument
         return this.then(...this.elements, padding(...args))
+    }
+
+    offset(x: number): this
+    offset(x: number, y: number): this
+    offset(params: { x?: number, y?: number }): this
+    offset(...args: any[]): this {
+        // @ts-ignore
+        return this.then(offset(...args))
     }
 
     size(all: number): this
@@ -64,4 +72,4 @@ class TerminalCollection extends ModifierCollection {
 }
 
 export type Modifier = BaseModifier
-export const Modifier = createModifierCollection(TerminalCollection)
+export const Modifier: Modifier & TerminalCollection = createModifierCollection(TerminalCollection)

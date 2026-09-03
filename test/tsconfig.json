@@ -1,4 +1,25 @@
 {
-    "extends": "../tsconfig.vitest.json",
-    "include": ["./**/*.ts", "./../src"]
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "lib": ["es2022", "ESNext.Disposable"],
+    "types": ["node", "vitest/globals"],
+
+    "skipLibCheck": true, // todo временно ; сделать build
+  },
+  "include": ["./**/*.test.ts"],
+  "references": [
+    { "path": "../notcompose" },
+    { "path": "../notcompose-layout" },
+    { "path": "../notcompose-ui" },
+    { "path": "../notcompose-terminal" },
+    { "path": "../notcompose-molecule" },
+    { "path": "../notcompose-molecule/notcompose-molecule-rxjs" },
+    { "path": "../notcompose-testing/core" },
+    { "path": "../notcompose-testing/layout" },
+    { "path": "../notcompose-testing/ui" },
+    { "path": "../notcompose-testing/terminal" },
+    { "path": "../notcompose-testing/molecule" },
+    { "path": "../notcompose-testing/html" },
+  ]
 }
