@@ -2,7 +2,7 @@ import { Layout } from '../runtime/Layout.js'
 import { elvis, Modifier, NameModifier } from 'notcompose'
 import { Alignment } from '../runtime/core/Alignment.js'
 import { Size } from '../runtime/core/Size.js'
-import { Placeable } from '../runtime/Placeable.js'
+import type { Placeable } from '../runtime/Placeable.js'
 import { MeasureResult } from '../runtime/Measurable.js'
 import { MeasurePolicy } from '../runtime/MeasurePolicy.js'
 

@@ -1,8 +1,9 @@
 import { Node } from './Node.js'
 import { Modifier } from './Modifier.js'
-import { CompleteComposerPlugin, ComposerPlugin } from './ComposerPlugin.js'
-import { ComposerPluginContext } from './ComposerPluginContext.js'
+import { CompleteComposerPlugin, type ComposerPlugin } from './ComposerPlugin.js'
+import type { ComposerPluginContext } from './ComposerPluginContext.js'
 import { NodeExtensionKey } from './NodeExtensionKey.js'
+import { KeyModifier } from './modifiers/KeyModifier.js'
 
 export type Key = number | string
 

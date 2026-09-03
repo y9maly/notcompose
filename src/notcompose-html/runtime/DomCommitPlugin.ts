@@ -1,10 +1,10 @@
-import { ComposerPlugin, ModifierElement, Node as CompositionNode } from 'notcompose'
-import { DomElementState, DomNodeState, DomRootState, domNodeStateOf, isDomContainerState } from './DomNodeState.js'
+import { type ComposerPlugin, type ModifierElement, Node as CompositionNode } from 'notcompose'
+import { type DomElementState, type DomNodeState, type DomRootState, domNodeStateOf, isDomContainerState } from './DomNodeState.js'
 import { AttributeModifier } from './modifiers/AttributeModifier.js'
 import { StyleModifier } from './modifiers/StyleModifier.js'
 import { ListenerModifier } from './modifiers/ListenerModifier.js'
 import { PropertyModifier } from './modifiers/PropertyModifier.js'
-import { DomRef, RefModifier } from './modifiers/RefModifier.js'
+import { type DomRef, RefModifier } from './modifiers/RefModifier.js'
 
 export class DomCommitPlugin implements ComposerPlugin {
     private readonly dirtyNodes = new Set<CompositionNode>()

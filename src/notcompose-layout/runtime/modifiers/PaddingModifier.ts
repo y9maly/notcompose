@@ -1,5 +1,5 @@
 import { LayoutModifier } from './LayoutModifier.js'
-import { ModifierElement } from 'notcompose'
+import type { ModifierElement } from 'notcompose'
 import { MeasureResult } from '../Measurable.js'
 
 export function padding(all: number): ModifierElement

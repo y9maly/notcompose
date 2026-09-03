@@ -1,4 +1,4 @@
-import { Key } from './Composer.js'
+import type { Key } from './Composer.js'
 import { Modifier } from './Modifier.js'
 import { NameElement } from './modifiers/NameElement.js'
 import { NodeExtensionKey } from './NodeExtensionKey.js'

@@ -1,4 +1,4 @@
-import { ModifierElement } from 'notcompose'
+import type { ModifierElement } from 'notcompose'
 import { LayoutModifier } from './LayoutModifier.js'
 import { Constraints } from '../Constraints.js'
 import { MeasureResult } from '../Measurable.js'

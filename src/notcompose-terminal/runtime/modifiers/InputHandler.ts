@@ -1,4 +1,4 @@
-import { ModifierElement } from 'notcompose'
+import type { ModifierElement } from 'notcompose'
 
 export interface InputHandlerModifier extends ModifierElement {
     pass: 'Initial' | 'Main' | 'Final'

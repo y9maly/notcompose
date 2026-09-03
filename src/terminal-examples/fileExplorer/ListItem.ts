@@ -1,4 +1,4 @@
-import { Item } from './utils.js'
+import type { Item } from './utils.js'
 import { DisposableEffect, Modifier, rememberState } from 'notcompose'
 import { Row } from 'notcompose/layout'
 import { Text } from 'notcompose/terminal'

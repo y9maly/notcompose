@@ -1,6 +1,6 @@
-import { IntrinsicMeasurable } from './IntrinsicMeasurable.js'
+import type { IntrinsicMeasurable } from './IntrinsicMeasurable.js'
 import { Constraints } from './Constraints.js'
-import { Placeable } from './Placeable.js'
+import type { Placeable } from './Placeable.js'
 
 export interface Measurable extends IntrinsicMeasurable {
     measure(constraints: Constraints): Placeable

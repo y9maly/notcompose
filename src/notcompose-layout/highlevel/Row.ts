@@ -1,7 +1,7 @@
 import { Layout } from '../runtime/Layout.js'
 import { elvis, Modifier, NameModifier } from 'notcompose'
 import { Alignment, VerticalAlignment } from '../runtime/core/Alignment.js'
-import { Placeable } from '../runtime/Placeable.js'
+import type { Placeable } from '../runtime/Placeable.js'
 import { MeasurePolicy } from '../runtime/MeasurePolicy.js'
 
 export const RowMeasurePolicy = (

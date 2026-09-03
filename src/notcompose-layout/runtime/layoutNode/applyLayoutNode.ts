@@ -5,7 +5,7 @@ import { EmptyMeasurePolicy } from '../../highlevel/Empty.js'
 import { LayoutModifierLayoutNodeCoordinator } from './LayoutModifierLayoutNodeCoordinator.js'
 import { LayoutModifier } from '../modifiers/LayoutModifier.js'
 import { InnerLayoutNodeCoordinator } from './InnerLayoutNodeCoordinator.js'
-import { LayoutNodeCoordinator } from './LayoutNodeCoordinator.js'
+import type { LayoutNodeCoordinator } from './LayoutNodeCoordinator.js'
 import { MeasurePolicy } from '../MeasurePolicy.js'
 
 export function applyLayoutNode(node: Node): LayoutNode {

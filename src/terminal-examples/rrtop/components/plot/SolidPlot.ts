@@ -1,4 +1,4 @@
-import { HistoryData } from './HistoryData.js'
+import type { HistoryData } from './HistoryData.js'
 import { elvis } from 'notcompose'
 import { Alignment, fillMaxWidth, height, RowWithConstraints, Spacer, VerticalAlignment, width } from 'notcompose/layout'
 import { repeat } from '../../../common/repeat.js'

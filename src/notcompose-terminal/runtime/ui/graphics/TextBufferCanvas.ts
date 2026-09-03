@@ -1,7 +1,7 @@
 import { AnnotatedString } from '../AnnotatedString.js'
-import { TextCanvas } from './TextCanvas.js'
-import { TextSpanType } from '../TextSpan.js'
-import { Char, Float } from '../../../../core/types.js'
+import type { TextCanvas } from './TextCanvas.js'
+import type { TextSpanType } from '../TextSpan.js'
+import { Char, type Float } from '../../../../core/types.js'
 import { TransformationMatrix } from './TransformationMatrix.js'
 import { Rect, Size } from 'notcompose/layout'
 

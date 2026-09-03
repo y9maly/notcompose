@@ -1,4 +1,4 @@
-import { Item } from './utils.js'
+import type { Item } from './utils.js'
 import { Key, Modifier, NameModifier } from 'notcompose'
 import { ColumnWithConstraints, Constraints } from 'notcompose/layout'
 import { Text } from 'notcompose/terminal'

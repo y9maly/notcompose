@@ -1,4 +1,4 @@
-import { Composer, Modifier, Node, RecomposeLambda, RecomposeLambdaExtensionKey, withComposer } from 'notcompose'
+import { Composer, Modifier, Node, type RecomposeLambda, RecomposeLambdaExtensionKey, withComposer } from 'notcompose'
 import { MeasurePolicy, MeasurePolicyExtensionKey, MeasureResult } from 'notcompose/layout'
 
 const RootMeasurePolicy = MeasurePolicy(

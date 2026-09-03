@@ -1,5 +1,5 @@
-import { MeasurerPluginContext } from './MeasurerPluginContext.js'
-import { LayoutNodeCoordinator } from '../layoutNode/LayoutNodeCoordinator.js'
+import type { MeasurerPluginContext } from './MeasurerPluginContext.js'
+import type { LayoutNodeCoordinator } from '../layoutNode/LayoutNodeCoordinator.js'
 import { MeasureResult } from '../Measurable.js'
 import { Constraints } from '../Constraints.js'
 

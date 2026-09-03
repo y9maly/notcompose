@@ -1,8 +1,8 @@
-import { ComposerPlugin } from '../../runtime/ComposerPlugin.js'
+import type { ComposerPlugin } from '../../runtime/ComposerPlugin.js'
 import { Node } from '../../runtime/Node.js'
-import { ComposerPluginContext } from '../../runtime/ComposerPluginContext.js'
+import type { ComposerPluginContext } from '../../runtime/ComposerPluginContext.js'
 import { Composer } from '../../runtime/Composer.js'
-import { StateReadsObserver } from './StateReadsObserver.js'
+import type { StateReadsObserver } from './StateReadsObserver.js'
 import { StateReadsCollector } from './StateReadsCollector.js'
 
 export class StateReadsPlugin implements ComposerPlugin {

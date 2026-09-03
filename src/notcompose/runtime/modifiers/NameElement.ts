@@ -1,4 +1,4 @@
-import { ModifierElement } from '../Modifier.js'
+import type { ModifierElement } from '../Modifier.js'
 
 /**
  * Для дебага

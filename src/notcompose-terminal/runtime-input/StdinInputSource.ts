@@ -1,4 +1,4 @@
-import { InputSource } from './InputSource.js'
+import type { InputSource } from './InputSource.js'
 import * as readline from 'node:readline'
 import process from 'node:process'
 

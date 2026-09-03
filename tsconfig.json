@@ -3,6 +3,7 @@
         "types": ["node"],
         "lib": ["es2024", "DOM", "DOM.Iterable", "ESNext.Array", "ESNext.Collection", "ESNext.Iterator", "ESNext.Promise"],
 
+        "verbatimModuleSyntax": true,
         "module": "nodenext",
         "moduleResolution": "nodenext",
         "target": "es2022",
@@ -22,6 +23,7 @@
         "declarationMap": true,
         "sourceMap": true,
 
+        "noEmitOnError": true,
         "incremental": true,
         "allowJs": true,
         "strict": true,

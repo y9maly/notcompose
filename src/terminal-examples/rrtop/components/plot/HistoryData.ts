@@ -1,4 +1,4 @@
-import { HistoryItem } from './HistoryItem.js'
+import type { HistoryItem } from './HistoryItem.js'
 
 export interface HistoryData {
     items: HistoryItem[]

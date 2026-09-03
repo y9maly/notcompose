@@ -1,4 +1,4 @@
-import { ModifierElement } from 'notcompose'
+import type { ModifierElement } from 'notcompose'
 import { ContentDrawScope } from '../ui/graphics/ContentDrawScope.js'
 import { DrawScope } from '../ui/graphics/DrawScope.js'
 

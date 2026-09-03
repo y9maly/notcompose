@@ -1,6 +1,6 @@
-import { Key } from '../../../notcompose/runtime/Composer.js'
+import type { Key } from '../../../notcompose/runtime/Composer.js'
 import { Constraints } from '../Constraints.js'
-import { Measurable, MeasureResult } from '../Measurable.js'
+import { type Measurable, MeasureResult } from '../Measurable.js'
 import { NodeExtensionKey } from 'notcompose'
 
 export const SubcomposeNodeExtensionKey = new NodeExtensionKey<SubcomposeNodeExtension>('Subcompose')

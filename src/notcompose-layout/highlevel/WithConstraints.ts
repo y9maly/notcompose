@@ -1,6 +1,6 @@
 import { MeasurePolicyExtensionKey } from '../runtime/nodeExtensions/MeasurePolicyNodeExtension.js'
 import { BoxMeasurePolicy } from './Box.js'
-import { SubconstraintsNodeExtension, SubconstraintsNodeExtensionKey } from '../runtime/nodeExtensions/SubconstraintsNodeExtension.js'
+import { type SubconstraintsNodeExtension, SubconstraintsNodeExtensionKey } from '../runtime/nodeExtensions/SubconstraintsNodeExtension.js'
 import { ColumnMeasurePolicy } from './Column.js'
 import { RowMeasurePolicy } from './Row.js'
 import { currentComposer, Modifier, NameModifier } from 'notcompose'

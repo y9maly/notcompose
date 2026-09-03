@@ -1,4 +1,4 @@
-import { createModifierCollection, Modifier as BaseModifier, ModifierCollection, ModifierElement } from 'notcompose'
+import { createModifierCollection, Modifier as BaseModifier, ModifierCollection, type ModifierElement } from 'notcompose'
 import { fillMaxHeight, fillMaxSize, fillMaxWidth, height, padding, size, width } from 'notcompose/layout'
 import { Color } from './runtime/ui/Color.js'
 import { background } from './runtime/modifiers/BackgroundModifier.js'

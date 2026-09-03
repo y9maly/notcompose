@@ -1,4 +1,4 @@
-import { State } from './State.js'
+import type { State } from './State.js'
 
 const stateReadObservers = new Set<(state: State<unknown>) => void>()
 const stateWriteObservers = new Set<(state: State<unknown>) => void>()

@@ -1,6 +1,6 @@
 import { mutableStateOf } from 'notcompose'
-import { HistoryData } from '../components/plot/HistoryData.js'
-import { SystemInfoRepository } from '../repository/SystemInfoRepository.js'
+import type { HistoryData } from '../components/plot/HistoryData.js'
+import type { SystemInfoRepository } from '../repository/SystemInfoRepository.js'
 
 export class MainViewModel {
     constructor(

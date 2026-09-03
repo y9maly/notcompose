@@ -1,6 +1,6 @@
 import { BehaviorSubject } from 'rxjs'
 import { subjectMolecule } from './rxjs/subjectMolecule.js'
-import { DisposableEffect, MutableState, rememberState, State, subjectAsState } from 'notcompose'
+import { DisposableEffect, MutableState, rememberState, type State, subjectAsState } from 'notcompose'
 import * as console from 'node:console'
 
 // --- Domain ---

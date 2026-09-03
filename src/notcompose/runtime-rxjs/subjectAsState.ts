@@ -1,5 +1,5 @@
 import { BehaviorSubject } from 'rxjs'
-import { State } from '../runtime/State.js'
+import type { State } from '../runtime/State.js'
 import { rememberState } from '../runtime-highlevel/rememberState.js'
 import { DisposableEffect } from '../runtime-highlevel/DisposableEffect.js'
 

@@ -1,5 +1,5 @@
 import { TagElement } from './TagElement.js'
-import { Args, Options } from './types.js'
+import { type Args, contentOf, modifierOf, type Options, optionsOf } from './types.js'
 import { Modifier } from '../HtmlModifier.js'
 
 type ElementOf<TAG extends keyof HTMLElementTagNameMap> = HTMLElementTagNameMap[TAG]

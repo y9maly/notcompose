@@ -1,4 +1,4 @@
-import { State } from '../../runtime/State.js'
+import type { State } from '../../runtime/State.js'
 import { GlobalSnapshot } from '../../runtime/Snapshot.js'
 
 export class StateReadsCollector<CONSUMER extends NonNullable<unknown>> {

@@ -1,7 +1,7 @@
-import { CompleteMeasurerPlugin, MeasurerPlugin } from './MeasurerPlugin.js'
-import { MeasurerPluginContext } from './MeasurerPluginContext.js'
+import { CompleteMeasurerPlugin, type MeasurerPlugin } from './MeasurerPlugin.js'
+import type { MeasurerPluginContext } from './MeasurerPluginContext.js'
 import { MeasureResult } from '../Measurable.js'
-import { LayoutNodeCoordinator } from '../layoutNode/LayoutNodeCoordinator.js'
+import type { LayoutNodeCoordinator } from '../layoutNode/LayoutNodeCoordinator.js'
 import { Constraints } from '../Constraints.js'
 
 interface Frame {

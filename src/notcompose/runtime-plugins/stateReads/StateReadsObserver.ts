@@ -1,6 +1,6 @@
 import { Node } from '../../runtime/Node.js'
-import { State } from '../../runtime/State.js'
-import { StateReads } from './StateReads.js'
+import type { State } from '../../runtime/State.js'
+import type { StateReads } from './StateReads.js'
 
 // Отслеживает изменение StateReads у ноды.
 export interface StateReadsObserver {

@@ -1,5 +1,5 @@
-import { ModifierElement } from 'notcompose'
-import { BaseLayoutNodeCoordinator, LayoutNodeCoordinator } from './LayoutNodeCoordinator.js'
+import type { ModifierElement } from 'notcompose'
+import { BaseLayoutNodeCoordinator, type LayoutNodeCoordinator } from './LayoutNodeCoordinator.js'
 import { LayoutModifier } from '../modifiers/LayoutModifier.js'
 
 export class LayoutModifierLayoutNodeCoordinator extends BaseLayoutNodeCoordinator {

@@ -1,4 +1,4 @@
-import { CleanCompositionPlugin, Composer, Modifier, mutableStateOf, NameModifier, PluginVerifierPlugin, Recomposer, RememberObserverPlugin, State, StateReadsPlugin } from 'notcompose'
+import { CleanCompositionPlugin, Composer, Modifier, mutableStateOf, NameModifier, PluginVerifierPlugin, Recomposer, RememberObserverPlugin, type State, StateReadsPlugin } from 'notcompose'
 import { Composition } from 'notcompose/terminal'
 
 const Empty = Symbol('Empty')

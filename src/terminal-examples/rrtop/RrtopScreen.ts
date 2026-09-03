@@ -1,6 +1,6 @@
 import { DisposableEffect, Key, Modifier, remember, rememberState } from 'notcompose'
 import { MainViewModel } from './mainScreen/MainViewModel.js'
-import { NodejsSystemInfoRepository, SystemInfoRepository } from './repository/SystemInfoRepository.js'
+import { NodejsSystemInfoRepository, type SystemInfoRepository } from './repository/SystemInfoRepository.js'
 import { MainScreen } from './mainScreen/MainScreen.js'
 import { Box, Column, ConstraintsModifiers, fillMaxSize, Row } from 'notcompose/layout'
 import { RawInfoViewModel } from './rawInfoScreen/RawInfoViewModel.js'

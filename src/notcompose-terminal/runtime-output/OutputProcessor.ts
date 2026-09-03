@@ -1,14 +1,14 @@
 import { Node } from 'notcompose'
-import { TextCanvas } from '../runtime/ui/graphics/TextCanvas.js'
+import type { TextCanvas } from '../runtime/ui/graphics/TextCanvas.js'
 import { TextBuffer, TextBufferCanvas, TextCell, TextRow } from '../runtime/ui/graphics/TextBufferCanvas.js'
 import { Char } from '../../core/types.js'
-import { DebugTextSpanProcessor, TextSpanProcessor } from './TextSpanProcessor.js'
+import { DebugTextSpanProcessor, type TextSpanProcessor } from './TextSpanProcessor.js'
 import { BehaviorSubject } from 'rxjs'
-import { LayoutModifierLayoutNodeCoordinator, LayoutNode, LayoutNodeCoordinator, LayoutNodeExtensionKey, MeasurePolicyExtensionKey, SubcomposeNodeExtensionKey } from 'notcompose/layout'
+import { LayoutModifierLayoutNodeCoordinator, LayoutNode, type LayoutNodeCoordinator, LayoutNodeExtensionKey, MeasurePolicyExtensionKey, SubcomposeNodeExtensionKey } from 'notcompose/layout'
 import { DrawModifier } from '../runtime/modifiers/DrawModifier.js'
 import { ContentDrawScope } from '../runtime/ui/graphics/ContentDrawScope.js'
 import { DrawScope } from '../runtime/ui/graphics/DrawScope.js'
-import { Key } from '../../notcompose/runtime/Composer.js'
+import type { Key } from '../../notcompose/runtime/Composer.js'
 
 export interface OutputProcessor {
     // todo Subject to change

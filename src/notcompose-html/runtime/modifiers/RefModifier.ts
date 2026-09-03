@@ -1,4 +1,4 @@
-import { ModifierElement } from 'notcompose'
+import type { ModifierElement } from 'notcompose'
 
 export interface DomRef<ELEMENT extends Element> {
     (element: ELEMENT): void | (() => void)

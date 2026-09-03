@@ -1,4 +1,4 @@
-import { ModifierElement } from 'notcompose'
+import type { ModifierElement } from 'notcompose'
 
 export type StyleValue = string | number | null | undefined
 

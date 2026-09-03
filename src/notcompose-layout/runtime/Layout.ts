@@ -1,5 +1,5 @@
 import { MeasurePolicyExtensionKey } from './nodeExtensions/MeasurePolicyNodeExtension.js'
-import { currentComposer, Modifier, NameModifier, RecomposeLambda, RecomposeLambdaExtensionKey } from 'notcompose'
+import { currentComposer, Modifier, NameModifier, type RecomposeLambda, RecomposeLambdaExtensionKey } from 'notcompose'
 import { MeasurePolicy } from './MeasurePolicy.js'
 
 export function Layout(content: () => void, measurePolicy: MeasurePolicy, modifier: Modifier = Modifier) {

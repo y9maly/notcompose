@@ -1,4 +1,4 @@
-import { State } from '../../runtime/State.js'
+import type { State } from '../../runtime/State.js'
 import { NodeExtensionKey } from '../../runtime/NodeExtensionKey.js'
 
 // Public Api

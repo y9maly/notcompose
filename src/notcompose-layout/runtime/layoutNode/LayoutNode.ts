@@ -1,6 +1,6 @@
 import { Node, NodeExtensionKey } from 'notcompose'
 import { MeasurePolicy } from '../MeasurePolicy.js'
-import { LayoutNodeCoordinator } from './LayoutNodeCoordinator.js'
+import type { LayoutNodeCoordinator } from './LayoutNodeCoordinator.js'
 
 export const LayoutNodeExtensionKey = new NodeExtensionKey<LayoutNode>('LayoutNode')
 

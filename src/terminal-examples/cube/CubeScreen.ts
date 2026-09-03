@@ -1,4 +1,4 @@
-import { Color, colored, DrawModifier, TextCanvas } from 'notcompose/terminal'
+import { Color, colored, DrawModifier, type TextCanvas } from 'notcompose/terminal'
 import { Modifier, mutableStateOf } from 'notcompose'
 import { Box } from 'notcompose/layout'
 

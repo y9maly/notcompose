@@ -1,4 +1,4 @@
-import { ModifierElement, Node } from 'notcompose'
+import { type ModifierElement, Node } from 'notcompose'
 import { MeasurePolicy } from '../MeasurePolicy.js'
 import { BaseLayoutNodeCoordinator } from './LayoutNodeCoordinator.js'
 

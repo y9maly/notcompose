@@ -1,4 +1,4 @@
-import { ModifierElement } from 'notcompose'
+import type { ModifierElement } from 'notcompose'
 
 export type DomEvent<ELEMENT extends Element, EVENT extends Event = Event> = EVENT & {
     readonly currentTarget: ELEMENT

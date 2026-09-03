@@ -1,7 +1,7 @@
-import { NameModifier, Node as CompositionNode, RecomposeLambda, RecomposeLambdaExtensionKey, currentComposer } from 'notcompose'
+import { NameModifier, Node as CompositionNode, type RecomposeLambda, RecomposeLambdaExtensionKey, currentComposer } from 'notcompose'
 import { DomNodeExtensionKey, createDomElementState, domNodeStateOf } from '../runtime/DomNodeState.js'
 import { Modifier } from '../HtmlModifier.js'
-import { Args, contentOf, modifierOf, Options, optionsOf } from './types.js'
+import { type Args, contentOf, modifierOf, type Options, optionsOf } from './types.js'
 
 export function TagElement<TAG extends keyof HTMLElementTagNameMap>(
     tagName: TAG,

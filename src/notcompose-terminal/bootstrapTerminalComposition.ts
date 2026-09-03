@@ -1,5 +1,5 @@
 import { InputProcessor } from './runtime-input/InputProcessor.js'
-import { OutputProcessor } from './runtime-output/OutputProcessor.js'
+import type { OutputProcessor } from './runtime-output/OutputProcessor.js'
 import { CleanCompositionPlugin, Composer, Modifier, NameModifier, PluginVerifierPlugin, Recomposer, RememberObserverPlugin, StateReadsPlugin } from 'notcompose'
 import { Composition } from './Composition.js'
 import { Constraints, LayoutProcessor } from 'notcompose/layout'

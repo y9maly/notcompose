@@ -1,5 +1,5 @@
-import { ComposerPlugin } from '../../runtime/ComposerPlugin.js'
-import { ComposerPluginContext } from '../../runtime/ComposerPluginContext.js'
+import type { ComposerPlugin } from '../../runtime/ComposerPlugin.js'
+import type { ComposerPluginContext } from '../../runtime/ComposerPluginContext.js'
 import { Node } from '../../runtime/Node.js'
 import { Composer } from '../../runtime/Composer.js'
 

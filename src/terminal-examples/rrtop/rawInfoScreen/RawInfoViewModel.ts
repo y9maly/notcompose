@@ -1,4 +1,4 @@
-import { SystemInfoRepository } from '../repository/SystemInfoRepository.js'
+import type { SystemInfoRepository } from '../repository/SystemInfoRepository.js'
 import { mutableStateOf } from 'notcompose'
 
 export class RawInfoViewModel {

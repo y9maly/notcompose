@@ -1,5 +1,5 @@
 import { currentComposer } from '../runtime/currentComposer.js'
-import { Key } from '../runtime/Composer.js'
+import type { Key } from '../runtime/Composer.js'
 
 const Empty = Symbol()
 

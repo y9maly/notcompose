@@ -1,5 +1,5 @@
-import { ModifierElement } from 'notcompose'
-import { AttributeValue } from '../attributes/attributes.js'
+import type { ModifierElement } from 'notcompose'
+import type { AttributeValue } from '../attributes/attributes.js'
 
 export class AttributeModifier implements ModifierElement {
     constructor(

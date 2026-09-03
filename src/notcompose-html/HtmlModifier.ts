@@ -1,10 +1,10 @@
-import { createModifierCollection, Modifier as BaseModifier, ModifierCollection, ModifierElement } from 'notcompose'
-import { AttributeValue } from './runtime/attributes/attributes.js'
+import { createModifierCollection, Modifier as BaseModifier, ModifierCollection, type ModifierElement } from 'notcompose'
+import type { AttributeValue } from './runtime/attributes/attributes.js'
 import { AttributeModifier } from './runtime/modifiers/AttributeModifier.js'
-import { StyleModifier, StyleValue } from './runtime/modifiers/StyleModifier.js'
-import { DomEvent, ListenerModifier } from './runtime/modifiers/ListenerModifier.js'
+import { StyleModifier, type StyleValue } from './runtime/modifiers/StyleModifier.js'
+import { type DomEvent, ListenerModifier } from './runtime/modifiers/ListenerModifier.js'
 import { PropertyModifier } from './runtime/modifiers/PropertyModifier.js'
-import { DomRef, RefModifier } from './runtime/modifiers/RefModifier.js'
+import { type DomRef, RefModifier } from './runtime/modifiers/RefModifier.js'
 
 class HtmlCollection extends ModifierCollection {
     constructor(

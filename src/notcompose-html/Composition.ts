@@ -1,4 +1,4 @@
-import { Composer, Modifier, NameModifier, Node, RecomposeLambda, RecomposeLambdaExtensionKey, withComposer } from 'notcompose'
+import { Composer, Modifier, NameModifier, Node, type RecomposeLambda, RecomposeLambdaExtensionKey, withComposer } from 'notcompose'
 import { DomNodeExtensionKey, createDomRootState } from './runtime/DomNodeState.js'
 
 export class HtmlComposition {

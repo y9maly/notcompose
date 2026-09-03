@@ -1,4 +1,4 @@
-import { ModifierElement } from 'notcompose'
+import type { ModifierElement } from 'notcompose'
 
 export class KeyModifier implements ModifierElement {
     constructor(

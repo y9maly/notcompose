@@ -1,4 +1,4 @@
-import { elvis, ModifierElement } from 'notcompose'
+import { elvis, type ModifierElement } from 'notcompose'
 import { DrawModifier } from './DrawModifier.js'
 import { ContentDrawScope } from '../ui/graphics/ContentDrawScope.js'
 import { Color } from '../ui/Color.js'

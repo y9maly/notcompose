@@ -1,4 +1,4 @@
-import { State } from '../runtime/State.js'
+import type { State } from '../runtime/State.js'
 import { remember } from './remember.js'
 import { mutableStateOf } from './mutableStateOf.js'
 
