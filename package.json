@@ -1,70 +1,10 @@
 {
   "name": "notcompose",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "type": "module",
-  "scripts": {
-    "build": "tsc",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
-    "test": "vitest run",
-    "test:watch": "vitest",
-    "test:types": "tsc -p tsconfig.vitest.json --noEmit",
-    "example:html": "vite --config ./vite.html.config.ts",
-    "example:html:build": "vite build --config ./vite.html.config.ts",
-    "example:html:preview": "vite preview --config ./vite.html.config.ts",
-    "example:rrtop": "tsx ./src/terminal-examples/rrtop.ts",
-    "example:cube": "tsx ./src/terminal-examples/cube.ts",
-    "example:counter": "tsx ./src/terminal-examples/counter.ts",
-    "example:fileExplorer": "tsx ./src/terminal-examples/fileExplorer.ts",
-    "main": "tsx ./src/main.ts"
-  },
-  "exports": {
-    ".": {
-      "types": "./dist/notcompose/index.d.ts",
-      "import": "./dist/notcompose/index.js"
-    },
-    "./molecule": {
-      "types": "./dist/notcompose-molecule/index.d.ts",
-      "import": "./dist/notcompose-molecule/index.js"
-    },
-    "./html": {
-      "types": "./dist/notcompose-html/index.d.ts",
-      "import": "./dist/notcompose-html/index.js"
-    },
-    "./layout": {
-      "types": "./dist/notcompose-layout/index.d.ts",
-      "import": "./dist/notcompose-layout/index.js"
-    },
-    "./terminal": {
-      "types": "./dist/notcompose-terminal/index.d.ts",
-      "import": "./dist/notcompose-terminal/index.js"
-    },
-    "./package.json": "./package.json"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "private": true,
   "packageManager": "pnpm@11.17.0",
-  "devDependencies": {
-    "@antfu/eslint-config": "^9.3.0",
-    "@babel/core": "^8.0.1",
-    "@babel/plugin-syntax-typescript": "^8.0.3",
-    "@types/babel__core": "^7.20.5",
-    "@types/node": "^26.2.0",
-    "@typescript-eslint/eslint-plugin": "^8.67.0",
-    "@typescript-eslint/utils": "^8.67.0",
-    "eslint": "^10.8.1",
-    "happy-dom": "^20.11.2",
-    "tsx": "^4.23.12",
-    "@typescript/native": "npm:typescript@^7.0.2",
-    "typescript": "npm:@typescript/typescript6@^6.0.2",
-    "typescript-eslint": "^8.67.0",
-    "vite": "^8.2.1",
-    "vitest": "^4.1.10"
-  },
-  "dependencies": {
-    "rxjs": "^7.8.2"
+  "scripts": {
+    "build": "pnpm -r run build",
+    "test": "pnpm -r run test",
+    "check": "pnpm run build && pnpm run test"
   }
 }

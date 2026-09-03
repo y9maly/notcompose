@@ -1,0 +1,42 @@
+{
+  "name": "@notcompose/terminal",
+  "version": "0.1.0",
+  "description": "notcompose terminal",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest run",
+    "prepack": "pnpm run build"
+  },
+  "dependencies": {
+    "rxjs": "^7.8.2"
+  },
+  "peerDependencies": {
+    "@notcompose/core": "^0.1.0",
+    "@notcompose/layout": "^0.1.0"
+  },
+  "devDependencies": {
+    "@notcompose/core": "workspace:*",
+    "@notcompose/layout": "workspace:*",
+    "@types/node": "^26.2.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/y9maly/notcompose.git",
+    "directory": "notcompose-terminal"
+  }
+}

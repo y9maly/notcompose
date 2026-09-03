@@ -1,40 +1,10 @@
 {
-    "compilerOptions": {
-        "types": ["node"],
-        "lib": ["es2024", "DOM", "DOM.Iterable", "ESNext.Array", "ESNext.Collection", "ESNext.Iterator", "ESNext.Promise"],
-
-        "verbatimModuleSyntax": true,
-        "module": "nodenext",
-        "moduleResolution": "nodenext",
-        "target": "es2022",
-
-        "rootDir": "./src",
-        "outDir": "./dist",
-        "paths": {
-            "notcompose": ["./src/notcompose/index.ts"],
-            "notcompose/molecule": ["./src/notcompose-molecule/index.ts"],
-            "notcompose/html": ["./src/notcompose-html/index.ts"],
-            "notcompose/html/jsx-runtime": ["./src/notcompose-html/jsx-runtime.ts"],
-            "notcompose/layout": ["./src/notcompose-layout/index.ts"],
-            "notcompose/terminal": ["./src/notcompose-terminal/index.ts"]
-        },
-
-        "declaration": true,
-        "declarationMap": true,
-        "sourceMap": true,
-
-        "noEmitOnError": true,
-        "incremental": true,
-        "allowJs": true,
-        "strict": true,
-        "esModuleInterop": true,
-        "skipLibCheck": true,
-        "jsx": "react-jsx",
-        "jsxImportSource": "notcompose/html",
-
-        "plugins": [
-            { "transform": "./compiler/transform.js" }
-        ],
-    },
-    "include": ["./src"]
+  "files": [],
+  "references": [
+    { "path": "notcompose" },
+    { "path": "notcompose-layout" },
+    { "path": "notcompose-terminal" },
+    { "path": "notcompose-molecule" },
+    { "path": "notcompose-html" },
+  ]
 }

@@ -1,2 +1,9 @@
+packages:
+  - notcompose
+  - notcompose-layout
+  - notcompose-terminal
+  - notcompose-molecule
+  - notcompose-html
+
 allowBuilds:
   esbuild: false
