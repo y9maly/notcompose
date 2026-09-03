@@ -1,3 +1,20 @@
+export type RemoveCallSignature<T> = { [K in keyof T]: T[K] }
+export type NotAFunction<T> = T extends Function ? never : T
+/**
+ * Usage:
+ * ```typescript
+ * function checkValue<V, T = V>(value: FallbackInfer<V, T>): T { return value }
+ * function log(string: string) {}
+ *
+ * // value inferred as '123'
+ * const value = checkValue(123)
+ *
+ * // TS2345: Argument of type number is not assignable to parameter of type string
+ * log(checkValue(123))
+ * ```
+ */
+export type FallbackInfer<V, T> =
+    V extends NoInfer<T> ? V : NoInfer<T>
 export type Int = number
 export type UInt = number
 export type Float = number

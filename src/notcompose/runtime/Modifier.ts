@@ -7,6 +7,8 @@ export interface ModifierElement {
 export interface Modifier {
     readonly elements: ReadonlyArray<ModifierElement>
     then(...elements: ReadonlyArray<ModifierElement>): this
+
+    key(key: string | number | boolean): this
 }
 
 interface ModifierCompanion extends Modifier {
@@ -28,6 +30,10 @@ class ModifierClass implements Modifier {
         return new ModifierClass(...elements) as this
     }
 
+    key(key: string | number | boolean): this {
+        return this.then(new KeyModifier(key.toString()))
+    }
+
     static [Symbol.hasInstance](value: unknown): value is Modifier {
         return (typeof value === 'object' || typeof value === 'function') && (
             // @ts-ignore
@@ -40,8 +46,12 @@ class ModifierClass implements Modifier {
 const ModifierClass$Companion: ModifierCompanion = {
     elements: [],
 
-    then(...elements: ReadonlyArray<ModifierElement>): ModifierConstructor {
-        return new ModifierClass(...elements) satisfies Modifier as ModifierConstructor
+    key(key: string | number | boolean): ModifierCompanion {
+        return this.then(new KeyModifier(key.toString()))
+    },
+
+    then(...elements: ReadonlyArray<ModifierElement>): ModifierCompanion {
+        return new ModifierClass(...elements) satisfies Modifier as ModifierCompanion
     }
 }
 
@@ -56,6 +66,7 @@ export interface ModifierCollection {
 export abstract class ModifierCollection implements Modifier {
     declare elements: ReadonlyArray<ModifierElement>
     declare then: (...elements: ReadonlyArray<ModifierElement>) => this
+    declare key: (key: string | number | boolean) => this
 }
 
 export function createModifierCollection<COLLECTION>(...collectionConstructors: ReadonlyArray<{ new (): COLLECTION }>): Modifier & COLLECTION {

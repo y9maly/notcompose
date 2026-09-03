@@ -33,4 +33,3 @@ export function CompleteMeasurerPlugin(plugin: MeasurerPlugin): CompleteMeasurer
     }
     return completePlugin
 }
-

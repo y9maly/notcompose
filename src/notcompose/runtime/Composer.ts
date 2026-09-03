@@ -149,6 +149,9 @@ export class Composer implements IComposer {
         if (parentFrame === null)
             throw new Error('Could not start node here')
 
+        // todo вынести в плагин
+        key = key ?? modifier.elements.find(it => it instanceof KeyModifier)?.key
+
         let node: Node | null; {
             node = key === undefined ? this.nextNode() : this.nextNode(key)
 
@@ -193,6 +196,9 @@ export class Composer implements IComposer {
         if (parentFrame === null)
             throw new Error('Could not insert node here')
         node.parent = parentFrame.node
+
+        // todo вынести в плагин
+        key = key ?? node.modifier.elements.find(it => it instanceof KeyModifier)?.key
 
         if (key === undefined) {
             parentFrame.usedPositionalChildren++
