@@ -20,21 +20,20 @@ export function SubcomposeLayout(content: (constraints: Constraints) => MeasureR
 
 let _scope: SubcomposeScope | undefined
 
-const Empty = Symbol()
 export function subcompose(content: () => void): ReadonlyArray<Measurable>
 export function subcompose(key: Key, content: () => void): ReadonlyArray<Measurable>
-export function subcompose(key: Key | (() => void), content: (() => void) | typeof Empty = Empty): ReadonlyArray<Measurable> {
+export function subcompose(key: Key | (() => void), content?: () => void): ReadonlyArray<Measurable> {
     if (_scope === undefined)
         throw new Error(`This function can be used only inside SubcomposeLayout`)
     const scope = _scope
 
     _scope = undefined
-    if (content === Empty) {
-        const measurables = scope.subcompose(null, key as (() => void))
+    if (arguments.length === 2) {
+        const measurables = scope.subcompose(key as Key, content! satisfies (() => void))
         _scope = scope
         return measurables
     } else {
-        const measurables = scope.subcompose(key as Key, content satisfies (() => void))
+        const measurables = scope.subcompose(null, key as (() => void))
         _scope = scope
         return measurables
     }

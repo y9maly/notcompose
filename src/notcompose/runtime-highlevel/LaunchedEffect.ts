@@ -2,8 +2,6 @@ import { remember } from './remember.js'
 import { RememberObserver } from '../runtime-plugins/rememberObserver/RememberObserver.js'
 import { currentComposer } from '../runtime/currentComposer.js'
 
-const Empty = Symbol()
-
 export function LaunchedEffect(
     keys: unknown[],
     block: () => void
@@ -15,17 +13,17 @@ export function LaunchedEffect(
 
 export function LaunchedEffect(
     a: unknown[] | (() => void),
-    b: (() => void) | typeof Empty = Empty,
+    b?: () => void,
 ) {
     let keys: unknown[]
     let block: () => void
 
-    if (b === Empty) {
+    if (arguments.length === 2) {
+        keys = a as unknown[]
+        block = b! satisfies () => void
+    } else {
         keys = []
         block = a as () => void
-    } else {
-        keys = a as unknown[]
-        block = b satisfies () => void
     }
 
     remember(keys, () => new LaunchedEffectImpl(block))

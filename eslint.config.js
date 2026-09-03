@@ -87,7 +87,7 @@ export default antfu(
                 VariableDeclarator: 1,
                 outerIIFEBody: 1,
             }],
-            'style/member-delimiter-style': ['warn', {
+            'style/member-delimiter-style': ['off', {
                 multiline: {
                     delimiter: 'none',
                     requireLast: false,

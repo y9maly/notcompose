@@ -15,24 +15,21 @@ export function padding(
 ): ModifierElement
 
 export function padding(
-    a:
-        | number
-        | { all?: number }
-        | { vertical?: number, horizontal?: number }
-        | { vertical?: number, start?: number, end?: number }
-        | { horizontal?: number, top?: number, bottom?: number }
-        | { start?: number, top?: number, end?: number, bottom?: number },
+    a: number | {
+        all?: number
+        horizontal?: number, start?: number, end?: number
+        vertical?: number, top?: number, bottom?: number
+    },
     b?: number,
     c?: number,
     d?: number,
 ): ModifierElement {
     let start, top, end, bottom
     if (typeof a === 'object') {
-        const paddingValues: any = a
-        start = paddingValues.start ?? paddingValues.horizontal ?? paddingValues.all ?? 0
-        end = paddingValues.end ?? paddingValues.horizontal ?? paddingValues.all ?? 0
-        bottom = paddingValues.bottom ?? paddingValues.vertical ?? paddingValues.all ?? 0
-        top = paddingValues.top ?? paddingValues.vertical ?? paddingValues.all ?? 0
+        start = a.start ?? a.horizontal ?? a.all ?? 0
+        end = a.end ?? a.horizontal ?? a.all ?? 0
+        bottom = a.bottom ?? a.vertical ?? a.all ?? 0
+        top = a.top ?? a.vertical ?? a.all ?? 0
     } else if (b === undefined) {
         start = top = end = bottom = a
     } else if (c === undefined || d === undefined) {

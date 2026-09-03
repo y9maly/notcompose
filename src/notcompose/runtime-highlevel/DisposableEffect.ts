@@ -2,8 +2,6 @@ import { currentComposer } from '../runtime/currentComposer.js'
 import { remember } from './remember.js'
 import { RememberObserver } from '../runtime-plugins/rememberObserver/RememberObserver.js'
 
-const Empty = Symbol()
-
 export function DisposableEffect(
     keys: unknown[],
     block: () => (() => void) | void
@@ -15,17 +13,17 @@ export function DisposableEffect(
 
 export function DisposableEffect(
     a: unknown[] | (() => (() => void) | void),
-    b: (() => (() => void) | void) | typeof Empty = Empty,
+    b?: () => (() => void) | void,
 ) {
     let keys: unknown[]
     let block: (() => (() => void) | void)
 
-    if (b === Empty) {
+    if (arguments.length === 2) {
+        keys = a as unknown[]
+        block = b!
+    } else {
         keys = []
         block = a as (() => (() => void) | void)
-    } else {
-        keys = a as unknown[]
-        block = b satisfies (() => (() => void) | void)
     }
 
     remember(keys, () => new DisposableEffectImpl(block))

@@ -1,8 +1,6 @@
 import { currentComposer } from '../runtime/currentComposer.js'
 import type { Key } from '../runtime/Composer.js'
 
-const Empty = Symbol()
-
 export interface remember {
     <T>(calculation: () => T): T
     <T>(keys: unknown[], calculation: () => T): T
@@ -18,9 +16,11 @@ export function remember<T>(calculation: () => T): T
 export function remember<T>(keys: unknown[], calculation: () => T): T
 export function remember<T>(
     a: unknown[] | (() => T),
-    b: (() => T) | typeof Empty = Empty,
+    b?: () => T,
 ): T {
-    return rememberPositional(a as any, b as any)
+    if (arguments.length === 2)
+        return rememberPositional(a as unknown[], b!)
+    return rememberPositional(a as () => T)
 }
 
 remember.positional = rememberPositional
@@ -41,17 +41,17 @@ function rememberPositional<T>(
 
 function rememberPositional<T>(
     a: unknown[] | (() => T),
-    b: (() => T) | typeof Empty = Empty,
+    b?: () => T,
 ): T {
     let keys: unknown[]
     let calculation: () => T
 
-    if (b === Empty) {
+    if (arguments.length === 2) {
+        keys = a as unknown[]
+        calculation = b! satisfies () => T
+    } else {
         keys = []
         calculation = a as () => T
-    } else {
-        keys = a as unknown[]
-        calculation = b satisfies () => T
     }
 
     const previousKeys = currentComposer().hasRememberedValue()
@@ -96,17 +96,17 @@ function rememberKeyed<T>(
 function rememberKeyed<T>(
     rememberKey: Key,
     a: unknown[] | (() => T),
-    b: (() => T) | typeof Empty = Empty,
+    b?: () => T,
 ): T {
     let keys: unknown[]
     let calculation: () => T
 
-    if (b === Empty) {
+    if (arguments.length === 2) {
+        keys = a as unknown[]
+        calculation = b! satisfies () => T
+    } else {
         keys = []
         calculation = a as () => T
-    } else {
-        keys = a as unknown[]
-        calculation = b satisfies () => T
     }
 
     const previous = currentComposer().hasRememberedKeyedValue(rememberKey)
