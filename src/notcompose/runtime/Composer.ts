@@ -5,7 +5,7 @@ import type { ComposerPluginContext } from './ComposerPluginContext.js'
 import { NodeExtensionKey } from './NodeExtensionKey.js'
 import { KeyModifier } from './modifiers/KeyModifier.js'
 
-export type Key = number | string
+export type Key = string | number | boolean
 
 export interface Frame {
     isTreeRoot: boolean
@@ -151,6 +151,8 @@ export class Composer implements IComposer {
 
         // todo вынести в плагин
         key = key ?? modifier.elements.find(it => it instanceof KeyModifier)?.key
+        if (key !== undefined && parentFrame.usedKeyedChildren.has(key))
+            throw new Error(`Key "${key}" was already used in this composition. Please make sure you provide unique key for each element.`)
 
         let node: Node | null; {
             node = key === undefined ? this.nextNode() : this.nextNode(key)
@@ -199,6 +201,8 @@ export class Composer implements IComposer {
 
         // todo вынести в плагин
         key = key ?? node.modifier.elements.find(it => it instanceof KeyModifier)?.key
+        if (key !== undefined && parentFrame.usedKeyedChildren.has(key))
+            throw new Error(`Key "${key}" was already used in this composition. Please make sure you provide unique key for each element.`)
 
         if (key === undefined) {
             parentFrame.usedPositionalChildren++

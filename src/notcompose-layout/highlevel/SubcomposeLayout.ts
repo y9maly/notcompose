@@ -1,4 +1,4 @@
-import { currentComposer, Modifier, NameElement, NameModifier } from 'notcompose'
+import { currentComposer, Modifier, NameModifier } from 'notcompose'
 import type { Key } from '../../notcompose/runtime/Composer.js'
 import { type SubcomposeNodeExtension, SubcomposeNodeExtensionKey, type SubcomposeScope } from '../runtime/nodeExtensions/SubcomposeNodeExtension.js'
 import { Constraints } from '../runtime/Constraints.js'

@@ -1,5 +1,5 @@
 import path from 'node:path'
-import { Modifier, remember, rememberState, rememberUpdatedState } from 'notcompose'
+import { Modifier, rememberState } from 'notcompose'
 import { input } from 'notcompose/terminal'
 import { getDirectoryContents } from './utils.js'
 import { Content } from './Content.js'

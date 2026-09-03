@@ -1,5 +1,5 @@
-import { Modifier, NameModifier, type RecomposeLambda, RecomposeLambdaExtensionKey, currentComposer, Node as CompositionNode } from 'notcompose'
-import { DomNodeExtensionKey, createDomTextState, domNodeStateOf } from '../runtime/DomNodeState.js'
+import { currentComposer, Modifier, NameModifier, Node as CompositionNode, type RecomposeLambda, RecomposeLambdaExtensionKey } from 'notcompose'
+import { createDomTextState, DomNodeExtensionKey, domNodeStateOf } from '../runtime/DomNodeState.js'
 
 export function Text(value: string | number | boolean) {
     const composer = currentComposer()

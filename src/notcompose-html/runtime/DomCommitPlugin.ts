@@ -1,5 +1,5 @@
 import { type ComposerPlugin, type ModifierElement, Node as CompositionNode } from 'notcompose'
-import { type DomElementState, type DomNodeState, type DomRootState, domNodeStateOf, isDomContainerState } from './DomNodeState.js'
+import { type DomElementState, type DomNodeState, domNodeStateOf, isDomContainerState } from './DomNodeState.js'
 import { AttributeModifier } from './modifiers/AttributeModifier.js'
 import { StyleModifier } from './modifiers/StyleModifier.js'
 import { ListenerModifier } from './modifiers/ListenerModifier.js'
@@ -196,7 +196,8 @@ function collectStyles(modifiers: ReadonlyArray<ModifierElement>): Map<string, s
 }
 
 function collectListeners(modifiers: ReadonlyArray<ModifierElement>): ListenerModifier[] {
-    const listeners = new Map<string, ListenerModifier>()
+    let needCombineSameListeners = false
+    const uniqueListeners = new Map<string, ListenerModifier[]>()
 
     modifiers.forEach(modifier => {
         if (!(modifier instanceof ListenerModifier))
@@ -205,10 +206,29 @@ function collectListeners(modifiers: ReadonlyArray<ModifierElement>): ListenerMo
         const capture = typeof modifier.options === 'boolean'
             ? modifier.options
             : modifier.options?.capture ?? false
-        listeners.set(`${modifier.type}:${capture}`, modifier)
+        const key = `${modifier.type}:${capture}`
+        const list = uniqueListeners.get(key)
+        if (list) {
+            needCombineSameListeners = true
+            list.push(modifier)
+        } else {
+            uniqueListeners.set(key, [modifier])
+        }
     })
 
-    return [...listeners.values()]
+    if (!needCombineSameListeners)
+        return modifiers.filter(it => it instanceof ListenerModifier)
+
+    return [...uniqueListeners.values().map((listeners) => {
+        const firstListener = listeners[0]
+        if (listeners.length === 1)
+            return firstListener
+        return new ListenerModifier(firstListener.type, (evt) => {
+            for (const listener of listeners) {
+                listener.listener(evt)
+            }
+        }, firstListener.options)
+    })]
 }
 
 function collectRef(modifiers: ReadonlyArray<ModifierElement>): DomRef<Element> | null {

@@ -1,25 +1,28 @@
-import { NameModifier, Node as CompositionNode, type RecomposeLambda, RecomposeLambdaExtensionKey, currentComposer } from 'notcompose'
-import { DomNodeExtensionKey, createDomElementState, domNodeStateOf } from '../runtime/DomNodeState.js'
+import { currentComposer, NameModifier, Node as CompositionNode, type RecomposeLambda, RecomposeLambdaExtensionKey } from 'notcompose'
+import { createDomElementState, DomNodeExtensionKey, domNodeStateOf } from '../runtime/DomNodeState.js'
 import { Modifier } from '../HtmlModifier.js'
-import { type Args, contentOf, modifierOf, type Options, optionsOf } from './types.js'
 
 export function TagElement<TAG extends keyof HTMLElementTagNameMap>(
     tagName: TAG,
-    ...args: Args
+    content: undefined | (() => void),
+    modifier: Modifier,
+    options: object,
+    // ...args: Args
 ): void {
+    // const [modifier, options, content] = [modifierOf(args), optionsOf(options), contentOf(args)]
     const composer = currentComposer()
     const lowerTagName = tagName.toLowerCase()
 
     composer.startNode(Modifier.then(
         NameModifier(`<${lowerTagName}>`),
-        ...modifierOf(args).elements,
+        ...modifier.elements,
         // todo
-        ...Object.entries(optionsOf(args) ?? {}).flatMap(([key, value]) => Modifier.prop(key, value).elements)
+        ...Object.entries(options).flatMap(([key, value]) => Modifier.prop(key, value).elements)
     ))
     const compositionNode = composer.currentNode!
     const state = ensureElementState(compositionNode, lowerTagName)
 
-    const recompose = (() => { contentOf(args)?.() }) satisfies RecomposeLambda
+    const recompose = (() => { content?.() }) satisfies RecomposeLambda
 
     composer.applyExtension(RecomposeLambdaExtensionKey, recompose)
     composer.startComposingNode()

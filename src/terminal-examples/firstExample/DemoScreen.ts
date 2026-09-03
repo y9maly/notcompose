@@ -1,4 +1,4 @@
-import { DisposableEffect, Key, Modifier, MutableState, NameElement, NameModifier, remember, rememberState } from 'notcompose'
+import { DisposableEffect, Key, Modifier, MutableState, NameModifier, remember, rememberState } from 'notcompose'
 import { Box, Column } from 'notcompose/layout'
 import { input, setTerminalContent, Text } from 'notcompose/terminal'
 
