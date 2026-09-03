@@ -34,23 +34,26 @@ export function rememberState<T>(
         }
     }
 
-    const state = remember(() => mutableStateOf<T | undefined>(undefined))
-    remember(keys, () => state.value = calculation())
-
-    return {
-        get value() { return state.value as T },
-        set value(value: T) { state.value = value },
-        * [Symbol.iterator]() {
-            yield state.value
-            yield (newValueOrUpdater: T | ((currentValue: T) => T)) => {
-                if (typeof newValueOrUpdater === 'function') {
-                    const updater = newValueOrUpdater as (currentValue: T) => T
-                    state.value = updater(state.value as T)
-                } else {
-                    state.value = newValueOrUpdater
+    const state = remember(() => {
+        const state = mutableStateOf<T | undefined>(undefined)
+        return Object.assign(state,
+            {
+                * [Symbol.iterator]() {
+                    yield state.value
+                    yield (newValueOrUpdater: T | ((currentValue: T) => T)) => {
+                        if (typeof newValueOrUpdater === 'function') {
+                            const updater = newValueOrUpdater as (currentValue: T) => T
+                            state.value = updater(state.value as T)
+                        } else {
+                            state.value = newValueOrUpdater
+                        }
+                    }
+                    yield state
                 }
             }
-            yield state
-        }
-    } as MutableState<T> & Readonly<[T, (newValueOrUpdater: T | ((currentValue: T) => T)) => void, MutableState<T>]>
+        ) as MutableState<T> & Readonly<[T, (newValueOrUpdater: T | ((currentValue: T) => T)) => void, MutableState<T>]>
+    })
+    remember(keys, () => state.value = calculation())
+
+    return state
 }
