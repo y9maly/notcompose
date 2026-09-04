@@ -1,0 +1,24 @@
+{
+  "name": "@examples/html",
+  "private": true,
+  "description": "notcompose-html examples",
+  "type": "module",
+  "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "typecheck": "tsc --noEmit",
+    "dev": "vite --config ./vite.html.config.ts",
+    "build": "pnpm run typecheck && vite build --config ./vite.html.config.ts",
+    "preview": "vite preview --config ./vite.html.config.ts",
+    "main": "tsx ./src/main.ts"
+  },
+  "dependencies": {
+    "@notcompose/core": "^0.1.0",
+    "@notcompose/ui": "^0.1.0",
+    "@notcompose/molecule": "^0.1.0",
+    "@notcompose/molecule-rxjs": "^0.1.0",
+    "@notcompose/html": "^0.1.0",
+    "rxjs": "^7.8.2"
+  },
+  "devDependencies": {}
+}

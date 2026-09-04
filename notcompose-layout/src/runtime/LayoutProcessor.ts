@@ -1,5 +1,4 @@
-import { type ComposerKey, currentComposer, Modifier, Node, type RecomposeLambda, RecomposeLambdaExtensionKey, withComposer } from '@notcompose/core'
-import { Composer, assertUInt  } from '@notcompose/core'
+import { assertUInt, Composer, type ComposerKey, currentComposer, Modifier, Node, type RecomposeLambda, RecomposeLambdaExtensionKey, withComposer } from '@notcompose/core'
 import { Constraints } from './Constraints.js'
 import { LayoutProcessorPluginDebug } from './LayoutProcessorPlugin.js'
 import { MeasurePolicyExtensionKey } from './nodeExtensions/MeasurePolicyNodeExtension.js'

@@ -38,7 +38,7 @@ class ModifierClass implements Modifier {
         return (typeof value === 'object' || typeof value === 'function') && (
             // @ts-ignore
             value?.[Symbol.hasInstance] === ModifierClass[Symbol.hasInstance]
-            || Function.prototype[Symbol.hasInstance].call(this, value)
+            || Function.prototype[Symbol.hasInstance].call(ModifierClass, value)
         )
     }
 }

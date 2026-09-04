@@ -5,6 +5,8 @@
     "moduleResolution": "nodenext",
     "lib": ["es2022"],
 
+    "skipLibCheck": true,
+
     "strict": true,
     "verbatimModuleSyntax": true,
     "noEmitOnError": false, // todo временно ; сделать build

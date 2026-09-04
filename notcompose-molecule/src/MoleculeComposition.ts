@@ -1,4 +1,4 @@
-import { Composer, Modifier, Node, RecomposeLambdaExtensionKey, withComposer, type RecomposeLambda } from '@notcompose/core'
+import { Composer, Modifier, Node, type RecomposeLambda, RecomposeLambdaExtensionKey, withComposer } from '@notcompose/core'
 
 export class MoleculeComposition {
     public readonly rootNode = new Node(null, Modifier)

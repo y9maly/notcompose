@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "es2022",
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "strict": true,
+    "verbatimModuleSyntax": true,
+    "noEmitOnError": false,
+    "forceConsistentCasingInFileNames": true,
+
+    "rootDir": "src",
+    "outDir": "dist",
+
+    "types": ["node"],
+    "lib": ["es2022", "ESNext.Disposable"],
+    "tsBuildInfoFile": "dist/.tsbuildinfo",
+  },
+  "include": ["src/**/*.ts"]
+}

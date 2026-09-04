@@ -1,0 +1,22 @@
+{
+  "name": "@tests/notcompose-terminal",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@notcompose/core": "workspace:*",
+    "@notcompose/layout": "workspace:*",
+    "@notcompose/ui": "workspace:*",
+    "@notcompose/terminal": "workspace:*",
+    "@notcompose/testing-core": "workspace:*",
+    "@notcompose/testing-layout": "workspace:*",
+    "@notcompose/testing-ui": "workspace:*",
+    "@notcompose/testing-terminal": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^26.2.0"
+  }
+}

@@ -1,7 +1,7 @@
-import { currentComposer, Modifier } from '@notcompose/core'
-import { handleInput } from '../runtime/modifiers/InputHandler.js'
+import { currentComposer } from '@notcompose/core'
+import { Modifier } from '../TerminalModifier.js'
 
 export function input(read: (str: string, key: any) => boolean) {
-    currentComposer().startNode(Modifier.then(handleInput(read)))
+    currentComposer().startNode(Modifier.handleInput(read))
     currentComposer().endNode()
 }

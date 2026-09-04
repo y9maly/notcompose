@@ -1,0 +1,28 @@
+{
+  "name": "@examples/terminal",
+  "private": true,
+  "description": "notcompose-terminal examples",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "example:rrtop": "tsx ./src/terminal/rrtop.ts",
+    "example:cube": "tsx ./src/terminal/cube.ts",
+    "example:counter": "tsx ./src/terminal/counter.ts",
+    "example:fileExplorer": "tsx ./src/terminal/fileExplorer.ts",
+    "main": "tsx ./src/main.ts"
+  },
+  "dependencies": {
+    "@notcompose/core": "^0.1.0",
+    "@notcompose/layout": "^0.1.0",
+    "@notcompose/ui": "^0.1.0",
+    "@notcompose/terminal": "^0.1.0",
+    "@notcompose/molecule": "^0.1.0",
+    "@notcompose/molecule-rxjs": "^0.1.0",
+    "rxjs": "^7.8.2"
+  },
+  "devDependencies": {
+    "@types/node": "^26.2.0"
+  }
+}

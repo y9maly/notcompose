@@ -4,15 +4,13 @@
     "rootDir": "src",
     "outDir": "dist",
 
-    "skipLibCheck": true, // todo временно ; сделать build
-
     "composite": true,
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true,
     "inlineSources": true,
 
-    "types": [],
+    "types": ["node"],
     "lib": ["es2022", "ESNext.Disposable"],
     "tsBuildInfoFile": "dist/.tsbuildinfo",
   },

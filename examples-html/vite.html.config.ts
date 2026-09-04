@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite'
 
 export default defineConfig({
-    root: 'src/html-examples',
+    root: 'src',
     resolve: {
         tsconfigPaths: true,
     },
@@ -12,7 +12,7 @@ export default defineConfig({
         port: 4173,
     },
     build: {
-        outDir: '../../dist-html-examples',
+        outDir: '../dist',
         emptyOutDir: true,
     },
 })

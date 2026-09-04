@@ -1,5 +1,4 @@
-import { Composer, error, Modifier, NameModifier, Node, type RecomposeLambda, RecomposeLambdaExtensionKey, withComposer } from '@notcompose/core'
-import { TestComposition } from './TestComposition.js'
+import { Composer, error, Modifier, NameModifier, Node } from '@notcompose/core'
 
 interface CompositionLike {
     readonly rootNode: Node

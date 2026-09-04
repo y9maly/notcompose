@@ -1,0 +1,18 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "lib": ["es2022", "ESNext.Disposable"],
+    "types": ["node", "vitest/globals"]
+  },
+  "include": ["../src/**/*.ts", "./**/*.test.ts"],
+  "references": [
+    { "path": "../../notcompose" },
+    { "path": "../../notcompose-layout" },
+    { "path": "../../notcompose-ui" },
+    { "path": "../../notcompose-testing/core" },
+    { "path": "../../notcompose-testing/layout" },
+    { "path": "../../notcompose-testing/ui" },
+    { "path": "../../notcompose-testing/terminal" },
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "name": "@tests/notcompose-html",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@notcompose/core": "workspace:*",
+    "@notcompose/ui": "workspace:*",
+    "@notcompose/html": "workspace:*",
+    "@notcompose/testing-core": "workspace:*",
+    "@notcompose/testing-ui": "workspace:*",
+    "@notcompose/testing-html": "workspace:*",
+    "happy-dom": "^20.11.0"
+  },
+  "devDependencies": {
+    "@types/node": "^26.2.0"
+  }
+}

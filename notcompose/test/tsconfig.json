@@ -1,0 +1,12 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "lib": ["es2022", "ESNext.Disposable"],
+    "types": ["node", "vitest/globals"]
+  },
+  "include": ["../src/**/*.ts", "./**/*.test.ts"],
+  "references": [
+    { "path": "../../notcompose-testing/core" },
+  ]
+}

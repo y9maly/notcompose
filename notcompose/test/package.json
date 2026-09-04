@@ -1,0 +1,16 @@
+{
+  "name": "@tests/notcompose-core",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@notcompose/core": "workspace:*",
+    "@notcompose/testing-core": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^26.2.0"
+  }
+}

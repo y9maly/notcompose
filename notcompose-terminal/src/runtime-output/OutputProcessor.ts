@@ -1,3 +1,4 @@
+import type { Char, ComposerKey } from '@notcompose/core'
 import { Node } from '@notcompose/core'
 import type { TextCanvas } from '../runtime/ui/graphics/TextCanvas.js'
 import { TextBuffer, TextBufferCanvas, TextCell, TextRow } from '../runtime/ui/graphics/TextBufferCanvas.js'
@@ -7,7 +8,6 @@ import { LayoutModifierLayoutNodeCoordinator, LayoutNode, type LayoutNodeCoordin
 import { DrawModifier } from '../runtime/modifiers/DrawModifier.js'
 import { ContentDrawScope } from '../runtime/ui/graphics/ContentDrawScope.js'
 import { DrawScope } from '../runtime/ui/graphics/DrawScope.js'
-import type { Char, ComposerKey } from '@notcompose/core'
 
 export interface OutputProcessor {
     // todo Subject to change
