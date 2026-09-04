@@ -1,3 +1,5 @@
+/// <reference lib="esnext.disposable" preserve="true" />
+
 export * from './core/elvis.js'
 export * from './core/exceptions.js'
 export * from './core/Multimap.js'

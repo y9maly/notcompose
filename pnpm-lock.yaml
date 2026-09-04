@@ -165,13 +165,12 @@ importers:
       '@notcompose/layout':
         specifier: ^0.1.0
         version: link:../notcompose-layout
-      rxjs:
-        specifier: ^7.8.2
-        version: 7.8.2
-    devDependencies:
       '@types/node':
         specifier: ^26.2.0
         version: 26.4.1
+      rxjs:
+        specifier: ^7.8.2
+        version: 7.8.2
 
   notcompose-terminal/test:
     dependencies:

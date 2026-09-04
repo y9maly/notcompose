@@ -2,7 +2,7 @@
   "extends": "../tsconfig.base.json",
   "compilerOptions": {
     "rootDir": "src",
-    "outDir": "dist",
+    "outDir": "./build/dist",
 
     "composite": true,
     "declaration": true,
@@ -12,7 +12,7 @@
 
     "types": [],
     "lib": ["es2022", "ESNext.Disposable"],
-    "tsBuildInfoFile": "dist/.tsbuildinfo",
+    "tsBuildInfoFile": "./build/.tsbuildinfo",
   },
   "include": ["src/**/*.ts"],
   "references": []

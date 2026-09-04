@@ -1,3 +1,5 @@
+/// <reference lib="esnext.disposable" preserve="true" />
+
 export * from './runtime/Constraints.js'
 export * from './runtime/IntrinsicMeasurable.js'
 export * from './runtime/Layout.js'

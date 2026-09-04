@@ -1,3 +1,5 @@
+/// <reference lib="esnext.disposable" preserve="true" />
+
 export * from './Composition.js'
 export * from './bootstrapHtmlComposition.js'
 export * from './renderHtml.js'

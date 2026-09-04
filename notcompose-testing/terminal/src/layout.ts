@@ -2,7 +2,7 @@ import type { TestLayout } from './TestLayout.js'
 import { currentTestRuntime } from '@notcompose/testing-core'
 
 export function currentTestLayout(): TestLayout {
-    return currentTestRuntime()['testLayout'] as TestLayout
+    return currentTestRuntime().testLayout as TestLayout
 }
 
 export function relayout() {

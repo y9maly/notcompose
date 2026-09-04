@@ -25,9 +25,9 @@ export function terminalTestRuntime(): TestRuntime {
     const runtime = new TestRuntime(bootstrap.composition.rootNode, bootstrap.composer, bootstrap.composition)
 
     runtime.composition.rootNode.extensions.set(MeasurePolicyExtensionKey.symbol, BoxMeasurePolicy)
-    runtime['recomposer'] = bootstrap.recomposer
-    runtime['testInput'] = testInput
-    runtime['testOutput'] = testOutput
-    runtime['testLayout'] = start
+    runtime.recomposer = bootstrap.recomposer
+    runtime.testInput = testInput
+    runtime.testOutput = testOutput
+    runtime.testLayout = start
     return runtime
 }

@@ -1,22 +1,22 @@
 {
   "name": "@notcompose/html",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "notcompose html",
   "type": "module",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "main": "./build/dist/index.js",
+  "types": "./build/dist/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "default": "./dist/index.js"
+      "types": "./build/dist/index.d.ts",
+      "import": "./build/dist/index.js",
+      "default": "./build/dist/index.js"
     },
     "./jsx-runtime": {
-      "types": "./dist/jsx-runtime.d.ts",
-      "import": "./dist/jsx-runtime.js"
+      "types": "./build/dist/jsx-runtime.d.ts",
+      "import": "./build/dist/jsx-runtime.js"
     }
   },
-  "files": ["dist"],
+  "files": ["build/dist"],
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "test": "vitest run",
@@ -28,7 +28,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "license": "ISC",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/y9maly/notcompose.git",

@@ -1,3 +1,6 @@
+/// <reference types="node" preserve="true" />
+/// <reference lib="esnext.disposable" preserve="true" />
+
 export * from './setTerminalContent.js'
 export * from './bootstrapTerminalComposition.js'
 export * from './Composition.js'

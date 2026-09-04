@@ -15,7 +15,7 @@ export function defaultTestRuntime(): TestRuntime {
     const composition = new TestComposition(composer)
 
     const runtime = new TestRuntime(composition.rootNode, composer, composition)
-    runtime['recomposer'] = recomposer
+    runtime.recomposer = recomposer
 
     return runtime
 }

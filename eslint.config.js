@@ -20,7 +20,7 @@ export default antfu(
             tsconfigPath: 'tsconfig.json',
             parserOptions: {
                 projectService: {
-                    allowDefaultProject: ['*.config.ts', 'eslint/*.ts'],
+                    allowDefaultProject: ['*/*.config.ts', '*.config.ts', 'eslint/*.ts'],
                     defaultProject: 'tsconfig.json',
                 },
             },

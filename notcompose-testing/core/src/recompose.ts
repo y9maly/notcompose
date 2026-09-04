@@ -2,7 +2,7 @@ import { elvis, error, Recomposer } from '@notcompose/core'
 import { currentTestRuntime } from './TestRuntime.js'
 
 export function currentRecomposer(): Recomposer {
-    const recomposer = currentTestRuntime()['recomposer']
+    const recomposer = currentTestRuntime().recomposer
     if (!(recomposer instanceof Recomposer)) error(`recomposer doesn't exist in this test runtime`)
     return recomposer
 }
