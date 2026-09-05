@@ -12,7 +12,7 @@ export function needRecompose() {
 }
 
 export function recompose() {
-    currentRecomposer().recompose(currentTestRuntime().composer)
+    currentRecomposer().recompose(currentTestRuntime().compositionSession)
 }
 
 export function flushRecompositions(max: number | null = 1000, options?: { shouldThrow?: boolean }): number {
@@ -23,7 +23,7 @@ export function flushRecompositions(max: number | null = 1000, options?: { shoul
     let recompositions = 0
     while (currentRecomposer().needRecompose()) {
         recompositions++
-        currentRecomposer().recompose(currentTestRuntime().composer)
+        currentRecomposer().recompose(currentTestRuntime().compositionSession)
         if (max && recompositions >= max) {
             if (shouldThrow)
                 throw new Error(`Maximum recompositions count reached: ${max}`)

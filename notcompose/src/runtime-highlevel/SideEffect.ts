@@ -1,4 +1,4 @@
-import { currentComposer } from '../runtime/currentComposer.js'
+import { currentComposer } from '../composer/currentComposer.js'
 
 export function SideEffect(block: () => void) {
     currentComposer().exitComposition()

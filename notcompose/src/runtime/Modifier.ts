@@ -6,14 +6,14 @@ export interface ModifierElement {
 
 export interface Modifier {
     readonly elements: ReadonlyArray<ModifierElement>
-    then(...elements: ReadonlyArray<ModifierElement>): this
+    then(...elements: ReadonlyArray<ModifierElement | Modifier>): this
 
     key(key: string | number | boolean): this
 }
 
 interface ModifierCompanion extends Modifier {
     readonly elements: readonly []
-    then(...elements: ReadonlyArray<ModifierElement>): this
+    then(...elements: ReadonlyArray<ModifierElement | Modifier>): this
 }
 
 interface ModifierConstructor extends ModifierCompanion {
@@ -26,8 +26,11 @@ class ModifierClass implements Modifier {
         this.elements = elements
     }
 
-    then(...elements: ReadonlyArray<ModifierElement>): this {
-        return new ModifierClass(...this.elements, ...elements) as this
+    then(...elements: ReadonlyArray<ModifierElement | Modifier>): this {
+        return new ModifierClass(
+            ...this.elements,
+            ...elements.flatMap(it => it instanceof Modifier ? it.elements : [it])
+        ) as this
     }
 
     key(key: string | number | boolean): this {
@@ -50,8 +53,10 @@ const ModifierClass$Companion: ModifierCompanion = {
         return this.then(new KeyModifier(key.toString()))
     },
 
-    then(...elements: ReadonlyArray<ModifierElement>): ModifierCompanion {
-        return new ModifierClass(...elements) satisfies Modifier as ModifierCompanion
+    then(...elements: ReadonlyArray<ModifierElement | Modifier>): ModifierCompanion {
+        return new ModifierClass(
+            ...elements.flatMap(it => it instanceof Modifier ? it.elements : [it])
+        ) satisfies Modifier as ModifierCompanion
     }
 }
 
@@ -65,7 +70,7 @@ export interface ModifierCollection {
 // eslint-disable-next-line ts/no-unsafe-declaration-merging
 export abstract class ModifierCollection implements Modifier {
     declare elements: ReadonlyArray<ModifierElement>
-    declare then: (...elements: ReadonlyArray<ModifierElement>) => this
+    declare then: (...elements: ReadonlyArray<ModifierElement | Modifier>) => this
     declare key: (key: string | number | boolean) => this
 }
 
@@ -82,11 +87,11 @@ export function createModifierCollection<COLLECTION>(...collectionConstructors: 
         copyPrototype(Instance.prototype, collectionConstructor.prototype)
     }
 
-    function initializeInstance(instance: any, ...elements: ReadonlyArray<ModifierElement>): Modifier & COLLECTION {
+    function initializeInstance(instance: any, ...elements: ReadonlyArray<ModifierElement | Modifier>): Modifier & COLLECTION {
         Object.setPrototypeOf(instance, Instance.prototype)
 
-        instance.elements = elements
-        instance.then = function (...newElements: ReadonlyArray<ModifierElement>): Modifier {
+        instance.elements = elements.flatMap(it => it instanceof Modifier ? it.elements : [it]) satisfies ModifierElement[]
+        instance.then = function (...newElements: ReadonlyArray<ModifierElement | Modifier>): Modifier {
             return initializeInstance(createInstance(), ...elements, ...newElements)
         }
 

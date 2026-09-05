@@ -1,6 +1,6 @@
-import { Composer, error, Modifier, NameModifier, Node } from '@notcompose/core'
+import { Composer, type CompositionSession, error, Modifier, NameModifier, Node } from '@notcompose/core'
 
-interface CompositionLike {
+interface CompositionRunnerLike {
     readonly rootNode: Node
 
     setContent(content: () => void): void
@@ -13,7 +13,8 @@ export class TestRuntime implements Record<string, unknown> {
     constructor(
         public readonly rootNode: Node,
         public readonly composer: Composer,
-        public readonly composition: CompositionLike,
+        public readonly compositionSession: CompositionSession,
+        public readonly compositionRunner: CompositionRunnerLike,
     ) {}
 
     [name: string]: unknown
@@ -28,8 +29,8 @@ export class TestRuntime implements Record<string, unknown> {
     }
 
     render(content: () => void) {
-        this.composition.setContent(content)
-        this.composition.compose(Modifier.then(NameModifier('Root')))
+        this.compositionRunner.setContent(content)
+        this.compositionRunner.compose(Modifier.then(NameModifier('Root')))
     }
 }
 

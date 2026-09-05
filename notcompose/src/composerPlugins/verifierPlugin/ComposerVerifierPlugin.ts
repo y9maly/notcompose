@@ -1,9 +1,9 @@
-import type { ComposerPlugin } from '../../runtime/ComposerPlugin.js'
-import type { ComposerPluginContext } from '../../runtime/ComposerPluginContext.js'
+import type { ComposerPlugin } from '../../composer/ComposerPlugin.js'
+import type { ComposerPluginContext } from '../../composer/ComposerPluginContext.js'
 import { Node } from '../../runtime/Node.js'
-import { Composer } from '../../runtime/Composer.js'
+import { Composer } from '../../composer/Composer.js'
 
-export class PluginVerifierPlugin implements ComposerPlugin {
+export class ComposerVerifierPlugin implements ComposerPlugin {
     private context!: ComposerPluginContext
     private composer!: Composer
 

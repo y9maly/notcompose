@@ -1,11 +1,11 @@
 import { Composer, Recomposer } from '@notcompose/core'
-import { HtmlComposition } from './Composition.js'
+import { HtmlCompositionRunner } from './Composition.js'
 import { bootstrapHtmlComposition, type HtmlCompositionController } from './bootstrapHtmlComposition.js'
 
 export interface RenderedHtmlComposition extends HtmlCompositionController {
     readonly composer: Composer
     readonly recomposer: Recomposer
-    readonly composition: HtmlComposition
+    readonly composition: HtmlCompositionRunner
     readonly root: Element
 }
 

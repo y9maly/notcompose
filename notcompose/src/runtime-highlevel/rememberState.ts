@@ -1,5 +1,5 @@
 import { MutableState } from '../runtime/State.js'
-import { remember } from './remember.js'
+import { remember } from '../recomputation/remember.js'
 import { mutableStateOf } from './mutableStateOf.js'
 
 export function rememberState<T>(

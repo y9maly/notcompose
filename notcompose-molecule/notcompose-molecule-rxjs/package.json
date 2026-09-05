@@ -1,6 +1,6 @@
 {
   "name": "@notcompose/molecule-rxjs",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "notcompose molecule (rxjs integration)",
   "type": "module",
   "main": "./build/dist/index.js",

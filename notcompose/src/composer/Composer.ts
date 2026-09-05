@@ -1,9 +1,9 @@
-import { Node } from './Node.js'
-import { Modifier } from './Modifier.js'
+import { Node } from '../runtime/Node.js'
+import { Modifier } from '../runtime/Modifier.js'
 import { CompleteComposerPlugin, type ComposerPlugin } from './ComposerPlugin.js'
 import type { ComposerPluginContext } from './ComposerPluginContext.js'
-import { NodeExtensionKey } from './NodeExtensionKey.js'
-import { KeyModifier } from './modifiers/KeyModifier.js'
+import { NodeExtensionKey } from '../runtime/NodeExtensionKey.js'
+import { KeyModifier } from '../runtime/modifiers/KeyModifier.js'
 
 export type Key = string | number | boolean
 

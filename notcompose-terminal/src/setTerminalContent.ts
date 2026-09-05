@@ -26,7 +26,7 @@ export function setTerminalContent(content: () => void) {
     const inputProcessor = new InputProcessor(
         new StdinInputSource(),
         new RootInputDispatcher(
-            () => bootstrap.composition.rootNode,
+            () => bootstrap.compositionRunner.rootNode,
             (_, key: any) => {
                 if (key?.ctrl && key?.name === 'c')
                     process.exit(0)
@@ -47,7 +47,7 @@ export function setTerminalContent(content: () => void) {
         }
     })
 
-    bootstrap.composition.setContent(content)
+    bootstrap.compositionRunner.setContent(content)
 
     bootstrap.start({
         inputProcessor: inputProcessor,

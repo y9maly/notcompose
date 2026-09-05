@@ -1,6 +1,6 @@
-import { remember } from './remember.js'
-import { RememberObserver } from '../runtime-plugins/rememberObserver/RememberObserver.js'
-import { currentComposer } from '../runtime/currentComposer.js'
+import { remember } from '../recomputation/remember.js'
+import { RememberObserver } from '../composerPlugins/rememberObserver/RememberObserver.js'
+import { currentComposer } from '../composer/currentComposer.js'
 
 export function LaunchedEffect(
     keys: unknown[],

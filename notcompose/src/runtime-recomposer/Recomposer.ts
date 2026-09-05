@@ -1,14 +1,14 @@
-import type { StateReadsObserver } from '../runtime-plugins/stateReads/StateReadsObserver.js'
+import type { StateReadsObserver } from '../composerPlugins/stateReads/StateReadsObserver.js'
 import { Node } from '../runtime/Node.js'
 import type { State } from '../runtime/State.js'
-import type { StateReads } from '../runtime-plugins/stateReads/StateReads.js'
-import { isCompositionDirty, markCompositionAsDirty } from '../runtime-plugins/dirtyComposition/DirtyCompositionMarker.js'
-import { RecomposeLambdaExtensionKey } from '../runtime-plugins/partialRecomposition/RecomposeLambda.js'
-import { Composer } from '../runtime/Composer.js'
-import { withComposer } from '../runtime/currentComposer.js'
+import type { StateReads } from '../composerPlugins/stateReads/StateReads.js'
+import { isCompositionDirty, markCompositionAsDirty } from '../composerPlugins/dirtyComposition/DirtyCompositionMarker.js'
+import { RecomposeLambdaExtensionKey } from '../composerPlugins/partialRecomposition/RecomposeLambda.js'
+import { currentComposer } from '../composer/currentComposer.js'
 import { debug } from '../runtime/debug.js'
 import { StateDependenciesMap } from './StateDependenciesMap.js'
-import type { ComposerPlugin } from '../runtime/ComposerPlugin.js'
+import type { ComposerPlugin } from '../composer/ComposerPlugin.js'
+import type { CompositionSession } from '../composition/CompositionSession.js'
 
 /**
  * Composer должен иметь плагин [StateReadsPlugin].
@@ -43,7 +43,7 @@ export class Recomposer implements StateReadsObserver, ComposerPlugin {
     }
 
     private recomposing = false
-    recompose(composer: Composer) {
+    recompose(composingSession: CompositionSession) {
         if (this.recomposing)
             throw new Error('[recompose] cannot be called recursively')
         if (!this.needRecompose())
@@ -53,14 +53,14 @@ export class Recomposer implements StateReadsObserver, ComposerPlugin {
             this.recomposing = true
             // if (this.currentStateReadsMap.size !== 0)
             //     throw new Error('Unexpected')
-            this.doRecompose(composer)
+            this.doRecompose(composingSession)
         } finally {
             // this.currentStateReadsMap.clear()
             this.recomposing = false
         }
     }
 
-    private doRecompose(composer: Composer) {
+    private doRecompose(composingSession: CompositionSession) {
         const nodesToRecompose = new Set(this.stateDependenciesMap.dirtyObjects)
         this.stateDependenciesMap.dirtyObjects.clear()
         nodesToRecompose.forEach((node) => {
@@ -70,13 +70,13 @@ export class Recomposer implements StateReadsObserver, ComposerPlugin {
             if (recomposeLambda === undefined)
                 return
 
-            withComposer(composer, () => {
-                composer.startTree(node)
-                composer.startComposingNode()
+            composingSession.compose(() => {
+                currentComposer().startTree(node)
+                currentComposer().startComposingNode()
                 debug.log(`Recompose ${node.findName() ?? ''}`)
                 recomposeLambda()
-                composer.endComposingNode()
-                composer.endTree()
+                currentComposer().endComposingNode()
+                currentComposer().endTree()
             })
         })
 

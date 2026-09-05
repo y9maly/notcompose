@@ -1,20 +1,25 @@
-import { CleanCompositionPlugin, Composer, PluginVerifierPlugin, Recomposer, RememberObserverPlugin, StateReadsPlugin } from '@notcompose/core'
+import { CleanCompositionPlugin, Composer, ComposerApplierPlugin, ComposerVerifierPlugin, CompositionSessionDefault, CurrentComposerRecomputeScope, Recomposer, RecomputeScopeApplierPlugin, RememberObserverPlugin, StateReadsPlugin } from '@notcompose/core'
 import { TestRuntime } from './TestRuntime.js'
-import { TestComposition } from './TestComposition.js'
+import { TestCompositionRunner } from './TestCompositionRunner.js'
 
 export function defaultTestRuntime(): TestRuntime {
     const recomposer = new Recomposer()
     const composer = new Composer([
         recomposer,
-        new PluginVerifierPlugin(),
+        new ComposerVerifierPlugin(),
         new CleanCompositionPlugin(),
         new StateReadsPlugin(recomposer),
         new RememberObserverPlugin(),
     ])
 
-    const composition = new TestComposition(composer)
+    const compositionSession = new CompositionSessionDefault(composer, [
+        new RecomputeScopeApplierPlugin(CurrentComposerRecomputeScope),
+        new ComposerApplierPlugin(),
+    ])
 
-    const runtime = new TestRuntime(composition.rootNode, composer, composition)
+    const compositionRunner = new TestCompositionRunner(compositionSession)
+
+    const runtime = new TestRuntime(compositionRunner.rootNode, composer, compositionSession, compositionRunner)
     runtime.recomposer = recomposer
 
     return runtime

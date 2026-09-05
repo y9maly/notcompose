@@ -1,7 +1,7 @@
 import { InputProcessor } from './runtime-input/InputProcessor.js'
 import type { OutputProcessor } from './runtime-output/OutputProcessor.js'
-import { CleanCompositionPlugin, Composer, Modifier, NameModifier, PluginVerifierPlugin, Recomposer, RememberObserverPlugin, StateReadsPlugin } from '@notcompose/core'
-import { Composition } from './Composition.js'
+import { CleanCompositionPlugin, Composer, ComposerApplierPlugin, ComposerVerifierPlugin, type CompositionSession, CompositionSessionDefault, CurrentComposerRecomputeScope, Modifier, NameModifier, Recomposer, RecomputeScopeApplierPlugin, RememberObserverPlugin, StateReadsPlugin } from '@notcompose/core'
+import { TerminalCompositionRunner } from './TerminalCompositionRunner.js'
 import { Constraints, LayoutProcessor } from '@notcompose/layout'
 
 type StartParams = {
@@ -23,7 +23,8 @@ type StartResult = {
 export function bootstrapTerminalComposition(): {
     composer: Composer
     recomposer: Recomposer
-    composition: Composition
+    compositionSession: CompositionSession
+    compositionRunner: TerminalCompositionRunner
     start(params: StartParams): StartResult
     stop(): void
 } {
@@ -31,7 +32,7 @@ export function bootstrapTerminalComposition(): {
     const composer = new Composer([
         recomposer,
         // Для дебага, кинет исключение если методы плагинов вызовутся неправильно
-        new PluginVerifierPlugin(),
+        new ComposerVerifierPlugin(),
         // Удаляет пометку о грязной ноде сразу после начала композиции
         new CleanCompositionPlugin(),
         // Отслеживает чтения стейтов во время композиции;
@@ -44,7 +45,12 @@ export function bootstrapTerminalComposition(): {
         new RememberObserverPlugin(),
     ])
 
-    const composition = new Composition(composer)
+    const compositionSession = new CompositionSessionDefault(composer, [
+        new RecomputeScopeApplierPlugin(CurrentComposerRecomputeScope),
+        new ComposerApplierPlugin(),
+    ])
+
+    const compositionRunner = new TerminalCompositionRunner(compositionSession)
 
     // Обходит дерево, измеряет ноды (layout/measurement + layout/placement фазы)
     const layoutProcessor = new LayoutProcessor()
@@ -81,15 +87,15 @@ export function bootstrapTerminalComposition(): {
             new Constraints(0, currentWidth(), 0, currentHeight())
 
         const recompose = () => {
-            composition.compose(Modifier.then(NameModifier('Root')))
+            compositionRunner.compose(Modifier.then(NameModifier('Root')))
         }
 
         const relayout = () => {
-            layoutProcessor.layout(composition.rootNode, composer, currentConstraints())
+            layoutProcessor.layout(compositionRunner.rootNode, compositionSession, currentConstraints())
         }
 
         const redraw = () => {
-            params.outputProcessor.doFrame(composition.rootNode, currentWidth(), currentHeight())
+            params.outputProcessor.doFrame(compositionRunner.rootNode, currentWidth(), currentHeight())
         }
 
         if (params.redrawOnViewportResize) {
@@ -142,7 +148,8 @@ export function bootstrapTerminalComposition(): {
     return {
         composer,
         recomposer,
-        composition,
+        compositionRunner,
+        compositionSession,
         start,
         stop,
     }

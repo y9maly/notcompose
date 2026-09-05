@@ -1,6 +1,6 @@
 {
   "name": "@notcompose/testing-layout",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "notcompose-testing utilities for notcompose-layout",
   "type": "module",
   "main": "./build/dist/index.js",

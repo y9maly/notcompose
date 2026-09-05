@@ -1,7 +1,7 @@
-import type { ComposerPlugin } from '../../runtime/ComposerPlugin.js'
+import type { ComposerPlugin } from '../../composer/ComposerPlugin.js'
 import { Node } from '../../runtime/Node.js'
-import type { ComposerPluginContext } from '../../runtime/ComposerPluginContext.js'
-import { Composer } from '../../runtime/Composer.js'
+import type { ComposerPluginContext } from '../../composer/ComposerPluginContext.js'
+import { Composer } from '../../composer/Composer.js'
 import type { StateReadsObserver } from './StateReadsObserver.js'
 import { StateReadsCollector } from './StateReadsCollector.js'
 

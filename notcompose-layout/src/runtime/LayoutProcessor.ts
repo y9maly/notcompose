@@ -1,4 +1,4 @@
-import { assertUInt, Composer, type ComposerKey, currentComposer, Modifier, Node, type RecomposeLambda, RecomposeLambdaExtensionKey, withComposer } from '@notcompose/core'
+import { assertUInt, type ComposerKey, type CompositionSession, currentComposer, Modifier, Node, type RecomposeLambda, RecomposeLambdaExtensionKey } from '@notcompose/core'
 import { Constraints } from './Constraints.js'
 import { LayoutProcessorPluginDebug } from './LayoutProcessorPlugin.js'
 import { MeasurePolicyExtensionKey } from './nodeExtensions/MeasurePolicyNodeExtension.js'
@@ -26,20 +26,20 @@ export class LayoutProcessor {
         }
     ) {}
 
-    // composer используется для Subconstraints/Subcompose
-    layout(node: Node, composer: Composer, constraints: Constraints) {
+    // compositionSession используется для Subconstraints/Subcompose
+    layout(node: Node, compositionSession: CompositionSession, constraints: Constraints) {
         const layoutNode = newApplyLayoutNode(node)
 
         // this.params.interceptMeasurement(() => layoutNode.measure(plugin, constraints))
-        const placeable = this.measure(layoutNode, constraints, (node, content) => {
-            withComposer(composer, () => {
-                composer.startTree(node)
-                composer.applyExtension(RecomposeLambdaExtensionKey, content satisfies RecomposeLambda)
-                composer.startComposingNode()
+        const placeable = this.measure(layoutNode, constraints, (node, content, debugInformation) => {
+            compositionSession.compose(() => {
+                currentComposer().startTree(node)
+                currentComposer().applyExtension(RecomposeLambdaExtensionKey, content satisfies RecomposeLambda)
+                currentComposer().startComposingNode()
                 content()
-                composer.endComposingNode()
-                composer.endTree()
-            })
+                currentComposer().endComposingNode()
+                currentComposer().endTree()
+            }, { debugInformation })
         })
         // layoutNode.outerCoordinator = InnerNodeCoordinator()
 
@@ -52,7 +52,7 @@ export class LayoutProcessor {
     private measure(
         layoutNode: LayoutNode,
         constraints: Constraints,
-        latecompose: (node: Node, content: () => void) => void,
+        latecompose: (node: Node, content: () => void, debugInformation: string) => void,
     ): Placeable {
         const plugin = new LayoutProcessorPluginDebug()
         const measurer = new Measurer([{
@@ -80,7 +80,7 @@ export class LayoutProcessor {
 function coordinatorAsMeasurable(
     coordinator: LayoutNodeCoordinator,
     measurer: Measurer,
-    latecompose: (node: Node, content: () => void) => void,
+    latecompose: (node: Node, content: () => void, debugInformation: string) => void,
 ): Measurable {
     if (coordinator instanceof LayoutModifierLayoutNodeCoordinator)
         return layoutModifierCoordinatorAsMeasurable(coordinator, measurer, latecompose)
@@ -91,7 +91,7 @@ function coordinatorAsMeasurable(
 function layoutModifierCoordinatorAsMeasurable(
     coordinator: LayoutModifierLayoutNodeCoordinator,
     measurer: Measurer,
-    latecompose: (node: Node, content: () => void) => void,
+    latecompose: (node: Node, content: () => void, debugInformation: string) => void,
 ): Measurable {
     return {
         measure: function (constraints: Constraints): Placeable {
@@ -125,7 +125,7 @@ function layoutModifierCoordinatorAsMeasurable(
 function innerCoordinatorAsMeasurable(
     coordinator: InnerLayoutNodeCoordinator,
     measurer: Measurer,
-    latecompose: (node: Node, content: () => void) => void,
+    latecompose: (node: Node, content: () => void, debugInformation: string) => void,
 ): Measurable {
     return {
         measure: function (constraints: Constraints): Placeable {
@@ -175,9 +175,9 @@ function subconstraint(
     node: Node,
     extension: SubconstraintsNodeExtension,
     constraints: Constraints,
-    latecompose: (node: Node, content: () => void) => void,
+    latecompose: (node: Node, content: () => void, debugInformation: string) => void,
 ) {
-    latecompose(node, () => extension.compose(constraints))
+    latecompose(node, () => extension.compose(constraints), 'subconstraint run in measurement phase')
 }
 
 function subcompose(
@@ -185,7 +185,7 @@ function subcompose(
     extension: SubcomposeNodeExtension,
     constraints: Constraints,
     measurer: Measurer,
-    latecompose: (node: Node, content: () => void) => void,
+    latecompose: (node: Node, content: () => void, debugInformation: string) => void,
 ) {
     let measureResult: MeasureResult | undefined
     const subcomposes: { key: string | number | boolean | null, node: Node }[] = []
@@ -195,7 +195,7 @@ function subcompose(
             subcomposes.push({ key, node })
 
             measurer.exitMeasurement()
-            latecompose(node, content)
+            latecompose(node, content, 'subcompose run in measurement phase')
             measurer.reenterMeasurement()
 
             node.children.forEach(({ node }) => {
@@ -223,7 +223,7 @@ function subcompose(
                 })
 
                 subcomposes.length = 0
-            })
+            }, 'subcompose run in measurement phase')
             measurer.reenterMeasurement()
         }
     } satisfies SubcomposeScope)

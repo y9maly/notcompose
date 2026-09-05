@@ -12,7 +12,7 @@ export function terminalTestRuntime(): TestRuntime {
 
     const inputProcessor = new InputProcessor(
         testInput,
-        new RootInputDispatcher(() => bootstrap.composition.rootNode)
+        new RootInputDispatcher(() => bootstrap.compositionRunner.rootNode)
     )
 
     const start = bootstrap.start({
@@ -22,9 +22,9 @@ export function terminalTestRuntime(): TestRuntime {
         redrawOnViewportResize: false,
     })
 
-    const runtime = new TestRuntime(bootstrap.composition.rootNode, bootstrap.composer, bootstrap.composition)
+    const runtime = new TestRuntime(bootstrap.compositionRunner.rootNode, bootstrap.composer, bootstrap.compositionSession, bootstrap.compositionRunner)
 
-    runtime.composition.rootNode.extensions.set(MeasurePolicyExtensionKey.symbol, BoxMeasurePolicy)
+    runtime.compositionRunner.rootNode.extensions.set(MeasurePolicyExtensionKey.symbol, BoxMeasurePolicy)
     runtime.recomposer = bootstrap.recomposer
     runtime.testInput = testInput
     runtime.testOutput = testOutput

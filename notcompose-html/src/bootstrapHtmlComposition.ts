@@ -1,5 +1,5 @@
-import { CleanCompositionPlugin, Composer, PluginVerifierPlugin, Recomposer, RememberObserverPlugin, StateReadsPlugin } from '@notcompose/core'
-import { HtmlComposition } from './Composition.js'
+import { CleanCompositionPlugin, Composer, ComposerApplierPlugin, ComposerVerifierPlugin, CompositionSessionDefault, CurrentComposerRecomputeScope, Recomposer, RecomputeScopeApplierPlugin, RememberObserverPlugin, StateReadsPlugin } from '@notcompose/core'
+import { HtmlCompositionRunner } from './Composition.js'
 import { DomCommitPlugin } from './runtime/DomCommitPlugin.js'
 
 export interface HtmlCompositionController {
@@ -10,19 +10,25 @@ export interface HtmlCompositionController {
 export function bootstrapHtmlComposition(root: Element): {
     readonly composer: Composer
     readonly recomposer: Recomposer
-    readonly composition: HtmlComposition
+    readonly composition: HtmlCompositionRunner
     start(): HtmlCompositionController
 } {
     const recomposer = new Recomposer()
     const composer = new Composer([
         recomposer,
-        new PluginVerifierPlugin(),
+        new ComposerVerifierPlugin(),
         new CleanCompositionPlugin(),
         new StateReadsPlugin(recomposer),
         new RememberObserverPlugin(),
         new DomCommitPlugin(),
     ])
-    const composition = new HtmlComposition(composer, root)
+
+    const compositionSession = new CompositionSessionDefault(composer, [
+        new RecomputeScopeApplierPlugin(CurrentComposerRecomputeScope),
+        new ComposerApplierPlugin(),
+    ])
+
+    const composition = new HtmlCompositionRunner(compositionSession, root)
 
     let started = false
     let disposed = false
@@ -32,9 +38,9 @@ export function bootstrapHtmlComposition(root: Element): {
             return
 
         if (recomposer.needRecompose())
-            recomposer.recompose(composer)
+            recomposer.recompose(compositionSession)
         if (recomposer.needRecompose())
-            recomposer.recompose(composer)
+            recomposer.recompose(compositionSession)
     }
 
     const dispose = () => {

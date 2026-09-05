@@ -1,4 +1,4 @@
-import { Composer, Modifier, Node, type RecomposeLambda, RecomposeLambdaExtensionKey, withComposer } from '@notcompose/core'
+import { type CompositionSession, currentComposer, Modifier, Node, RecomposeLambdaExtensionKey } from '@notcompose/core'
 import { MeasurePolicy, MeasurePolicyExtensionKey, MeasureResult } from '@notcompose/layout'
 
 const RootMeasurePolicy = MeasurePolicy(
@@ -18,17 +18,20 @@ const RootMeasurePolicy = MeasurePolicy(
     }
 )
 
-export class Composition {
+export class TerminalCompositionRunner {
     public readonly rootNode = new Node(null, Modifier)
     private content: (() => void) | null = null
     private invalidatedCallback: (() => void) | null = null
+    private runnerFrame = 0
+    private contentFrame = 0
 
     constructor(
-        private composer: Composer
+        private compositionSession: CompositionSession,
     ) {}
 
     setContent(content: () => void): void {
         this.content = content
+        this.contentFrame = 0
     }
 
     invalidate() {
@@ -45,16 +48,20 @@ export class Composition {
     compose(modifier: Modifier): void {
         if (this.content === null)
             throw new Error('No content to compose')
+        this.runnerFrame++
+        this.contentFrame++
 
-        withComposer(this.composer, () => {
+        this.compositionSession.compose(() => {
             this.rootNode.modifier = modifier
-            this.composer.startTree(this.rootNode)
-            this.composer.applyExtension(MeasurePolicyExtensionKey, RootMeasurePolicy)
-            this.composer.applyExtension(RecomposeLambdaExtensionKey, this.content! satisfies RecomposeLambda)
-            this.composer.startComposingNode()
+            currentComposer().startTree(this.rootNode)
+            currentComposer().applyExtension(MeasurePolicyExtensionKey, RootMeasurePolicy)
+            currentComposer().applyExtension(RecomposeLambdaExtensionKey, this.content!)
+            currentComposer().startComposingNode()
             this.content!()
-            this.composer.endComposingNode()
-            this.composer.endTree()
+            currentComposer().endComposingNode()
+            currentComposer().endTree()
+        }, {
+            debugInformation: `currentContentRootFrame = ${this.contentFrame}\nterminalRunnerRootFrame = ${this.runnerFrame}`
         })
     }
 }

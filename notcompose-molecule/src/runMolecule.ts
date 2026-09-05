@@ -1,5 +1,5 @@
-import { CleanCompositionPlugin, Composer, Modifier, mutableStateOf, NameModifier, PluginVerifierPlugin, Recomposer, RememberObserverPlugin, type State, StateReadsPlugin } from '@notcompose/core'
-import { MoleculeComposition } from './MoleculeComposition.js'
+import { CleanCompositionPlugin, Composer, ComposerApplierPlugin, ComposerVerifierPlugin, CompositionSessionDefault, CurrentComposerRecomputeScope, Modifier, mutableStateOf, NameModifier, Recomposer, RecomputeScopeApplierPlugin, RememberObserverPlugin, type State, StateReadsPlugin } from '@notcompose/core'
+import { MoleculeCompositionRunner } from './MoleculeCompositionRunner.js'
 
 const Empty = Symbol('Empty')
 export function runMolecule<T>(content: () => T): State<T> {
@@ -7,7 +7,7 @@ export function runMolecule<T>(content: () => T): State<T> {
     const composer = new Composer([
         recomposer,
         // Для дебага, кинет исключение если методы плагинов вызовутся неправильно
-        new PluginVerifierPlugin(),
+        new ComposerVerifierPlugin(),
         // Удаляет пометку о грязной ноде сразу после начала композиции
         new CleanCompositionPlugin(),
         // Отслеживает чтения стейтов во время композиции;
@@ -21,7 +21,13 @@ export function runMolecule<T>(content: () => T): State<T> {
     ])
 
     const state = mutableStateOf<T | typeof Empty>(Empty)
-    const composition = new MoleculeComposition(composer)
+
+    const compositionSession = new CompositionSessionDefault(composer, [
+        new RecomputeScopeApplierPlugin(CurrentComposerRecomputeScope),
+        new ComposerApplierPlugin(),
+    ])
+
+    const composition = new MoleculeCompositionRunner(compositionSession)
     composition.setContent(() => {
         state.value = content()
     })
@@ -36,7 +42,7 @@ export function runMolecule<T>(content: () => T): State<T> {
         // noinspection InfiniteLoopJS
         while (true) {
             await recomposer.awaitNeedRecompose()
-            recomposer.recompose(composer)
+            recomposer.recompose(compositionSession)
         }
     })()
 

@@ -1,4 +1,4 @@
-import { Node } from './Node.js'
+import { Node } from '../runtime/Node.js'
 import type { Key } from './Composer.js'
 import type { ComposerPluginContext } from './ComposerPluginContext.js'
 

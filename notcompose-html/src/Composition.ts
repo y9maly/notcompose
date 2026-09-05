@@ -1,12 +1,14 @@
-import { Composer, Modifier, NameModifier, Node, type RecomposeLambda, RecomposeLambdaExtensionKey, withComposer } from '@notcompose/core'
+import { type CompositionSession, currentComposer, Modifier, NameModifier, Node, RecomposeLambdaExtensionKey } from '@notcompose/core'
 import { createDomRootState, DomNodeExtensionKey } from './runtime/DomNodeState.js'
 
-export class HtmlComposition {
+export class HtmlCompositionRunner {
     public readonly rootNode: Node
     private content: (() => void) | null = null
+    private runnerFrame = 0
+    private contentFrame = 0
 
     constructor(
-        private readonly composer: Composer,
+        private readonly compositionSession: CompositionSession,
         public readonly rootElement: Element,
     ) {
         this.rootNode = new Node(null, Modifier.then(NameModifier('HtmlRoot')))
@@ -15,22 +17,24 @@ export class HtmlComposition {
 
     setContent(content: () => void) {
         this.content = content
+        this.contentFrame = 0
     }
 
     compose() {
         if (this.content === null)
             throw new Error('No content to compose')
+        this.runnerFrame++
+        this.contentFrame++
 
-        withComposer(this.composer, () => {
-            this.composer.startTree(this.rootNode)
-            this.composer.applyExtension(
-                RecomposeLambdaExtensionKey,
-                this.content! satisfies RecomposeLambda,
-            )
-            this.composer.startComposingNode()
+        this.compositionSession.compose(() => {
+            currentComposer().startTree(this.rootNode)
+            currentComposer().applyExtension(RecomposeLambdaExtensionKey, this.content!)
+            currentComposer().startComposingNode()
             this.content!()
-            this.composer.endComposingNode()
-            this.composer.endTree()
+            currentComposer().endComposingNode()
+            currentComposer().endTree()
+        }, {
+            debugInformation: `currentContentRootFrame = ${this.contentFrame}\nhtmlRunnerRootFrame = ${this.runnerFrame}`
         })
     }
 }

@@ -1,4 +1,4 @@
-import type { ComposerPlugin } from '../../runtime/ComposerPlugin.js'
+import type { ComposerPlugin } from '../../composer/ComposerPlugin.js'
 import { Node } from '../../runtime/Node.js'
 import { unmarkCompositionAsDirty } from './DirtyCompositionMarker.js'
 

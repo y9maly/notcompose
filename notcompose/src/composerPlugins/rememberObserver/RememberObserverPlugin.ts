@@ -1,7 +1,7 @@
-import type { ComposerPlugin } from '../../runtime/ComposerPlugin.js'
+import type { ComposerPlugin } from '../../composer/ComposerPlugin.js'
 import { Node } from '../../runtime/Node.js'
 import { RememberObserver } from './RememberObserver.js'
-import type { Key } from '../../runtime/Composer.js'
+import type { Key } from '../../composer/Composer.js'
 
 export class RememberObserverPlugin implements ComposerPlugin {
     onValueRemembered(node: Node, value: unknown) {
