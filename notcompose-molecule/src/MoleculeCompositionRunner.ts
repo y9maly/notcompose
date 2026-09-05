@@ -33,15 +33,9 @@ export class MoleculeCompositionRunner {
         this.runnerFrame++
         this.contentFrame++
 
-        this.compositionSession.compose(() => {
-            this.rootNode.modifier = modifier
-            currentComposer().startTree(this.rootNode)
-            currentComposer().applyExtension(RecomposeLambdaExtensionKey, this.content!)
-            currentComposer().startComposingNode()
-            this.content!()
-            currentComposer().endComposingNode()
-            currentComposer().endTree()
-        }, {
+        this.rootNode.modifier = modifier
+        this.rootNode.setExtension(RecomposeLambdaExtensionKey, this.content)
+        this.compositionSession.compose(this.rootNode, this.content, {
             debugInformation: `currentContentRootFrame = ${this.contentFrame}\nmoleculeRunnerRootFrame = ${this.runnerFrame}`
         })
     }

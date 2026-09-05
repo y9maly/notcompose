@@ -5,8 +5,9 @@
     "lib": ["es2022", "ESNext.Disposable", "DOM", "DOM.Iterable"],
     "types": ["node", "vitest/globals"]
   },
-  "include": ["../src/**/*.ts", "./**/*.test.ts"],
+  "include": ["./**/*.test.ts"],
   "references": [
+    { "path": "../" },
     { "path": "../../notcompose" },
     { "path": "../../notcompose-ui" },
     { "path": "../../notcompose-testing/core" },

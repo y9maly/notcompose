@@ -1,4 +1,4 @@
-import { CleanCompositionPlugin, Composer, ComposerApplierPlugin, ComposerVerifierPlugin, CompositionSessionDefault, CurrentComposerRecomputeScope, Modifier, mutableStateOf, NameModifier, Recomposer, RecomputeScopeApplierPlugin, RememberObserverPlugin, type State, StateReadsPlugin } from '@notcompose/core'
+import { CleanCompositionPlugin, Composer, ComposerCompositionPlugin, ComposerVerifierPlugin, CompositionSessionDefault, CurrentComposerRecomputeScope, Modifier, mutableStateOf, NameModifier, Recomposer, RecomputeScopeApplierPlugin, RememberObserverPlugin, type State, StateReadsPlugin } from '@notcompose/core'
 import { MoleculeCompositionRunner } from './MoleculeCompositionRunner.js'
 
 const Empty = Symbol('Empty')
@@ -22,9 +22,9 @@ export function runMolecule<T>(content: () => T): State<T> {
 
     const state = mutableStateOf<T | typeof Empty>(Empty)
 
-    const compositionSession = new CompositionSessionDefault(composer, [
+    const compositionSession = new CompositionSessionDefault([
         new RecomputeScopeApplierPlugin(CurrentComposerRecomputeScope),
-        new ComposerApplierPlugin(),
+        new ComposerCompositionPlugin(composer),
     ])
 
     const composition = new MoleculeCompositionRunner(compositionSession)

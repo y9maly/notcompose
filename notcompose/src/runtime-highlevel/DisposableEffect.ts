@@ -1,6 +1,6 @@
-import { currentComposer } from '../composer/currentComposer.js'
 import { remember } from '../recomputation/remember.js'
 import { RememberObserver } from '../composerPlugins/rememberObserver/RememberObserver.js'
+import { outsideComposition } from '../composition/currentCompositionRun.js'
 
 export function DisposableEffect(
     keys: unknown[],
@@ -39,22 +39,12 @@ class DisposableEffectImpl implements RememberObserver {
     ) {}
 
     onRemembered(): void {
-        currentComposer().exitComposition()
-        try {
-            this.onDispose = this.block()
-        } finally {
-            currentComposer().reenterComposition()
-        }
+        this.onDispose = outsideComposition(this.block)
     }
 
     onForgotten(): void {
         if (this.onDispose) {
-            currentComposer().exitComposition()
-            try {
-                this.onDispose()
-            } finally {
-                currentComposer().reenterComposition()
-            }
+            outsideComposition(this.onDispose)
         }
     }
 }

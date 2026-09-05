@@ -6,6 +6,10 @@ import type { CompositionRun } from './CompositionRun.js'
 export interface CompositionPlugin {
     onEnterRun?(previousRun: CompositionRun | null, newRun: CompositionRun): void
 
+    onLeave?(currentRun: CompositionRun): void
+
+    onReenter?(currentRun: CompositionRun): void
+
     onExitRun?(
         exitedRun: CompositionRun,
         restoredRun: CompositionRun | null,

@@ -1,5 +1,5 @@
 import { describe, expect } from 'vitest'
-import { createModifierCollection, Modifier, ModifierCollection, type ModifierElement } from '../src/index.js'
+import { createModifierCollection, Modifier, ModifierCollection, type ModifierElement } from '@notcompose/core'
 
 describe('Test modifiers', () => {
     it('instanceof should work', () => {

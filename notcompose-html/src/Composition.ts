@@ -26,14 +26,8 @@ export class HtmlCompositionRunner {
         this.runnerFrame++
         this.contentFrame++
 
-        this.compositionSession.compose(() => {
-            currentComposer().startTree(this.rootNode)
-            currentComposer().applyExtension(RecomposeLambdaExtensionKey, this.content!)
-            currentComposer().startComposingNode()
-            this.content!()
-            currentComposer().endComposingNode()
-            currentComposer().endTree()
-        }, {
+        this.rootNode.setExtension(RecomposeLambdaExtensionKey, this.content)
+        this.compositionSession.compose(this.rootNode, this.content, {
             debugInformation: `currentContentRootFrame = ${this.contentFrame}\nhtmlRunnerRootFrame = ${this.runnerFrame}`
         })
     }

@@ -70,13 +70,9 @@ export class Recomposer implements StateReadsObserver, ComposerPlugin {
             if (recomposeLambda === undefined)
                 return
 
-            composingSession.compose(() => {
-                currentComposer().startTree(node)
-                currentComposer().startComposingNode()
+            composingSession.compose(node, () => {
                 debug.log(`Recompose ${node.findName() ?? ''}`)
                 recomposeLambda()
-                currentComposer().endComposingNode()
-                currentComposer().endTree()
             })
         })
 

@@ -15,6 +15,22 @@ export class RecomputeScopeApplierPlugin implements CompositionPlugin {
         setCurrentRecomputeScopeUnsafe(this.recomputeScope)
     }
 
+    onLeave(currentRun: CompositionRun) {
+        const associatedRecomputeScope = currentRecomputeScopeOrNull()
+        this.associatedRecomputeScopes.set(currentRun, associatedRecomputeScope)
+        associatedRecomputeScope?.leaveRecomputeScope()
+        setCurrentRecomputeScopeUnsafe(null)
+    }
+
+    onReenter(currentRun: CompositionRun) {
+        const associatedRecomputeScope = this.associatedRecomputeScopes.get(currentRun)
+        if (associatedRecomputeScope === undefined)
+            throw new Error(`Must be unreachable: onReenter cannot be invoked before onLeave (currentRun=${JSON.stringify(currentRun)})`)
+        this.associatedRecomputeScopes.delete(currentRun)
+        setCurrentRecomputeScopeUnsafe(associatedRecomputeScope)
+        associatedRecomputeScope?.reenterRecomputeScope()
+    }
+
     onExitRun(
         exitedRun: CompositionRun,
         restoredRun: CompositionRun | null,

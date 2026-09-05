@@ -81,7 +81,10 @@ export class Composer implements IComposer {
             throw new Error(`Cannot ${actionName ?? 'do this'} because exited composition`)
     }
 
-    exitComposition() {
+    /**
+     * @deprecated Don't use this. It will be completely migrated to outsideComposition(() => ) soon
+     */
+    leaveComposition() {
         if (this.exitedComposition)
             throw new Error('Cannot exit composition because already exited')
         if (this.frames.length === 0)
@@ -90,6 +93,9 @@ export class Composer implements IComposer {
         this.plugins.forEach(plugin => plugin.exitComposition())
     }
 
+    /**
+     * @deprecated Don't use this. It will be completely migrated to outsideComposition(() => ) soon
+     */
     reenterComposition() {
         if (!this.exitedComposition)
             throw new Error('Cannot reenter composition because already in composition')

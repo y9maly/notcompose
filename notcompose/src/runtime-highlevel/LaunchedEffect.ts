@@ -1,6 +1,6 @@
 import { remember } from '../recomputation/remember.js'
 import { RememberObserver } from '../composerPlugins/rememberObserver/RememberObserver.js'
-import { currentComposer } from '../composer/currentComposer.js'
+import { outsideComposition } from '../composition/currentCompositionRun.js'
 
 export function LaunchedEffect(
     keys: unknown[],
@@ -37,12 +37,7 @@ class LaunchedEffectImpl implements RememberObserver {
     ) {}
 
     onRemembered(): void {
-        currentComposer().exitComposition()
-        try {
-            this.block()
-        } finally {
-            currentComposer().reenterComposition()
-        }
+        outsideComposition(this.block)
     }
 
     onForgotten(): void {}

@@ -1,4 +1,4 @@
-import { Composer, currentComposerOrNull, setCurrentComposerUnsafe, withComposer } from '../src/index.js'
+import { Composer, currentComposerOrNull, setCurrentComposerUnsafe, withComposer } from '@notcompose/core'
 
 describe('Composer tests', () => {
     it('currentComposer() works', () => {

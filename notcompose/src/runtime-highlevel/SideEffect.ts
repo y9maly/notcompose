@@ -1,7 +1,5 @@
-import { currentComposer } from '../composer/currentComposer.js'
+import { outsideComposition } from '../composition/currentCompositionRun.js'
 
 export function SideEffect(block: () => void) {
-    currentComposer().exitComposition()
-    block()
-    currentComposer().reenterComposition()
+    outsideComposition(block)
 }

@@ -54,7 +54,8 @@ function rememberPositional<T>(
         calculation = a as () => T
     }
 
-    return currentRecomputeScope().rememberPositional(recomputeKeys, calculation)
+    return currentRecomputeScope(`You can't use remember here because you are outside any recompute scope`)
+        .rememberPositional(recomputeKeys, calculation)
 }
 
 function rememberKeyed<T>(
@@ -76,7 +77,7 @@ function rememberKeyed<T>(
     let recomputeKeys: unknown[]
     let calculation: () => T
 
-    if (arguments.length === 2) {
+    if (arguments.length === 3) {
         recomputeKeys = a as unknown[]
         calculation = b! satisfies () => T
     } else {
@@ -84,5 +85,6 @@ function rememberKeyed<T>(
         calculation = a as () => T
     }
 
-    return currentRecomputeScope().rememberKeyed(rememberKey, recomputeKeys, calculation)
+    return currentRecomputeScope(`You can't use remember here because you are outside any recompute scope`)
+        .rememberKeyed(rememberKey, recomputeKeys, calculation)
 }

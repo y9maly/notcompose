@@ -1,4 +1,4 @@
-import { CleanCompositionPlugin, Composer, ComposerApplierPlugin, ComposerVerifierPlugin, CompositionSessionDefault, CurrentComposerRecomputeScope, Recomposer, RecomputeScopeApplierPlugin, RememberObserverPlugin, StateReadsPlugin } from '@notcompose/core'
+import { CleanCompositionPlugin, Composer, ComposerCompositionPlugin, ComposerVerifierPlugin, CompositionSessionDefault, CurrentComposerRecomputeScope, Recomposer, RecomputeScopeApplierPlugin, RememberObserverPlugin, StateReadsPlugin } from '@notcompose/core'
 import { TestRuntime } from './TestRuntime.js'
 import { TestCompositionRunner } from './TestCompositionRunner.js'
 
@@ -12,9 +12,9 @@ export function defaultTestRuntime(): TestRuntime {
         new RememberObserverPlugin(),
     ])
 
-    const compositionSession = new CompositionSessionDefault(composer, [
+    const compositionSession = new CompositionSessionDefault([
         new RecomputeScopeApplierPlugin(CurrentComposerRecomputeScope),
-        new ComposerApplierPlugin(),
+        new ComposerCompositionPlugin(composer),
     ])
 
     const compositionRunner = new TestCompositionRunner(compositionSession)

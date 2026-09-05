@@ -2,6 +2,19 @@ import type { CompositionRun } from './CompositionRun.js'
 
 let value: CompositionRun | null = null
 
+export function outsideComposition<R>(block: () => R): R {
+    const run = currentCompositionRunOrNull()
+    if (run === null)
+        return block()
+
+    run.leaveComposition()
+    try {
+        return block()
+    } finally {
+        run.reenterComposition()
+    }
+}
+
 export function withCompositionRun<R>(compositionRun: CompositionRun, block: (previous: CompositionRun | null) => R): R {
     const previous = currentCompositionRunOrNull()
     try {

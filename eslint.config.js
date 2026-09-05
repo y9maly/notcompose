@@ -148,6 +148,7 @@ export default antfu(
             'no-unreachable': 'error',
             'no-var': 'error',
             'no-new': 'off',
+            'no-empty': 'off',
             'node/prefer-global/process': 'off',
             'object-shorthand': 'off',
             'one-var': 'off',

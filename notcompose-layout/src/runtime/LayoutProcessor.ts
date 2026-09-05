@@ -32,14 +32,8 @@ export class LayoutProcessor {
 
         // this.params.interceptMeasurement(() => layoutNode.measure(plugin, constraints))
         const placeable = this.measure(layoutNode, constraints, (node, content, debugInformation) => {
-            compositionSession.compose(() => {
-                currentComposer().startTree(node)
-                currentComposer().applyExtension(RecomposeLambdaExtensionKey, content satisfies RecomposeLambda)
-                currentComposer().startComposingNode()
-                content()
-                currentComposer().endComposingNode()
-                currentComposer().endTree()
-            }, { debugInformation })
+            node.setExtension(RecomposeLambdaExtensionKey, content)
+            compositionSession.compose(node, content, { debugInformation })
         })
         // layoutNode.outerCoordinator = InnerNodeCoordinator()
 

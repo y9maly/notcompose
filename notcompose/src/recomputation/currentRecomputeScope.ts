@@ -20,8 +20,8 @@ export function currentRecomputeScopeOrNull(): RecomputeScope | null {
     return value
 }
 
-export function currentRecomputeScope(): RecomputeScope {
+export function currentRecomputeScope(errorMessage: string = 'No current recompute scope; You are outside any recompute scope'): RecomputeScope {
     if (value === null)
-        throw new Error('No current recompute scope; You are outside any recompute scope')
+        throw new Error(errorMessage)
     return value
 }
