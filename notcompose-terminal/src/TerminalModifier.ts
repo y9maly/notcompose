@@ -1,5 +1,5 @@
 import { createModifierCollection, Modifier as BaseModifier, ModifierCollection, type ModifierElement } from '@notcompose/core'
-import { ConstraintsModifiers, fillMaxHeight, fillMaxSize, fillMaxWidth, height, offset, offsetX, offsetY, padding, size, width } from '@notcompose/layout'
+import { Constraints, ConstraintsModifiers, fillMaxHeight, fillMaxSize, fillMaxWidth, height, LayoutModifier, type Measurable, MeasureResult, offset, offsetX, offsetY, padding, size, width } from '@notcompose/layout'
 import { Color } from './runtime/ui/Color.js'
 import { background } from './runtime/modifiers/BackgroundModifier.js'
 import { DrawScope } from './runtime/ui/graphics/DrawScope.js'
@@ -82,6 +82,10 @@ class TerminalCollection extends ModifierCollection {
 
     minusMaxWidth(value: number): this {
         return this.then(ConstraintsModifiers.minusMaxWidth(value))
+    }
+
+    layout(measure: (measurable: Measurable, constraints: Constraints) => MeasureResult): this {
+        return this.then(LayoutModifier(measure))
     }
 
     background(

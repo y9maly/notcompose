@@ -187,6 +187,7 @@ export default antfu(
             'unicorn/no-new-array': 'off',
             'unicorn/number-literal-case': 'off',
             'unicorn/prefer-number-properties': 'off',
+            'unicorn/throw-new-error': 'off',
 
             // Keep source order meaningful; automatic sorting may reorder side effects.
             'perfectionist/sort-exports': 'off',

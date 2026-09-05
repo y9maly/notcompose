@@ -7,9 +7,9 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "typecheck": "tsc --noEmit",
-    "dev": "vite --config ./vite.html.config.ts",
-    "build": "pnpm run typecheck && vite build --config ./vite.html.config.ts",
-    "preview": "vite preview --config ./vite.html.config.ts",
+    "dev": "vite --config vite.config.ts",
+    "build": "pnpm run typecheck && vite build --config vite.config.ts",
+    "preview": "vite preview --config vite.config.ts",
     "main": "tsx ./src/main.ts"
   },
   "dependencies": {
@@ -18,7 +18,10 @@
     "@notcompose/molecule": "^0.1.0",
     "@notcompose/molecule-rxjs": "^0.1.0",
     "@notcompose/html": "^0.1.0",
+    "highlight.js": "^11.12.0",
     "rxjs": "^7.8.2"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "typescript": "npm:@typescript/typescript6@^6.0.2"
+  }
 }

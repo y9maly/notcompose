@@ -300,9 +300,17 @@ export function Input(modifier?: Modifier, options?: OptionsOf<'input'>): void
 export function Input(options?: ModifierOptionsOf<'input'>): void
 export function Input(...args: voidElement<'input'>) { voidElement('input', args) }
 
-export function Textarea(content: string | (() => void), modifier?: Modifier, options?: OptionsOf<'textarea'>): void
-export function Textarea(content: string | (() => void), options?: ModifierOptionsOf<'textarea'>): void
-export function Textarea(...args: contentElement<'textarea'>) { contentElement('textarea', args) }
+export function Textarea(value: string, modifier?: Modifier, options?: OptionsOf<'textarea'>): void
+export function Textarea(value: string, options?: ModifierOptionsOf<'textarea'>): void
+export function Textarea(value: string, ...args: voidElement<'textarea'>) {
+    voidElement('textarea', args, {
+        interceptModifier: (modifier) => Modifier(modifier)
+            .property<HTMLTextAreaElement>(element => {
+                console.log('Update')
+                element.value = value
+            })
+    })
+}
 
 export function Select(content: string | (() => void), modifier?: Modifier, options?: OptionsOf<'select'>): void
 export function Select(content: string | (() => void), options?: ModifierOptionsOf<'select'>): void

@@ -9,11 +9,11 @@
     "forceConsistentCasingInFileNames": true,
 
     "rootDir": "src",
-    "outDir": "dist",
+    "outDir": "./build/dist",
 
     "types": ["node"],
     "lib": ["es2022", "ESNext.Disposable"],
-    "tsBuildInfoFile": "dist/.tsbuildinfo",
+    "tsBuildInfoFile": "./build/.tsbuildinfo",
   },
   "include": ["src/**/*.ts"]
 }

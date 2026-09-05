@@ -9,12 +9,12 @@
     "forceConsistentCasingInFileNames": true,
 
     "rootDir": "src",
-    "outDir": "dist",
+    "outDir": "./build/dist",
     "noEmit": true,
 
     "types": ["vite/client"],
     "lib": ["es2022", "ESNext.Disposable", "DOM", "DOM.Iterable"],
-    "tsBuildInfoFile": "./.tsbuildinfo",
+    "tsBuildInfoFile": "./build/.tsbuildinfo",
   },
   "include": ["src/**/*.ts"]
 }
