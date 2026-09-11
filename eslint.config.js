@@ -72,6 +72,19 @@ export default antfu(
             // allow this:
             // > function something ()
             'style/space-before-function-paren': 'off',
+            // allow this:
+            // > if (something){ }
+            'style/space-before-blocks': 'off',
+            // allow this:
+            // > if(something)
+            'style/keyword-spacing': 'off',
+            // allow this:
+            // > (a,b)
+            'style/comma-spacing': 'off',
+            // allow this:
+            // > something() {}
+            // > somethingElse() {}
+            'style/lines-between-class-members': 'off',
             // ...
             'style/space-infix-ops': 'off',
             'style/type-annotation-spacing': 'warn',
@@ -145,7 +158,7 @@ export default antfu(
             'no-lone-blocks': 'off',
             'no-throw-literal': 'error',
             'no-unmodified-loop-condition': 'off',
-            'no-unreachable': 'error',
+            'no-unreachable': 'warn',
             'no-var': 'error',
             'no-new': 'off',
             'no-empty': 'off',
@@ -154,6 +167,7 @@ export default antfu(
             'one-var': 'off',
             'prefer-const': 'warn',
             'prefer-template': 'off',
+            'prefer-promise-reject-errors': 'off',
             'symbol-description': 'off',
             'unused-imports/no-unused-imports': 'off',
             'unused-imports/no-unused-vars': ['off', {
@@ -175,6 +189,9 @@ export default antfu(
             'ts/no-unnecessary-type-assertion': 'warn',
             'ts/no-unused-expressions': 'off',
             'ts/no-use-before-define': 'off',
+            'ts/no-namespace': ['warn', {
+                allowDeclarations: true,
+            }],
             'ts/consistent-type-imports': 'off',
             'ts/explicit-function-return-type': 'off',
             'ts/method-signature-style': 'off',

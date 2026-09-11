@@ -1,8 +1,17 @@
-import { CleanCompositionPlugin, Composer, ComposerCompositionPlugin, ComposerVerifierPlugin, CompositionSessionDefault, CurrentComposerRecomputeScope, Modifier, mutableStateOf, NameModifier, Recomposer, RecomputeScopeApplierPlugin, RememberObserverPlugin, type State, StateReadsPlugin } from '@notcompose/core'
+import { CleanCompositionPlugin, Composer, ComposerCompositionPlugin, ComposerVerifierPlugin, CompositionSessionDefault, ComposerRecomputeScope, Modifier, mutableStateOf, NameModifier, Recomposer, RecomputeScopeApplierPlugin, RememberObserverPlugin, type State, StateReadsPlugin } from '@notcompose/core'
 import { MoleculeCompositionRunner } from './MoleculeCompositionRunner.js'
 
-const Empty = Symbol('Empty')
-export function runMolecule<T>(content: () => T): State<T> {
+export function runMolecule<T>(content: () => T): [State<T>, dispose: () => void]
+export function runMolecule<T>(signal: AbortSignal, content: () => T): State<T>
+export function runMolecule<T>(a: AbortSignal | (() => T), b?: () => T): [State<T>, dispose: () => void] | State<T> {
+    if (arguments.length === 2)
+        return runMoleculeImpl(a as AbortSignal, b!)
+    const abortController = new AbortController()
+    const state = runMoleculeImpl(abortController.signal, a as () => T)
+    return [state, () => abortController.abort()]
+}
+
+function runMoleculeImpl<T>(signal: AbortSignal, content: () => T): State<T> {
     const recomposer = new Recomposer()
     const composer = new Composer([
         recomposer,
@@ -20,10 +29,10 @@ export function runMolecule<T>(content: () => T): State<T> {
         new RememberObserverPlugin(),
     ])
 
-    const state = mutableStateOf<T | typeof Empty>(Empty)
+    const state = mutableStateOf<T | undefined>(undefined)
 
     const compositionSession = new CompositionSessionDefault([
-        new RecomputeScopeApplierPlugin(CurrentComposerRecomputeScope),
+        new RecomputeScopeApplierPlugin(new ComposerRecomputeScope(composer)),
         new ComposerCompositionPlugin(composer),
     ])
 
@@ -38,15 +47,20 @@ export function runMolecule<T>(content: () => T): State<T> {
 
     recompose()
 
+    const abortPromise = new Promise<true>((resolve) => {
+        signal.addEventListener('abort', () => resolve(true), { once: true })
+        if (signal.aborted) resolve(true)
+    })
+
     void (async () => {
         // noinspection InfiniteLoopJS
         while (true) {
-            await recomposer.awaitNeedRecompose()
+            const aborted = await Promise.race([abortPromise, recomposer.awaitNeedRecompose() satisfies Promise<void>])
+            if (aborted === true)
+                break
             recomposer.recompose(compositionSession)
         }
     })()
 
-    if (state.value === Empty)
-        throw new Error('State cannot be empty')
     return state as State<T>
 }

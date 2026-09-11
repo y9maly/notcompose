@@ -2,6 +2,19 @@ import type { RecomputeScope } from './RecomputeScope.js'
 
 let value: RecomputeScope | null = null
 
+export function outsideRecomputeScope<R>(block: () => R): R {
+    const scope = currentRecomputeScopeOrNull()
+    if (scope === null)
+        return block()
+
+    scope.leaveRecomputeScope()
+    try {
+        return block()
+    } finally {
+        scope.reenterRecomputeScope()
+    }
+}
+
 export function withRecomputeScope<R>(recomputeScope: RecomputeScope, block: () => R): R {
     const previous = currentRecomputeScopeOrNull()
     try {

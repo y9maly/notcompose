@@ -10,7 +10,8 @@ import { AnnotatedString } from './runtime/ui/AnnotatedString.js'
 import { drawText } from './runtime/modifiers/TextModifier.js'
 import { border } from './runtime/modifiers/BorderModifier.js'
 
-class TerminalCollection extends ModifierCollection {
+// todo move something to LayoutModifierCollection
+export class TerminalCollection extends ModifierCollection {
     constructor(
         public readonly elements: ReadonlyArray<ModifierElement> = []
     ) { super() }

@@ -43,7 +43,7 @@ export class Recomposer implements StateReadsObserver, ComposerPlugin {
     }
 
     private recomposing = false
-    recompose(composingSession: CompositionSession) {
+    recompose(compositionSession: CompositionSession) {
         if (this.recomposing)
             throw new Error('[recompose] cannot be called recursively')
         if (!this.needRecompose())
@@ -53,14 +53,14 @@ export class Recomposer implements StateReadsObserver, ComposerPlugin {
             this.recomposing = true
             // if (this.currentStateReadsMap.size !== 0)
             //     throw new Error('Unexpected')
-            this.doRecompose(composingSession)
+            this.doRecompose(compositionSession)
         } finally {
             // this.currentStateReadsMap.clear()
             this.recomposing = false
         }
     }
 
-    private doRecompose(composingSession: CompositionSession) {
+    private doRecompose(compositionSession: CompositionSession) {
         const nodesToRecompose = new Set(this.stateDependenciesMap.dirtyObjects)
         this.stateDependenciesMap.dirtyObjects.clear()
         nodesToRecompose.forEach((node) => {
@@ -70,7 +70,7 @@ export class Recomposer implements StateReadsObserver, ComposerPlugin {
             if (recomposeLambda === undefined)
                 return
 
-            composingSession.compose(node, () => {
+            compositionSession.compose(node, () => {
                 debug.log(`Recompose ${node.findName() ?? ''}`)
                 recomposeLambda()
             })

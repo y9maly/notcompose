@@ -11,7 +11,7 @@
     "inlineSources": true,
 
     "types": [],
-    "lib": ["es2022", "ESNext.Disposable"],
+    "lib": ["es2022", "ESNext.Disposable", "DOM"],
     "tsBuildInfoFile": "./build/.tsbuildinfo",
   },
   "include": ["src/**/*.ts"],

@@ -374,9 +374,9 @@ export function Canvas(content: string | (() => void), modifier?: Modifier, opti
 export function Canvas(content: string | (() => void), options?: ModifierOptionsOf<'canvas'>): void
 export function Canvas(...args: contentElement<'canvas'>) { contentElement('canvas', args) }
 
-export function Iframe(content: string | (() => void), modifier?: Modifier, options?: OptionsOf<'iframe'>): void
-export function Iframe(content: string | (() => void), options?: ModifierOptionsOf<'iframe'>): void
-export function Iframe(...args: contentElement<'iframe'>) { contentElement('iframe', args) }
+export function Iframe(modifier?: Modifier, options?: OptionsOf<'iframe'>): void
+export function Iframe(options?: ModifierOptionsOf<'iframe'>): void
+export function Iframe(...args: voidElement<'iframe'>) { voidElement('iframe', args) }
 
 export function Figure(content: string | (() => void), modifier?: Modifier, options?: OptionsOf<'figure'>): void
 export function Figure(content: string | (() => void), options?: ModifierOptionsOf<'figure'>): void

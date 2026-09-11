@@ -1,24 +1,26 @@
 import type { RecomputeScope } from './RecomputeScope.js'
-import { currentComposer } from '../composer/currentComposer.js'
 import { outsideComposition } from '../composition/currentCompositionRun.js'
+import type { Composer } from '../composer/Composer.js'
 
-class $CurrentComposerRecomputeScope implements RecomputeScope {
+export class ComposerRecomputeScope implements RecomputeScope {
     private leaves = 0
     private isLeaved = false
+
+    constructor(private readonly composer: Composer) {}
 
     rememberPositional<T>(recomputeKeys: ReadonlyArray<unknown>, calculation: () => T): T {
         if (this.isLeaved)
             throw new Error('You cannot remember values here because this recomputeScope is leaved')
 
-        const previousKeys = currentComposer().hasRememberedValue()
-            ? currentComposer().rememberedValue() as unknown[]
+        const previousKeys = this.composer.hasRememberedValue()
+            ? this.composer.rememberedValue() as unknown[]
             : null
         const firstComposition = previousKeys === null
 
         if (firstComposition) {
             const value = outsideComposition(calculation)
-            currentComposer().rememberValue(recomputeKeys)
-            currentComposer().rememberValue(value)
+            this.composer.rememberValue(recomputeKeys)
+            this.composer.rememberValue(value)
             return value
         }
 
@@ -28,28 +30,28 @@ class $CurrentComposerRecomputeScope implements RecomputeScope {
             || recomputeKeys.some((it, index) => !Object.is(it, previousKeys[index]))
         ) {
             const newValue = outsideComposition(calculation)
-            currentComposer().rememberValue(recomputeKeys)
-            currentComposer().rememberValue(newValue)
+            this.composer.rememberValue(recomputeKeys)
+            this.composer.rememberValue(newValue)
             return newValue
         } else {
-            currentComposer().nextRememberedValue()
+            this.composer.nextRememberedValue()
         }
 
-        return currentComposer().nextRememberedValue() as T
+        return this.composer.nextRememberedValue() as T
     }
 
     rememberKeyed<T>(rememberKey: string | number | boolean, recomputeKeys: ReadonlyArray<unknown>, calculation: () => T): T {
         if (this.isLeaved)
             throw new Error('You cannot remember values here because this recomputeScope is leaved')
 
-        const previous = currentComposer().hasRememberedKeyedValue(rememberKey)
-            ? currentComposer().rememberedKeyedValue(rememberKey) as [unknown[], T]
+        const previous = this.composer.hasRememberedKeyedValue(rememberKey)
+            ? this.composer.rememberedKeyedValue(rememberKey) as [unknown[], T]
             : null
         const firstComposition = previous === null
 
         if (firstComposition) {
             const value = outsideComposition(calculation)
-            currentComposer().rememberKeyedValue(rememberKey, [recomputeKeys, value])
+            this.composer.rememberKeyedValue(rememberKey, [recomputeKeys, value])
             return value
         }
         const [previousKeys, previousValue] = previous
@@ -60,7 +62,7 @@ class $CurrentComposerRecomputeScope implements RecomputeScope {
             || recomputeKeys.some((it, index) => !Object.is(it, previousKeys[index]))
         ) {
             const newValue = outsideComposition(calculation)
-            currentComposer().rememberKeyedValue(rememberKey, [recomputeKeys, newValue])
+            this.composer.rememberKeyedValue(rememberKey, [recomputeKeys, newValue])
             return newValue
         } else {
             return previousValue
@@ -81,5 +83,3 @@ class $CurrentComposerRecomputeScope implements RecomputeScope {
         }
     }
 }
-
-export const CurrentComposerRecomputeScope: RecomputeScope = new $CurrentComposerRecomputeScope()

@@ -1,7 +1,7 @@
-import type { CompositionPlugin } from '../composition/CompositionPlugin.js'
-import type { CompositionRun } from '../composition/CompositionRun.js'
 import { currentComposerOrNull, setCurrentComposerUnsafe } from '../composer/currentComposer.js'
 import type { Composer } from '../composer/Composer.js'
+import type { CompositionPlugin } from '../composition/CompositionPlugin.js'
+import type { CompositionRun } from '../composition/CompositionRun.js'
 
 export class ComposerCompositionPlugin implements CompositionPlugin {
     private readonly associatedComposers = new Map<CompositionRun | null, Composer | null>()
@@ -46,5 +46,10 @@ export class ComposerCompositionPlugin implements CompositionPlugin {
             throw new Error(`Must be unreachable: onExitRun cannot be invoked before onEnterRun (exitedRun=${JSON.stringify(exitedRun)}, restoredRun=${JSON.stringify(restoredRun)}, exitedRunResult=${JSON.stringify(exitedRunResult)})`)
         this.associatedComposers.delete(restoredRun)
         setCurrentComposerUnsafe(associatedComposer)
+    }
+
+    onDispose() {
+        // TODO Not implemented yet
+        throw new Error('Not implemented yet')
     }
 }

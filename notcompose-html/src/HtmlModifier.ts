@@ -6,7 +6,7 @@ import { type DomEvent, ListenerModifier } from './runtime/modifiers/ListenerMod
 import { PropertyModifier } from './runtime/modifiers/PropertyModifier.js'
 import { type DomRef, RefModifier } from './runtime/modifiers/RefModifier.js'
 
-class HtmlCollection extends ModifierCollection {
+export class HtmlCollection extends ModifierCollection {
     constructor(
         public readonly elements: ReadonlyArray<ModifierElement> = []
     ) { super() }

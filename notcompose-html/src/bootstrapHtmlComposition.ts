@@ -1,4 +1,4 @@
-import { CleanCompositionPlugin, Composer, ComposerCompositionPlugin, ComposerVerifierPlugin, CompositionSessionDefault, CurrentComposerRecomputeScope, Recomposer, RecomputeScopeApplierPlugin, RememberObserverPlugin, StateReadsPlugin } from '@notcompose/core'
+import { CleanCompositionPlugin, Composer, ComposerCompositionPlugin, ComposerVerifierPlugin, CompositionSessionDefault, ComposerRecomputeScope, Recomposer, RecomputeScopeApplierPlugin, RememberObserverPlugin, StateReadsPlugin } from '@notcompose/core'
 import { HtmlCompositionRunner } from './Composition.js'
 import { DomCommitPlugin } from './runtime/DomCommitPlugin.js'
 
@@ -24,7 +24,7 @@ export function bootstrapHtmlComposition(root: Element): {
     ])
 
     const compositionSession = new CompositionSessionDefault([
-        new RecomputeScopeApplierPlugin(CurrentComposerRecomputeScope),
+        new RecomputeScopeApplierPlugin(new ComposerRecomputeScope(composer)),
         new ComposerCompositionPlugin(composer),
     ])
 

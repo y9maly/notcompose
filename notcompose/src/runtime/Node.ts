@@ -8,7 +8,13 @@ export class Node {
         public parent: Node | null,
         public modifier: Modifier,
         public readonly children: { key: Key | null, node: Node }[] = [],
+        /**
+         * @deprecated will be moved to composition phase later
+         */
         public readonly positionalRemembered: unknown[] = [],
+        /**
+         * @deprecated will be moved to composition phase later
+         */
         public readonly keyedRemembered: Map<Key, unknown> = new Map(),
         public readonly extensions: Map<symbol, unknown> = new Map(),
     ) {}
