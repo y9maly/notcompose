@@ -23,6 +23,7 @@ export interface MutableState<T> extends State<T> {
     (newValue: T): void
     set(newValue: T): void
     update(updater: (value: T) => T): void
+    asState(): State<T>
 }
 
 interface MutableStateConstructor {
@@ -59,6 +60,10 @@ function updateValue<T>(this: MutableStateImpl<T>, updater: (value: T) => T): vo
     GlobalSnapshot.observeWrite(this)
 }
 
+function asState<T>(this: MutableState<T>): State<T> {
+    return this
+}
+
 export const MutableState: MutableStateConstructor = function<T>(
     value: T,
     equalityPolicy: EqualityPolicy<T> = strictEqualityPolicy()
@@ -71,6 +76,7 @@ export const MutableState: MutableStateConstructor = function<T>(
     instance.equalityPolicy = equalityPolicy
     instance.set = setValue.bind(instance as MutableStateImpl<unknown>)
     instance.update = updateValue.bind(instance as MutableStateImpl<unknown>) as MutableState<T>['update']
+    instance.asState = asState.bind(instance) as MutableState<T>['asState']
     Object.defineProperty(instance, 'value', {
         get: getValue.bind(instance as MutableStateImpl<unknown>),
         set: setValue.bind(instance as MutableStateImpl<unknown>),
