@@ -1,4 +1,5 @@
 import { GlobalSnapshot } from './Snapshot.js'
+import lodash from 'lodash'
 
 export interface State<out T> {
     readonly value: T
@@ -12,10 +13,12 @@ export interface EqualityPolicy<T> {
 // eslint-disable-next-line eqeqeq
 function LooseEqualityPolicy<T>(a: T, b: T) { return a == b }
 function StrictEqualityPolicy<T>(a: T, b: T) { return Object.is(a, b) }
+function DeepEqualityPolicy<T>(a: T, b: T) { return lodash.isEqual(a, b) }
 function NeverEqualPolicy() { return false }
 
 export function looseEqualityPolicy<T>(): EqualityPolicy<T> { return LooseEqualityPolicy }
 export function strictEqualityPolicy<T>(): EqualityPolicy<T> { return StrictEqualityPolicy }
+export function deepEqualityPolicy<T>(): EqualityPolicy<T> { return DeepEqualityPolicy }
 export function neverEqualPolicy<T>(): EqualityPolicy<T> { return NeverEqualPolicy }
 
 export interface MutableState<T> extends State<T> {

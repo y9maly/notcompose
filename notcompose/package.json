@@ -18,8 +18,13 @@
     "test": "vitest run",
     "prepack": "pnpm run build"
   },
+  "dependencies": {
+    "lodash": "^4.18.1"
+  },
   "peerDependencies": {},
-  "devDependencies": {},
+  "devDependencies": {
+    "@types/lodash": "^4.17.25"
+  },
   "publishConfig": {
     "access": "public"
   },
