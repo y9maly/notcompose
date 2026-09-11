@@ -52,6 +52,7 @@ P.S. Установить всё сразу и, например, рендери
 git clone https://github.com/y9maly/notcompose.git && cd notcompose
 npm install -g pnpm
 pnpm install
+pnpm build
 
 # Запуск тестов
 pnpm run test

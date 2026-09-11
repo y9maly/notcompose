@@ -1,5 +1,7 @@
 import type { Key } from '../composer/Composer.js'
 import { currentRecomputeScope } from './currentRecomputeScope.js'
+import { RecomputeScopeHolder } from './RecomputeScopeHolder.js'
+import { RememberObserver } from '../composerPlugins/rememberObserver/RememberObserver.js'
 
 export interface remember {
     <T>(calculation: () => T): T
@@ -54,8 +56,16 @@ function rememberPositional<T>(
         calculation = a as () => T
     }
 
-    return currentRecomputeScope(`You can't use remember here because you are outside any recompute scope`)
-        .rememberPositional(recomputeKeys, calculation)
+    const recomputeScope = currentRecomputeScope(`You can't use remember here because you are outside any recompute scope`)
+    // todo need lower-level recompute-scope API here!
+    const holder = recomputeScope.rememberPositional([], () => {
+        const holder = new RecomputeScopeHolder();
+        (holder as any)[RememberObserver.symbol] = RememberObserver(() => {}, () => holder.dispose())
+        return holder
+    })
+    return recomputeScope.rememberPositional(recomputeKeys, () => {
+        return holder.withRecomputeScope(calculation)
+    })
 }
 
 function rememberKeyed<T>(
@@ -85,6 +95,14 @@ function rememberKeyed<T>(
         calculation = a as () => T
     }
 
-    return currentRecomputeScope(`You can't use remember here because you are outside any recompute scope`)
-        .rememberKeyed(rememberKey, recomputeKeys, calculation)
+    const recomputeScope = currentRecomputeScope(`You can't use remember here because you are outside any recompute scope`)
+    // todo need lower-level recompute-scope API here!
+    const holder = recomputeScope.rememberPositional([], () => {
+        const holder = new RecomputeScopeHolder();
+        (holder as any)[RememberObserver.symbol] = RememberObserver(() => {}, () => holder.dispose())
+        return holder
+    })
+    return recomputeScope.rememberKeyed(rememberKey, recomputeKeys, () => {
+        return holder.withRecomputeScope(calculation)
+    })
 }

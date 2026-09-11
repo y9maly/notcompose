@@ -1,7 +1,5 @@
 /// <reference lib="esnext.disposable" preserve="true" />
 
-export * from './measurement/MeasurementStub.js'
-export * from './measurement/currentMeasurement.js'
 export * from './runtime/Constraints.js'
 export * from './runtime/IntrinsicMeasurable.js'
 export * from './runtime/Layout.js'

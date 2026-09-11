@@ -1,6 +1,6 @@
 import { InputProcessor } from './runtime-input/InputProcessor.js'
 import type { OutputProcessor } from './runtime-output/OutputProcessor.js'
-import { CleanCompositionPlugin, Composer, ComposerCompositionPlugin, ComposerVerifierPlugin, type CompositionSession, CompositionSessionDefault, CurrentComposerRecomputeScope, Modifier, NameModifier, Recomposer, RecomputeScopeApplierPlugin, RememberObserverPlugin, StateReadsPlugin } from '@notcompose/core'
+import { CleanCompositionPlugin, Composer, ComposerCompositionPlugin, ComposerVerifierPlugin, type CompositionSession, CompositionSessionDefault, ComposerRecomputeScope, Modifier, NameModifier, Recomposer, RecomputeScopeApplierPlugin, RememberObserverPlugin, StateReadsPlugin } from '@notcompose/core'
 import { TerminalCompositionRunner } from './TerminalCompositionRunner.js'
 import { Constraints, LayoutProcessor } from '@notcompose/layout'
 
@@ -46,7 +46,7 @@ export function bootstrapTerminalComposition(): {
     ])
 
     const compositionSession = new CompositionSessionDefault([
-        new RecomputeScopeApplierPlugin(CurrentComposerRecomputeScope),
+        new RecomputeScopeApplierPlugin(new ComposerRecomputeScope(composer)),
         new ComposerCompositionPlugin(composer),
     ])
 

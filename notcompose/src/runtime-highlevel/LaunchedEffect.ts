@@ -1,6 +1,7 @@
 import { remember } from '../recomputation/remember.js'
 import { RememberObserver } from '../composerPlugins/rememberObserver/RememberObserver.js'
 import { outsideComposition } from '../composition/currentCompositionRun.js'
+import { RecomputeScopeHolder } from '../recomputation/RecomputeScopeHolder.js'
 
 export function LaunchedEffect(
     keys: unknown[],
@@ -26,18 +27,25 @@ export function LaunchedEffect(
         block = a as () => void
     }
 
-    remember(keys, () => new LaunchedEffectImpl(block))
+    // todo need lower-level recompute-scope API here!
+    const holder = remember(() => {
+        const holder = new RecomputeScopeHolder();
+        (holder as any)[RememberObserver.symbol] = RememberObserver(() => {}, () => holder.dispose())
+        return holder
+    })
+    remember(keys, () => new LaunchedEffectImpl(holder, block))
 }
 
 class LaunchedEffectImpl implements RememberObserver {
     [RememberObserver.symbol] = this
 
     constructor(
+        private recomputeScopeHolder: RecomputeScopeHolder,
         private block: () => void
     ) {}
 
     onRemembered(): void {
-        outsideComposition(this.block)
+        outsideComposition(() => this.recomputeScopeHolder.withRecomputeScope(this.block))
     }
 
     onForgotten(): void {}
