@@ -156,7 +156,8 @@ export class Composer implements IComposer {
             throw new Error('Could not start node here')
 
         // todo вынести в плагин
-        key = key ?? modifier.elements.find(it => it instanceof KeyModifier)?.key
+        // todo поддержать массив ключей
+        key = key ?? keyFromModifier(modifier)
         if (key !== undefined && parentFrame.usedKeyedChildren.has(key))
             throw new Error(`Key "${key}" was already used in this composition. Please make sure you provide unique key for each element.`)
 
@@ -206,7 +207,8 @@ export class Composer implements IComposer {
         node.parent = parentFrame.node
 
         // todo вынести в плагин
-        key = key ?? node.modifier.elements.find(it => it instanceof KeyModifier)?.key
+        // todo поддержать массив ключей
+        key = key ?? keyFromModifier(node.modifier)
         if (key !== undefined && parentFrame.usedKeyedChildren.has(key))
             throw new Error(`Key "${key}" was already used in this composition. Please make sure you provide unique key for each element.`)
 
@@ -414,4 +416,12 @@ export class Composer implements IComposer {
     dispose(): void {
         this.plugins.forEach(plugin => plugin.dispose())
     }
+}
+
+function keyFromModifier(modifier: Modifier): string | undefined {
+    // todo вынести в плагин
+    // todo поддержать массив ключей
+    const keyModifiers = modifier.elements.filter(it => it instanceof KeyModifier)
+    if (keyModifiers.length === 0) return undefined
+    return keyModifiers.map(it => it.key).join(', ')
 }
